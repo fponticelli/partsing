@@ -1,4 +1,5 @@
-import { match } from './parse_text';
+import { match } from './parse_text'
+
 abstract class ParseResultBase<Result, Failure, Source> {
   constructor(
     readonly source: Source | undefined
@@ -6,13 +7,13 @@ abstract class ParseResultBase<Result, Failure, Source> {
   abstract match<O>(o: {
     success: (s: ParseSuccess<Result, Failure, Source>) => O,
     failure: (f: ParseFailure<Result, Failure, Source>) => O
-  }): O;
+  }): O
     
-  abstract flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source>;
-  abstract flatMapError<E>(f: (r: Failure) => ParseResult<Result, E, Source>): ParseResult<Result, E, Source>;
+  abstract flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source>
+  abstract flatMapError<E>(f: (r: Failure) => ParseResult<Result, E, Source>): ParseResult<Result, E, Source>
   
-  abstract map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source>;
-  abstract mapError<E>(f: (r: Failure) => E): ParseResult<Result, E, Source>;
+  abstract map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source>
+  abstract mapError<E>(f: (r: Failure) => E): ParseResult<Result, E, Source>
 }
 
 export class ParseSuccess<Result, Failure, Source> extends ParseResultBase<Result, Failure, Source> {
@@ -75,9 +76,9 @@ export class ParseFailure<Result, Failure, Source> extends ParseResultBase<Resul
   }
 }
 
-export type ParseResult<Result, Failure, Source> = ParseSuccess<Result, Failure, Source> | ParseFailure<Result, Failure, Source>;
+export type ParseResult<Result, Failure, Source> = ParseSuccess<Result, Failure, Source> | ParseFailure<Result, Failure, Source>
 
-export type Parsing<Source, Result, Failure> = (source: Source) => ParseResult<Result, Failure, Source>;
+export type Parsing<Source, Result, Failure> = (source: Source) => ParseResult<Result, Failure, Source>
 
 export class Parser<Source, Result, Failure> {
   constructor(readonly run: (source: Source) => ParseResult<Result, Failure, Source>) {}

@@ -1,4 +1,4 @@
-import { Parser, ParseFailure, ParseSuccess, ParseResult } from './parse';
+import { Parser, ParseFailure, ParseSuccess, ParseResult } from './parse'
 
 export interface TextSource {
   source: string
