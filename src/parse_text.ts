@@ -1,4 +1,4 @@
-import { Parser, ParseFailure, ParseSuccess, ParseResult } from './parse'
+import { Parser, ParseFailure, ParseSuccess, ParseResult, seq, alt } from './parse';
 
 export interface TextSource {
   source: string
@@ -71,8 +71,42 @@ export const lazy = <T>(f: () => TextParser<T>) => {
   })
 }
 
-const parser = regexp(/[abc]{1,2}/g)
-  .then(regexp(/[abc]{1,2}/g))
-  .then(index())
+/*
 
-console.log(parse(parser, '123a12c3'))
+letter string
+letters string
+digit number
+digits number
+whitespace string
+optWhitespace option ? string
+char string
+matchChar string
+matchOneOf string
+matchNoneOf string
+
+separatedBy(sep)
+
+succeed A
+fail A expected
+
+test
+takeWhile
+or
+skip
+many
+times
+atMost
+atLeast
+
+*/
+
+const parser = 
+  regexp(/[abc]{1,2}/g)
+    .then(regexp(/[abc]{1,2}/g))
+    .then(
+      regexp(/[\d]+/g)
+        .alt(index())
+    )
+    .skip(eot())
+
+console.log(parse(parser, '123a45c6').toString())
