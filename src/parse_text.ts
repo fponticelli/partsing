@@ -9,9 +9,9 @@ export interface TextFailure extends TextSource {
   expected: string
 }
 
-export type TextParser<T> = Parser<TextSource, T, TextFailure>
+export type TextParser<T> = Parser<T, TextFailure, TextSource>
 
-const make = <T>(f: (source: TextSource) => ParseResult<T, TextFailure, TextSource>): TextParser<T> => new Parser<TextSource, T, TextFailure>(f)
+const make = <T>(f: (source: TextSource) => ParseResult<T, TextFailure, TextSource>): TextParser<T> => new Parser<T, TextFailure, TextSource>(f)
 
 export const regexp = (pattern: RegExp, group = 0): TextParser<string> =>
   make((source: TextSource) => {

@@ -78,12 +78,12 @@ export class ParseFailure<Result, Failure, Source> extends ParseResultBase<Resul
 
 export type ParseResult<Result, Failure, Source> = ParseSuccess<Result, Failure, Source> | ParseFailure<Result, Failure, Source>
 
-export type Parsing<Source, Result, Failure> = (source: Source) => ParseResult<Result, Failure, Source>
+export type Parsing<Result, Failure, Source> = (source: Source) => ParseResult<Result, Failure, Source>
 
-export class Parser<Source, Result, Failure> {
+export class Parser<Result, Failure, Source> {
   constructor(readonly run: (source: Source) => ParseResult<Result, Failure, Source>) {}
 
-  flatMap<Dest>(fun: (res: Result) => Parser<Source, Dest, Failure>): Parser<Source, Dest, Failure> {
+  flatMap<Dest>(fun: (res: Result) => Parser<Dest, Failure, Source>): Parser<Dest, Failure, Source> {
     return new Parser((source: Source) => {
       return this.run(source).match<ParseResult<Dest, Failure, Source>>({
         failure: (f: ParseFailure<Result, Failure, Source>) => new ParseFailure(f.source, f.failure),
@@ -92,14 +92,14 @@ export class Parser<Source, Result, Failure> {
     })
   }
   
-  map<Dest>(fun: (res: Result) => Dest): Parser<Source, Dest, Failure> {
+  map<Dest>(fun: (res: Result) => Dest): Parser<Dest, Failure, Source> {
     return this.flatMap(r => new Parser((source: Source) => {
       return this.run(source).map(fun)
     }))
   }
   
-  mapError<OtherFailure>(fun: (e: Failure) => OtherFailure): Parser<Source, Result, OtherFailure> {
-    return new Parser<Source, Result, OtherFailure>((source: Source) => {
+  mapError<OtherFailure>(fun: (e: Failure) => OtherFailure): Parser<Result, OtherFailure, Source> {
+    return new Parser<Result, OtherFailure, Source>((source: Source) => {
       return this.run(source).match<ParseResult<Result, OtherFailure, Source>>({
         failure: (f: ParseFailure<Result, Failure, Source>) => new ParseFailure<Result, OtherFailure, Source>(f.source, fun(f.failure)),
         success: s => new ParseSuccess<Result, OtherFailure, Source>(s.source, s.value)
@@ -107,15 +107,15 @@ export class Parser<Source, Result, Failure> {
     })
   }
 
-  then<Dest>(next: Parser<Source, Dest, Failure>): Parser<Source, Dest, Failure> {
+  then<Dest>(next: Parser<Dest, Failure, Source>): Parser<Dest, Failure, Source> {
     return this.flatMap(_ => next)
   }
 
-  result<Dest>(value: Dest): Parser<Source, Dest, Failure> {
+  result<Dest>(value: Dest): Parser<Dest, Failure, Source> {
     return this.map(_ => value)
   }
 
-  skip<Next>(next: Parser<Source, Next, Failure>): Parser<Source, Result, Failure> {
+  skip<Next>(next: Parser<Next, Failure, Source>): Parser<Result, Failure, Source> {
     return this.flatMap(r => next.result(r))
   }
 }
