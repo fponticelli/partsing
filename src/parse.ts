@@ -8,7 +8,7 @@ abstract class ParseResultBase<Result, Failure, Source> {
   }): O;
     
   abstract flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source>;
-  abstract map<O>(f: (r: Result) => [Source, O]): ParseResult<O, Failure, Source>;
+  abstract map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source>;
 }
 
 export class ParseSuccess<Result, Failure, Source> extends ParseResultBase<Result, Failure, Source> {
@@ -30,8 +30,8 @@ export class ParseSuccess<Result, Failure, Source> extends ParseResultBase<Resul
   flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source> {
     return f(this.value)
   }
-  map<O>(f: (r: Result) => [Source, O]): ParseResult<O, Failure, Source> {
-    return this.flatMap(v => new ParseSuccess(...f(v)))
+  map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source> {
+    return this.flatMap(v => new ParseSuccess(this.source, f(v)))
   }
 }
 
@@ -54,7 +54,7 @@ export class ParseFailure<Result, Failure, Source> extends ParseResultBase<Resul
   flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source> {
     return new ParseFailure(this.source, this.failure)
   }
-  map<O>(f: (r: Result) => [Source, O]): ParseResult<O, Failure, Source> {
+  map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source> {
     return new ParseFailure(this.source, this.failure)
   }
 }
@@ -75,7 +75,7 @@ export class Parser<Source, Result, Failure> {
     })
   }
   
-  map<Dest>(fun: (res: Result) => [Source, Dest]): Parser<Source, Dest, Failure> {
+  map<Dest>(fun: (res: Result) => Dest): Parser<Source, Dest, Failure> {
     return this.flatMap(r => new Parser((source: Source) => {
       return this.run(source).map(fun)
     }))
@@ -83,7 +83,7 @@ export class Parser<Source, Result, Failure> {
   
   mapValue<Dest>(fun: (res: Result) => Dest): Parser<Source, Dest, Failure> {
     return this.flatMap(r => new Parser((source: Source) => {
-      return this.run(source).map(v => [source, fun(v)])
+      return this.run(source).map(fun)
     }))
   }
 
