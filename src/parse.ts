@@ -1,4 +1,4 @@
-import { match } from './parse_text'
+import { match, TextFailure } from './parse_text';
 
 abstract class ParseResultBase<Result, Failure, Source> {
   constructor(
@@ -136,7 +136,7 @@ export class Parser<Result, Failure, Source> {
     return this.flatMap(r => next.result(r))
   }
 
-  seq<U extends any[]>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
+  join<U extends any[]>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
       : Parser<[Result] | { [P in keyof U]: U[P] }, Failure, Source> {
     return this.flatMap((res: Result) => {
       return new Parser<[Result] | { [P in keyof U]: U[P] }, Failure, Source>(
@@ -158,7 +158,7 @@ export class Parser<Result, Failure, Source> {
     })
   }
 
-  alt<U extends any[]>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
+  or<U extends any[]>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
       : Parser<Result | TupleToUnion<U>, Failure, Source> {
     return this.flatMapError((f: Failure) => {
       return new Parser<Result | TupleToUnion<U>, Failure, Source>(
@@ -176,6 +176,58 @@ export class Parser<Result, Failure, Source> {
         }
       )
     })
+  }
+  
+  many(atLeast = 1) {
+    return new Parser<Result[], Failure, Source>((source: Source) => {
+      const buff: Result[] = []
+      while (true) {
+        const result = this.run(source)
+        if (result.kind === 'parse-success') {
+          buff.push(result.value)
+          source = result.source
+        } else if (buff.length < atLeast) {
+          return new ParseFailure(source, result.failure)
+        } else {
+          return new ParseSuccess<Result[], Failure, Source>(result.source, buff)
+        }
+      }
+    });
+  }
+
+  between(min: number, max: number) {
+    return new Parser<Result[], Failure, Source>((source: Source) => {
+      const buff: Result[] = []
+      for (let i = 0; i < max; i++) {
+        const result = this.run(source)
+        if (result.kind === 'parse-success') {
+          buff.push(result.value)
+          source = result.source
+        } else if (buff.length < min) {
+          return new ParseFailure(source, result.failure)
+        } else {
+          return new ParseSuccess<Result[], Failure, Source>(result.source, buff)
+        }
+      }
+      return new ParseSuccess<Result[], Failure, Source>(source, buff)
+    });
+  }
+
+  times(count: number) {
+    return this.between(count, count)
+  }
+
+  atMost(times: number) {
+    return this.between(0, times)
+  }
+
+  separatedByAtLeastOnce<Separator>(separator: Parser<Separator, Failure, Source>): Parser<Result[], Failure, Source> {
+    const pairs = separator.then(this).many()
+    return this.flatMap<Result[]>((res: Result) => pairs.map(rs => [res].concat(rs)))
+  }
+  
+  separatedBy<Separator>(separator: Parser<Separator, Failure, Source>) {
+    return this.separatedByAtLeastOnce(separator).or(succeed([]))
   }
 
   probe(f: (v: ParseResult<Result, Failure, Source>) => void)
@@ -232,3 +284,27 @@ export const alt = <U extends any[], Source, Failure>(...parsers: { [P in keyof 
     }
   )
 }
+
+export const succeed = <Result, Failure, Source>(r: Result) =>
+  new Parser<Result, Failure, Source>(source => new ParseSuccess(source, r))
+
+export const fail = <Result, Failure, Source>(f: Failure) =>
+  new Parser<Result, Failure, Source>(source => new ParseFailure(source, f))
+
+export const many = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, atLeast = 1) =>
+  parser.many(atLeast)
+
+export const between = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, min: number, max: number) =>
+  parser.between(min, max);
+
+export const times = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, count: number) =>
+  parser.times(count)
+
+export const atMost = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, times: number) =>
+  parser.atMost(times)
+
+export const separatedByAtLeastOnce = <Result, Separator, Failure, Source>(parser: Parser<Result, Failure, Source>, separator: Parser<Separator, Failure, Source>) =>
+  parser.separatedByAtLeastOnce(separator)
+
+export const separatedBy = <Result, Separator, Failure, Source>(parser: Parser<Result, Failure, Source>, separator: Parser<Separator, Failure, Source>) =>
+  parser.separatedBy(separator)
