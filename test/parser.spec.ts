@@ -30,4 +30,28 @@ describe('parser', () => {
     const f = parseFailure().map(String).run(1) as ParseFailure<string, number, number>
     expect(f.failure).toEqual(1)
   })
+
+  it('Parser.flatMapError transform the failure value', () => {
+    const result = parseSuccess()
+      .flatMapError(e => new Parser(v => ParseResult.success('1', String(v)))).run(1) as ParseSuccess<number, string, string>
+    expect(result.value).toEqual(1)
+    const f = parseFailure()
+      .flatMapError(e => new Parser(v => ParseResult.failure('1', e))).run(1) as ParseFailure<string, number, string>
+    expect(f.failure).toEqual(1)
+    const s = parseFailure()
+      .flatMapError(e => new Parser(v => ParseResult.success('1', e))).run(1) as ParseSuccess<string, number, string>
+    expect(s.value).toEqual(1)
+  })
+
+  it('Parser.mapError transform the failure value', () => {
+    const result = parseSuccess().mapError(String).run(1) as ParseSuccess<number, string, string>
+    expect(result.value).toEqual(1)
+    const f = parseFailure().mapError(String).run(1) as ParseFailure<string, string, number>
+    expect(f.failure).toEqual('1')
+  })
+
+  it('Parser.result returns the passed value', () => {
+    const result = parseSuccess().result(2).run(1) as ParseSuccess<number, string, string>
+    expect(result.value).toEqual(2)
+  })
 })
