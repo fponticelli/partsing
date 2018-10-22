@@ -16,8 +16,7 @@ const make = <T>(f: (source: TextSource) => ParseResult<T, TextFailure, TextSour
   new Parser<T, TextFailure, TextSource>(f)
 
 export const expect = <T>(expected: string, parser: TextParser<T>) =>
-  parser // TODO
-  // make(source => parser.run(source).mapError(f => ({ ...f, expected })))
+  make(source => parser.run(source).mapError(f => ({ ...f, expected })))
 
 export const parse = <T>(parser: TextParser<T>, source: string): ParseResult<T, TextFailure, TextSource> =>
   parser.run({ source, index: 0})
@@ -43,7 +42,7 @@ export const rest = (): TextParser<string> =>
     return new ParseSuccess({ ...source, index: source.source.length }, value)
   })
 
-export const eot = (): TextParser<unknown> =>
+export const eot = (): TextParser<undefined> =>
   make(source => {
     const index = source.source.length
     if (source.index === index) {

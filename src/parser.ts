@@ -3,6 +3,16 @@ import { ParseResult, ParseFailure, ParseSuccess } from './parse_result'
 export type Parsing<Result, Failure, Source> = (source: Source) => ParseResult<Result, Failure, Source>
 
 export class Parser<Result, Failure, Source> {
+  static of<Result, Failure, Source>(run: (source: Source) => ParseResult<Result, Failure, Source>) {
+    return new Parser(run)
+  }
+
+  static ofGuaranteed<Result, Failure, Source>(run: (source: Source) => [Source, Result]) {
+    return new Parser((source: Source) =>
+      ParseResult.success<Result, Failure, Source>(...run(source))
+    )
+  }
+
   constructor(readonly run: (source: Source) => ParseResult<Result, Failure, Source>) {}
 
   flatMap<Dest>(fun: (res: Result) => Parser<Dest, Failure, Source>): Parser<Dest, Failure, Source> {

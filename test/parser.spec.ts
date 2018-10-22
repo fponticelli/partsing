@@ -1,26 +1,40 @@
 import { Parser } from '../src/parser'
 import { ParseResult, ParseSuccess, ParseFailure } from '../src/parse_result'
 
-const parseSuccess = <R, F>() => new Parser<R, F, R>(source => ParseResult.success<R, F, R>(source, source))
-const parseFailure = <R>() => new Parser<R, R, R>(source => ParseResult.failure<R, R, R>(source, source))
+const parseSuccess = <R, F>() => Parser.of<R, F, R>(source => ParseResult.success<R, F, R>(source, source))
+const parseFailure = <R>() => Parser.of<R, R, R>(source => ParseResult.failure<R, R, R>(source, source))
+
+const runSuccess = <R, F, S>(p: Parser<R, F, S>, s: S) => {
+  const r = p.run(s)
+  if (r.isFailure())
+    fail(`parser ${p} was supposed to succeed parsing '${s}'`)
+  return [r.source, (r as ParseSuccess<R, F, S>).value]
+}
+
+const runFailure = <R, F, S>(p: Parser<R, F, S>, s: S) => {
+  const r = p.run(s)
+  if (r.isSuccess())
+    fail(`parser ${p} was supposed to fail parsing '${s}'`)
+  return [r.source, (r as ParseFailure<R, F, S>).failure]
+}
 
 describe('parser', () => {
   it('Parser constructor and run', () => {
-    const result = parseSuccess().run('a') as ParseSuccess<string, string, string>
-    expect(result.value).toEqual('a')
-    expect(result.source).toEqual('a')
+    const [source, value] = runSuccess(parseSuccess(), 'a')
+    expect(value).toEqual('a')
+    expect(source).toEqual('a')
     
-    const f = parseFailure().run('a') as ParseFailure<string, string, string>
-    expect(f.failure).toEqual('a')
-    expect(f.source).toEqual('a')
+    const [source2, failure] = runFailure(parseFailure(), 'b')
+    expect(failure).toEqual('b')
+    expect(source2).toEqual('b')
   })
 
   it('Parser.flatMap transform the parsed value', () => {
     const result = parseSuccess()
-      .flatMap(v => new Parser(v => ParseResult.success('1', String(v)))).run(1) as ParseSuccess<string, string, number>
-    expect(result.value).toEqual('1')
+      .flatMap(x => Parser.of(v => ParseResult.success('1', `${x}${v}`))).run(2) as ParseSuccess<string, string, number>
+    expect(result.value).toEqual('22')
     const f = parseSuccess()
-      .flatMap(v => new Parser(v => ParseResult.failure('1', 'x'))).run(1) as ParseFailure<string, string, number>
+      .flatMap(x => Parser.of(v => ParseResult.failure('1', 'x'))).run(1) as ParseFailure<string, string, number>
     expect(f.failure).toEqual('x')
   })
 
@@ -33,13 +47,13 @@ describe('parser', () => {
 
   it('Parser.flatMapError transform the failure value', () => {
     const result = parseSuccess()
-      .flatMapError(e => new Parser(v => ParseResult.success('1', String(v)))).run(1) as ParseSuccess<number, string, string>
+      .flatMapError(e => Parser.of(v => ParseResult.success('1', String(v)))).run(1) as ParseSuccess<number, string, string>
     expect(result.value).toEqual(1)
     const f = parseFailure()
-      .flatMapError(e => new Parser(v => ParseResult.failure('1', e))).run(1) as ParseFailure<string, number, string>
+      .flatMapError(e => Parser.of(v => ParseResult.failure('1', e))).run(1) as ParseFailure<string, number, string>
     expect(f.failure).toEqual(1)
     const s = parseFailure()
-      .flatMapError(e => new Parser(v => ParseResult.success('1', e))).run(1) as ParseSuccess<string, number, string>
+      .flatMapError(e => Parser.of(v => ParseResult.success('1', e))).run(1) as ParseSuccess<string, number, string>
     expect(s.value).toEqual(1)
   })
 
