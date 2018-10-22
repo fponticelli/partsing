@@ -234,3 +234,12 @@ export const separatedByAtLeastOnce = <Result, Separator, Failure, Source>
 export const separatedBy = <Result, Separator, Failure, Source>
     (parser: Parser<Result, Failure, Source>, separator: Parser<Separator, Failure, Source>) =>
   parser.separatedBy(separator)
+
+export const lazy = <Result, Failure, Source>(f: () => Parser<Result, Failure, Source>) => {
+  let parser: Parser<Result, Failure, Source> | undefined
+  return Parser.of((source: Source) => {
+    if (parser === undefined)
+      parser = f()
+    return parser.run(source)
+  })
+}

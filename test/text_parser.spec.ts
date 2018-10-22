@@ -1,13 +1,18 @@
 import {
   eot,
   expect as expected,
+  letters,
+  digit,
+  digits,
   regexp,
   parse,
   rest,
   TextParser,
   TextSource,
   TextFailure,
-  index
+  index,
+  match,
+  letter
 } from '../src/text_parser'
 
 const parseSuccess = <R>(parser: TextParser<R>, source: string): [TextSource, R] => {
@@ -34,6 +39,13 @@ describe('parse_text', () => {
     expect(parse(p, 'abc').isFailure()).toEqual(true)
     const [source, parsed] = parseSuccess(p, 'a123b')
     expect(source.index).toEqual(4)
+    expect(parsed).toEqual('123')
+  })
+
+  it('regexp with group', () => {
+    const p = regexp(/a(\d+)b/g, 1)
+    const [source, parsed] = parseSuccess(p, '--a123b--')
+    expect(source.index).toEqual(7)
     expect(parsed).toEqual('123')
   })
 
@@ -70,5 +82,40 @@ describe('parse_text', () => {
     expect(parsed).toEqual('a123b')
     const [_2, failure] = parseFailure(eot(), 'a123b')
     expect(failure.expected).toEqual('EOT')
+  })
+
+  it('match', () => {
+    const [_, parsed] = parseSuccess(match('a12'), 'a123b')
+    expect(parsed).toEqual('a12')
+    const [_2, failure] = parseFailure(match('abc'), 'a123b')
+    expect(failure.expected).toEqual('"abc"')
+  })
+
+  it('letter', () => {
+    const [_, parsed] = parseSuccess(letter(), 'a123b')
+    expect(parsed).toEqual('a')
+    const [_2, failure] = parseFailure(letter(), '123')
+    expect(failure.expected).toEqual('one letter')
+  })
+
+  it('letters', () => {
+    const [_, parsed] = parseSuccess(letters(0), 'abc123')
+    expect(parsed).toEqual('abc')
+    const [_2, failure] = parseFailure(letters(1), '123abc')
+    expect(failure.expected).toEqual('at least 1 letter(s)')
+  })
+
+  it('digit', () => {
+    const [_, parsed] = parseSuccess(digit(), '123abc')
+    expect(parsed).toEqual('1')
+    const [_2, failure] = parseFailure(digit(), 'abc')
+    expect(failure.expected).toEqual('one digit')
+  })
+
+  it('digits', () => {
+    const [_, parsed] = parseSuccess(digits(0), '123abc')
+    expect(parsed).toEqual('123')
+    const [_2, failure] = parseFailure(digits(1), 'abc123')
+    expect(failure.expected).toEqual('at least 1 digit(s)')
   })
 })

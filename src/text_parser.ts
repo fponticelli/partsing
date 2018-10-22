@@ -24,7 +24,6 @@ export const parse = <T>(parser: TextParser<T>, source: string): ParseResult<T, 
 export const regexp = (pattern: RegExp, group = 0): TextParser<string> =>
   make((source: TextSource) => {
     const res = pattern.exec(source.source.substring(source.index))
-    console.log(source, res)
     if (res == null) {
       return new ParseFailure(source, { expected: pattern.toString() })
     } else {
@@ -60,43 +59,34 @@ export const match = <V extends string>(s: V): TextParser<V> => {
     if (value === s) {
       return new ParseSuccess({ ...source, index }, s)
     } else {
-      return new ParseFailure(source, { expected: s })
+      return new ParseFailure(source, { expected: `"${s}"` })
     }
   })
 }
 
-export const lazy = <T>(f: () => TextParser<T>) => {
-  let parser: TextParser<T> | undefined
-  return make(source => {
-    if (parser === undefined)
-      parser = f()
-    return parser.run(source)
-  })
-}
-
 export const letter = (): TextParser<string> =>
-  expect('one letter', regexp(/~[a-z]/gi))
+  expect('one letter', regexp(/^[a-z]/gi))
 
-export const letters = (min: number, max?: number): TextParser<string> => {
-  const message = max === undefined ? `at least ${min} letters` : `between ${min} and ${max} letters`
+export const letters = (min = 1, max?: number): TextParser<string> => {
+  const message = max === undefined ? `at least ${min} letter(s)` : `between ${min} and ${max} letter(s)`
   const maxs = max === undefined ? '' : String(max)
-  return expect(message, regexp(new RegExp(`~[a-z]{${min},${maxs}}`, 'gi')))
+  return expect(message, regexp(new RegExp(`^[a-z]{${min},${maxs}}`, 'gi')))
 }
 
 export const digit = (): TextParser<string> =>
-  expect('one digit', regexp(/~\d/gi))
+  expect('one digit', regexp(/^\d/gi))
 
-export const digits = (min: number, max?: number): TextParser<string> => {
-  const message = max === undefined ? `at least ${min} digits` : `between ${min} and ${max} digits`
+export const digits = (min = 1, max?: number): TextParser<string> => {
+  const message = max === undefined ? `at least ${min} digit(s)` : `between ${min} and ${max} digit(s)`
   const maxs = max === undefined ? '' : String(max)
-  return expect(message, regexp(new RegExp(`~\d{${min},${maxs}}`, 'gi')))
+  return expect(message, regexp(new RegExp(`^[0-9]{${min},${maxs}}`, 'gi')))
 }
 
 export const whitespace = (): TextParser<string> =>
-  expect('whitespace', regexp(/\s+/g))
+  expect('whitespace', regexp(/^\s+/g))
 
 export const optionalWhitespace = (): TextParser<string> =>
-  expect('optional whitespace', regexp(/\s*/g))
+  expect('optional whitespace', regexp(/^\s*/g))
 
 export const char = (): TextParser<string> =>
   make((source: TextSource) => {
