@@ -1,4 +1,5 @@
-import { Parser, ParseFailure, ParseSuccess, ParseResult, seq, alt } from './parse';
+import { Parser, seq, alt } from './parser'
+import { ParseResult, ParseFailure, ParseSuccess } from './parse_result'
 
 export interface TextSource {
   source: string
@@ -11,10 +12,12 @@ export interface TextFailure {
 
 export type TextParser<T> = Parser<T, TextFailure, TextSource>
 
-const make = <T>(f: (source: TextSource) => ParseResult<T, TextFailure, TextSource>): TextParser<T> => new Parser<T, TextFailure, TextSource>(f)
+const make = <T>(f: (source: TextSource) => ParseResult<T, TextFailure, TextSource>): TextParser<T> =>
+  new Parser<T, TextFailure, TextSource>(f)
 
 export const expect = <T>(expected: string, parser: TextParser<T>) =>
-  make(source => parser.run(source).mapError(f => ({ ...f, expected })))
+  parser // TODO
+  // make(source => parser.run(source).mapError(f => ({ ...f, expected })))
 
 export const parse = <T>(parser: TextParser<T>, source: string): ParseResult<T, TextFailure, TextSource> =>
   parser.run({ source, index: 0})
@@ -22,6 +25,7 @@ export const parse = <T>(parser: TextParser<T>, source: string): ParseResult<T, 
 export const regexp = (pattern: RegExp, group = 0): TextParser<string> =>
   make((source: TextSource) => {
     const res = pattern.exec(source.source.substring(source.index))
+    console.log(source, res)
     if (res == null) {
       return new ParseFailure(source, { expected: pattern.toString() })
     } else {

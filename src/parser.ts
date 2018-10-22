@@ -1,90 +1,4 @@
-import { match, TextFailure } from './parse_text';
-
-abstract class ParseResultBase<Result, Failure, Source> {
-  constructor(
-    readonly source: Source | undefined
-  ) {}
-  abstract match<O>(o: {
-    success: (s: ParseSuccess<Result, Failure, Source>) => O,
-    failure: (f: ParseFailure<Result, Failure, Source>) => O
-  }): O
-    
-  abstract flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source>
-  abstract flatMapError<E>(f: (r: Failure) => ParseResult<Result, E, Source>): ParseResult<Result, E, Source>
-  
-  abstract map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source>
-  abstract mapError<E>(f: (r: Failure) => E): ParseResult<Result, E, Source>
-
-  abstract toString(): string;
-}
-
-export class ParseSuccess<Result, Failure, Source> extends ParseResultBase<Result, Failure, Source> {
-  readonly kind = 'parse-success'
-  constructor(
-    source: Source | undefined,
-    readonly value: Result
-  ) {
-    super(source)
-  }
-
-  match<O>(o: {
-    success: (s: ParseSuccess<Result, Failure, Source>) => O,
-    failure: (f: ParseFailure<Result, Failure, Source>) => O
-  }): O {
-    return o.success(this)
-  }
-
-  flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source> {
-    return f(this.value)
-  }
-  map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source> {
-    return this.flatMap(v => new ParseSuccess(this.source, f(v)))
-  }
-  flatMapError<E>(f: (r: Failure) => ParseResult<Result, E, Source>): ParseResult<Result, E, Source> {
-    return new ParseSuccess(this.source, this.value)
-  }
-  mapError<E>(f: (r: Failure) => E): ParseResult<Result, E, Source> {
-    return new ParseSuccess(this.source, this.value)
-  }
-  toString(): string {
-    return `ParseSuccess<${JSON.stringify(this.value)}>: ${JSON.stringify(this.source)}`
-  }
-}
-
-export class ParseFailure<Result, Failure, Source> extends ParseResultBase<Result, Failure, Source> {
-  readonly kind = 'parse-failure'
-  constructor(
-    source: Source | undefined,
-    readonly failure: Failure
-  ) {
-    super(source)
-  }
-
-  match<O>(o: {
-    success: (succ: ParseSuccess<Result, Failure, Source>) => O,
-    failure: (fail: ParseFailure<Result, Failure, Source>) => O
-  }): O {
-    return o.failure(this)
-  }
-
-  flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source> {
-    return new ParseFailure(this.source, this.failure)
-  }
-  map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source> {
-    return new ParseFailure(this.source, this.failure)
-  }
-  flatMapError<E>(f: (r: Failure) => ParseResult<Result, E, Source>): ParseResult<Result, E, Source> {
-    return f(this.failure)
-  }
-  mapError<E>(f: (r: Failure) => E): ParseResult<Result, E, Source> {
-    return this.flatMapError(e => new ParseFailure(this.source, f(e)))
-  }
-  toString(): string {
-    return `ParseFailure<${JSON.stringify(this.failure)}>: ${JSON.stringify(this.source)}`
-  }
-}
-
-export type ParseResult<Result, Failure, Source> = ParseSuccess<Result, Failure, Source> | ParseFailure<Result, Failure, Source>
+import { ParseResult, ParseFailure, ParseSuccess } from './parse_result'
 
 export type Parsing<Result, Failure, Source> = (source: Source) => ParseResult<Result, Failure, Source>
 
@@ -192,7 +106,7 @@ export class Parser<Result, Failure, Source> {
           return new ParseSuccess<Result[], Failure, Source>(result.source, buff)
         }
       }
-    });
+    })
   }
 
   between(min: number, max: number) {
@@ -210,7 +124,7 @@ export class Parser<Result, Failure, Source> {
         }
       }
       return new ParseSuccess<Result[], Failure, Source>(source, buff)
-    });
+    })
   }
 
   times(count: number) {
@@ -239,9 +153,9 @@ export class Parser<Result, Failure, Source> {
     })
   }
 
-  log() {
-    return this.probe(v => console.log(String(v)))
-  }
+  // log() {
+  //   return this.probe(v => console.log(String(v)))
+  // }
 }
 
 export const seq = <U extends any[], Source, Failure>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
@@ -270,7 +184,7 @@ export const alt = <U extends any[], Source, Failure>(...parsers: { [P in keyof 
   if (parsers.length === 0) throw new Error('alt needs to be called with at least one argumenr')
   return new Parser<TupleToUnion<U>, Failure, Source>(
     (source: Source) => {
-      let failure
+      let failure = undefined
       for (let i = 0; i < parsers.length; i++) {
         const parser = parsers[i]
         const result = parser.run(source)
@@ -295,7 +209,7 @@ export const many = <Result, Failure, Source>(parser: Parser<Result, Failure, So
   parser.many(atLeast)
 
 export const between = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, min: number, max: number) =>
-  parser.between(min, max);
+  parser.between(min, max)
 
 export const times = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, count: number) =>
   parser.times(count)
@@ -303,8 +217,10 @@ export const times = <Result, Failure, Source>(parser: Parser<Result, Failure, S
 export const atMost = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, times: number) =>
   parser.atMost(times)
 
-export const separatedByAtLeastOnce = <Result, Separator, Failure, Source>(parser: Parser<Result, Failure, Source>, separator: Parser<Separator, Failure, Source>) =>
+export const separatedByAtLeastOnce = <Result, Separator, Failure, Source>
+    (parser: Parser<Result, Failure, Source>, separator: Parser<Separator, Failure, Source>) =>
   parser.separatedByAtLeastOnce(separator)
 
-export const separatedBy = <Result, Separator, Failure, Source>(parser: Parser<Result, Failure, Source>, separator: Parser<Separator, Failure, Source>) =>
+export const separatedBy = <Result, Separator, Failure, Source>
+    (parser: Parser<Result, Failure, Source>, separator: Parser<Separator, Failure, Source>) =>
   parser.separatedBy(separator)
