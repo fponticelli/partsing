@@ -1,5 +1,6 @@
 import { Parser } from '../src/parser'
 import { ParseResult, ParseSuccess, ParseFailure } from '../src/parse_result'
+import { regexp, parse } from '../src/text_parser';
 
 const parseSuccess = <R, F>() => Parser.of<R, F, R>(source => ParseResult.success<R, F, R>(source, source))
 const parseFailure = <R>() => Parser.of<R, R, R>(source => ParseResult.failure<R, R, R>(source, source))
@@ -67,5 +68,12 @@ describe('parser', () => {
   it('Parser.result returns the passed value', () => {
     const result = parseSuccess().result(2).run(1) as ParseSuccess<number, string, string>
     expect(result.value).toEqual(2)
+  })
+
+  it('Parser.join', () => {
+    const parser = regexp(/^1/).join(regexp(/^a/), regexp(/^b/))
+    expect(parse(parser, '1ab')).toBe(1)
+    const result = parse(parser, '1ab').getUnsafeSuccess()
+    expect(result).toEqual([1, 'a', 'b'])
   })
 })

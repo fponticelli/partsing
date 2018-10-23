@@ -101,7 +101,7 @@ export const char = (): TextParser<string> =>
 
 export const testChar = (f: (c: string) => boolean): TextParser<string> =>
   make((source: TextSource) => {
-    if (source.index < source.source.length) {
+    if (source.index >= source.source.length) {
       return new ParseFailure(source, { expected: 'expected to test char but reached end of source' })
     } else {
       const char = source.source.charAt(source.index)
@@ -114,10 +114,10 @@ export const testChar = (f: (c: string) => boolean): TextParser<string> =>
   })
 
 export const matchOneOf = (anyOf: string): TextParser<string> =>
-  testChar((c: string) => anyOf.indexOf(c) >= 0)
+  expect(`expected one of \`${anyOf}\``, testChar((c: string) => anyOf.indexOf(c) >= 0))
 
 export const matchNoneOf = (noneOf: string): TextParser<string> =>
-  testChar((c: string) => noneOf.indexOf(c) < 0)
+  expect(`expected none of \`${noneOf}\``, testChar((c: string) => noneOf.indexOf(c) < 0))
 
 export const takeWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<string> =>
   make((source: TextSource) => {
@@ -126,23 +126,23 @@ export const takeWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<st
       index++
     }
     if (index - source.index < atLeast) {
-      return new ParseFailure(source, { expected: `expected at least ${atLeast} occurrances of predicate` })
+      return new ParseFailure(source, { expected: `expected at least ${atLeast} occurrance(s) of predicate` })
     } else {
       return new ParseSuccess({...source, index }, source.source.substring(source.index, index))
     }
   })
 
 export const takeBetween = (f: (c: string) => boolean, min: number, max: number): TextParser<string> =>
-make((source: TextSource) => {
-  let index = source.index
-  let counter = 0
-  while (index < source.source.length && counter < max && f(source.source.charAt(index))) {
-    index++
-    counter++
-  }
-  if (counter < min) {
-    return new ParseFailure(source, { expected: `expected at least ${counter} occurrances of predicate` })
-  } else {
-    return new ParseSuccess({...source, index }, source.source.substring(source.index, index))
-  }
-})
+  make((source: TextSource) => {
+    let index = source.index
+    let counter = 0
+    while (index < source.source.length && counter < max && f(source.source.charAt(index))) {
+      index++
+      counter++
+    }
+    if (counter < min) {
+      return new ParseFailure(source, { expected: `expected at least ${min} occurrance(s) of predicate` })
+    } else {
+      return new ParseSuccess({...source, index }, source.source.substring(source.index, index))
+    }
+  })

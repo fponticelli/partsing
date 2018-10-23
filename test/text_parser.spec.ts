@@ -1,18 +1,26 @@
 import {
-  eot,
-  expect as expected,
-  letters,
+  char,
   digit,
   digits,
-  regexp,
+  eot,
+  expect as expected,
+  index,
+  letter,
+  letters,
+  match,
+  matchNoneOf,
+  matchOneOf,
+  optionalWhitespace,
   parse,
+  regexp,
   rest,
+  takeBetween,
+  takeWhile,
+  testChar,
+  TextFailure,
   TextParser,
   TextSource,
-  TextFailure,
-  index,
-  match,
-  letter
+  whitespace
 } from '../src/text_parser'
 
 const parseSuccess = <R>(parser: TextParser<R>, source: string): [TextSource, R] => {
@@ -67,55 +75,130 @@ describe('parse_text', () => {
 
   it('index', () => {
     const p = regexp(/\d+/g)
-    const [_, parsed] = parseSuccess(p.then(index()), 'a123b')
+    const [, parsed] = parseSuccess(p.then(index()), 'a123b')
     expect(parsed).toEqual(4)
   })
 
   it('rest', () => {
     const p = regexp(/\d+/g)
-    const [_, parsed] = parseSuccess(p.then(rest()), 'a123b')
+    const [, parsed] = parseSuccess(p.then(rest()), 'a123b')
     expect(parsed).toEqual('b')
   })
 
   it('eot', () => {
-    const [_, parsed] = parseSuccess(rest().skip(eot()), 'a123b')
+    const [, parsed] = parseSuccess(rest().skip(eot()), 'a123b')
     expect(parsed).toEqual('a123b')
-    const [_2, failure] = parseFailure(eot(), 'a123b')
+    const [, failure] = parseFailure(eot(), 'a123b')
     expect(failure.expected).toEqual('EOT')
   })
 
   it('match', () => {
-    const [_, parsed] = parseSuccess(match('a12'), 'a123b')
+    const [, parsed] = parseSuccess(match('a12'), 'a123b')
     expect(parsed).toEqual('a12')
-    const [_2, failure] = parseFailure(match('abc'), 'a123b')
+    const [, failure] = parseFailure(match('abc'), 'a123b')
     expect(failure.expected).toEqual('"abc"')
   })
 
   it('letter', () => {
-    const [_, parsed] = parseSuccess(letter(), 'a123b')
+    const [, parsed] = parseSuccess(letter(), 'a123b')
     expect(parsed).toEqual('a')
-    const [_2, failure] = parseFailure(letter(), '123')
+    const [, failure] = parseFailure(letter(), '123')
     expect(failure.expected).toEqual('one letter')
   })
 
   it('letters', () => {
-    const [_, parsed] = parseSuccess(letters(0), 'abc123')
+    const [, parsed] = parseSuccess(letters(0), 'abc123')
     expect(parsed).toEqual('abc')
-    const [_2, failure] = parseFailure(letters(1), '123abc')
-    expect(failure.expected).toEqual('at least 1 letter(s)')
+    const [, failure2] = parseFailure(letters(1), '123abc')
+    expect(failure2.expected).toEqual('at least 1 letter(s)')
+    const [, parsed3] = parseSuccess(letters(0, 2), 'abc123')
+    expect(parsed3).toEqual('ab')
+    const [, failure4] = parseFailure(letters(3, 4), 'ab123')
+    expect(failure4.expected).toEqual('between 3 and 4 letter(s)')
   })
 
   it('digit', () => {
-    const [_, parsed] = parseSuccess(digit(), '123abc')
+    const [, parsed] = parseSuccess(digit(), '123abc')
     expect(parsed).toEqual('1')
-    const [_2, failure] = parseFailure(digit(), 'abc')
+    const [, failure] = parseFailure(digit(), 'abc')
     expect(failure.expected).toEqual('one digit')
   })
 
   it('digits', () => {
-    const [_, parsed] = parseSuccess(digits(0), '123abc')
+    const [, parsed] = parseSuccess(digits(0), '123abc')
     expect(parsed).toEqual('123')
-    const [_2, failure] = parseFailure(digits(1), 'abc123')
+    const [, parsed2] = parseSuccess(digits(3, 4), '123abc')
+    expect(parsed2).toEqual('123')
+    const [, failure] = parseFailure(digits(1), 'abc123')
     expect(failure.expected).toEqual('at least 1 digit(s)')
+    const [, failure2] = parseFailure(digits(3, 4), '12abc')
+    expect(failure2.expected).toEqual('between 3 and 4 digit(s)')
+  })
+
+  it('whitespace', () => {
+    const [, parsed] = parseSuccess(whitespace(), '  abc')
+    expect(parsed).toEqual('  ')
+    const [, failure] = parseFailure(whitespace(), 'abc')
+    expect(failure.expected).toEqual('whitespace')
+  })
+
+  it('optionalWhitespace', () => {
+    const [, parsed] = parseSuccess(optionalWhitespace(), '  123')
+    expect(parsed).toEqual('  ')
+    const [, parsed2] = parseSuccess(optionalWhitespace(), '123')
+    expect(parsed2).toEqual('')
+  })
+
+  it('char', () => {
+    const [, parsed] = parseSuccess(char(), 'abc')
+    expect(parsed).toEqual('a')
+    const [, failure] = parseFailure(char(), '')
+    expect(failure.expected).toEqual('a character')
+  })
+
+  it('testChar', () => {
+    const [, parsed] = parseSuccess(testChar(v => v === 'a'), 'abc')
+    expect(parsed).toEqual('a')
+    const [, failure] = parseFailure(testChar(v => v === 'a'), 'bcd')
+    expect(failure.expected).toBeDefined()
+    const [, failure3] = parseFailure(testChar(v => v === 'a'), '')
+    expect(failure3.expected).toBeDefined()
+  })
+
+  it('matchOneOf', () => {
+    const [, parsed1] = parseSuccess(matchOneOf('abc'), 'cxy')
+    expect(parsed1).toEqual('c')
+    const [, failure] = parseFailure(matchOneOf('abc'), 'xyz')
+    expect(failure.expected).toEqual('expected one of `abc`')
+  })
+
+  it('matchNoneOf', () => {
+    const [, parsed1] = parseSuccess(matchNoneOf('abc'), 'xyz')
+    expect(parsed1).toEqual('x')
+    const [, failure] = parseFailure(matchNoneOf('abc'), 'cxy')
+    expect(failure.expected).toEqual('expected none of `abc`')
+  })
+
+  it('takeWhile', () => {
+    const [, parsed1] = parseSuccess(takeWhile(v => v.toLowerCase() === v), 'xyZ')
+    expect(parsed1).toEqual('xy')
+    const [, failure2] = parseFailure(takeWhile(v => v.toLowerCase() === v), 'XYZ')
+    expect(failure2.expected).toEqual('expected at least 1 occurrance(s) of predicate')
+    const [, failure3] = parseFailure(takeWhile(v => v.toLowerCase() === v, 2), 'xYZ')
+    expect(failure3.expected).toBeDefined()
+  })
+  
+  it('takeBetween', () => {
+    const [, parsed1] = parseSuccess(takeBetween(v => v.toLowerCase() === v, 2, 3), 'xyzabc')
+    expect(parsed1).toEqual('xyz')
+    const [, failure2] = parseFailure(takeBetween(v => v.toLowerCase() === v, 2, 3), 'xYZ')
+    expect(failure2.expected).toEqual('expected at least 2 occurrance(s) of predicate')
+    const [, failure3] = parseFailure(takeBetween(v => v.toLowerCase() === v, 2, 3), '')
+    expect(failure3.expected).toBeDefined()
   })
 })
+
+/*
+export const takeWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<string> =>
+export const takeBetween = (f: (c: string) => boolean, min: number, max: number): TextParser<string> =>
+*/  

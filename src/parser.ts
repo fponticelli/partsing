@@ -63,13 +63,14 @@ export class Parser<Result, Failure, Source> {
   join<U extends any[]>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
       : Parser<[Result] | { [P in keyof U]: U[P] }, Failure, Source> {
     return this.flatMap((res: Result) => {
+      console.log('XXX', res)
       return new Parser<[Result] | { [P in keyof U]: U[P] }, Failure, Source>(
         (source: Source) => {
           const buff: { [P in keyof U]: U[P] } = [] as never
           for (let i = 0; i < parsers.length; i++) {
             const parser = parsers[i]
             const result = parser.run(source)
-            if (result.kind === 'parse-failure') {
+            if (result.isFailure()) {
               return new ParseFailure(source, result.failure)
             } else {
               source = result.source

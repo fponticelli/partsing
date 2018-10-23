@@ -16,6 +16,9 @@ abstract class ParseResultBase<Result, Failure, Source> {
   abstract isSuccess(): this is ParseSuccess<Result, Failure, Source>
   abstract isFailure(): this is ParseFailure<Result, Failure, Source>
 
+  abstract getUnsafeSuccess(): Result
+  abstract getUnsafeFailure(): Failure
+
   abstract toString(): string
 }
 
@@ -53,6 +56,13 @@ export class ParseSuccess<Result, Failure, Source> extends ParseResultBase<Resul
   }
   isFailure(): this is ParseFailure<Result, Failure, Source> {
     return false
+  }
+  
+  getUnsafeSuccess(): Result {
+    return this.value
+  }
+  getUnsafeFailure(): Failure {
+    throw new Error('can\'t get failure from success')
   }
 
   toString(): string {
@@ -94,6 +104,12 @@ export class ParseFailure<Result, Failure, Source> extends ParseResultBase<Resul
   }
   isFailure(): this is ParseFailure<Result, Failure, Source> {
     return true
+  }
+  getUnsafeSuccess(): Result {
+    throw new Error('can\'t get success from failure')
+  }
+  getUnsafeFailure(): Failure {
+    return this.failure
   }
 
   toString(): string {
