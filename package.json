@@ -14,8 +14,9 @@
   },
   "scripts": {
     "lint": "tslint --fix --project .",
-    "test": "jest --coverage --silent",
-    "watch": "jest --watch --coverage --silent"
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "watch": "jest --watch --coverage"
   },
   "eslint.packageManager": "yarn",
   "jest": {

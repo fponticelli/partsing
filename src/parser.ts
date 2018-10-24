@@ -63,7 +63,6 @@ export class Parser<Result, Failure, Source> {
   join<U extends any[]>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
       : Parser<[Result] | { [P in keyof U]: U[P] }, Failure, Source> {
     return this.flatMap((res: Result) => {
-      console.log('XXX', res)
       return new Parser<[Result] | { [P in keyof U]: U[P] }, Failure, Source>(
         (source: Source) => {
           const buff: { [P in keyof U]: U[P] } = [] as never
@@ -108,7 +107,7 @@ export class Parser<Result, Failure, Source> {
       const buff: Result[] = []
       while (true) {
         const result = this.run(source)
-        if (result.kind === 'parse-success') {
+        if (result.isSuccess()) {
           buff.push(result.value)
           source = result.source
         } else if (buff.length < atLeast) {
@@ -123,16 +122,19 @@ export class Parser<Result, Failure, Source> {
   between(min: number, max: number) {
     return new Parser<Result[], Failure, Source>((source: Source) => {
       const buff: Result[] = []
+      let failure = undefined
       for (let i = 0; i < max; i++) {
         const result = this.run(source)
-        if (result.kind === 'parse-success') {
+        if (result.isSuccess()) {
           buff.push(result.value)
           source = result.source
-        } else if (buff.length < min) {
-          return new ParseFailure(source, result.failure)
         } else {
-          return new ParseSuccess<Result[], Failure, Source>(result.source, buff)
+          failure = result.failure
+          break
         }
+      }
+      if (buff.length < min) {
+        return new ParseFailure(source, failure!)
       }
       return new ParseSuccess<Result[], Failure, Source>(source, buff)
     })
@@ -163,13 +165,10 @@ export class Parser<Result, Failure, Source> {
       return result
     })
   }
-
-  // log() {
-  //   return this.probe(v => console.log(String(v)))
-  // }
 }
 
-export const seq = <U extends any[], Source, Failure>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
+export const seq = <U extends any[], Failure, Source>
+    (...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
     : Parser<{ [P in keyof U]: U[P] }, Failure, Source> => {
   return new Parser<{ [P in keyof U]: U[P] }, Failure, Source>(
     (source: Source) => {
