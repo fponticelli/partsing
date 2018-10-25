@@ -1,6 +1,6 @@
-import { Parser, succeed, fail, lazy, between, times, atMost, many, seq } from '../src/parser'
+import { Parser, succeed, fail, lazy, between, times, atMost, many, seq, alt } from '../src/parser'
 import { ParseResult, ParseSuccess, ParseFailure } from '../src/parse_result'
-import { parse, digit, regexp, TextFailure, TextSource } from '../src/text_parser'
+import { parse, digit, regexp, TextFailure, TextSource, match, letter } from '../src/text_parser'
 
 const parseSuccess = <R, F>() => Parser.of<R, F, R>(source => ParseResult.success<R, F, R>(source, source))
 const parseFailure = <R>() => Parser.of<R, R, R>(source => ParseResult.failure<R, R, R>(source, source))
@@ -74,12 +74,16 @@ describe('parser', () => {
     const parser = regexp(/^1/).join(regexp(/^a/), regexp(/^b/))
     const result = parse(parser, '1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
+    const result2 = parse(parser, '1ba').getUnsafeFailure()
+    expect(result2).toBeDefined()
   })
 
   it('seq', () => {
     const parser = seq<[string, string, string], TextFailure, TextSource>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
     const result = parse(parser, '1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
+    const result2 = parse(parser, '1ba').getUnsafeFailure()
+    expect(result2).toBeDefined()
   })
 
   it('succeed', () => {
@@ -95,9 +99,9 @@ describe('parser', () => {
   })
 
   it('lazy', () => {
-    expect(
-      lazy(() => succeed('s')).run('any').getUnsafeSuccess()
-    ).toEqual('s')
+    const p = lazy(() => succeed('s'))
+    expect(p.run('any').getUnsafeSuccess()).toEqual('s')
+    expect(p.run('any').getUnsafeSuccess()).toEqual('s')
   })
 
   it('between', () => {
@@ -128,20 +132,53 @@ describe('parser', () => {
     const m3 = digit().many()
     expect(parse(m3, 'abc').getUnsafeFailure()).toBeDefined()
   })
+
+  it('or', () => {
+    const p = digit().or(match('a'))
+    expect(parse(p, '1').getUnsafeSuccess()).toEqual('1')
+    expect(parse(p, 'a').getUnsafeSuccess()).toEqual('a')
+    expect(parse(p, 'x').getUnsafeFailure()).toBeDefined()
+  })
+
+  it('alt', () => {
+    const p = alt<[string, string], TextFailure, TextSource>(digit(), match('a'))
+    expect(parse(p, '1').getUnsafeSuccess()).toEqual('1')
+    expect(parse(p, 'a').getUnsafeSuccess()).toEqual('a')
+    expect(parse(p, 'x').getUnsafeFailure()).toBeDefined()
+    expect(() => parse(alt(), 'x')).toThrow(Error)
+  })
+
+  it('seq', () => {
+    const parser = seq<[string, string, string], TextFailure, TextSource>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const result = parse(parser, '1ab').getUnsafeSuccess()
+    expect(result).toEqual(['1', 'a', 'b'])
+  })
+
+  it('probe', () => {
+    let value = undefined
+    const p = digit().probe(v => value = v)
+    const result = parse(p, '1')
+    expect(result).toBe(value)
+  })
+
+  it('separatedBy', () => {
+    const p = letter().separatedBy(match(','))
+    expect(parse(p, '1').getUnsafeSuccess()).toEqual([])
+    expect(parse(p, 'a').getUnsafeSuccess()).toEqual(['a'])
+    expect(parse(p, 'a,b').getUnsafeSuccess()).toEqual(['a', 'b'])
+    expect(parse(p, 'a,b,c').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])    
+  })
+
+  it('separatedByAtLeastOnce', () => {
+    const p = letter().separatedByAtLeastOnce(match(','))
+    expect(parse(p, 'a').getUnsafeFailure()).toBeDefined()
+    expect(parse(p, 'a,b').getUnsafeSuccess()).toEqual(['a', 'b'])
+    expect(parse(p, 'a,b,c').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])
+  })
+
+  it('ofGuaranteed', () => {
+    const p = Parser.ofGuaranteed<string, TextFailure, TextSource>((source: {source: string, index: number}) => [source, source.source])
+    const result = parse(p, '1').getUnsafeSuccess()
+    expect(result).toBe('1')
+  })
 })
-
-/*
-or<U extends any[]>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
-      : Parser<Result | TupleToUnion<U>, Failure, Source> {
-static ofGuaranteed<Result, Failure, Source>(run: (source: Source) => [Source, Result]) {
-  
-export const alt = <U extends any[], Source, Failure>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> }) => {
-export const seq = <U extends any[], Source, Failure>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
-probe(f: (v: ParseResult<Result, Failure, Source>) => void)
-  
-export const separatedByAtLeastOnce = <Result, Separator, Failure, Source>
-export const separatedBy = <Result, Separator, Failure, Source>
-
-letters
-digits
-*/

@@ -67,6 +67,16 @@ describe('parse_text', () => {
     expect(parsed).toEqual('123')
   })
 
+  it('regexp matching from start without global', () => {
+    const p = regexp(/^\d+/)
+    const [source, failure] = parseFailure(p, 'a123b')
+    expect(source.index).toEqual(0)
+    expect(failure.expected).toEqual('/^\\d+/')
+    const [source2, parsed] = parseSuccess(p, '123')
+    expect(source2.index).toEqual(3)
+    expect(parsed).toEqual('123')
+  })
+
   it('expected changes message', () => {
     const p = expected('number', regexp(/^\d+/g))
     const [source, failure] = parseFailure(p, 'a123b')
@@ -107,8 +117,10 @@ describe('parse_text', () => {
   })
 
   it('letters', () => {
-    const [, parsed] = parseSuccess(letters(0), 'abc123')
+    const [, parsed] = parseSuccess(letters(), 'abc123')
     expect(parsed).toEqual('abc')
+    const [, parsed1] = parseSuccess(letters(0), 'abc123')
+    expect(parsed1).toEqual('abc')
     const [, failure2] = parseFailure(letters(1), '123abc')
     expect(failure2.expected).toEqual('at least 1 letter(s)')
     const [, parsed3] = parseSuccess(letters(0, 2), 'abc123')
@@ -125,8 +137,10 @@ describe('parse_text', () => {
   })
 
   it('digits', () => {
-    const [, parsed] = parseSuccess(digits(0), '123abc')
-    expect(parsed).toEqual('123')
+    const [, parsed0] = parseSuccess(digits(), '123abc')
+    expect(parsed0).toEqual('123')
+    const [, parsed1] = parseSuccess(digits(0), '123abc')
+    expect(parsed1).toEqual('123')
     const [, parsed2] = parseSuccess(digits(3, 4), '123abc')
     expect(parsed2).toEqual('123')
     const [, failure] = parseFailure(digits(1), 'abc123')

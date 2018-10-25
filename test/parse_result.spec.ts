@@ -69,4 +69,11 @@ describe('parse_result', () => {
     const f = ParseResult.failure('', 1).flatMapError(v => ParseResult.success('', 1)) as ParseSuccess<any, number, any>
     expect(f.value).toEqual(1)
   })
+
+  it('getUnsafeSuccess/getUnsafeFailure throw when not safe', () => {
+    const s = new ParseSuccess('', 1)
+    expect(s.getUnsafeFailure).toThrow(Error)
+    const f = new ParseFailure('', 1)
+    expect(f.getUnsafeSuccess).toThrow(Error)
+  })
 })
