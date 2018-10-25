@@ -2,23 +2,19 @@ import { Parser, seq, alt } from './parser'
 import { ParseResult, ParseFailure, ParseSuccess } from './parse_result'
 
 export interface TextSource {
-  source: string
-  index: number
+  readonly source: string
+  readonly index: number
 }
 
-export interface TextFailure {
-  expected: string
-}
+export type TextParser<T> = Parser<T, string, TextSource>
 
-export type TextParser<T> = Parser<T, TextFailure, TextSource>
-
-const make = <T>(f: (source: TextSource) => ParseResult<T, TextFailure, TextSource>): TextParser<T> =>
-  new Parser<T, TextFailure, TextSource>(f)
+const make = <T>(f: (source: TextSource) => ParseResult<T, string, TextSource>): TextParser<T> =>
+  new Parser<T, string, TextSource>(f)
 
 export const expect = <T>(expected: string, parser: TextParser<T>) =>
-  make(source => parser.run(source).mapError(f => ({ ...f, expected })))
+  make(source => parser.run(source).mapError(_ => expected))
 
-export const parse = <T>(parser: TextParser<T>, source: string): ParseResult<T, TextFailure, TextSource> =>
+export const parse = <T>(parser: TextParser<T>, source: string): ParseResult<T, string, TextSource> =>
   parser.run({ source, index: 0})
 
 export const regexp = (pattern: RegExp, group = 0): TextParser<string> =>
@@ -27,7 +23,7 @@ export const regexp = (pattern: RegExp, group = 0): TextParser<string> =>
     pattern.lastIndex = 0
     const res = pattern.exec(s)
     if (res == null) {
-      return new ParseFailure(source, { expected: pattern.toString() })
+      return new ParseFailure(source, pattern.toString())
     } else {
       const index = source.index + (pattern.global ? pattern.lastIndex : res[0].length)
       return new ParseSuccess({ ...source, index }, res[group])
@@ -49,7 +45,7 @@ export const eot = (): TextParser<undefined> =>
     if (source.index === index) {
       return new ParseSuccess({ ...source, index }, undefined)
     } else {
-      return new ParseFailure(source, { expected: 'EOT' })
+      return new ParseFailure(source, 'EOT')
     }
   })
 
@@ -61,7 +57,7 @@ export const match = <V extends string>(s: V): TextParser<V> => {
     if (value === s) {
       return new ParseSuccess({ ...source, index }, s)
     } else {
-      return new ParseFailure(source, { expected: `"${s}"` })
+      return new ParseFailure(source, `"${s}"`)
     }
   })
 }
@@ -97,20 +93,20 @@ export const char = (): TextParser<string> =>
       return new ParseSuccess({ ...source, index: source.index + 1 }, c)
     } else {
       // no more characters
-      return new ParseFailure(source, { expected: 'a character' })
+      return new ParseFailure(source, 'a character')
     }
   })
 
 export const testChar = (f: (c: string) => boolean): TextParser<string> =>
   make((source: TextSource) => {
     if (source.index >= source.source.length) {
-      return new ParseFailure(source, { expected: 'expected to test char but reached end of source' })
+      return new ParseFailure(source, 'to test char but reached end of source')
     } else {
       const char = source.source.charAt(source.index)
       if (f(char)) {
         return new ParseSuccess({...source, index: source.index + 1}, char)
       } else {
-        return new ParseFailure(source, { expected: 'failed matching char predicate' })
+        return new ParseFailure(source, 'failed matching char predicate')
       }
     }
   })
@@ -128,7 +124,7 @@ export const takeWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<st
       index++
     }
     if (index - source.index < atLeast) {
-      return new ParseFailure(source, { expected: `expected at least ${atLeast} occurrance(s) of predicate` })
+      return new ParseFailure(source, `expected at least ${atLeast} occurrance(s) of predicate`)
     } else {
       return new ParseSuccess({...source, index }, source.source.substring(source.index, index))
     }
@@ -143,7 +139,7 @@ export const takeBetween = (f: (c: string) => boolean, min: number, max: number)
       counter++
     }
     if (counter < min) {
-      return new ParseFailure(source, { expected: `expected at least ${min} occurrance(s) of predicate` })
+      return new ParseFailure(source, `expected at least ${min} occurrance(s) of predicate`)
     } else {
       return new ParseSuccess({...source, index }, source.source.substring(source.index, index))
     }

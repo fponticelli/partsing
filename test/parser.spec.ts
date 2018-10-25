@@ -1,6 +1,6 @@
 import { Parser, succeed, fail, lazy, between, times, atMost, many, seq, alt } from '../src/parser'
 import { ParseResult, ParseSuccess, ParseFailure } from '../src/parse_result'
-import { parse, digit, regexp, TextFailure, TextSource, match, letter } from '../src/text_parser'
+import { parse, digit, regexp, TextSource, match, letter } from '../src/text_parser'
 
 const parseSuccess = <R, F>() => Parser.of<R, F, R>(source => ParseResult.success<R, F, R>(source, source))
 const parseFailure = <R>() => Parser.of<R, R, R>(source => ParseResult.failure<R, R, R>(source, source))
@@ -79,7 +79,7 @@ describe('parser', () => {
   })
 
   it('seq', () => {
-    const parser = seq<[string, string, string], TextFailure, TextSource>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const parser = seq<[string, string, string], string, TextSource>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
     const result = parse(parser, '1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
     const result2 = parse(parser, '1ba').getUnsafeFailure()
@@ -141,7 +141,7 @@ describe('parser', () => {
   })
 
   it('alt', () => {
-    const p = alt<[string, string], TextFailure, TextSource>(digit(), match('a'))
+    const p = alt<[string, string], string, TextSource>(digit(), match('a'))
     expect(parse(p, '1').getUnsafeSuccess()).toEqual('1')
     expect(parse(p, 'a').getUnsafeSuccess()).toEqual('a')
     expect(parse(p, 'x').getUnsafeFailure()).toBeDefined()
@@ -149,7 +149,7 @@ describe('parser', () => {
   })
 
   it('seq', () => {
-    const parser = seq<[string, string, string], TextFailure, TextSource>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const parser = seq<[string, string, string], string, TextSource>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
     const result = parse(parser, '1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
   })
@@ -177,7 +177,7 @@ describe('parser', () => {
   })
 
   it('ofGuaranteed', () => {
-    const p = Parser.ofGuaranteed<string, TextFailure, TextSource>((source: {source: string, index: number}) => [source, source.source])
+    const p = Parser.ofGuaranteed<string, string, TextSource>((source: {source: string, index: number}) => [source, source.source])
     const result = parse(p, '1').getUnsafeSuccess()
     expect(result).toBe('1')
   })
