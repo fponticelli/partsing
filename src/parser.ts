@@ -155,6 +155,10 @@ export class Parser<Result, Failure, Source> {
       return result
     })
   }
+
+  as<E>(e: E): Parser<Result, E, Source> {
+    return this.mapError(_ => e)
+  }
 }
 
 export const seq = <U extends any[], Failure, Source>

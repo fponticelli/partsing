@@ -3,7 +3,6 @@ import {
   digit,
   digits,
   eot,
-  expect as expected,
   index,
   letter,
   letters,
@@ -77,7 +76,7 @@ describe('parse_text', () => {
   })
 
   it('expected changes message', () => {
-    const p = expected('number', regexp(/^\d+/g))
+    const p = regexp(/^\d+/g).as('number')
     const [source, failure] = parseFailure(p, 'a123b')
     expect(failure).toEqual('number')
   })

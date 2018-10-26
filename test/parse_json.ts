@@ -1,18 +1,16 @@
-import { regexp, expect, match, TextParser, optionalWhitespace, TextSource } from '../src/text_parser'
+import { regexp, match, TextParser, optionalWhitespace, TextSource } from '../src/text_parser'
 import { alt, lazy } from '../src/parser'
-import { JSONValue, JSONArray, JSONObject, JSONPrimitive } from './json_value';
+import { JSONValue, JSONArray, JSONObject, JSONPrimitive } from './json_value'
 
 const jsonTrue = match('true').result(true)
 const jsonFalse = match('false').result(false)
   
-const jsonNumber = expect(
-  'number',
-  regexp(/^-?(0|[1-9]\d*)([.]\d+)?([eE][+-]?\d+)?/).map(Number)
-)
-const jsonString = expect(
-  'quoted string',
-  regexp(/^"((?:\\.|.)*?)"/, 1)
-)
+const jsonNumber = regexp(/^-?(0|[1-9]\d*)([.]\d+)?([eE][+-]?\d+)?/)
+  .map(Number)
+  .as('number')
+
+const jsonString = regexp(/^"((?:\\.|.)*?)"/, 1)
+  .as('quoted string')
 const jsonNull = match('null').result(null)
 const jsonBoolean = jsonTrue.or(jsonFalse)
 

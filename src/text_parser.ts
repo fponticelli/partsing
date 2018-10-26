@@ -11,9 +11,6 @@ export type TextParser<T> = Parser<T, string, TextSource>
 const make = <T>(f: (source: TextSource) => ParseResult<T, string, TextSource>): TextParser<T> =>
   new Parser<T, string, TextSource>(f)
 
-export const expect = <T>(expected: string, parser: TextParser<T>) =>
-  make(source => parser.run(source).mapError(_ => expected))
-
 export const parse = <T>(parser: TextParser<T>, source: string): ParseResult<T, string, TextSource> =>
   parser.run({ source, index: 0})
 
@@ -63,28 +60,28 @@ export const match = <V extends string>(s: V): TextParser<V> => {
 }
 
 export const letter = (): TextParser<string> =>
-  expect('one letter', regexp(/^[a-z]/i))
+  regexp(/^[a-z]/i).as('one letter')
 
 export const letters = (min = 1, max?: number): TextParser<string> => {
   const message = max === undefined ? `at least ${min} letter(s)` : `between ${min} and ${max} letter(s)`
   const maxs = max === undefined ? '' : String(max)
-  return expect(message, regexp(new RegExp(`^[a-z]{${min},${maxs}}`, 'i')))
+  return regexp(new RegExp(`^[a-z]{${min},${maxs}}`, 'i')).as(message)
 }
 
 export const digit = (): TextParser<string> =>
-  expect('one digit', regexp(/^\d/))
+  regexp(/^\d/).as('one digit')
 
 export const digits = (min = 1, max?: number): TextParser<string> => {
   const message = max === undefined ? `at least ${min} digit(s)` : `between ${min} and ${max} digit(s)`
   const maxs = max === undefined ? '' : String(max)
-  return expect(message, regexp(new RegExp(`^[0-9]{${min},${maxs}}`, '')))
+  return regexp(new RegExp(`^[0-9]{${min},${maxs}}`, '')).as(message)
 }
 
 export const whitespace = (): TextParser<string> =>
-  expect('whitespace', regexp(/^\s+/))
+  regexp(/^\s+/).as('whitespace')
 
 export const optionalWhitespace = (): TextParser<string> =>
-  expect('optional whitespace', regexp(/^\s*/))
+  regexp(/^\s*/).as('optional whitespace')
 
 export const char = (): TextParser<string> =>
   make((source: TextSource) => {
@@ -112,10 +109,10 @@ export const testChar = (f: (c: string) => boolean): TextParser<string> =>
   })
 
 export const matchOneOf = (anyOf: string): TextParser<string> =>
-  expect(`expected one of \`${anyOf}\``, testChar((c: string) => anyOf.indexOf(c) >= 0))
+  testChar((c: string) => anyOf.indexOf(c) >= 0).as(`expected one of \`${anyOf}\``)
 
 export const matchNoneOf = (noneOf: string): TextParser<string> =>
-  expect(`expected none of \`${noneOf}\``, testChar((c: string) => noneOf.indexOf(c) < 0))
+  testChar((c: string) => noneOf.indexOf(c) < 0).as(`expected none of \`${noneOf}\``)
 
 export const takeWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<string> =>
   make((source: TextSource) => {
