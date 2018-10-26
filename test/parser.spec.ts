@@ -71,9 +71,9 @@ describe('parser', () => {
   })
 
   it('Parser.join', () => {
-    const parser = regexp(/^1/).join(regexp(/^a/), regexp(/^b/))
+    const parser = regexp(/^1/).join(regexp(/^a/)).join(regexp(/^b/))
     const result = parse(parser, '1ab').getUnsafeSuccess()
-    expect(result).toEqual(['1', 'a', 'b'])
+    expect(result).toEqual([['1', 'a'], 'b'])
     const result2 = parse(parser, '1ba').getUnsafeFailure()
     expect(result2).toBeDefined()
   })

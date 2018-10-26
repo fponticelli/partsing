@@ -13,6 +13,7 @@
     "typescript": "^3.1.3"
   },
   "scripts": {
+    "build": "tsc",
     "lint": "tslint --fix --project .",
     "test": "jest",
     "test-coverage": "jest --coverage",

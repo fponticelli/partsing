@@ -59,28 +59,13 @@ export class Parser<Result, Failure, Source> {
   }
 
   skip<Next>(next: Parser<Next, Failure, Source>): Parser<Result, Failure, Source> {
-    return this.flatMap(r => next.result(r))
+    return this.flatMap((r: Result): Parser<Result, Failure, Source> => next.result(r))
   }
 
-  join<U extends any[]>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
-      : Parser<[Result] | { [P in keyof U]: U[P] }, Failure, Source> {
+  join<Other>(other: Parser<Other, Failure, Source>)
+      : Parser<[Result, Other], Failure, Source> {
     return this.flatMap((res: Result) => {
-      return new Parser<[Result] | { [P in keyof U]: U[P] }, Failure, Source>(
-        (source: Source) => {
-          const buff: { [P in keyof U]: U[P] } = [] as never
-          for (let i = 0; i < parsers.length; i++) {
-            const parser = parsers[i]
-            const result = parser.run(source)
-            if (result.isFailure()) {
-              return new ParseFailure(source, result.failure)
-            } else {
-              source = result.source
-              buff[i] = result.value
-            }
-          }
-          return new ParseSuccess(source, [res, ...buff] as never)
-        }
-      )
+      return other.map((o: Other): [Result, Other] => [res, o])
     })
   }
 
@@ -155,7 +140,8 @@ export class Parser<Result, Failure, Source> {
     return this.flatMap<Result[]>((res: Result) => pairs.map(rs => [res].concat(rs)))
   }
   
-  separatedBy<Separator>(separator: Parser<Separator, Failure, Source>) {
+  separatedBy<Separator>(separator: Parser<Separator, Failure, Source>)
+      : Parser<Result[], Failure, Source> {
     return this.separatedByAtLeastOnce(separator)
       .or(this.map(v => [v]))
       .or(succeed([]))
