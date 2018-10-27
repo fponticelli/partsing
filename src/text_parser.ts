@@ -14,18 +14,43 @@ const make = <T>(f: (source: TextSource) => ParseResult<T, string, TextSource>):
 export const parseText = <T>(parser: TextParser<T>, source: string): ParseResult<T, string, TextSource> =>
   parser.run({ source, index: 0})
 
-export const regexp = (pattern: RegExp, group = 0): TextParser<string> =>
-  make((source: TextSource) => {
-    const s = source.source.substring(source.index)
-    pattern.lastIndex = 0
-    const res = pattern.exec(s)
-    if (res == null) {
-      return new ParseFailure(source, pattern.toString())
-    } else {
-      const index = source.index + (pattern.global ? pattern.lastIndex : s.indexOf(res[0]) + res[0].length)
-      return new ParseSuccess({ ...source, index }, res[group])
-    }
-  })
+export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
+  if (pattern.sticky) {
+    return make((source: TextSource) => {
+      pattern.lastIndex = source.index
+      const res = pattern.exec(source.source)
+      if (res == null) {
+        return new ParseFailure(source, pattern.toString())
+      } else {
+        return new ParseSuccess({ ...source, index: pattern.lastIndex }, res[group])
+      }
+    })
+  } else if (pattern.global) {
+    return make((source: TextSource) => {
+      const s = source.source.substring(source.index)
+      pattern.lastIndex = 0
+      const res = pattern.exec(s)
+      if (res == null) {
+        return new ParseFailure(source, pattern.toString())
+      } else {
+        const index = source.index + pattern.lastIndex
+        return new ParseSuccess({ ...source, index }, res[group])
+      }
+    })
+  } else {
+    return make((source: TextSource) => {
+      const s = source.source.substring(source.index)
+      pattern.lastIndex = 0
+      const res = pattern.exec(s)
+      if (res == null) {
+        return new ParseFailure(source, pattern.toString())
+      } else {
+        const index = source.index + s.indexOf(res[0]) + res[0].length
+        return new ParseSuccess({ ...source, index }, res[group])
+      }
+    })
+  }
+}
 
 export const index = (): TextParser<number> =>
   make(source => new ParseSuccess(source, source.index))
@@ -59,29 +84,59 @@ export const match = <V extends string>(s: V): TextParser<V> => {
   })
 }
 
+const {
+  letterPattern,
+  lettersPattern,
+  digitPattern,
+  digitsPattern,
+  whitespacePattern,
+  optionalWhitespacePattern
+} = (() => {
+  const t = /test/y
+  if (t.sticky === true) {
+    return {
+      letterPattern: /[a-z]/yi,
+      lettersPattern: (min: string, max: string) => new RegExp(`[a-z]{${min},${max}}`, 'yi'),
+      digitPattern: /\d/y,
+      digitsPattern: (min: string, max: string) => new RegExp(`[0-9]{${min},${max}}`, 'yi'),
+      whitespacePattern: /\s+/y,
+      optionalWhitespacePattern: /\s*/y
+    }
+  } else {
+    return {
+      letterPattern: /^[a-z]/i,
+      lettersPattern: (min: string, max: string) => new RegExp(`^[a-z]{${min},${max}}`, 'i'),
+      digitPattern: /^\d/,
+      digitsPattern: (min: string, max: string) => new RegExp(`^[0-9]{${min},${max}}`, 'i'),
+      whitespacePattern: /^\s+/,
+      optionalWhitespacePattern: /^\s*/
+    }
+  }
+})()
+
 export const letter = (): TextParser<string> =>
-  regexp(/^[a-z]/i).withFailure('one letter')
+  regexp(letterPattern).withFailure('one letter')
 
 export const letters = (min = 1, max?: number): TextParser<string> => {
   const message = max === undefined ? `at least ${min} letter(s)` : `between ${min} and ${max} letter(s)`
   const maxs = max === undefined ? '' : String(max)
-  return regexp(new RegExp(`^[a-z]{${min},${maxs}}`, 'i')).withFailure(message)
+  return regexp(lettersPattern(String(min), maxs)).withFailure(message)
 }
 
 export const digit = (): TextParser<string> =>
-  regexp(/^\d/).withFailure('one digit')
+  regexp(digitPattern).withFailure('one digit')
 
 export const digits = (min = 1, max?: number): TextParser<string> => {
   const message = max === undefined ? `at least ${min} digit(s)` : `between ${min} and ${max} digit(s)`
   const maxs = max === undefined ? '' : String(max)
-  return regexp(new RegExp(`^[0-9]{${min},${maxs}}`, '')).withFailure(message)
+  return regexp(digitsPattern(String(min), maxs)).withFailure(message)
 }
 
 export const whitespace = (): TextParser<string> =>
-  regexp(/^\s+/).withFailure('whitespace')
+  regexp(whitespacePattern).withFailure('whitespace')
 
 export const optionalWhitespace = (): TextParser<string> =>
-  regexp(/^\s*/).withFailure('optional whitespace')
+  regexp(optionalWhitespacePattern).withFailure('optional whitespace')
 
 export const char = (): TextParser<string> =>
   make((source: TextSource) => {

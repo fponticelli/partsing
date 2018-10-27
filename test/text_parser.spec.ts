@@ -49,10 +49,10 @@ describe('parse_text', () => {
   })
 
   it('regexp with group', () => {
-    const p = regexp(/a(\d+)b/gm, 1)
-    const [source, parsed] = parseSuccess(p, '--a123b\n-a123b---')
-    expect(source.index).toEqual(7)
-    expect(parsed).toEqual('123')
+    const p = regexp(/a(\d+)b/g, 1)
+    const [source, parsed] = parseSuccess(p.join(p), '--a123b-a456b--')
+    expect(source.index).toEqual(13)
+    expect(parsed).toEqual(['123', '456'])
   })
 
   it('regexp matching from start', () => {
