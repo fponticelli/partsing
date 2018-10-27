@@ -10,7 +10,8 @@ const jsonNumber = regexp(/^-?(0|[1-9]\d*)([.]\d+)?([eE][+-]?\d+)?/)
   .map(Number)
   .withFailure('number')
 
-const jsonString = regexp(/^"((?:\\.|.)*?)"/, 1)
+// this is incomplete as it doesn't convert escaped chars or unicode values
+const jsonString = regexp(/^"((:?\\"|[^"])*)"/, 1)
   .withFailure('quoted string')
 const jsonNull = match('null').withResult(null)
 const jsonBoolean = jsonTrue.or(jsonFalse)
