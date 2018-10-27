@@ -1,64 +1,64 @@
-abstract class ParseResultBase<Result, Failure, Source> {
+abstract class ParseResultBase<Success, Failure, Source> {
   constructor(
     readonly source: Source
   ) {}
   abstract match<O>(o: {
-    success: (s: ParseSuccess<Result, Failure, Source>) => O,
-    failure: (f: ParseFailure<Result, Failure, Source>) => O
+    success: (s: ParseSuccess<Success, Failure, Source>) => O,
+    failure: (f: ParseFailure<Success, Failure, Source>) => O
   }): O
     
-  abstract flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source>
-  abstract flatMapError<E>(f: (r: Failure) => ParseResult<Result, E, Source>): ParseResult<Result, E, Source>
+  abstract flatMap<O>(f: (r: Success) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source>
+  abstract flatMapError<E>(f: (r: Failure) => ParseResult<Success, E, Source>): ParseResult<Success, E, Source>
   
-  abstract map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source>
-  abstract mapError<E>(f: (r: Failure) => E): ParseResult<Result, E, Source>
+  abstract map<O>(f: (r: Success) => O): ParseResult<O, Failure, Source>
+  abstract mapError<E>(f: (r: Failure) => E): ParseResult<Success, E, Source>
 
-  abstract isSuccess(): this is ParseSuccess<Result, Failure, Source>
-  abstract isFailure(): this is ParseFailure<Result, Failure, Source>
+  abstract isSuccess(): this is ParseSuccess<Success, Failure, Source>
+  abstract isFailure(): this is ParseFailure<Success, Failure, Source>
 
-  abstract getUnsafeSuccess(): Result
+  abstract getUnsafeSuccess(): Success
   abstract getUnsafeFailure(): Failure
 
   abstract toString(): string
 }
 
-export class ParseSuccess<Result, Failure, Source> extends ParseResultBase<Result, Failure, Source> {
+export class ParseSuccess<Success, Failure, Source> extends ParseResultBase<Success, Failure, Source> {
   readonly kind = 'parse-success'
   constructor(
     source: Source,
-    readonly value: Result
+    readonly value: Success
   ) {
     super(source)
   }
 
   match<O>(o: {
-    success: (s: ParseSuccess<Result, Failure, Source>) => O,
-    failure: (f: ParseFailure<Result, Failure, Source>) => O
+    success: (s: ParseSuccess<Success, Failure, Source>) => O,
+    failure: (f: ParseFailure<Success, Failure, Source>) => O
   }): O {
     return o.success(this)
   }
 
-  flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source> {
+  flatMap<O>(f: (r: Success) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source> {
     return f(this.value)
   }
-  map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source> {
+  map<O>(f: (r: Success) => O): ParseResult<O, Failure, Source> {
     return this.flatMap(v => new ParseSuccess(this.source, f(v)))
   }
-  flatMapError<E>(f: (r: Failure) => ParseResult<Result, E, Source>): ParseResult<Result, E, Source> {
+  flatMapError<E>(f: (r: Failure) => ParseResult<Success, E, Source>): ParseResult<Success, E, Source> {
     return new ParseSuccess(this.source, this.value)
   }
-  mapError<E>(f: (r: Failure) => E): ParseResult<Result, E, Source> {
+  mapError<E>(f: (r: Failure) => E): ParseResult<Success, E, Source> {
     return new ParseSuccess(this.source, this.value)
   }
 
-  isSuccess(): this is ParseSuccess<Result, Failure, Source> {
+  isSuccess(): this is ParseSuccess<Success, Failure, Source> {
     return true
   }
-  isFailure(): this is ParseFailure<Result, Failure, Source> {
+  isFailure(): this is ParseFailure<Success, Failure, Source> {
     return false
   }
   
-  getUnsafeSuccess(): Result {
+  getUnsafeSuccess(): Success {
     return this.value
   }
   getUnsafeFailure(): Failure {
@@ -70,7 +70,7 @@ export class ParseSuccess<Result, Failure, Source> extends ParseResultBase<Resul
   }
 }
 
-export class ParseFailure<Result, Failure, Source> extends ParseResultBase<Result, Failure, Source> {
+export class ParseFailure<Success, Failure, Source> extends ParseResultBase<Success, Failure, Source> {
   readonly kind = 'parse-failure'
   constructor(
     source: Source,
@@ -80,32 +80,32 @@ export class ParseFailure<Result, Failure, Source> extends ParseResultBase<Resul
   }
 
   match<O>(o: {
-    success: (succ: ParseSuccess<Result, Failure, Source>) => O,
-    failure: (fail: ParseFailure<Result, Failure, Source>) => O
+    success: (succ: ParseSuccess<Success, Failure, Source>) => O,
+    failure: (fail: ParseFailure<Success, Failure, Source>) => O
   }): O {
     return o.failure(this)
   }
 
-  flatMap<O>(f: (r: Result) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source> {
+  flatMap<O>(f: (r: Success) => ParseResult<O, Failure, Source>): ParseResult<O, Failure, Source> {
     return new ParseFailure(this.source, this.failure)
   }
-  map<O>(f: (r: Result) => O): ParseResult<O, Failure, Source> {
+  map<O>(f: (r: Success) => O): ParseResult<O, Failure, Source> {
     return new ParseFailure(this.source, this.failure)
   }
-  flatMapError<E>(f: (r: Failure) => ParseResult<Result, E, Source>): ParseResult<Result, E, Source> {
+  flatMapError<E>(f: (r: Failure) => ParseResult<Success, E, Source>): ParseResult<Success, E, Source> {
     return f(this.failure)
   }
-  mapError<E>(f: (r: Failure) => E): ParseResult<Result, E, Source> {
+  mapError<E>(f: (r: Failure) => E): ParseResult<Success, E, Source> {
     return this.flatMapError(e => new ParseFailure(this.source, f(e)))
   }
 
-  isSuccess(): this is ParseSuccess<Result, Failure, Source> {
+  isSuccess(): this is ParseSuccess<Success, Failure, Source> {
     return false
   }
-  isFailure(): this is ParseFailure<Result, Failure, Source> {
+  isFailure(): this is ParseFailure<Success, Failure, Source> {
     return true
   }
-  getUnsafeSuccess(): Result {
+  getUnsafeSuccess(): Success {
     throw new Error('can\'t get success from failure')
   }
   getUnsafeFailure(): Failure {
@@ -117,11 +117,11 @@ export class ParseFailure<Result, Failure, Source> extends ParseResultBase<Resul
   }
 }
 
-export type ParseResult<Result, Failure, Source> = ParseSuccess<Result, Failure, Source> | ParseFailure<Result, Failure, Source>
+export type ParseResult<Success, Failure, Source> = ParseSuccess<Success, Failure, Source> | ParseFailure<Success, Failure, Source>
 
 export const ParseResult = {
-  success: <Result, Failure, Source>(source: Source, result: Result): ParseResult<Result, Failure, Source> =>
+  success: <Success, Failure, Source>(source: Source, result: Success): ParseResult<Success, Failure, Source> =>
     new ParseSuccess(source, result),
-  failure: <Result, Failure, Source>(source: Source, failure: Failure): ParseResult<Result, Failure, Source> =>
+  failure: <Success, Failure, Source>(source: Source, failure: Failure): ParseResult<Success, Failure, Source> =>
     new ParseFailure(source, failure)  
 }
