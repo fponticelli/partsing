@@ -10,7 +10,7 @@ import {
   matchNoneOf,
   matchOneOf,
   optionalWhitespace,
-  parse,
+  parseText,
   regexp,
   rest,
   takeBetween,
@@ -22,7 +22,7 @@ import {
 } from '../src/text_parser'
 
 const parseSuccess = <R>(parser: TextParser<R>, source: string): [TextSource, R] => {
-  const r = parse(parser, source)
+  const r = parseText(parser, source)
   if (r.isFailure()) {
     throw 'expected parse success'
   } else {
@@ -31,7 +31,7 @@ const parseSuccess = <R>(parser: TextParser<R>, source: string): [TextSource, R]
 }
 
 const parseFailure = <R>(parser: TextParser<R>, source: string): [TextSource, string] => {
-  const r = parse(parser, source)
+  const r = parseText(parser, source)
   if (r.isSuccess()) {
     throw 'expected parse failure'
   } else {
@@ -41,16 +41,16 @@ const parseFailure = <R>(parser: TextParser<R>, source: string): [TextSource, st
 
 describe('parse_text', () => {
   it('regexp', () => {
-    const p = regexp(/\d+/g)
-    expect(parse(p, 'abc').isFailure()).toEqual(true)
+    const p = regexp(/(\d+)/, 1)
+    expect(parseText(p, 'abc').isFailure()).toEqual(true)
     const [source, parsed] = parseSuccess(p, 'a123b')
     expect(source.index).toEqual(4)
     expect(parsed).toEqual('123')
   })
 
   it('regexp with group', () => {
-    const p = regexp(/a(\d+)b/g, 1)
-    const [source, parsed] = parseSuccess(p, '--a123b--')
+    const p = regexp(/a(\d+)b/gm, 1)
+    const [source, parsed] = parseSuccess(p, '--a123b\n-a123b---')
     expect(source.index).toEqual(7)
     expect(parsed).toEqual('123')
   })
@@ -209,8 +209,3 @@ describe('parse_text', () => {
     expect(failure3).toBeDefined()
   })
 })
-
-/*
-export const takeWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<string> =>
-export const takeBetween = (f: (c: string) => boolean, min: number, max: number): TextParser<string> =>
-*/  

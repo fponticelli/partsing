@@ -11,7 +11,7 @@ export type TextParser<T> = Parser<T, string, TextSource>
 const make = <T>(f: (source: TextSource) => ParseResult<T, string, TextSource>): TextParser<T> =>
   new Parser<T, string, TextSource>(f)
 
-export const parse = <T>(parser: TextParser<T>, source: string): ParseResult<T, string, TextSource> =>
+export const parseText = <T>(parser: TextParser<T>, source: string): ParseResult<T, string, TextSource> =>
   parser.run({ source, index: 0})
 
 export const regexp = (pattern: RegExp, group = 0): TextParser<string> =>
@@ -22,7 +22,7 @@ export const regexp = (pattern: RegExp, group = 0): TextParser<string> =>
     if (res == null) {
       return new ParseFailure(source, pattern.toString())
     } else {
-      const index = source.index + (pattern.global ? pattern.lastIndex : res[0].length)
+      const index = source.index + (pattern.global ? pattern.lastIndex : s.indexOf(res[0]) + res[0].length)
       return new ParseSuccess({ ...source, index }, res[group])
     }
   })
