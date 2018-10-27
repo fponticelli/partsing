@@ -52,7 +52,7 @@ export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
   }
 }
 
-export const index = (): TextParser<number> =>
+export const withPosition = (): TextParser<number> =>
   make(source => new ParseSuccess(source, source.index))
 
 export const rest = (): TextParser<string> =>
@@ -87,6 +87,10 @@ export const match = <V extends string>(s: V): TextParser<V> => {
 const {
   letterPattern,
   lettersPattern,
+  upperCaseLetterPattern,
+  upperCaseLettersPattern,
+  lowerCaseLetterPattern,
+  lowerCaseLettersPattern,
   digitPattern,
   digitsPattern,
   whitespacePattern,
@@ -97,6 +101,10 @@ const {
     return {
       letterPattern: /[a-z]/yi,
       lettersPattern: (min: string, max: string) => new RegExp(`[a-z]{${min},${max}}`, 'yi'),
+      upperCaseLetterPattern: /[A-Z]/y,
+      upperCaseLettersPattern: (min: string, max: string) => new RegExp(`[A-Z]{${min},${max}}`, 'y'),
+      lowerCaseLetterPattern: /[a-z]/y,
+      lowerCaseLettersPattern: (min: string, max: string) => new RegExp(`[a-z]{${min},${max}}`, 'y'),
       digitPattern: /\d/y,
       digitsPattern: (min: string, max: string) => new RegExp(`[0-9]{${min},${max}}`, 'yi'),
       whitespacePattern: /\s+/y,
@@ -106,6 +114,10 @@ const {
     return {
       letterPattern: /^[a-z]/i,
       lettersPattern: (min: string, max: string) => new RegExp(`^[a-z]{${min},${max}}`, 'i'),
+      upperCaseLetterPattern: /^[A-Z]/,
+      upperCaseLettersPattern: (min: string, max: string) => new RegExp(`^[A-Z]{${min},${max}}`, ''),
+      lowerCaseLetterPattern: /^[a-z]/,
+      lowerCaseLettersPattern: (min: string, max: string) => new RegExp(`^[a-z]{${min},${max}}`, ''),
       digitPattern: /^\d/,
       digitsPattern: (min: string, max: string) => new RegExp(`^[0-9]{${min},${max}}`, 'i'),
       whitespacePattern: /^\s+/,
@@ -121,6 +133,24 @@ export const letters = (min = 1, max?: number): TextParser<string> => {
   const message = max === undefined ? `at least ${min} letter(s)` : `between ${min} and ${max} letter(s)`
   const maxs = max === undefined ? '' : String(max)
   return regexp(lettersPattern(String(min), maxs)).withFailure(message)
+}
+
+export const upperCaseLetter = (): TextParser<string> =>
+  regexp(upperCaseLetterPattern).withFailure('one letter')
+
+export const upperCaseLetters = (min = 1, max?: number): TextParser<string> => {
+  const message = max === undefined ? `at least ${min} letter(s)` : `between ${min} and ${max} letter(s)`
+  const maxs = max === undefined ? '' : String(max)
+  return regexp(upperCaseLettersPattern(String(min), maxs)).withFailure(message)
+}
+
+export const lowerCaseLetter = (): TextParser<string> =>
+  regexp(lowerCaseLetterPattern).withFailure('one letter')
+
+export const lowerCaseLetters = (min = 1, max?: number): TextParser<string> => {
+  const message = max === undefined ? `at least ${min} letter(s)` : `between ${min} and ${max} letter(s)`
+  const maxs = max === undefined ? '' : String(max)
+  return regexp(lowerCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
 
 export const digit = (): TextParser<string> =>
@@ -163,13 +193,13 @@ export const testChar = (f: (c: string) => boolean): TextParser<string> =>
     }
   })
 
-export const matchOneOf = (anyOf: string): TextParser<string> =>
-  testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure(`expected one of \`${anyOf}\``)
+export const matchAnyCharOf = (anyOf: string): TextParser<string> =>
+  testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure(`expected any char of \`${anyOf}\``)
 
-export const matchNoneOf = (noneOf: string): TextParser<string> =>
-  testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(`expected none of \`${noneOf}\``)
+export const matchNoCharOf = (noneOf: string): TextParser<string> =>
+  testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(`expected none of \`${noneOf}\` chars`)
 
-export const takeWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<string> =>
+export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<string> =>
   make((source: TextSource) => {
     let index = source.index
     while (index < source.source.length && f(source.source.charAt(index))) {
@@ -182,7 +212,7 @@ export const takeWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<st
     }
   })
 
-export const takeBetween = (f: (c: string) => boolean, min: number, max: number): TextParser<string> =>
+export const takeCharBetween = (f: (c: string) => boolean, min: number, max: number): TextParser<string> =>
   make((source: TextSource) => {
     let index = source.index
     let counter = 0

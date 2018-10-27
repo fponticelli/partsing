@@ -1,6 +1,7 @@
-import { regexp, match, TextParser, optionalWhitespace, TextSource } from '../src/text_parser'
+import { regexp, match, TextParser, optionalWhitespace, TextSource, parseText } from '../src/text_parser'
 import { oneOf, lazy } from '../src/parser'
 import { JSONValue, JSONArray, JSONObject, JSONPrimitive } from './json_value'
+import { ParseResult } from '../src/parse_result'
 
 const jsonTrue = match('true').withResult(true)
 const jsonFalse = match('false').withResult(false)
@@ -14,7 +15,7 @@ const jsonString = regexp(/^"((?:\\.|.)*?)"/, 1)
 const jsonNull = match('null').withResult(null)
 const jsonBoolean = jsonTrue.or(jsonFalse)
 
-export const parseJson: TextParser<JSONValue> = lazy(() =>
+const jsonValue: TextParser<JSONValue> = lazy(() =>
   oneOf(
     jsonNumber,
     jsonNull,
@@ -33,9 +34,9 @@ const rSquare = token(match(']'))
 const comma = token(match(','))
 const colon = token(match(':'))
 
-const jsonArray: TextParser<JSONArray> = lSquare.pickNext(commaSeparated(parseJson)).skipNext(rSquare)
+const jsonArray: TextParser<JSONArray> = lSquare.pickNext(commaSeparated(jsonValue)).skipNext(rSquare)
 
-const pair = jsonString.skipNext(colon).join(parseJson)
+const pair = jsonString.skipNext(colon).join(jsonValue)
 const jsonObject: TextParser<JSONObject> = lCurly.pickNext(commaSeparated(pair)).skipNext(rCurly)
   .map((res: [string, JSONValue][]) => {
     return res.reduce(
@@ -45,3 +46,5 @@ const jsonObject: TextParser<JSONObject> = lCurly.pickNext(commaSeparated(pair))
       {}
     )
 })
+
+export const parseJson = (source: string): ParseResult<JSONValue, string, TextSource> => parseText(jsonValue, source)

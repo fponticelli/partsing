@@ -3,18 +3,22 @@ import {
   digit,
   digits,
   eot,
-  index,
+  withPosition,
   letter,
   letters,
+  lowerCaseLetter,
+  lowerCaseLetters,
+  upperCaseLetter,
+  upperCaseLetters,
   match,
-  matchNoneOf,
-  matchOneOf,
+  matchNoCharOf,
+  matchAnyCharOf,
   optionalWhitespace,
   parseText,
   regexp,
   rest,
-  takeBetween,
-  takeWhile,
+  takeCharBetween,
+  takeCharWhile,
   testChar,
   TextParser,
   TextSource,
@@ -83,7 +87,7 @@ describe('parse_text', () => {
 
   it('index', () => {
     const p = regexp(/\d+/g)
-    const [, parsed] = parseSuccess(p.pickNext(index()), 'a123b')
+    const [, parsed] = parseSuccess(p.pickNext(withPosition()), 'a123b')
     expect(parsed).toEqual(4)
   })
 
@@ -124,6 +128,46 @@ describe('parse_text', () => {
     const [, parsed3] = parseSuccess(letters(0, 2), 'abc123')
     expect(parsed3).toEqual('ab')
     const [, failure4] = parseFailure(letters(3, 4), 'ab123')
+    expect(failure4).toEqual('between 3 and 4 letter(s)')
+  })
+
+  it('lowerCaseLetter', () => {
+    const [, parsed] = parseSuccess(lowerCaseLetter(), 'a123b')
+    expect(parsed).toEqual('a')
+    const [, failure] = parseFailure(lowerCaseLetter(), 'AB')
+    expect(failure).toEqual('one letter')
+  })
+
+  it('lowerCaseLetters', () => {
+    const [, parsed] = parseSuccess(lowerCaseLetters(), 'abcABC')
+    expect(parsed).toEqual('abc')
+    const [, parsed1] = parseSuccess(lowerCaseLetters(0), 'abcABC')
+    expect(parsed1).toEqual('abc')
+    const [, failure2] = parseFailure(lowerCaseLetters(1), 'ABCabc')
+    expect(failure2).toEqual('at least 1 letter(s)')
+    const [, parsed3] = parseSuccess(lowerCaseLetters(0, 2), 'abcABC')
+    expect(parsed3).toEqual('ab')
+    const [, failure4] = parseFailure(lowerCaseLetters(3, 4), 'abABC')
+    expect(failure4).toEqual('between 3 and 4 letter(s)')
+  })
+
+  it('upperCaseLetter', () => {
+    const [, parsed] = parseSuccess(upperCaseLetter(), 'AabcB')
+    expect(parsed).toEqual('A')
+    const [, failure] = parseFailure(upperCaseLetter(), 'abc')
+    expect(failure).toEqual('one letter')
+  })
+
+  it('upperCaseLetters', () => {
+    const [, parsed] = parseSuccess(upperCaseLetters(), 'ABCabc')
+    expect(parsed).toEqual('ABC')
+    const [, parsed1] = parseSuccess(upperCaseLetters(0), 'ABCabc')
+    expect(parsed1).toEqual('ABC')
+    const [, failure2] = parseFailure(upperCaseLetters(1), 'abcABC')
+    expect(failure2).toEqual('at least 1 letter(s)')
+    const [, parsed3] = parseSuccess(upperCaseLetters(0, 2), 'ABCabc')
+    expect(parsed3).toEqual('AB')
+    const [, failure4] = parseFailure(upperCaseLetters(3, 4), 'ABabc')
     expect(failure4).toEqual('between 3 and 4 letter(s)')
   })
 
@@ -178,34 +222,34 @@ describe('parse_text', () => {
   })
 
   it('matchOneOf', () => {
-    const [, parsed1] = parseSuccess(matchOneOf('abc'), 'cxy')
+    const [, parsed1] = parseSuccess(matchAnyCharOf('abc'), 'cxy')
     expect(parsed1).toEqual('c')
-    const [, failure] = parseFailure(matchOneOf('abc'), 'xyz')
-    expect(failure).toEqual('expected one of `abc`')
+    const [, failure] = parseFailure(matchAnyCharOf('abc'), 'xyz')
+    expect(failure).toEqual('expected any char of `abc`')
   })
 
   it('matchNoneOf', () => {
-    const [, parsed1] = parseSuccess(matchNoneOf('abc'), 'xyz')
+    const [, parsed1] = parseSuccess(matchNoCharOf('abc'), 'xyz')
     expect(parsed1).toEqual('x')
-    const [, failure] = parseFailure(matchNoneOf('abc'), 'cxy')
-    expect(failure).toEqual('expected none of `abc`')
+    const [, failure] = parseFailure(matchNoCharOf('abc'), 'cxy')
+    expect(failure).toEqual('expected none of `abc` chars')
   })
 
-  it('takeWhile', () => {
-    const [, parsed1] = parseSuccess(takeWhile(v => v.toLowerCase() === v), 'xyZ')
+  it('takeCharWhile', () => {
+    const [, parsed1] = parseSuccess(takeCharWhile(v => v.toLowerCase() === v), 'xyZ')
     expect(parsed1).toEqual('xy')
-    const [, failure2] = parseFailure(takeWhile(v => v.toLowerCase() === v), 'XYZ')
+    const [, failure2] = parseFailure(takeCharWhile(v => v.toLowerCase() === v), 'XYZ')
     expect(failure2).toEqual('expected at least 1 occurrance(s) of predicate')
-    const [, failure3] = parseFailure(takeWhile(v => v.toLowerCase() === v, 2), 'xYZ')
+    const [, failure3] = parseFailure(takeCharWhile(v => v.toLowerCase() === v, 2), 'xYZ')
     expect(failure3).toBeDefined()
   })
   
-  it('takeBetween', () => {
-    const [, parsed1] = parseSuccess(takeBetween(v => v.toLowerCase() === v, 2, 3), 'xyzabc')
+  it('takeCharBetween', () => {
+    const [, parsed1] = parseSuccess(takeCharBetween(v => v.toLowerCase() === v, 2, 3), 'xyzabc')
     expect(parsed1).toEqual('xyz')
-    const [, failure2] = parseFailure(takeBetween(v => v.toLowerCase() === v, 2, 3), 'xYZ')
+    const [, failure2] = parseFailure(takeCharBetween(v => v.toLowerCase() === v, 2, 3), 'xYZ')
     expect(failure2).toEqual('expected at least 2 occurrance(s) of predicate')
-    const [, failure3] = parseFailure(takeBetween(v => v.toLowerCase() === v, 2, 3), '')
+    const [, failure3] = parseFailure(takeCharBetween(v => v.toLowerCase() === v, 2, 3), '')
     expect(failure3).toBeDefined()
   })
 })
