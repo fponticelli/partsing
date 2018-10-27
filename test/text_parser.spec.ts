@@ -76,25 +76,25 @@ describe('parse_text', () => {
   })
 
   it('expected changes message', () => {
-    const p = regexp(/^\d+/g).as('number')
+    const p = regexp(/^\d+/g).withFailure('number')
     const [source, failure] = parseFailure(p, 'a123b')
     expect(failure).toEqual('number')
   })
 
   it('index', () => {
     const p = regexp(/\d+/g)
-    const [, parsed] = parseSuccess(p.then(index()), 'a123b')
+    const [, parsed] = parseSuccess(p.pickNext(index()), 'a123b')
     expect(parsed).toEqual(4)
   })
 
   it('rest', () => {
     const p = regexp(/\d+/g)
-    const [, parsed] = parseSuccess(p.then(rest()), 'a123b')
+    const [, parsed] = parseSuccess(p.pickNext(rest()), 'a123b')
     expect(parsed).toEqual('b')
   })
 
   it('eot', () => {
-    const [, parsed] = parseSuccess(rest().skip(eot()), 'a123b')
+    const [, parsed] = parseSuccess(rest().skipNext(eot()), 'a123b')
     expect(parsed).toEqual('a123b')
     const [, failure] = parseFailure(eot(), 'a123b')
     expect(failure).toEqual('EOT')

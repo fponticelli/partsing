@@ -50,16 +50,12 @@ export class Parser<Result, Failure, Source> {
     })
   }
 
-  then<Dest>(next: Parser<Dest, Failure, Source>): Parser<Dest, Failure, Source> {
+  pickNext<Dest>(next: Parser<Dest, Failure, Source>): Parser<Dest, Failure, Source> {
     return this.flatMap(_ => next)
   }
 
-  result<Dest>(value: Dest): Parser<Dest, Failure, Source> {
-    return this.map(_ => value)
-  }
-
-  skip<Next>(next: Parser<Next, Failure, Source>): Parser<Result, Failure, Source> {
-    return this.flatMap((r: Result): Parser<Result, Failure, Source> => next.result(r))
+  skipNext<Next>(next: Parser<Next, Failure, Source>): Parser<Result, Failure, Source> {
+    return this.flatMap((r: Result): Parser<Result, Failure, Source> => next.withResult(r))
   }
 
   join<Other>(other: Parser<Other, Failure, Source>)
@@ -89,7 +85,7 @@ export class Parser<Result, Failure, Source> {
     })
   }
   
-  many(atLeast = 1) {
+  repeatAtLeast(times = 1) {
     return new Parser<Result[], Failure, Source>((source: Source) => {
       const buff: Result[] = []
       while (true) {
@@ -97,7 +93,7 @@ export class Parser<Result, Failure, Source> {
         if (result.isSuccess()) {
           buff.push(result.value)
           source = result.source
-        } else if (buff.length < atLeast) {
+        } else if (buff.length < times) {
           return new ParseFailure(source, result.failure)
         } else {
           return new ParseSuccess<Result[], Failure, Source>(source, buff)
@@ -106,7 +102,7 @@ export class Parser<Result, Failure, Source> {
     })
   }
 
-  between(min: number, max: number) {
+  repeatBetween(min: number, max: number) {
     return new Parser<Result[], Failure, Source>((source: Source) => {
       const buff: Result[] = []
       let failure = undefined
@@ -127,16 +123,16 @@ export class Parser<Result, Failure, Source> {
     })
   }
 
-  times(count: number) {
-    return this.between(count, count)
+  repeat(times: number) {
+    return this.repeatBetween(times, times)
   }
 
-  atMost(times: number) {
-    return this.between(0, times)
+  repeatAtMost(times: number) {
+    return this.repeatBetween(0, times)
   }
 
   separatedByAtLeastOnce<Separator>(separator: Parser<Separator, Failure, Source>): Parser<Result[], Failure, Source> {
-    const pairs = separator.then(this).many(1)
+    const pairs = separator.pickNext(this).repeatAtLeast(1)
     return this.flatMap<Result[]>((res: Result) => pairs.map(rs => [res].concat(rs)))
   }
   
@@ -156,12 +152,16 @@ export class Parser<Result, Failure, Source> {
     })
   }
 
-  as<E>(e: E): Parser<Result, E, Source> {
+  withResult<Dest>(value: Dest): Parser<Dest, Failure, Source> {
+    return this.map(_ => value)
+  }
+
+  withFailure<E>(e: E): Parser<Result, E, Source> {
     return this.mapError(_ => e)
   }
 }
 
-export const seq = <U extends any[], Failure, Source>
+export const sequence = <U extends any[], Failure, Source>
     (...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
     : Parser<{ [P in keyof U]: U[P] }, Failure, Source> => {
   return new Parser<{ [P in keyof U]: U[P] }, Failure, Source>(
@@ -184,7 +184,7 @@ export const seq = <U extends any[], Failure, Source>
 
 type TupleToUnion<T extends any[]> = T[number] | never
 
-export const alt = <U extends any[], Failure, Source>
+export const oneOf = <U extends any[], Failure, Source>
     (...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> }) => {
   if (parsers.length === 0) throw new Error('alt needs to be called with at least one argumenr')
   return new Parser<TupleToUnion<U>, Failure, Source>(
@@ -209,18 +209,6 @@ export const succeed = <Result, Failure, Source>(r: Result) =>
 
 export const fail = <Result, Failure, Source>(f: Failure) =>
   new Parser<Result, Failure, Source>(source => new ParseFailure(source, f))
-
-export const many = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, atLeast = 1) =>
-  parser.many(atLeast)
-
-export const between = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, min: number, max: number) =>
-  parser.between(min, max)
-
-export const times = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, count: number) =>
-  parser.times(count)
-
-export const atMost = <Result, Failure, Source>(parser: Parser<Result, Failure, Source>, times: number) =>
-  parser.atMost(times)
 
 export const lazy = <Result, Failure, Source>(f: () => Parser<Result, Failure, Source>) => {
   let parser: Parser<Result, Failure, Source> | undefined
