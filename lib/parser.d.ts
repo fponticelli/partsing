@@ -23,6 +23,7 @@ export declare class Parser<Result, Failure, Source> {
     separatedByAtLeastOnce<Separator>(separator: Parser<Separator, Failure, Source>): Parser<Result[], Failure, Source>;
     separatedBy<Separator>(separator: Parser<Separator, Failure, Source>): Parser<Result[], Failure, Source>;
     probe(f: (v: ParseResult<Result, Failure, Source>) => void): Parser<Result, Failure, Source>;
+    as<E>(e: E): Parser<Result, E, Source>;
 }
 export declare const seq: <U extends any[], Failure, Source>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source>; }) => Parser<{ [P in keyof U]: U[P]; }, Failure, Source>;
 declare type TupleToUnion<T extends any[]> = T[number] | never;

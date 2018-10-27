@@ -5,7 +5,6 @@ export interface TextSource {
     readonly index: number;
 }
 export declare type TextParser<T> = Parser<T, string, TextSource>;
-export declare const expect: <T>(expected: string, parser: Parser<T, string, TextSource>) => Parser<T, string, TextSource>;
 export declare const parse: <T>(parser: Parser<T, string, TextSource>, source: string) => ParseResult<T, string, TextSource>;
 export declare const regexp: (pattern: RegExp, group?: number) => Parser<string, string, TextSource>;
 export declare const index: () => Parser<number, string, TextSource>;
