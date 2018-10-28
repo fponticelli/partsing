@@ -96,8 +96,14 @@ const {
   whitespacePattern,
   optionalWhitespacePattern
 } = (() => {
-  const t = /test/y
-  if (t.sticky === true) {
+  const testSticky = (() => { 
+    try {
+      return /test/y.sticky
+    } catch (_) {
+      return false
+    }
+   })()
+  if (testSticky) {
     return {
       letterPattern: /[a-z]/yi,
       lettersPattern: (min: string, max: string) => new RegExp(`[a-z]{${min},${max}}`, 'yi'),
