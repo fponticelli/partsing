@@ -105,26 +105,26 @@ describe('parser', () => {
   })
 
   it('repeatBetween', () => {
-    const p = digit().repeatBetween(2, 3)
+    const p = digit.repeatBetween(2, 3)
     expect(parseText(p, '1abc').getUnsafeFailure()).toBeDefined()
     expect(parseText(p, '12b').getUnsafeSuccess()).toEqual(['1', '2'])
     expect(parseText(p, '123b').getUnsafeSuccess()).toEqual(['1', '2', '3'])
     expect(parseText(p, '1234abc').getUnsafeSuccess()).toEqual(['1', '2', '3'])
-    const t = digit().repeat(2)
+    const t = digit.repeat(2)
     expect(parseText(t, '1abc').getUnsafeFailure()).toBeDefined()
     expect(parseText(t, '12b').getUnsafeSuccess()).toEqual(['1', '2'])
     expect(parseText(t, '123b').getUnsafeSuccess()).toEqual(['1', '2'])
-    const a = digit().repeatAtMost(2)
+    const a = digit.repeatAtMost(2)
     expect(parseText(a, 'abc').getUnsafeSuccess()).toEqual([])
     expect(parseText(a, '1b').getUnsafeSuccess()).toEqual(['1'])
     expect(parseText(a, '12b').getUnsafeSuccess()).toEqual(['1', '2'])
     expect(parseText(a, '123b').getUnsafeSuccess()).toEqual(['1', '2'])
-    const m = digit().repeatAtLeast()
+    const m = digit.repeatAtLeast()
     expect(parseText(m, 'abc').getUnsafeFailure()).toBeDefined()
     expect(parseText(m, '1b').getUnsafeSuccess()).toEqual(['1'])
     expect(parseText(m, '12b').getUnsafeSuccess()).toEqual(['1', '2'])
     expect(parseText(m, '123b').getUnsafeSuccess()).toEqual(['1', '2', '3'])
-    const m2 = digit().repeatAtLeast(2)
+    const m2 = digit.repeatAtLeast(2)
     expect(parseText(m2, 'abc').getUnsafeFailure()).toBeDefined()
     expect(parseText(m2, '1b').getUnsafeFailure()).toBeDefined()
     expect(parseText(m2, '12b').getUnsafeSuccess()).toEqual(['1', '2'])
@@ -132,14 +132,14 @@ describe('parser', () => {
   })
 
   it('or', () => {
-    const p = digit().or(match('a'))
+    const p = digit.or(match('a'))
     expect(parseText(p, '1').getUnsafeSuccess()).toEqual('1')
     expect(parseText(p, 'a').getUnsafeSuccess()).toEqual('a')
     expect(parseText(p, 'x').getUnsafeFailure()).toBeDefined()
   })
 
   it('oneOf', () => {
-    const p = oneOf<[string, string], string, TextSource>(digit(), match('a'))
+    const p = oneOf<[string, string], string, TextSource>(digit, match('a'))
     expect(parseText(p, '1').getUnsafeSuccess()).toEqual('1')
     expect(parseText(p, 'a').getUnsafeSuccess()).toEqual('a')
     expect(parseText(p, 'x').getUnsafeFailure()).toBeDefined()
@@ -154,13 +154,13 @@ describe('parser', () => {
 
   it('probe', () => {
     let value = undefined
-    const p = digit().probe(v => value = v)
+    const p = digit.probe(v => value = v)
     const result = parseText(p, '1')
     expect(result).toBe(value)
   })
 
   it('separatedBy', () => {
-    const p = letter().separatedBy(match(','))
+    const p = letter.separatedBy(match(','))
     expect(parseText(p, '1').getUnsafeSuccess()).toEqual([])
     expect(parseText(p, 'a').getUnsafeSuccess()).toEqual(['a'])
     expect(parseText(p, 'a,b').getUnsafeSuccess()).toEqual(['a', 'b'])
@@ -168,7 +168,7 @@ describe('parser', () => {
   })
 
   it('separatedByAtLeastOnce', () => {
-    const p = letter().separatedByAtLeastOnce(match(','))
+    const p = letter.separatedByAtLeastOnce(match(','))
     expect(parseText(p, 'a').getUnsafeFailure()).toBeDefined()
     expect(parseText(p, 'a,b').getUnsafeSuccess()).toEqual(['a', 'b'])
     expect(parseText(p, 'a,b,c').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])

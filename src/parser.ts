@@ -27,27 +27,27 @@ export class Parser<Success, Failure, Source> {
   }
   
   map<Dest>(fun: (res: Success) => Dest): Parser<Dest, Failure, Source> {
-    return this.flatMap<Dest>(r => new Parser<Dest, Failure, Source>((source: Source) => {
-      return new ParseSuccess(source, fun(r))
-    }))
+    return this.flatMap<Dest>(r => new Parser<Dest, Failure, Source>((source: Source) =>
+      new ParseSuccess(source, fun(r))
+    ))
   }
 
   flatMapError<E>(fun: (res: Failure) => Parser<Success, E, Source>): Parser<Success, E, Source> {
-    return new Parser<Success, E, Source>((source: Source) => {
-      return this.run(source).match<ParseResult<Success, E, Source>>({
+    return new Parser<Success, E, Source>((source: Source) =>
+      this.run(source).match<ParseResult<Success, E, Source>>({
         failure: (f: ParseFailure<Success, Failure, Source>) => fun(f.failure).run(source),
         success: (s: ParseSuccess<Success, Failure, Source>) => new ParseSuccess<Success, E, Source>(s.source, s.value)
       })
-    })
+    )
   }
   
   mapError<OtherFailure>(fun: (e: Failure) => OtherFailure): Parser<Success, OtherFailure, Source> {
-    return new Parser<Success, OtherFailure, Source>((source: Source) => {
-      return this.run(source).match<ParseResult<Success, OtherFailure, Source>>({
+    return new Parser<Success, OtherFailure, Source>((source: Source) =>
+      this.run(source).match<ParseResult<Success, OtherFailure, Source>>({
         failure: (f: ParseFailure<Success, Failure, Source>) => new ParseFailure<Success, OtherFailure, Source>(f.source, fun(f.failure)),
         success: s => new ParseSuccess<Success, OtherFailure, Source>(s.source, s.value)
       })
-    })
+    )
   }
 
   pickNext<Dest>(next: Parser<Dest, Failure, Source>): Parser<Dest, Failure, Source> {
@@ -60,18 +60,17 @@ export class Parser<Success, Failure, Source> {
 
   join<Other>(other: Parser<Other, Failure, Source>)
       : Parser<[Success, Other], Failure, Source> {
-    return this.flatMap((res: Success) => {
-      return other.map((o: Other): [Success, Other] => [res, o])
-    })
+    return this.flatMap((res: Success) =>
+      other.map((o: Other): [Success, Other] => [res, o])
+    )
   }
 
   or<U extends any[]>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> })
       : Parser<Success | TupleToUnion<U>, Failure, Source> {
-    return this.flatMapError((f: Failure) => {
-      return new Parser<Success | TupleToUnion<U>, Failure, Source>(
+    return this.flatMapError((f: Failure) =>
+      new Parser<Success | TupleToUnion<U>, Failure, Source>(
         (source: Source) => {
-          for (let i = 0; i < parsers.length; i++) {
-            const parser = parsers[i]
+          for (let parser of parsers) {
             const result = parser.run(source)
             if (result.isFailure()) {
               f = result.failure
@@ -82,7 +81,7 @@ export class Parser<Success, Failure, Source> {
           return new ParseFailure(source, f)
         }
       )
-    })
+    )
   }
   
   repeatAtLeast(times = 1) {
@@ -190,8 +189,7 @@ export const oneOf = <U extends any[], Failure, Source>
   return new Parser<TupleToUnion<U>, Failure, Source>(
     (source: Source) => {
       let failure = undefined
-      for (let i = 0; i < parsers.length; i++) {
-        const parser = parsers[i]
+      for (let parser of parsers) {
         const result = parser.run(source)
         if (result.isFailure()) {
           failure = result

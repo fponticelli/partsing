@@ -52,17 +52,14 @@ export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
   }
 }
 
-export const withPosition = (): TextParser<number> =>
-  make(source => new ParseSuccess(source, source.index))
+export const withPosition = make(source => new ParseSuccess(source, source.index))
 
-export const rest = (): TextParser<string> =>
-  make(source => {
+export const rest = make(source => {
     const value = source.source.substring(source.index)
     return new ParseSuccess({ ...source, index: source.source.length }, value)
   })
 
-export const eot = (): TextParser<undefined> =>
-  make(source => {
+export const eot = make(source => {
     const index = source.source.length
     if (source.index === index) {
       return new ParseSuccess({ ...source, index }, undefined)
@@ -132,8 +129,7 @@ const {
   }
 })()
 
-export const letter = (): TextParser<string> =>
-  regexp(letterPattern).withFailure('one letter')
+export const letter = regexp(letterPattern).withFailure('one letter')
 
 export const letters = (min = 1, max?: number): TextParser<string> => {
   const message = max === undefined ? `at least ${min} letter(s)` : `between ${min} and ${max} letter(s)`
@@ -141,8 +137,7 @@ export const letters = (min = 1, max?: number): TextParser<string> => {
   return regexp(lettersPattern(String(min), maxs)).withFailure(message)
 }
 
-export const upperCaseLetter = (): TextParser<string> =>
-  regexp(upperCaseLetterPattern).withFailure('one letter')
+export const upperCaseLetter = regexp(upperCaseLetterPattern).withFailure('one letter')
 
 export const upperCaseLetters = (min = 1, max?: number): TextParser<string> => {
   const message = max === undefined ? `at least ${min} letter(s)` : `between ${min} and ${max} letter(s)`
@@ -150,8 +145,7 @@ export const upperCaseLetters = (min = 1, max?: number): TextParser<string> => {
   return regexp(upperCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
 
-export const lowerCaseLetter = (): TextParser<string> =>
-  regexp(lowerCaseLetterPattern).withFailure('one letter')
+export const lowerCaseLetter = regexp(lowerCaseLetterPattern).withFailure('one letter')
 
 export const lowerCaseLetters = (min = 1, max?: number): TextParser<string> => {
   const message = max === undefined ? `at least ${min} letter(s)` : `between ${min} and ${max} letter(s)`
@@ -159,8 +153,7 @@ export const lowerCaseLetters = (min = 1, max?: number): TextParser<string> => {
   return regexp(lowerCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
 
-export const digit = (): TextParser<string> =>
-  regexp(digitPattern).withFailure('one digit')
+export const digit = regexp(digitPattern).withFailure('one digit')
 
 export const digits = (min = 1, max?: number): TextParser<string> => {
   const message = max === undefined ? `at least ${min} digit(s)` : `between ${min} and ${max} digit(s)`
@@ -168,14 +161,11 @@ export const digits = (min = 1, max?: number): TextParser<string> => {
   return regexp(digitsPattern(String(min), maxs)).withFailure(message)
 }
 
-export const whitespace = (): TextParser<string> =>
-  regexp(whitespacePattern).withFailure('whitespace')
+export const whitespace = regexp(whitespacePattern).withFailure('whitespace')
 
-export const optionalWhitespace = (): TextParser<string> =>
-  regexp(optionalWhitespacePattern).withFailure('optional whitespace')
+export const optionalWhitespace = regexp(optionalWhitespacePattern).withFailure('optional whitespace')
 
-export const char = (): TextParser<string> =>
-  make((source: TextSource) => {
+export const char = make((source: TextSource) => {
     if (source.index < source.source.length) {
       const c = source.source.charAt(source.index)
       return new ParseSuccess({ ...source, index: source.index + 1 }, c)

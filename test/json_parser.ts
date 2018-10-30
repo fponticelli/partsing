@@ -26,7 +26,7 @@ const jsonValue: TextParser<JSONValue> = lazy(() =>
     jsonObject
   ))
 
-const token = <T>(parser: TextParser<T>) => parser.skipNext(optionalWhitespace())
+const token = <T>(parser: TextParser<T>) => parser.skipNext(optionalWhitespace)
 const commaSeparated = <T>(parser: TextParser<T>) => parser.separatedBy(token(match(',')))
 const lCurly = token(match('{'))
 const rCurly = token(match('}'))

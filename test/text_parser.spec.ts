@@ -85,22 +85,22 @@ describe('parse_text', () => {
     expect(failure).toEqual('number')
   })
 
-  it('index', () => {
+  it('withPosition', () => {
     const p = regexp(/\d+/g)
-    const [, parsed] = parseSuccess(p.pickNext(withPosition()), 'a123b')
+    const [, parsed] = parseSuccess(p.pickNext(withPosition), 'a123b')
     expect(parsed).toEqual(4)
   })
 
   it('rest', () => {
     const p = regexp(/\d+/g)
-    const [, parsed] = parseSuccess(p.pickNext(rest()), 'a123b')
+    const [, parsed] = parseSuccess(p.pickNext(rest), 'a123b')
     expect(parsed).toEqual('b')
   })
 
   it('eot', () => {
-    const [, parsed] = parseSuccess(rest().skipNext(eot()), 'a123b')
+    const [, parsed] = parseSuccess(rest.skipNext(eot), 'a123b')
     expect(parsed).toEqual('a123b')
-    const [, failure] = parseFailure(eot(), 'a123b')
+    const [, failure] = parseFailure(eot, 'a123b')
     expect(failure).toEqual('EOT')
   })
 
@@ -112,9 +112,9 @@ describe('parse_text', () => {
   })
 
   it('letter', () => {
-    const [, parsed] = parseSuccess(letter(), 'a123b')
+    const [, parsed] = parseSuccess(letter, 'a123b')
     expect(parsed).toEqual('a')
-    const [, failure] = parseFailure(letter(), '123')
+    const [, failure] = parseFailure(letter, '123')
     expect(failure).toEqual('one letter')
   })
 
@@ -132,9 +132,9 @@ describe('parse_text', () => {
   })
 
   it('lowerCaseLetter', () => {
-    const [, parsed] = parseSuccess(lowerCaseLetter(), 'a123b')
+    const [, parsed] = parseSuccess(lowerCaseLetter, 'a123b')
     expect(parsed).toEqual('a')
-    const [, failure] = parseFailure(lowerCaseLetter(), 'AB')
+    const [, failure] = parseFailure(lowerCaseLetter, 'AB')
     expect(failure).toEqual('one letter')
   })
 
@@ -152,9 +152,9 @@ describe('parse_text', () => {
   })
 
   it('upperCaseLetter', () => {
-    const [, parsed] = parseSuccess(upperCaseLetter(), 'AabcB')
+    const [, parsed] = parseSuccess(upperCaseLetter, 'AabcB')
     expect(parsed).toEqual('A')
-    const [, failure] = parseFailure(upperCaseLetter(), 'abc')
+    const [, failure] = parseFailure(upperCaseLetter, 'abc')
     expect(failure).toEqual('one letter')
   })
 
@@ -172,9 +172,9 @@ describe('parse_text', () => {
   })
 
   it('digit', () => {
-    const [, parsed] = parseSuccess(digit(), '123abc')
+    const [, parsed] = parseSuccess(digit, '123abc')
     expect(parsed).toEqual('1')
-    const [, failure] = parseFailure(digit(), 'abc')
+    const [, failure] = parseFailure(digit, 'abc')
     expect(failure).toEqual('one digit')
   })
 
@@ -192,23 +192,23 @@ describe('parse_text', () => {
   })
 
   it('whitespace', () => {
-    const [, parsed] = parseSuccess(whitespace(), '  abc')
+    const [, parsed] = parseSuccess(whitespace, '  abc')
     expect(parsed).toEqual('  ')
-    const [, failure] = parseFailure(whitespace(), 'abc')
+    const [, failure] = parseFailure(whitespace, 'abc')
     expect(failure).toEqual('whitespace')
   })
 
   it('optionalWhitespace', () => {
-    const [, parsed] = parseSuccess(optionalWhitespace(), '  123')
+    const [, parsed] = parseSuccess(optionalWhitespace, '  123')
     expect(parsed).toEqual('  ')
-    const [, parsed2] = parseSuccess(optionalWhitespace(), '123')
+    const [, parsed2] = parseSuccess(optionalWhitespace, '123')
     expect(parsed2).toEqual('')
   })
 
   it('char', () => {
-    const [, parsed] = parseSuccess(char(), 'abc')
+    const [, parsed] = parseSuccess(char, 'abc')
     expect(parsed).toEqual('a')
-    const [, failure] = parseFailure(char(), '')
+    const [, failure] = parseFailure(char, '')
     expect(failure).toEqual('a character')
   })
 
