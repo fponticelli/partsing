@@ -6,12 +6,12 @@ import { ParseResult } from '../src/parse_result'
 const jsonTrue = match('true').withResult(true)
 const jsonFalse = match('false').withResult(false)
   
-const jsonNumber = regexp(/^-?(0|[1-9]\d*)([.]\d+)?([eE][+-]?\d+)?/)
+const jsonNumber = regexp(/-?(0|[1-9]\d*)([.]\d+)?([eE][+-]?\d+)?/y)
   .map(Number)
   .withFailure('number')
 
 // this is incomplete as it doesn't convert escaped chars or unicode values
-const jsonString = regexp(/^"((:?\\"|[^"])*)"/, 1)
+const jsonString = regexp(/"((:?\\"|[^"])*)"/y, 1)
   .withFailure('quoted string')
 const jsonNull = match('null').withResult(null)
 const jsonBoolean = jsonTrue.or(jsonFalse)
