@@ -1,4 +1,5 @@
 import { ParseResult } from './parse_result';
+import { TupleToUnion } from './type_level';
 export declare type Parsing<Success, Failure, Source> = (source: Source) => ParseResult<Success, Failure, Source>;
 export declare class Parser<Success, Failure, Source> {
     readonly run: (source: Source) => ParseResult<Success, Failure, Source>;
@@ -26,9 +27,7 @@ export declare class Parser<Success, Failure, Source> {
     withFailure<E>(e: E): Parser<Success, E, Source>;
 }
 export declare const sequence: <U extends any[], Failure, Source>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source>; }) => Parser<{ [P in keyof U]: U[P]; }, Failure, Source>;
-declare type TupleToUnion<T extends any[]> = T[number] | never;
 export declare const oneOf: <U extends any[], Failure, Source>(...parsers: { [P in keyof U]: Parser<U[P], Failure, Source>; }) => Parser<U[number], Failure, Source>;
 export declare const succeed: <Success, Failure, Source>(r: Success) => Parser<Success, Failure, Source>;
 export declare const fail: <Success, Failure, Source>(f: Failure) => Parser<Success, Failure, Source>;
 export declare const lazy: <Success, Failure, Source>(f: () => Parser<Success, Failure, Source>) => Parser<Success, Failure, Source>;
-export {};

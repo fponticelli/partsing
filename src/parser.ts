@@ -1,4 +1,5 @@
 import { ParseResult, ParseFailure, ParseSuccess } from './parse_result'
+import { TupleToUnion } from './type_level'
 
 export type Parsing<Success, Failure, Source> = (source: Source) => ParseResult<Success, Failure, Source>
 
@@ -180,8 +181,6 @@ export const sequence = <U extends any[], Failure, Source>
     }
   )
 }
-
-type TupleToUnion<T extends any[]> = T[number] | never
 
 export const oneOf = <U extends any[], Failure, Source>
     (...parsers: { [P in keyof U]: Parser<U[P], Failure, Source> }) => {
