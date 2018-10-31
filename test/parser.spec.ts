@@ -104,7 +104,7 @@ describe('parser', () => {
     expect(p.run('any').getUnsafeSuccess()).toEqual('s')
   })
 
-  it('repeatBetween', () => {
+  it('repeatX', () => {
     const p = digit.repeatBetween(2, 3)
     expect(parseText(p, '1abc').getUnsafeFailure()).toBeDefined()
     expect(parseText(p, '12b').getUnsafeSuccess()).toEqual(['1', '2'])

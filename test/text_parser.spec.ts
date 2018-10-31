@@ -43,7 +43,7 @@ const parseFailure = <R>(parser: TextParser<R>, source: string): [TextSource, st
   }
 }
 
-describe('parse_text', () => {
+describe('text_parser', () => {
   it('regexp', () => {
     const p = regexp(/(\d+)/, 1)
     expect(parseText(p, 'abc').isFailure()).toEqual(true)
@@ -79,7 +79,7 @@ describe('parse_text', () => {
     expect(parsed).toEqual('123')
   })
 
-  it('expected changes message', () => {
+  it('withFailure changes error message', () => {
     const p = regexp(/^\d+/g).withFailure('number')
     const [source, failure] = parseFailure(p, 'a123b')
     expect(failure).toEqual('number')
@@ -221,14 +221,14 @@ describe('parse_text', () => {
     expect(failure3).toBeDefined()
   })
 
-  it('matchOneOf', () => {
+  it('matchAnyCharOf', () => {
     const [, parsed1] = parseSuccess(matchAnyCharOf('abc'), 'cxy')
     expect(parsed1).toEqual('c')
     const [, failure] = parseFailure(matchAnyCharOf('abc'), 'xyz')
     expect(failure).toEqual('expected any char of `abc`')
   })
 
-  it('matchNoneOf', () => {
+  it('matchNoCharOf', () => {
     const [, parsed1] = parseSuccess(matchNoCharOf('abc'), 'xyz')
     expect(parsed1).toEqual('x')
     const [, failure] = parseFailure(matchNoCharOf('abc'), 'cxy')
