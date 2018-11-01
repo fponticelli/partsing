@@ -34,6 +34,9 @@ export const optionalValue = <T>(parser: ValueParser<T>) => parser.or(undefinedV
 export const anyValue = make<any>(source => ParseResult.success(source, source.source))
 export const stringValue = testType<string>('string')
 export const numberValue = testType<number>('number')
+export const integerValue = numberValue.test(Number.isInteger, 'expected integer')
+export const safeIntegerValue = numberValue.test(Number.isSafeInteger, 'expected safe integer')
+export const finiteNumberValue = numberValue.test(Number.isFinite, 'expected finite number')
 export const booleanValue = testType<boolean>('boolean')
 export const undefinedValue = testType<undefined>('undefined')
 export const nullValue = testValue<null>(v => v === null, 'null').withResult(null)
@@ -59,6 +62,24 @@ export const arrayValue = <T>(parser: ValueParser<T>) =>
     })
   )
 
+export const tupleValue = <U extends any[]>(...parsers: { [k in keyof U]: ValueParser<U[k]>}) => 
+  anyArrayValue.flatMap((values: any[]) =>
+    make<U>((source: ValueSource) => {
+      const length = values.length
+      const buff = new Array(length) as U
+      for (let i = 0; i < length; i++) {
+        let s = { source: values[i], path: source.path.concat([i]) }
+        let r = parsers[i].run(s)
+        if (r.isSuccess()) {
+          buff[i] = r.value
+        } else {
+          return ParseResult.failure(r.source, r.failure)
+        }
+      }
+      return ParseResult.success(source, buff)
+    })
+  )
+
 const testObject = testType<{}>('object')
 
 export const objectValue = <T, K extends keyof T>(
@@ -70,7 +91,7 @@ export const objectValue = <T, K extends keyof T>(
   > => {
     return testObject.flatMap((o: any) => {
       return make(source => {
-        const mandatoryFields = Object.keys(fieldParsers).filter(f => optionalFields.indexOf(f as K) >= 0)
+        const mandatoryFields = Object.keys(fieldParsers).filter(f => optionalFields.indexOf(f as K) < 0)
         const buff = {} as any
         for (let field of mandatoryFields) {
           if (o.hasOwnProperty(field)) {
