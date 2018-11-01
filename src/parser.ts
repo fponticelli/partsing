@@ -143,6 +143,16 @@ export class Parser<Success, Failure, Source> {
       .or(succeed([]))
   }
 
+  test(predicate: (r: Success) => boolean, failure: Failure): Parser<Success, Failure, Source> {
+    return this.flatMap(res => new Parser<Success, Failure, Source>(source => {
+      if (predicate(res)) {
+        return ParseResult.success(source, res)
+      } else {
+        return ParseResult.failure(source, failure)
+      }
+    }))
+  }
+
   probe(f: (v: ParseResult<Success, Failure, Source>) => void)
       : Parser<Success, Failure, Source> {
     return new Parser((source: Source) => {

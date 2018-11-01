@@ -22,6 +22,7 @@ export declare class Parser<Success, Failure, Source> {
     repeatAtMost(times: number): Parser<Success[], Failure, Source>;
     separatedByAtLeastOnce<Separator>(separator: Parser<Separator, Failure, Source>): Parser<Success[], Failure, Source>;
     separatedBy<Separator>(separator: Parser<Separator, Failure, Source>): Parser<Success[], Failure, Source>;
+    test(predicate: (r: Success) => boolean, failure: Failure): Parser<Success, Failure, Source>;
     probe(f: (v: ParseResult<Success, Failure, Source>) => void): Parser<Success, Failure, Source>;
     withResult<Dest>(value: Dest): Parser<Dest, Failure, Source>;
     withFailure<E>(e: E): Parser<Success, E, Source>;
