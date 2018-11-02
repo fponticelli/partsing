@@ -41,7 +41,7 @@ describe('parse_result', () => {
   it('map will transform success but not failure', () => {
     const v = ParseResult.success('', 1).map(String) as ParseSuccess<string, any, any>
     expect(v.value).toEqual('1')
-    const f = ParseResult.failure('', 1).map(String) as ParseFailure<any, number, any>
+    const f = ParseResult.failure('', 1).map(String) as ParseFailure<any, any, number>
     expect(f.failure).toEqual(1)
   })
 
@@ -50,19 +50,19 @@ describe('parse_result', () => {
     expect(v.value).toEqual('1')
     const s = ParseResult.success('', 1).flatMap(v => ParseResult.failure('', 'fail')) as ParseFailure<string, any, any>
     expect(s.failure).toEqual('fail')
-    const f = ParseResult.failure('', 1).flatMap(v => ParseResult.success('', String(v))) as ParseFailure<any, number, any>
+    const f = ParseResult.failure('', 1).flatMap(v => ParseResult.success('', String(v))) as ParseFailure<any, any, number>
     expect(f.failure).toEqual(1)
   })
 
   it('mapError will transform failure but not success', () => {
-    const v = ParseResult.success('', 1).mapError(String) as ParseSuccess<number, any, any>
+    const v = ParseResult.success('', 1).mapError(String) as ParseSuccess<any, number, any>
     expect(v.value).toEqual(1)
     const f = ParseResult.failure('', 1).mapError(String) as ParseFailure<any, string, any>
     expect(f.failure).toEqual('1')
   })
 
   it('flatMapError will transform failure but not success', () => {
-    const v = ParseResult.success('', 1).flatMapError(e => ParseResult.success('', 2)) as ParseSuccess<number, string, string>
+    const v = ParseResult.success('', 1).flatMapError(e => ParseResult.success('', 2)) as ParseSuccess<string, number, string>
     expect(v.value).toEqual(1)
     const s = ParseResult.failure('', 1).flatMapError(e => ParseResult.failure('', `${e} fail`)) as ParseFailure<string, any, any>
     expect(s.failure).toEqual('1 fail')

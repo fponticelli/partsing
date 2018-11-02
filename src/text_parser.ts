@@ -6,12 +6,12 @@ export interface TextInput {
   readonly index: number
 }
 
-export type TextParser<T> = Parser<T, string, TextInput>
+export type TextParser<T> = Parser<TextInput, T, string>
 
-const make = <T>(f: (input: TextInput) => ParseResult<T, string, TextInput>): TextParser<T> =>
-  new Parser<T, string, TextInput>(f)
+const make = <T>(f: (input: TextInput) => ParseResult<TextInput, T, string>): TextParser<T> =>
+  new Parser<TextInput, T, string>(f)
 
-export const parseText = <T>(parser: TextParser<T>, input: string): ParseResult<T, string, TextInput> =>
+export const parseText = <T>(parser: TextParser<T>, input: string): ParseResult<TextInput, T, string> =>
   parser.run({ input, index: 0})
 
 export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {

@@ -48,4 +48,4 @@ const jsonObject: TextParser<JSONObject> = lCurly.pickNext(commaSeparated(pair))
     )
 })
 
-export const parseJson = (input: string): ParseResult<JSONValue, string, TextInput> => parseText(jsonValue, input)
+export const parseJson = (input: string): ParseResult<TextInput, JSONValue, string> => parseText(jsonValue, input)

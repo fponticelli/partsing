@@ -7,12 +7,12 @@ export interface ValueInput {
   readonly path: (string | number)[]
 }
 
-export type ValueParser<T> = Parser<T, string, ValueInput>
+export type ValueParser<T> = Parser<ValueInput, T, string>
 
-const make = <T>(f: (input: ValueInput) => ParseResult<T, string, ValueInput>): ValueParser<T> =>
-  new Parser<T, string, ValueInput>(f)
+const make = <T>(f: (input: ValueInput) => ParseResult<ValueInput, T, string>): ValueParser<T> =>
+  new Parser<ValueInput, T, string>(f)
 
-export const parseValue = <T>(parser: ValueParser<T>, input: any): ParseResult<T, string, ValueInput> =>
+export const parseValue = <T>(parser: ValueParser<T>, input: any): ParseResult<ValueInput, T, string> =>
   parser.run({ input, path: []})
 
 export const testValue = <T>(f: (input: T) => boolean, expected: string) => make<T>(input => 
