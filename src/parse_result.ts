@@ -7,11 +7,11 @@ abstract class ParseResultBase<In, Out, Err> {
     failure: (f: ParseFailure<In, Out, Err>) => O
   }): O
     
-  abstract flatMap<O>(f: (r: Out) => ParseResult<In, O, Err>): ParseResult<In, O, Err>
-  abstract flatMapError<E>(f: (r: Err) => ParseResult<In, Out, E>): ParseResult<In, Out, E>
+  abstract flatMap<Out2>(f: (r: Out) => ParseResult<In, Out2, Err>): ParseResult<In, Out2, Err>
+  abstract flatMapError<Err2>(f: (r: Err) => ParseResult<In, Out, Err2>): ParseResult<In, Out, Err2>
   
-  abstract map<O>(f: (r: Out) => O): ParseResult<In, O, Err>
-  abstract mapError<E>(f: (r: Err) => E): ParseResult<In, Out, E>
+  abstract map<Out2>(f: (r: Out) => Out2): ParseResult<In, Out2, Err>
+  abstract mapError<Err2>(f: (r: Err) => Err2): ParseResult<In, Out, Err2>
 
   abstract isSuccess(): this is ParseSuccess<In, Out, Err>
   abstract isFailure(): this is ParseFailure<In, Out, Err>
@@ -44,10 +44,10 @@ export class ParseSuccess<In, Out, Err> extends ParseResultBase<In, Out, Err> {
   map<Out2>(f: (r: Out) => Out2): ParseResult<In, Out2, Err> {
     return this.flatMap(v => new ParseSuccess(this.input, f(v)))
   }
-  flatMapError<E>(f: (r: Err) => ParseResult<In, Out, E>): ParseResult<In, Out, E> {
+  flatMapError<Err2>(f: (r: Err) => ParseResult<In, Out, Err2>): ParseResult<In, Out, Err2> {
     return new ParseSuccess(this.input, this.value)
   }
-  mapError<E>(f: (r: Err) => E): ParseResult<In, Out, E> {
+  mapError<Err2>(f: (r: Err) => Err2): ParseResult<In, Out, Err2> {
     return new ParseSuccess(this.input, this.value)
   }
 
@@ -92,10 +92,10 @@ export class ParseFailure<In, Out, Err> extends ParseResultBase<In, Out, Err> {
   map<Out2>(f: (r: Out) => Out2): ParseResult<In, Out2, Err> {
     return new ParseFailure(this.input, this.failure)
   }
-  flatMapError<E>(f: (r: Err) => ParseResult<In, Out, E>): ParseResult<In, Out, E> {
+  flatMapError<Err2>(f: (r: Err) => ParseResult<In, Out, Err2>): ParseResult<In, Out, Err2> {
     return f(this.failure)
   }
-  mapError<E>(f: (r: Err) => E): ParseResult<In, Out, E> {
+  mapError<Err2>(f: (r: Err) => Err2): ParseResult<In, Out, Err2> {
     return this.flatMapError(e => new ParseFailure(this.input, f(e)))
   }
 

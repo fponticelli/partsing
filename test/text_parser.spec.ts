@@ -25,7 +25,7 @@ import {
   whitespace
 } from '../src/text_parser'
 
-const parseSuccess = <R>(parser: TextParser<R>, input: string): [TextInput, R] => {
+const parseSuccess = <Out>(parser: TextParser<Out>, input: string): [TextInput, Out] => {
   const r = parseText(parser, input)
   if (r.isFailure()) {
     throw 'expected parse success'
@@ -34,7 +34,7 @@ const parseSuccess = <R>(parser: TextParser<R>, input: string): [TextInput, R] =
   }
 }
 
-const parseFailure = <R>(parser: TextParser<R>, input: string): [TextInput, string] => {
+const parseFailure = <Out>(parser: TextParser<Out>, input: string): [TextInput, string] => {
   const r = parseText(parser, input)
   if (r.isSuccess()) {
     throw 'expected parse failure'

@@ -27,42 +27,42 @@ export class Parser<In, Out, Err> {
     })
   }
   
-  map<Dest>(fun: (res: Out) => Dest): Parser<In, Dest, Err> {
-    return this.flatMap<Dest>(r => new Parser<In, Dest, Err>((input: In) =>
+  map<Out2>(fun: (res: Out) => Out2): Parser<In, Out2, Err> {
+    return this.flatMap<Out2>(r => new Parser<In, Out2, Err>((input: In) =>
       new ParseSuccess(input, fun(r))
     ))
   }
 
-  flatMapError<E>(fun: (res: Err) => Parser<In, Out, E>): Parser<In, Out, E> {
-    return new Parser<In, Out, E>((input: In) =>
-      this.run(input).match<ParseResult<In, Out, E>>({
+  flatMapError<Err2>(fun: (res: Err) => Parser<In, Out, Err2>): Parser<In, Out, Err2> {
+    return new Parser<In, Out, Err2>((input: In) =>
+      this.run(input).match<ParseResult<In, Out, Err2>>({
         failure: (f: ParseFailure<In, Out, Err>) => fun(f.failure).run(input),
-        success: (s: ParseSuccess<In, Out, Err>) => new ParseSuccess<In, Out, E>(s.input, s.value)
+        success: (s: ParseSuccess<In, Out, Err>) => new ParseSuccess<In, Out, Err2>(s.input, s.value)
       })
     )
   }
   
-  mapError<OtherFailure>(fun: (e: Err) => OtherFailure): Parser<In, Out, OtherFailure> {
-    return new Parser<In, Out, OtherFailure>((input: In) =>
-      this.run(input).match<ParseResult<In, Out, OtherFailure>>({
-        failure: (f: ParseFailure<In, Out, Err>) => new ParseFailure<In, Out, OtherFailure>(f.input, fun(f.failure)),
-        success: s => new ParseSuccess<In, Out, OtherFailure>(s.input, s.value)
+  mapError<Err2>(fun: (e: Err) => Err2): Parser<In, Out, Err2> {
+    return new Parser<In, Out, Err2>((input: In) =>
+      this.run(input).match<ParseResult<In, Out, Err2>>({
+        failure: (f: ParseFailure<In, Out, Err>) => new ParseFailure<In, Out, Err2>(f.input, fun(f.failure)),
+        success: s => new ParseSuccess<In, Out, Err2>(s.input, s.value)
       })
     )
   }
 
-  pickNext<Dest>(next: Parser<In, Dest, Err>): Parser<In, Dest, Err> {
+  pickNext<Out2>(next: Parser<In, Out2, Err>): Parser<In, Out2, Err> {
     return this.flatMap(_ => next)
   }
 
-  skipNext<Next>(next: Parser<In, Next, Err>): Parser<In, Out, Err> {
+  skipNext<Out2>(next: Parser<In, Out2, Err>): Parser<In, Out, Err> {
     return this.flatMap((r: Out): Parser<In, Out, Err> => next.withResult(r))
   }
 
-  join<Other>(other: Parser<In, Other, Err>)
-      : Parser<In, [Out, Other], Err> {
+  join<Out2>(other: Parser<In, Out2, Err>)
+      : Parser<In, [Out, Out2], Err> {
     return this.flatMap((res: Out) =>
-      other.map((o: Other): [Out, Other] => [res, o])
+      other.map((o: Out2): [Out, Out2] => [res, o])
     )
   }
 
@@ -162,11 +162,11 @@ export class Parser<In, Out, Err> {
     })
   }
 
-  withResult<Dest>(value: Dest): Parser<In, Dest, Err> {
+  withResult<Out2>(value: Out2): Parser<In, Out2, Err> {
     return this.map(_ => value)
   }
 
-  withFailure<E>(e: E): Parser<In, Out, E> {
+  withFailure<Err2>(e: Err2): Parser<In, Out, Err2> {
     return this.mapError(_ => e)
   }
 }

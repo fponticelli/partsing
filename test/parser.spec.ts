@@ -2,21 +2,21 @@ import { Parser, succeed, fail, lazy, sequence, oneOf } from '../src/parser'
 import { ParseResult, ParseSuccess, ParseFailure } from '../src/parse_result'
 import { parseText, digit, regexp, TextInput, match, letter } from '../src/text_parser'
 
-const parseSuccess = <R, F>() => Parser.of<R, R, F>(input => ParseResult.success<R, R, F>(input, input))
-const parseFailure = <R>() => Parser.of<R, R, R>(input => ParseResult.failure<R, R, R>(input, input))
+const parseSuccess = <In, Err>() => Parser.of<In, In, Err>(input => ParseResult.success<In, In, Err>(input, input))
+const parseFailure = <In>() => Parser.of<In, In, In>(input => ParseResult.failure<In, In, In>(input, input))
 
-const runSuccess = <S, R, F>(p: Parser<S, R, F>, s: S) => {
-  const r = p.run(s)
+const runSuccess = <In, Out, Err>(p: Parser<In, Out, Err>, input: In) => {
+  const r = p.run(input)
   if (r.isFailure())
-    fail(`parser ${p} was supposed to succeed parsing '${s}'`)
-  return [r.input, (r as ParseSuccess<S, R, F>).value]
+    fail(`parser ${p} was supposed to succeed parsing '${input}'`)
+  return [r.input, (r as ParseSuccess<In, Out, Err>).value]
 }
 
-const runFailure = <S, R, F>(p: Parser<S, R, F>, s: S) => {
-  const r = p.run(s)
+const runFailure = <In, Out, Err>(p: Parser<In, Out, Err>, input: In) => {
+  const r = p.run(input)
   if (r.isSuccess())
-    fail(`parser ${p} was supposed to fail parsing '${s}'`)
-  return [r.input, (r as ParseFailure<S, R, F>).failure]
+    fail(`parser ${p} was supposed to fail parsing '${input}'`)
+  return [r.input, (r as ParseFailure<In, Out, Err>).failure]
 }
 
 describe('parser', () => {
