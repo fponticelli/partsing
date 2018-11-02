@@ -1,4 +1,4 @@
-import { regexp, match, TextParser, optionalWhitespace, TextSource, parseText } from '../src/text_parser'
+import { regexp, match, TextParser, optionalWhitespace, TextInput, parseText } from '../src/text_parser'
 import { oneOf, lazy } from '../src/parser'
 import { JSONValue, JSONArray, JSONObject, JSONPrimitive } from './json_value'
 import { ParseResult } from '../src/parse_result'
@@ -48,4 +48,4 @@ const jsonObject: TextParser<JSONObject> = lCurly.pickNext(commaSeparated(pair))
     )
 })
 
-export const parseJson = (source: string): ParseResult<JSONValue, string, TextSource> => parseText(jsonValue, source)
+export const parseJson = (input: string): ParseResult<JSONValue, string, TextInput> => parseText(jsonValue, input)

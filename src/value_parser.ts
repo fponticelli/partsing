@@ -2,36 +2,36 @@ import { Parser } from './parser'
 import { ParseResult } from './parse_result'
 import { TupleToUnion } from './type_level'
 
-export interface ValueSource {
-  readonly source: any
+export interface ValueInput {
+  readonly input: any
   readonly path: (string | number)[]
 }
 
-export type ValueParser<T> = Parser<T, string, ValueSource>
+export type ValueParser<T> = Parser<T, string, ValueInput>
 
-const make = <T>(f: (source: ValueSource) => ParseResult<T, string, ValueSource>): ValueParser<T> =>
-  new Parser<T, string, ValueSource>(f)
+const make = <T>(f: (input: ValueInput) => ParseResult<T, string, ValueInput>): ValueParser<T> =>
+  new Parser<T, string, ValueInput>(f)
 
-export const parseValue = <T>(parser: ValueParser<T>, source: any): ParseResult<T, string, ValueSource> =>
-  parser.run({ source, path: []})
+export const parseValue = <T>(parser: ValueParser<T>, input: any): ParseResult<T, string, ValueInput> =>
+  parser.run({ input, path: []})
 
-export const testValue = <T>(f: (source: T) => boolean, expected: string) => make<T>(source => 
-  f(source.source) ?  
-    ParseResult.success(source, source.source) :
-    ParseResult.failure(source, `expected ${expected} but got ${source.source}`)
+export const testValue = <T>(f: (input: T) => boolean, expected: string) => make<T>(input => 
+  f(input.input) ?  
+    ParseResult.success(input, input.input) :
+    ParseResult.failure(input, `expected ${expected} but got ${input.input}`)
 )
 
-export const testType = <T>(expected: string) => make<T>(source =>
-  typeof source.source === expected ?
-    ParseResult.success(source, source.source) :
-    ParseResult.failure(source, `expected ${expected} but got ${typeof source.source}`)
+export const testType = <T>(expected: string) => make<T>(input =>
+  typeof input.input === expected ?
+    ParseResult.success(input, input.input) :
+    ParseResult.failure(input, `expected ${expected} but got ${typeof input.input}`)
 )
 
 export const nullableValue = <T>(parser: ValueParser<T>) => parser.or(nullValue)
 export const undefineableValue = <T>(parser: ValueParser<T>) => parser.or(undefinedValue)
 export const optionalValue = <T>(parser: ValueParser<T>) => parser.or(undefinedValue).or(nullValue)
 
-export const anyValue = make<any>(source => ParseResult.success(source, source.source))
+export const anyValue = make<any>(input => ParseResult.success(input, input.input))
 export const stringValue = testType<string>('string')
 export const numberValue = testType<number>('number')
 export const integerValue = numberValue.test(Number.isInteger, 'expected integer')
@@ -46,37 +46,37 @@ export const literalValue = <T>(value: T, eq: (a: T, b: T) => boolean = (a, b) =
 export const anyArrayValue = testValue<any[]>(Array.isArray, 'array')
 export const arrayValue = <T>(parser: ValueParser<T>) => 
   anyArrayValue.flatMap((values: any[]) =>
-    make<T[]>((source: ValueSource) => {
+    make<T[]>((input: ValueInput) => {
       const length = values.length
       const buff = new Array(length)
       for (let i = 0; i < length; i++) {
-        let s = { source: values[i], path: source.path.concat([i]) }
+        let s = { input: values[i], path: input.path.concat([i]) }
         let r = parser.run(s)
         if (r.isSuccess()) {
           buff[i] = r.value
         } else {
-          return ParseResult.failure(r.source, r.failure)
+          return ParseResult.failure(r.input, r.failure)
         }
       }
-      return ParseResult.success(source, buff)
+      return ParseResult.success(input, buff)
     })
   )
 
 export const tupleValue = <U extends any[]>(...parsers: { [k in keyof U]: ValueParser<U[k]>}) => 
   anyArrayValue.flatMap((values: any[]) =>
-    make<U>((source: ValueSource) => {
+    make<U>((input: ValueInput) => {
       const length = values.length
       const buff = new Array(length) as U
       for (let i = 0; i < length; i++) {
-        let s = { source: values[i], path: source.path.concat([i]) }
+        let s = { input: values[i], path: input.path.concat([i]) }
         let r = parsers[i].run(s)
         if (r.isSuccess()) {
           buff[i] = r.value
         } else {
-          return ParseResult.failure(r.source, r.failure)
+          return ParseResult.failure(r.input, r.failure)
         }
       }
-      return ParseResult.success(source, buff)
+      return ParseResult.success(input, buff)
     })
   )
 
@@ -90,34 +90,34 @@ export const objectValue = <T, K extends keyof T>(
     { [k in TupleToUnion<typeof optionalFields>]+?: T[k] }
   > => {
     return testObject.flatMap((o: any) => {
-      return make(source => {
+      return make(input => {
         const mandatoryFields = Object.keys(fieldParsers).filter(f => optionalFields.indexOf(f as K) < 0)
         const buff = {} as any
         for (let field of mandatoryFields) {
           if (o.hasOwnProperty(field)) {
-            const s = { source: o[field], path: source.path.concat([field]) }
+            const s = { input: o[field], path: input.path.concat([field]) }
             const result = fieldParsers[field as K].run(s)
             if (result.isSuccess()) {
               buff[field] = result.value
             } else {
-              return ParseResult.failure(result.source, result.failure)
+              return ParseResult.failure(result.input, result.failure)
             }
           } else {
-            return ParseResult.failure(source, `object doesn't have mandatory field "${field}"`)
+            return ParseResult.failure(input, `object doesn't have mandatory field "${field}"`)
           }
         }
         for (let field of optionalFields) {
           if (o.hasOwnProperty(field)) {
-            const s = { source: o[field], path: source.path.concat([field as never]) }
+            const s = { input: o[field], path: input.path.concat([field as never]) }
             const result = fieldParsers[field as K].run(s)
             if (result.isSuccess()) {
               buff[field] = result.value
             } else {
-              return ParseResult.failure(result.source, result.failure)
+              return ParseResult.failure(result.input, result.failure)
             }
           }
         }
-        return ParseResult.success(source, buff as never)
+        return ParseResult.success(input, buff as never)
       })
     })
   }

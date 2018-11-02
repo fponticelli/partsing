@@ -1,82 +1,82 @@
 import { Parser, sequence, oneOf } from './parser'
 import { ParseResult, ParseFailure, ParseSuccess } from './parse_result'
 
-export interface TextSource {
-  readonly source: string
+export interface TextInput {
+  readonly input: string
   readonly index: number
 }
 
-export type TextParser<T> = Parser<T, string, TextSource>
+export type TextParser<T> = Parser<T, string, TextInput>
 
-const make = <T>(f: (source: TextSource) => ParseResult<T, string, TextSource>): TextParser<T> =>
-  new Parser<T, string, TextSource>(f)
+const make = <T>(f: (input: TextInput) => ParseResult<T, string, TextInput>): TextParser<T> =>
+  new Parser<T, string, TextInput>(f)
 
-export const parseText = <T>(parser: TextParser<T>, source: string): ParseResult<T, string, TextSource> =>
-  parser.run({ source, index: 0})
+export const parseText = <T>(parser: TextParser<T>, input: string): ParseResult<T, string, TextInput> =>
+  parser.run({ input, index: 0})
 
 export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
   if (pattern.sticky) {
-    return make((source: TextSource) => {
-      pattern.lastIndex = source.index
-      const res = pattern.exec(source.source)
+    return make((input: TextInput) => {
+      pattern.lastIndex = input.index
+      const res = pattern.exec(input.input)
       if (res == null) {
-        return new ParseFailure(source, pattern.toString())
+        return new ParseFailure(input, pattern.toString())
       } else {
-        return new ParseSuccess({ ...source, index: pattern.lastIndex }, res[group])
+        return new ParseSuccess({ ...input, index: pattern.lastIndex }, res[group])
       }
     })
   } else if (pattern.global) {
-    return make((source: TextSource) => {
-      const s = source.source.substring(source.index)
+    return make((input: TextInput) => {
+      const s = input.input.substring(input.index)
       pattern.lastIndex = 0
       const res = pattern.exec(s)
       if (res == null) {
-        return new ParseFailure(source, pattern.toString())
+        return new ParseFailure(input, pattern.toString())
       } else {
-        const index = source.index + pattern.lastIndex
-        return new ParseSuccess({ ...source, index }, res[group])
+        const index = input.index + pattern.lastIndex
+        return new ParseSuccess({ ...input, index }, res[group])
       }
     })
   } else {
-    return make((source: TextSource) => {
-      const s = source.source.substring(source.index)
+    return make((input: TextInput) => {
+      const s = input.input.substring(input.index)
       pattern.lastIndex = 0
       const res = pattern.exec(s)
       if (res == null) {
-        return new ParseFailure(source, pattern.toString())
+        return new ParseFailure(input, pattern.toString())
       } else {
-        const index = source.index + s.indexOf(res[0]) + res[0].length
-        return new ParseSuccess({ ...source, index }, res[group])
+        const index = input.index + s.indexOf(res[0]) + res[0].length
+        return new ParseSuccess({ ...input, index }, res[group])
       }
     })
   }
 }
 
-export const withPosition = make(source => new ParseSuccess(source, source.index))
+export const withPosition = make(input => new ParseSuccess(input, input.index))
 
-export const rest = make(source => {
-    const value = source.source.substring(source.index)
-    return new ParseSuccess({ ...source, index: source.source.length }, value)
+export const rest = make(input => {
+    const value = input.input.substring(input.index)
+    return new ParseSuccess({ ...input, index: input.input.length }, value)
   })
 
-export const eot = make(source => {
-    const index = source.source.length
-    if (source.index === index) {
-      return new ParseSuccess({ ...source, index }, undefined)
+export const eot = make(input => {
+    const index = input.input.length
+    if (input.index === index) {
+      return new ParseSuccess({ ...input, index }, undefined)
     } else {
-      return new ParseFailure(source, 'EOT')
+      return new ParseFailure(input, 'EOT')
     }
   })
 
 export const match = <V extends string>(s: V): TextParser<V> => {
   const length = s.length
-  return make(source => {
-    const index = source.index + length
-    const value = source.source.substring(source.index, index)
+  return make(input => {
+    const index = input.index + length
+    const value = input.input.substring(input.index, index)
     if (value === s) {
-      return new ParseSuccess({ ...source, index }, s)
+      return new ParseSuccess({ ...input, index }, s)
     } else {
-      return new ParseFailure(source, `"${s}"`)
+      return new ParseFailure(input, `"${s}"`)
     }
   })
 }
@@ -165,26 +165,26 @@ export const whitespace = regexp(whitespacePattern).withFailure('whitespace')
 
 export const optionalWhitespace = regexp(optionalWhitespacePattern).withFailure('optional whitespace')
 
-export const char = make((source: TextSource) => {
-    if (source.index < source.source.length) {
-      const c = source.source.charAt(source.index)
-      return new ParseSuccess({ ...source, index: source.index + 1 }, c)
+export const char = make((input: TextInput) => {
+    if (input.index < input.input.length) {
+      const c = input.input.charAt(input.index)
+      return new ParseSuccess({ ...input, index: input.index + 1 }, c)
     } else {
       // no more characters
-      return new ParseFailure(source, 'a character')
+      return new ParseFailure(input, 'a character')
     }
   })
 
 export const testChar = (f: (c: string) => boolean): TextParser<string> =>
-  make((source: TextSource) => {
-    if (source.index >= source.source.length) {
-      return new ParseFailure(source, 'to test char but reached end of source')
+  make((input: TextInput) => {
+    if (input.index >= input.input.length) {
+      return new ParseFailure(input, 'to test char but reached end of input')
     } else {
-      const char = source.source.charAt(source.index)
+      const char = input.input.charAt(input.index)
       if (f(char)) {
-        return new ParseSuccess({...source, index: source.index + 1}, char)
+        return new ParseSuccess({...input, index: input.index + 1}, char)
       } else {
-        return new ParseFailure(source, 'failed matching char predicate')
+        return new ParseFailure(input, 'failed matching char predicate')
       }
     }
   })
@@ -196,29 +196,29 @@ export const matchNoCharOf = (noneOf: string): TextParser<string> =>
   testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(`expected none of \`${noneOf}\` chars`)
 
 export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<string> =>
-  make((source: TextSource) => {
-    let index = source.index
-    while (index < source.source.length && f(source.source.charAt(index))) {
+  make((input: TextInput) => {
+    let index = input.index
+    while (index < input.input.length && f(input.input.charAt(index))) {
       index++
     }
-    if (index - source.index < atLeast) {
-      return new ParseFailure(source, `expected at least ${atLeast} occurrance(s) of predicate`)
+    if (index - input.index < atLeast) {
+      return new ParseFailure(input, `expected at least ${atLeast} occurrance(s) of predicate`)
     } else {
-      return new ParseSuccess({...source, index }, source.source.substring(source.index, index))
+      return new ParseSuccess({...input, index }, input.input.substring(input.index, index))
     }
   })
 
 export const takeCharBetween = (f: (c: string) => boolean, min: number, max: number): TextParser<string> =>
-  make((source: TextSource) => {
-    let index = source.index
+  make((input: TextInput) => {
+    let index = input.index
     let counter = 0
-    while (index < source.source.length && counter < max && f(source.source.charAt(index))) {
+    while (index < input.input.length && counter < max && f(input.input.charAt(index))) {
       index++
       counter++
     }
     if (counter < min) {
-      return new ParseFailure(source, `expected at least ${min} occurrance(s) of predicate`)
+      return new ParseFailure(input, `expected at least ${min} occurrance(s) of predicate`)
     } else {
-      return new ParseSuccess({...source, index }, source.source.substring(source.index, index))
+      return new ParseSuccess({...input, index }, input.input.substring(input.index, index))
     }
   })

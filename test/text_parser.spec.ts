@@ -21,25 +21,25 @@ import {
   takeCharWhile,
   testChar,
   TextParser,
-  TextSource,
+  TextInput,
   whitespace
 } from '../src/text_parser'
 
-const parseSuccess = <R>(parser: TextParser<R>, source: string): [TextSource, R] => {
-  const r = parseText(parser, source)
+const parseSuccess = <R>(parser: TextParser<R>, input: string): [TextInput, R] => {
+  const r = parseText(parser, input)
   if (r.isFailure()) {
     throw 'expected parse success'
   } else {
-    return [r.source, r.value]
+    return [r.input, r.value]
   }
 }
 
-const parseFailure = <R>(parser: TextParser<R>, source: string): [TextSource, string] => {
-  const r = parseText(parser, source)
+const parseFailure = <R>(parser: TextParser<R>, input: string): [TextInput, string] => {
+  const r = parseText(parser, input)
   if (r.isSuccess()) {
     throw 'expected parse failure'
   } else {
-    return [r.source, r.failure]
+    return [r.input, r.failure]
   }
 }
 
@@ -47,41 +47,41 @@ describe('text_parser', () => {
   it('regexp', () => {
     const p = regexp(/(\d+)/, 1)
     expect(parseText(p, 'abc').isFailure()).toEqual(true)
-    const [source, parsed] = parseSuccess(p, 'a123b')
-    expect(source.index).toEqual(4)
+    const [input, parsed] = parseSuccess(p, 'a123b')
+    expect(input.index).toEqual(4)
     expect(parsed).toEqual('123')
   })
 
   it('regexp with group', () => {
     const p = regexp(/a(\d+)b/g, 1)
-    const [source, parsed] = parseSuccess(p.join(p), '--a123b-a456b--')
-    expect(source.index).toEqual(13)
+    const [input, parsed] = parseSuccess(p.join(p), '--a123b-a456b--')
+    expect(input.index).toEqual(13)
     expect(parsed).toEqual(['123', '456'])
   })
 
   it('regexp matching from start', () => {
     const p = regexp(/^\d+/g)
-    const [source, failure] = parseFailure(p, 'a123b')
-    expect(source.index).toEqual(0)
+    const [input, failure] = parseFailure(p, 'a123b')
+    expect(input.index).toEqual(0)
     expect(failure).toEqual('/^\\d+/g')
-    const [source2, parsed] = parseSuccess(p, '123')
-    expect(source2.index).toEqual(3)
+    const [input2, parsed] = parseSuccess(p, '123')
+    expect(input2.index).toEqual(3)
     expect(parsed).toEqual('123')
   })
 
   it('regexp matching from start without global', () => {
     const p = regexp(/^\d+/)
-    const [source, failure] = parseFailure(p, 'a123b')
-    expect(source.index).toEqual(0)
+    const [input, failure] = parseFailure(p, 'a123b')
+    expect(input.index).toEqual(0)
     expect(failure).toEqual('/^\\d+/')
-    const [source2, parsed] = parseSuccess(p, '123')
-    expect(source2.index).toEqual(3)
+    const [input2, parsed] = parseSuccess(p, '123')
+    expect(input2.index).toEqual(3)
     expect(parsed).toEqual('123')
   })
 
   it('withFailure changes error message', () => {
     const p = regexp(/^\d+/g).withFailure('number')
-    const [source, failure] = parseFailure(p, 'a123b')
+    const [input, failure] = parseFailure(p, 'a123b')
     expect(failure).toEqual('number')
   })
 

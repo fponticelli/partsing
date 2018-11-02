@@ -1,29 +1,29 @@
 import { Parser, succeed, fail, lazy, sequence, oneOf } from '../src/parser'
 import { ParseResult, ParseSuccess, ParseFailure } from '../src/parse_result'
-import { parseText, digit, regexp, TextSource, match, letter } from '../src/text_parser'
+import { parseText, digit, regexp, TextInput, match, letter } from '../src/text_parser'
 
-const parseSuccess = <R, F>() => Parser.of<R, F, R>(source => ParseResult.success<R, F, R>(source, source))
-const parseFailure = <R>() => Parser.of<R, R, R>(source => ParseResult.failure<R, R, R>(source, source))
+const parseSuccess = <R, F>() => Parser.of<R, F, R>(input => ParseResult.success<R, F, R>(input, input))
+const parseFailure = <R>() => Parser.of<R, R, R>(input => ParseResult.failure<R, R, R>(input, input))
 
 const runSuccess = <R, F, S>(p: Parser<R, F, S>, s: S) => {
   const r = p.run(s)
   if (r.isFailure())
     fail(`parser ${p} was supposed to succeed parsing '${s}'`)
-  return [r.source, (r as ParseSuccess<R, F, S>).value]
+  return [r.input, (r as ParseSuccess<R, F, S>).value]
 }
 
 const runFailure = <R, F, S>(p: Parser<R, F, S>, s: S) => {
   const r = p.run(s)
   if (r.isSuccess())
     fail(`parser ${p} was supposed to fail parsing '${s}'`)
-  return [r.source, (r as ParseFailure<R, F, S>).failure]
+  return [r.input, (r as ParseFailure<R, F, S>).failure]
 }
 
 describe('parser', () => {
   it('Parser constructor and run', () => {
-    const [source, value] = runSuccess(parseSuccess(), 'a')
+    const [input, value] = runSuccess(parseSuccess(), 'a')
     expect(value).toEqual('a')
-    expect(source).toEqual('a')
+    expect(input).toEqual('a')
     
     const [source2, failure] = runFailure(parseFailure(), 'b')
     expect(failure).toEqual('b')
@@ -79,7 +79,7 @@ describe('parser', () => {
   })
 
   it('sequence', () => {
-    const parser = sequence<[string, string, string], string, TextSource>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const parser = sequence<[string, string, string], string, TextInput>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
     const result = parseText(parser, '1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
     const result2 = parseText(parser, '1ba').getUnsafeFailure()
@@ -139,7 +139,7 @@ describe('parser', () => {
   })
 
   it('oneOf', () => {
-    const p = oneOf<[string, string], string, TextSource>(digit, match('a'))
+    const p = oneOf<[string, string], string, TextInput>(digit, match('a'))
     expect(parseText(p, '1').getUnsafeSuccess()).toEqual('1')
     expect(parseText(p, 'a').getUnsafeSuccess()).toEqual('a')
     expect(parseText(p, 'x').getUnsafeFailure()).toBeDefined()
@@ -147,7 +147,7 @@ describe('parser', () => {
   })
 
   it('sequence', () => {
-    const parser = sequence<[string, string, string], string, TextSource>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const parser = sequence<[string, string, string], string, TextInput>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
     const result = parseText(parser, '1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
   })
@@ -175,7 +175,7 @@ describe('parser', () => {
   })
 
   it('ofGuaranteed', () => {
-    const p = Parser.ofGuaranteed<string, string, TextSource>((source: {source: string, index: number}) => [source, source.source])
+    const p = Parser.ofGuaranteed<string, string, TextInput>((input: {input: string, index: number}) => [input, input.input])
     const result = parseText(p, '1').getUnsafeSuccess()
     expect(result).toBe('1')
   })
