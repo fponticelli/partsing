@@ -21,17 +21,21 @@ import {
   takeCharWhile,
   testChar,
   TextParser,
-  TextInput,
-  TextParserError,
-  whitespace,
+  whitespace
+} from '../../src/text'
+
+import { TextInput } from '../../src/text/input'
+
+import {
+  TextError,
   ExpectedAtLeast,
   NoCharOfError,
   AnyCharOfError,
   OneEntityError,
   MatchError,
-  EOTError,
+  ExpectedEOTError,
   RegExpError
-} from '../../src/text'
+} from '../../src/text/error'
 
 const parseSuccess = <Out>(parser: TextParser<Out>, input: string): [TextInput, Out] => {
   const r = parseText(parser, input)
@@ -42,7 +46,7 @@ const parseSuccess = <Out>(parser: TextParser<Out>, input: string): [TextInput, 
   }
 }
 
-const parseFailure = <Out>(parser: TextParser<Out>, input: string): [TextInput, TextParserError] => {
+const parseFailure = <Out>(parser: TextParser<Out>, input: string): [TextInput, TextError] => {
   const r = parseText(parser, input)
   if (r.isSuccess()) {
     throw 'expected parse failure'
@@ -88,7 +92,7 @@ describe('text_parser', () => {
   })
 
   it('withFailure changes error message', () => {
-    const p = regexp(/^\d+/g).withFailure(TextParserError.custom('number'))
+    const p = regexp(/^\d+/g).withFailure(TextError.custom('number'))
     const [input, failure] = parseFailure(p, 'a123b')
     expect(failure.toString()).toEqual('number')
   })
@@ -109,7 +113,7 @@ describe('text_parser', () => {
     const [, parsed] = parseSuccess(rest.skipNext(eot), 'a123b')
     expect(parsed).toEqual('a123b')
     const [, failure] = parseFailure(eot, 'a123b')
-    expect(failure).toBeInstanceOf(EOTError)
+    expect(failure).toBeInstanceOf(ExpectedEOTError)
   })
 
   it('match', () => {

@@ -1,216 +1,14 @@
 import { Parser } from '../core/parser'
 import { ParseResult, ParseFailure, ParseSuccess } from '../core/result'
+import { TextError, Entity } from './error'
+import { TextInput } from './input'
 
-export interface TextInput {
-  readonly input: string
-  readonly index: number
-}
+export type TextParser<T> = Parser<TextInput, T, TextError>
 
-export enum ErrorEntityType {
-  CHARACTER = 'character',
-  PREDICATE = 'predicate',
-  LETTERS = 'letter',
-  UPPER_CASE_LETTERS = 'uppercase letter',
-  LOWER_CASE_LETTERS = 'lowercase letter',
-  DIGITS = 'digit',
-  WHITESPACE = 'whitespace'
-}
+const make = <T>(f: (input: TextInput) => ParseResult<TextInput, T, TextError>): TextParser<T> =>
+  new Parser<TextInput, T, TextError>(f)
 
-export const pluralize = (entity: ErrorEntityType, qt: number) => {
-  if (qt === 1) return String(entity)
-  switch (entity) {
-    case ErrorEntityType.CHARACTER: return 'characters'
-    case ErrorEntityType.PREDICATE: return 'predicates'
-    case ErrorEntityType.LETTERS: return 'letters'
-    case ErrorEntityType.UPPER_CASE_LETTERS: return 'uppercase letters'
-    case ErrorEntityType.LOWER_CASE_LETTERS: return 'lowercase letters'
-    case ErrorEntityType.DIGITS: return 'digits'
-    case ErrorEntityType.WHITESPACE: return 'whitespaces'
-    default: throw new Error('unreacheable code')
-  }
-}
-
-abstract class TextParserErrorBase {
-  toStringWithInput(input: TextInput): string {
-    const msg = this.toString()
-    const length = Math.min(25, Math.max(msg.length, 10), input.input.length - input.index)
-    const prefix = input.index === 0 ? '' : '…'
-    const suffix = input.index < input.input.length - 1 ? '…' : ''
-    const extract = input.input.substr(input.index, length)
-    return `${msg} at "${prefix}${extract}${suffix}"`
-  }
-  abstract toString(): string
-}
-
-export class RegExpError extends TextParserErrorBase {
-  readonly kind: 'regexp-error' = 'regexp-error'
-  constructor(readonly pattern: RegExp) {
-    super()
-  }
-
-  toString() {
-    return `doesn't match ${this.pattern.source}`
-  }
-}
-
-export class OneEntityError extends TextParserErrorBase {
-  readonly kind: 'one-entity-error' = 'one-entity-error'
-  constructor(readonly entity: ErrorEntityType) {
-    super()
-  }
-
-  toString() {
-    return `expected a ${pluralize(this.entity, 1)}`
-  }
-}
-
-export class UnexpectedEOTError extends TextParserErrorBase {
-  readonly kind: 'unexpected-eot-error' = 'unexpected-eot-error'
-  constructor() {
-    super()
-  }
-
-  toString() {
-    return `unexpected end of input`
-  }
-}
-
-export class EOTError extends TextParserErrorBase {
-  readonly kind: 'eot-error' = 'eot-error'
-  constructor() {
-    super()
-  }
-
-  toString() {
-    return `expected end of input`
-  }
-}
-
-export class MatchError extends TextParserErrorBase {
-  readonly kind: 'match-error' = 'match-error'
-  constructor(
-    readonly value: string
-  ) {
-    super()
-  }
-
-  toString() {
-    return `expected "${this.value}"`
-  }
-}
-
-export class ExpectedAtLeast extends TextParserErrorBase {
-  readonly kind: 'expected-at-least-error' = 'expected-at-least-error'
-  constructor(
-    readonly min: number,
-    readonly entity: ErrorEntityType
-  ) {
-    super()
-  }
-
-  toString() {
-    return `expected at least ${this.min} ${pluralize(this.entity, this.min)}`
-  }
-}
-
-export class CustomError extends TextParserErrorBase {
-  readonly kind: 'custom-error' = 'custom-error'
-  constructor(
-    readonly message: string
-  ) {
-    super()
-  }
-
-  toString() {
-    return this.message
-  }
-}
-
-export class AnyCharOfError extends TextParserErrorBase {
-  readonly kind: 'any-char-of-error' = 'any-char-of-error'
-  constructor(
-    readonly values: string
-  ) {
-    super()
-  }
-
-  toString() {
-    return `expected any char of "${this.values}"`
-  }
-}
-
-export class NoCharOfError extends TextParserErrorBase {
-  readonly kind: 'no-char-of-error' = 'no-char-of-error'
-  constructor(
-    readonly values: string
-  ) {
-    super()
-  }
-
-  toString() {
-    return `expected no char of "${this.values}"`
-  }
-}
-
-export class FailedMatchingError extends TextParserErrorBase {
-  readonly kind: 'failed-matching-error' = 'failed-matching-error'
-  constructor(
-    readonly entity: ErrorEntityType
-  ) {
-    super()
-  }
-
-  toString() {
-    return `failed matching ${pluralize(this.entity, 1)}`
-  }
-}
-
-export class OptionalError extends TextParserErrorBase {
-  readonly kind: 'optional-error' = 'optional-error'
-  constructor(
-    readonly entity: ErrorEntityType
-  ) {
-    super()
-  }
-
-  toString() {
-    return `expected optional ${pluralize(this.entity, 1)}`
-  }
-}
-
-export type TextParserError
-  = RegExpError
-  | EOTError
-  | MatchError
-  | ExpectedAtLeast
-  | CustomError
-  | AnyCharOfError
-  | NoCharOfError
-  | OneEntityError
-  | UnexpectedEOTError
-  | FailedMatchingError
-  | OptionalError
-
-export const TextParserError = {
-  regExp: (pattern: RegExp) => new RegExpError(pattern) as TextParserError,
-  eot: new EOTError() as TextParserError,
-  match: (value: string) => new MatchError(value) as TextParserError,
-  expectedAtLeast: (min: number, entity: ErrorEntityType) => new ExpectedAtLeast(min, entity) as TextParserError,
-  anyCharOf: (values: string) => new AnyCharOfError(values) as TextParserError,
-  noCharOf: (values: string) => new NoCharOfError(values) as TextParserError,
-  custom: (value: string) => new CustomError(value) as TextParserError,
-  one: (entity: ErrorEntityType) => new OneEntityError(entity) as TextParserError,
-  unexpectedEot: new UnexpectedEOTError() as TextParserError,
-  failedMatching: (entity: ErrorEntityType) => new FailedMatchingError(entity) as TextParserError,
-  optional: (entity: ErrorEntityType) => new OptionalError(entity) as TextParserError
-}
-
-export type TextParser<T> = Parser<TextInput, T, TextParserError>
-
-const make = <T>(f: (input: TextInput) => ParseResult<TextInput, T, TextParserError>): TextParser<T> =>
-  new Parser<TextInput, T, TextParserError>(f)
-
-export const parseText = <T>(parser: TextParser<T>, input: string): ParseResult<TextInput, T, TextParserError> =>
+export const parseText = <T>(parser: TextParser<T>, input: string): ParseResult<TextInput, T, TextError> =>
   parser.run({ input, index: 0})
 
 export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
@@ -219,7 +17,7 @@ export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
       pattern.lastIndex = input.index
       const res = pattern.exec(input.input)
       if (res == null) {
-        return new ParseFailure(input, TextParserError.regExp(pattern))
+        return new ParseFailure(input, TextError.regExp(pattern))
       } else {
         return new ParseSuccess({ ...input, index: pattern.lastIndex }, res[group])
       }
@@ -230,7 +28,7 @@ export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
       pattern.lastIndex = 0
       const res = pattern.exec(s)
       if (res == null) {
-        return new ParseFailure(input, TextParserError.regExp(pattern))
+        return new ParseFailure(input, TextError.regExp(pattern))
       } else {
         const index = input.index + pattern.lastIndex
         return new ParseSuccess({ ...input, index }, res[group])
@@ -242,7 +40,7 @@ export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
       pattern.lastIndex = 0
       const res = pattern.exec(s)
       if (res == null) {
-        return new ParseFailure(input, TextParserError.regExp(pattern))
+        return new ParseFailure(input, TextError.regExp(pattern))
       } else {
         const index = input.index + s.indexOf(res[0]) + res[0].length
         return new ParseSuccess({ ...input, index }, res[group])
@@ -263,7 +61,7 @@ export const eot = make(input => {
     if (input.index === index) {
       return new ParseSuccess({ ...input, index }, undefined)
     } else {
-      return new ParseFailure(input, TextParserError.eot)
+      return new ParseFailure(input, TextError.eot)
     }
   })
 
@@ -275,7 +73,7 @@ export const match = <V extends string>(s: V): TextParser<V> => {
     if (value === s) {
       return new ParseSuccess({ ...input, index }, s)
     } else {
-      return new ParseFailure(input, TextParserError.match(s))
+      return new ParseFailure(input, TextError.match(s))
     }
   })
 }
@@ -328,45 +126,45 @@ const {
   }
 })()
 
-export const letter = regexp(letterPattern).withFailure<TextParserError>(TextParserError.one(ErrorEntityType.LETTERS))
+export const letter = regexp(letterPattern).withFailure(TextError.one(Entity.LETTERS))
 
 export const letters = (min = 1, max?: number): TextParser<string> => {
-  const message = TextParserError.expectedAtLeast(min, ErrorEntityType.LETTERS)
+  const message = TextError.expectedAtLeast(min, Entity.LETTERS)
   const maxs = max === undefined ? '' : String(max)
-  return regexp(lettersPattern(String(min), maxs)).withFailure<TextParserError>(message)
+  return regexp(lettersPattern(String(min), maxs)).withFailure(message)
 }
 
 export const upperCaseLetter = regexp(upperCaseLetterPattern)
-  .withFailure<TextParserError>(TextParserError.one(ErrorEntityType.UPPER_CASE_LETTERS))
+  .withFailure(TextError.one(Entity.UPPER_CASE_LETTERS))
 
 export const upperCaseLetters = (min = 1, max?: number): TextParser<string> => {
-  const message = TextParserError.expectedAtLeast(min, ErrorEntityType.UPPER_CASE_LETTERS)
+  const message = TextError.expectedAtLeast(min, Entity.UPPER_CASE_LETTERS)
   const maxs = max === undefined ? '' : String(max)
-  return regexp(upperCaseLettersPattern(String(min), maxs)).withFailure<TextParserError>(message)
+  return regexp(upperCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
 
 export const lowerCaseLetter = regexp(lowerCaseLetterPattern)
-  .withFailure<TextParserError>(TextParserError.one(ErrorEntityType.LOWER_CASE_LETTERS))
+  .withFailure(TextError.one(Entity.LOWER_CASE_LETTERS))
 
 export const lowerCaseLetters = (min = 1, max?: number): TextParser<string> => {
-  const message = TextParserError.expectedAtLeast(min, ErrorEntityType.LOWER_CASE_LETTERS)
+  const message = TextError.expectedAtLeast(min, Entity.LOWER_CASE_LETTERS)
   const maxs = max === undefined ? '' : String(max)
-  return regexp(lowerCaseLettersPattern(String(min), maxs)).withFailure<TextParserError>(message)
+  return regexp(lowerCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
 
-export const digit = regexp(digitPattern).withFailure<TextParserError>(TextParserError.one(ErrorEntityType.DIGITS))
+export const digit = regexp(digitPattern).withFailure(TextError.one(Entity.DIGITS))
 
 export const digits = (min = 1, max?: number): TextParser<string> => {
-  const message = TextParserError.expectedAtLeast(min, ErrorEntityType.DIGITS)
+  const message = TextError.expectedAtLeast(min, Entity.DIGITS)
   const maxs = max === undefined ? '' : String(max)
-  return regexp(digitsPattern(String(min), maxs)).withFailure<TextParserError>(message)
+  return regexp(digitsPattern(String(min), maxs)).withFailure(message)
 }
 
 export const whitespace = regexp(whitespacePattern)
-  .withFailure<TextParserError>(TextParserError.expectedAtLeast(1, ErrorEntityType.WHITESPACE))
+  .withFailure(TextError.expectedAtLeast(1, Entity.WHITESPACE))
 
 export const optionalWhitespace = regexp(optionalWhitespacePattern)
-  .withFailure<TextParserError>(TextParserError.optional(ErrorEntityType.WHITESPACE))
+  .withFailure(TextError.optional(Entity.WHITESPACE))
 
 export const char = make((input: TextInput) => {
     if (input.index < input.input.length) {
@@ -374,29 +172,29 @@ export const char = make((input: TextInput) => {
       return new ParseSuccess({ ...input, index: input.index + 1 }, c)
     } else {
       // no more characters
-      return new ParseFailure(input, TextParserError.one(ErrorEntityType.CHARACTER))
+      return new ParseFailure(input, TextError.one(Entity.CHARACTER))
     }
   })
 
 export const testChar = (f: (c: string) => boolean): TextParser<string> =>
   make((input: TextInput) => {
     if (input.index >= input.input.length) {
-      return new ParseFailure(input, TextParserError.unexpectedEot)
+      return new ParseFailure(input, TextError.unexpectedEot)
     } else {
       const char = input.input.charAt(input.index)
       if (f(char)) {
         return new ParseSuccess({...input, index: input.index + 1}, char)
       } else {
-        return new ParseFailure(input, TextParserError.failedMatching(ErrorEntityType.PREDICATE))
+        return new ParseFailure(input, TextError.failedMatching(Entity.PREDICATE))
       }
     }
   })
 
 export const matchAnyCharOf = (anyOf: string): TextParser<string> =>
-  testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure<TextParserError>(TextParserError.anyCharOf(anyOf))
+  testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure(TextError.anyCharOf(anyOf))
 
 export const matchNoCharOf = (noneOf: string): TextParser<string> =>
-  testChar((c: string) => noneOf.indexOf(c) < 0).withFailure<TextParserError>(TextParserError.noCharOf(noneOf))
+  testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(TextError.noCharOf(noneOf))
 
 export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<string> =>
   make((input: TextInput) => {
@@ -405,7 +203,7 @@ export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextParse
       index++
     }
     if (index - input.index < atLeast) {
-      return new ParseFailure(input, TextParserError.expectedAtLeast(atLeast, ErrorEntityType.PREDICATE))
+      return new ParseFailure(input, TextError.expectedAtLeast(atLeast, Entity.PREDICATE))
     } else {
       return new ParseSuccess({...input, index }, input.input.substring(input.index, index))
     }
@@ -420,7 +218,7 @@ export const takeCharBetween = (f: (c: string) => boolean, min: number, max: num
       counter++
     }
     if (counter < min) {
-      return new ParseFailure(input, TextParserError.expectedAtLeast(min, ErrorEntityType.PREDICATE))
+      return new ParseFailure(input, TextError.expectedAtLeast(min, Entity.PREDICATE))
     } else {
       return new ParseSuccess({...input, index }, input.input.substring(input.index, index))
     }
