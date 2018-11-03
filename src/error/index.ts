@@ -3,6 +3,7 @@ import { CustomError } from './custom_error'
 import { ExpectedAnyOf } from './expected_any_of'
 import { ExpectedAtLeast } from './expected_at_least'
 import { ExpectedEoi } from './expected_eoi'
+import { ExpectedField } from './expected_field'
 import { ExpectedMatch } from './expected_match'
 import { ExpectedNoneOf } from './expected_none_of'
 import { ExpectedOnce } from './expected_once'
@@ -14,6 +15,7 @@ export type DecodeError
   | ExpectedAnyOf
   | ExpectedAtLeast
   | ExpectedEoi
+  | ExpectedField
   | ExpectedMatch
   | ExpectedNoneOf
   | ExpectedOnce
@@ -25,6 +27,7 @@ export const DecodeError = {
   expectedAnyOf: (entity: Entity, values: string[]) => new ExpectedAnyOf(entity, values) as DecodeError,
   expectedAtLeast: (min: number, entity: Entity) => new ExpectedAtLeast(min, entity) as DecodeError,
   expectedEot: new ExpectedEoi() as DecodeError,
+  expectedField: (field: string) => new ExpectedField(field) as DecodeError,
   expectedMatch: (value: string) => new ExpectedMatch(value) as DecodeError,
   expectedNoneOf: (entity: Entity, values: string[]) => new ExpectedNoneOf(entity, values) as DecodeError,
   expectedOnce: (entity: Entity) => new ExpectedOnce(entity) as DecodeError,
@@ -37,6 +40,7 @@ export { CustomError } from './custom_error'
 export { ExpectedAnyOf } from './expected_any_of'
 export { ExpectedAtLeast } from './expected_at_least'
 export { ExpectedEoi } from './expected_eoi'
+export { ExpectedField } from './expected_field'
 export { ExpectedMatch } from './expected_match'
 export { ExpectedNoneOf } from './expected_none_of'
 export { ExpectedOnce } from './expected_once'

@@ -1,30 +1,35 @@
 import { Decoder } from '../core/decoder'
-import { DecodeResult } from '../core/result'
+import { DecodeResult, DecodeFailure } from '../core/result'
 import { TupleToUnion } from '../core/type_level'
+import { DecodeError, Entity } from '../error'
 
 export interface ValueInput {
   readonly input: any
   readonly path: (string | number)[]
 }
 
-export type ValueDecoder<T> = Decoder<ValueInput, T, string>
+export type ValueDecoder<T> = Decoder<ValueInput, T, DecodeError>
 
-const make = <T>(f: (input: ValueInput) => DecodeResult<ValueInput, T, string>): ValueDecoder<T> =>
-  new Decoder<ValueInput, T, string>(f)
+const make = <T>(f: (input: ValueInput) => DecodeResult<ValueInput, T, DecodeError>): ValueDecoder<T> =>
+  new Decoder<ValueInput, T, DecodeError>(f)
 
-export const decodeValue = <T>(decoder: ValueDecoder<T>, input: any): DecodeResult<ValueInput, T, string> =>
+export const decodeValue = <T>(decoder: ValueDecoder<T>) => (input: any): DecodeResult<any, T, string> =>
   decoder.run({ input, path: []})
+    .match({
+      success: (s) => DecodeResult.success(input, s.value),
+      failure: (f) => DecodeResult.failure(input, failureToString(f))
+    })
 
 export const testValue = <T>(f: (input: T) => boolean, expected: string) => make<T>(input => 
   f(input.input) ?  
     DecodeResult.success(input, input.input) :
-    DecodeResult.failure(input, `expected ${expected} but got ${input.input}`)
+    DecodeResult.failure(input, DecodeError.expectedMatch(expected))
 )
 
 export const testType = <T>(expected: string) => make<T>(input =>
   typeof input.input === expected ?
     DecodeResult.success(input, input.input) :
-    DecodeResult.failure(input, `expected ${expected} but got ${typeof input.input}`)
+    DecodeResult.failure(input, DecodeError.expectedMatch(expected))
 )
 
 export const nullableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(nullValue)
@@ -34,9 +39,9 @@ export const optionalValue = <T>(decoder: ValueDecoder<T>) => decoder.or(undefin
 export const anyValue = make<any>(input => DecodeResult.success(input, input.input))
 export const stringValue = testType<string>('string')
 export const numberValue = testType<number>('number')
-export const integerValue = numberValue.test(Number.isInteger, 'expected integer')
-export const safeIntegerValue = numberValue.test(Number.isSafeInteger, 'expected safe integer')
-export const finiteNumberValue = numberValue.test(Number.isFinite, 'expected finite number')
+export const integerValue = numberValue.test(Number.isInteger, DecodeError.expectedMatch('integer'))
+export const safeIntegerValue = numberValue.test(Number.isSafeInteger, DecodeError.expectedMatch('safe integer'))
+export const finiteNumberValue = numberValue.test(Number.isFinite, DecodeError.expectedMatch('finite number'))
 export const booleanValue = testType<boolean>('boolean')
 export const undefinedValue = testType<undefined>('undefined')
 export const nullValue = testValue<null>(v => v === null, 'null').withResult(null)
@@ -103,7 +108,7 @@ export const objectValue = <T, K extends keyof T>(
               return DecodeResult.failure(result.input, result.failure)
             }
           } else {
-            return DecodeResult.failure(input, `object doesn't have mandatory field "${field}"`)
+            return DecodeResult.failure(input, DecodeError.expectedField(field))
           }
         }
         for (let field of optionalFields) {
@@ -121,3 +126,26 @@ export const objectValue = <T, K extends keyof T>(
       })
     })
   }
+ 
+export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeError>): string => {
+  const { failure, input } = err
+  const msg = failure.toString() + ' but got ' + String(input.input)
+  const isToken = /^[a-z$_]+$/i
+  const path = input.path.reduce(
+    (acc, curr) => {
+      if (typeof curr === 'number') {
+        return `${acc}[${curr}]`
+      } else if (isToken.test(curr)) {
+        return `${acc}.${curr}`
+      } else {
+        const t = curr.replace('"', '\\"')
+        return `${acc}["${t}"]`
+      }
+    },
+    ''
+  )
+  if (path === '')
+    return msg
+  else
+    return `${msg} at ${path}`
+}
