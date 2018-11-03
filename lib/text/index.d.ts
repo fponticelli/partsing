@@ -1,9 +1,9 @@
 import { Parser } from '../core/parser';
-import { ParseResult } from '../core/result';
+import { ParseResult, ParseFailure } from '../core/result';
 import { DecodeError } from '../error';
 import { TextInput } from './input';
 export declare type TextParser<T> = Parser<TextInput, T, DecodeError>;
-export declare const parseText: <T>(parser: Parser<TextInput, T, DecodeError>, input: string) => ParseResult<TextInput, T, DecodeError>;
+export declare const parseText: <T>(parser: Parser<TextInput, T, DecodeError>) => (input: string) => ParseResult<string, T, string>;
 export declare const regexp: (pattern: RegExp, group?: number) => Parser<TextInput, string, DecodeError>;
 export declare const withPosition: Parser<TextInput, number, DecodeError>;
 export declare const rest: Parser<TextInput, string, DecodeError>;
@@ -25,3 +25,4 @@ export declare const matchAnyCharOf: (anyOf: string) => Parser<TextInput, string
 export declare const matchNoCharOf: (noneOf: string) => Parser<TextInput, string, DecodeError>;
 export declare const takeCharWhile: (f: (c: string) => boolean, atLeast?: number) => Parser<TextInput, string, DecodeError>;
 export declare const takeCharBetween: (f: (c: string) => boolean, min: number, max: number) => Parser<TextInput, string, DecodeError>;
+export declare const failureToString: <Out>(err: ParseFailure<TextInput, Out, DecodeError>) => string;

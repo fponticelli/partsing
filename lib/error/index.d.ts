@@ -20,7 +20,7 @@ export declare const DecodeError: {
     patternMismatch: (pattern: string) => DecodeError;
     unexpectedEoi: DecodeError;
 };
-export { Entity } from './entity';
+export { Entity, pluralize } from './entity';
 export { CustomError } from './custom_error';
 export { ExpectedAnyOf } from './expected_any_of';
 export { ExpectedAtLeast } from './expected_at_least';

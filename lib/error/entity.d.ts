@@ -2,7 +2,7 @@ export declare enum Entity {
     CHARACTER = "character",
     PREDICATE = "predicate",
     LETTER = "letter",
-    UPPER_CASE_LETTER = "uppercase letter",
+    UPPERCASE_LETTER = "uppercase letter",
     LOWER_CASE_LETTER = "lowercase letter",
     DIGIT = "digit",
     WHITESPACE = "whitespace"

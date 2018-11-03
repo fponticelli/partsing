@@ -38,7 +38,7 @@ import {
 } from '../../src/error'
 
 const parseSuccess = <Out>(parser: TextParser<Out>, input: string): [TextInput, Out] => {
-  const r = parseText(parser, input)
+  const r = parser.run({ input, index: 0 })
   if (r.isFailure()) {
     throw 'expected parse success'
   } else {
@@ -47,7 +47,7 @@ const parseSuccess = <Out>(parser: TextParser<Out>, input: string): [TextInput, 
 }
 
 const parseFailure = <Out>(parser: TextParser<Out>, input: string): [TextInput, DecodeError] => {
-  const r = parseText(parser, input)
+  const r = parser.run({ input, index: 0 })
   if (r.isSuccess()) {
     throw 'expected parse failure'
   } else {
@@ -58,7 +58,7 @@ const parseFailure = <Out>(parser: TextParser<Out>, input: string): [TextInput, 
 describe('text_parser', () => {
   it('regexp', () => {
     const p = regexp(/(\d+)/, 1)
-    expect(parseText(p, 'abc').isFailure()).toEqual(true)
+    expect(parseText(p)('abc').isFailure()).toEqual(true)
     const [input, parsed] = parseSuccess(p, 'a123b')
     expect(input.index).toEqual(4)
     expect(parsed).toEqual('123')

@@ -1,7 +1,7 @@
 import { DecodeErrorBase } from './decode_error_base'
 
 export class UnexpectedEoi extends DecodeErrorBase {
-  readonly kind: 'unexpected-eot-error' = 'unexpected-eot-error'
+  readonly kind: 'unexpected-eoi' = 'unexpected-eoi'
   constructor() {
     super()
   }

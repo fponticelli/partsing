@@ -9,8 +9,12 @@ export type TextParser<T> = Parser<TextInput, T, DecodeError>
 const make = <T>(f: (input: TextInput) => ParseResult<TextInput, T, DecodeError>): TextParser<T> =>
   new Parser<TextInput, T, DecodeError>(f)
 
-export const parseText = <T>(parser: TextParser<T>, input: string): ParseResult<TextInput, T, DecodeError> =>
+export const parseText = <T>(parser: TextParser<T>) => (input: string): ParseResult<string, T, string> =>
   parser.run({ input, index: 0})
+    .match({
+      success: (r) => ParseResult.success(input, r.value),
+      failure: (f) => ParseResult.failure(input, failureToString(f))
+    })
 
 export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
   if (pattern.sticky) {
@@ -74,7 +78,7 @@ export const match = <V extends string>(s: V): TextParser<V> => {
     if (value === s) {
       return new ParseSuccess({ ...input, index }, s)
     } else {
-      return new ParseFailure(input, DecodeError.expectedMatch(s))
+      return new ParseFailure(input, DecodeError.expectedMatch(`"${s}"`))
     }
   })
 }
@@ -136,10 +140,10 @@ export const letters = (min = 1, max?: number): TextParser<string> => {
 }
 
 export const upperCaseLetter = regexp(upperCaseLetterPattern)
-  .withFailure(DecodeError.expectedOnce(Entity.UPPER_CASE_LETTER))
+  .withFailure(DecodeError.expectedOnce(Entity.UPPERCASE_LETTER))
 
 export const upperCaseLetters = (min = 1, max?: number): TextParser<string> => {
-  const message = DecodeError.expectedAtLeast(min, Entity.UPPER_CASE_LETTER)
+  const message = DecodeError.expectedAtLeast(min, Entity.UPPERCASE_LETTER)
   const maxs = max === undefined ? '' : String(max)
   return regexp(upperCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
@@ -227,3 +231,13 @@ export const takeCharBetween = (f: (c: string) => boolean, min: number, max: num
       return new ParseSuccess({...input, index }, input.input.substring(input.index, index))
     }
   })
+
+export const failureToString = <Out>(err: ParseFailure<TextInput, Out, DecodeError>): string => {
+  const { failure, input } = err
+  const msg = failure.toString()
+  const length = Math.min(25, Math.max(msg.length, 10), input.input.length - input.index)
+  const prefix = input.index === 0 ? '' : '…'
+  const suffix = input.index < input.input.length - 1 ? '…' : ''
+  const extract = input.input.substr(input.index, length)
+  return `${msg} at "${prefix}${extract}${suffix}"`
+}
