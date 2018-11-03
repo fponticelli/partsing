@@ -24,7 +24,7 @@ export declare const DecodeError: {
 };
 export { Entity, pluralize } from './entity';
 export { CustomError } from './custom_error';
-export { ExpectedAnyOf } from './expected_any_of';
+export { ExpectedAnyOf, concatOr } from './expected_any_of';
 export { ExpectedAtLeast } from './expected_at_least';
 export { ExpectedEoi } from './expected_eoi';
 export { ExpectedField } from './expected_field';

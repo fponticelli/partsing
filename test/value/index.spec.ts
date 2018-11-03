@@ -15,7 +15,8 @@ import {
   nullableValue,
   undefineableValue,
   optionalValue,
-  anyValue
+  anyValue,
+  pathToString
 } from '../../src/value'
 
 describe('value_decoder', () => {
@@ -125,5 +126,9 @@ describe('value_decoder', () => {
     expect(decodeValue(anyValue)(true).getUnsafeSuccess()).toEqual(true)
     expect(decodeValue(anyValue)(null).getUnsafeSuccess()).toBeNull()
     expect(decodeValue(anyValue)(undefined).getUnsafeSuccess()).toBeUndefined()
+  })
+
+  it('pathToString', () => {
+    expect(pathToString(['a', 'a b c', 'd', 1, '$f'])).toEqual('a["a b c"].d[1].$f')
   })
 })

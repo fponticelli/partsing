@@ -126,17 +126,15 @@ export const objectValue = <T, K extends keyof T>(
       })
     })
   }
- 
-export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeError>): string => {
-  const { failure, input } = err
-  const msg = failure.toString() + ' but got ' + String(input.input)
-  const isToken = /^[a-z$_]+$/i
-  const path = input.path.reduce(
-    (acc, curr) => {
+
+const isToken = /^[a-z$_]+$/i
+export const pathToString = (path: (string | number)[]): string => {
+  return path.reduce(
+    (acc: string, curr: string | number) => {
       if (typeof curr === 'number') {
         return `${acc}[${curr}]`
       } else if (isToken.test(curr)) {
-        return `${acc}.${curr}`
+        return acc.length === 0 ? curr : `${acc}.${curr}`
       } else {
         const t = curr.replace('"', '\\"')
         return `${acc}["${t}"]`
@@ -144,6 +142,12 @@ export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeE
     },
     ''
   )
+}
+ 
+export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeError>): string => {
+  const { failure, input } = err
+  const msg = failure.toString() + ' but got ' + String(input.input)
+  const path = pathToString(input.path)
   if (path === '')
     return msg
   else

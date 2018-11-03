@@ -1,4 +1,5 @@
 import {
+  concatOr,
   pluralize,
   Entity,
   CustomError,
@@ -41,5 +42,12 @@ describe('errors', () => {
     expect(new ExpectedOnce(Entity.CHARACTER).toString()).toEqual('expected a character')
     expect(new PatternMismatch('/a/').toString()).toEqual('doesn\'t match pattern /a/')
     expect(new UnexpectedEoi().toString()).toEqual('unexpected end of input')
+  })
+
+  it('concatOr', () => {
+    expect(concatOr([])).toEqual('<empty>')
+    expect(concatOr(['a'])).toEqual('a')
+    expect(concatOr(['a', 'b'])).toEqual('a or b')
+    expect(concatOr(['a', 'b', 'c'])).toEqual('a, b or c')
   })
 })
