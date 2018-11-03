@@ -31,7 +31,7 @@ import {
   MatchError,
   EOTError,
   RegExpError
-} from '../src/text_parser'
+} from '../../src/text'
 
 const parseSuccess = <Out>(parser: TextParser<Out>, input: string): [TextInput, Out] => {
   const r = parseText(parser, input)

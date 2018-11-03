@@ -1,5 +1,5 @@
-import { Parser } from './parser'
-import { ParseResult, ParseFailure, ParseSuccess } from './parse_result'
+import { Parser } from '../parser'
+import { ParseResult, ParseFailure, ParseSuccess } from '../parse_result'
 
 export interface TextInput {
   readonly input: string
@@ -192,17 +192,17 @@ export type TextParserError
   | OptionalError
 
 export const TextParserError = {
-  regExp: (pattern: RegExp) => new RegExpError(pattern),
-  eot: new EOTError(),
-  match: (value: string) => new MatchError(value),
-  expectedAtLeast: (min: number, entity: ErrorEntityType) => new ExpectedAtLeast(min, entity),
-  anyCharOf: (values: string) => new AnyCharOfError(values),
-  noCharOf: (values: string) => new NoCharOfError(values),
-  custom: (value: string) => new CustomError(value),
-  one: (entity: ErrorEntityType) => new OneEntityError(entity),
-  unexpectedEot: new UnexpectedEOTError(),
-  failedMatching: (entity: ErrorEntityType) => new FailedMatchingError(entity),
-  optional: (entity: ErrorEntityType) => new OptionalError(entity)
+  regExp: (pattern: RegExp) => new RegExpError(pattern) as TextParserError,
+  eot: new EOTError() as TextParserError,
+  match: (value: string) => new MatchError(value) as TextParserError,
+  expectedAtLeast: (min: number, entity: ErrorEntityType) => new ExpectedAtLeast(min, entity) as TextParserError,
+  anyCharOf: (values: string) => new AnyCharOfError(values) as TextParserError,
+  noCharOf: (values: string) => new NoCharOfError(values) as TextParserError,
+  custom: (value: string) => new CustomError(value) as TextParserError,
+  one: (entity: ErrorEntityType) => new OneEntityError(entity) as TextParserError,
+  unexpectedEot: new UnexpectedEOTError() as TextParserError,
+  failedMatching: (entity: ErrorEntityType) => new FailedMatchingError(entity) as TextParserError,
+  optional: (entity: ErrorEntityType) => new OptionalError(entity) as TextParserError
 }
 
 export type TextParser<T> = Parser<TextInput, T, TextParserError>
