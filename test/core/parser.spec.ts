@@ -1,7 +1,7 @@
 import { Parser, succeed, fail, lazy, sequence, oneOf } from '../../src/core/parser'
 import { ParseResult, ParseSuccess, ParseFailure } from '../../src/core/result'
 import { TextInput } from '../../src/text/input'
-import { TextError } from '../../src/text/error'
+import { DecodeError } from '../../src/error'
 import {
   parseText,
   digit,
@@ -87,7 +87,7 @@ describe('parser', () => {
   })
 
   it('sequence', () => {
-    const parser = sequence<TextInput, [string, string, string], TextError>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const parser = sequence<TextInput, [string, string, string], DecodeError>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
     const result = parseText(parser, '1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
     const result2 = parseText(parser, '1ba').getUnsafeFailure()
@@ -147,7 +147,7 @@ describe('parser', () => {
   })
 
   it('oneOf', () => {
-    const p = oneOf<TextInput, [string, string], TextError>(digit, match('a'))
+    const p = oneOf<TextInput, [string, string], DecodeError>(digit, match('a'))
     expect(parseText(p, '1').getUnsafeSuccess()).toEqual('1')
     expect(parseText(p, 'a').getUnsafeSuccess()).toEqual('a')
     expect(parseText(p, 'x').getUnsafeFailure()).toBeDefined()
@@ -155,7 +155,7 @@ describe('parser', () => {
   })
 
   it('sequence', () => {
-    const parser = sequence<TextInput, [string, string, string], TextError>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const parser = sequence<TextInput, [string, string, string], DecodeError>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
     const result = parseText(parser, '1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
   })
@@ -183,7 +183,7 @@ describe('parser', () => {
   })
 
   it('ofGuaranteed', () => {
-    const p = Parser.ofGuaranteed<TextInput, string, TextError>((input: {input: string, index: number}) => [input, input.input])
+    const p = Parser.ofGuaranteed<TextInput, string, DecodeError>((input: {input: string, index: number}) => [input, input.input])
     const result = parseText(p, '1').getUnsafeSuccess()
     expect(result).toBe('1')
   })

@@ -1,14 +1,15 @@
 import { Parser } from '../core/parser'
 import { ParseResult, ParseFailure, ParseSuccess } from '../core/result'
-import { TextError, Entity } from './error'
+import { DecodeError } from '../error'
+import { Entity } from '../error'
 import { TextInput } from './input'
 
-export type TextParser<T> = Parser<TextInput, T, TextError>
+export type TextParser<T> = Parser<TextInput, T, DecodeError>
 
-const make = <T>(f: (input: TextInput) => ParseResult<TextInput, T, TextError>): TextParser<T> =>
-  new Parser<TextInput, T, TextError>(f)
+const make = <T>(f: (input: TextInput) => ParseResult<TextInput, T, DecodeError>): TextParser<T> =>
+  new Parser<TextInput, T, DecodeError>(f)
 
-export const parseText = <T>(parser: TextParser<T>, input: string): ParseResult<TextInput, T, TextError> =>
+export const parseText = <T>(parser: TextParser<T>, input: string): ParseResult<TextInput, T, DecodeError> =>
   parser.run({ input, index: 0})
 
 export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
@@ -17,7 +18,7 @@ export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
       pattern.lastIndex = input.index
       const res = pattern.exec(input.input)
       if (res == null) {
-        return new ParseFailure(input, TextError.regExp(pattern))
+        return new ParseFailure(input, DecodeError.patternMismatch(pattern.source))
       } else {
         return new ParseSuccess({ ...input, index: pattern.lastIndex }, res[group])
       }
@@ -28,7 +29,7 @@ export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
       pattern.lastIndex = 0
       const res = pattern.exec(s)
       if (res == null) {
-        return new ParseFailure(input, TextError.regExp(pattern))
+        return new ParseFailure(input, DecodeError.patternMismatch(pattern.source))
       } else {
         const index = input.index + pattern.lastIndex
         return new ParseSuccess({ ...input, index }, res[group])
@@ -40,7 +41,7 @@ export const regexp = (pattern: RegExp, group = 0): TextParser<string> => {
       pattern.lastIndex = 0
       const res = pattern.exec(s)
       if (res == null) {
-        return new ParseFailure(input, TextError.regExp(pattern))
+        return new ParseFailure(input, DecodeError.patternMismatch(pattern.source))
       } else {
         const index = input.index + s.indexOf(res[0]) + res[0].length
         return new ParseSuccess({ ...input, index }, res[group])
@@ -61,7 +62,7 @@ export const eot = make(input => {
     if (input.index === index) {
       return new ParseSuccess({ ...input, index }, undefined)
     } else {
-      return new ParseFailure(input, TextError.eot)
+      return new ParseFailure(input, DecodeError.expectedEot)
     }
   })
 
@@ -73,7 +74,7 @@ export const match = <V extends string>(s: V): TextParser<V> => {
     if (value === s) {
       return new ParseSuccess({ ...input, index }, s)
     } else {
-      return new ParseFailure(input, TextError.match(s))
+      return new ParseFailure(input, DecodeError.expectedMatch(s))
     }
   })
 }
@@ -126,45 +127,44 @@ const {
   }
 })()
 
-export const letter = regexp(letterPattern).withFailure(TextError.one(Entity.LETTERS))
+export const letter = regexp(letterPattern).withFailure(DecodeError.expectedOnce(Entity.LETTER))
 
 export const letters = (min = 1, max?: number): TextParser<string> => {
-  const message = TextError.expectedAtLeast(min, Entity.LETTERS)
+  const message = DecodeError.expectedAtLeast(min, Entity.LETTER)
   const maxs = max === undefined ? '' : String(max)
   return regexp(lettersPattern(String(min), maxs)).withFailure(message)
 }
 
 export const upperCaseLetter = regexp(upperCaseLetterPattern)
-  .withFailure(TextError.one(Entity.UPPER_CASE_LETTERS))
+  .withFailure(DecodeError.expectedOnce(Entity.UPPER_CASE_LETTER))
 
 export const upperCaseLetters = (min = 1, max?: number): TextParser<string> => {
-  const message = TextError.expectedAtLeast(min, Entity.UPPER_CASE_LETTERS)
+  const message = DecodeError.expectedAtLeast(min, Entity.UPPER_CASE_LETTER)
   const maxs = max === undefined ? '' : String(max)
   return regexp(upperCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
 
 export const lowerCaseLetter = regexp(lowerCaseLetterPattern)
-  .withFailure(TextError.one(Entity.LOWER_CASE_LETTERS))
+  .withFailure(DecodeError.expectedOnce(Entity.LOWER_CASE_LETTER))
 
 export const lowerCaseLetters = (min = 1, max?: number): TextParser<string> => {
-  const message = TextError.expectedAtLeast(min, Entity.LOWER_CASE_LETTERS)
+  const message = DecodeError.expectedAtLeast(min, Entity.LOWER_CASE_LETTER)
   const maxs = max === undefined ? '' : String(max)
   return regexp(lowerCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
 
-export const digit = regexp(digitPattern).withFailure(TextError.one(Entity.DIGITS))
+export const digit = regexp(digitPattern).withFailure(DecodeError.expectedOnce(Entity.DIGIT))
 
 export const digits = (min = 1, max?: number): TextParser<string> => {
-  const message = TextError.expectedAtLeast(min, Entity.DIGITS)
+  const message = DecodeError.expectedAtLeast(min, Entity.DIGIT)
   const maxs = max === undefined ? '' : String(max)
   return regexp(digitsPattern(String(min), maxs)).withFailure(message)
 }
 
 export const whitespace = regexp(whitespacePattern)
-  .withFailure(TextError.expectedAtLeast(1, Entity.WHITESPACE))
+  .withFailure(DecodeError.expectedAtLeast(1, Entity.WHITESPACE))
 
 export const optionalWhitespace = regexp(optionalWhitespacePattern)
-  .withFailure(TextError.optional(Entity.WHITESPACE))
 
 export const char = make((input: TextInput) => {
     if (input.index < input.input.length) {
@@ -172,29 +172,33 @@ export const char = make((input: TextInput) => {
       return new ParseSuccess({ ...input, index: input.index + 1 }, c)
     } else {
       // no more characters
-      return new ParseFailure(input, TextError.one(Entity.CHARACTER))
+      return new ParseFailure(input, DecodeError.expectedOnce(Entity.CHARACTER))
     }
   })
 
 export const testChar = (f: (c: string) => boolean): TextParser<string> =>
   make((input: TextInput) => {
     if (input.index >= input.input.length) {
-      return new ParseFailure(input, TextError.unexpectedEot)
+      return new ParseFailure(input, DecodeError.unexpectedEoi)
     } else {
       const char = input.input.charAt(input.index)
       if (f(char)) {
         return new ParseSuccess({...input, index: input.index + 1}, char)
       } else {
-        return new ParseFailure(input, TextError.failedMatching(Entity.PREDICATE))
+        return new ParseFailure(input, DecodeError.expectedOnce(Entity.PREDICATE))
       }
     }
   })
 
 export const matchAnyCharOf = (anyOf: string): TextParser<string> =>
-  testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure(TextError.anyCharOf(anyOf))
+  testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure(DecodeError.expectedAnyOf(
+    Entity.CHARACTER,
+    anyOf.split('').map(v => `"${v}"`)))
 
 export const matchNoCharOf = (noneOf: string): TextParser<string> =>
-  testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(TextError.noCharOf(noneOf))
+  testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(DecodeError.expectedNoneOf(
+    Entity.CHARACTER,
+    noneOf.split('').map(v => `"${v}"`)))
 
 export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextParser<string> =>
   make((input: TextInput) => {
@@ -203,7 +207,7 @@ export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextParse
       index++
     }
     if (index - input.index < atLeast) {
-      return new ParseFailure(input, TextError.expectedAtLeast(atLeast, Entity.PREDICATE))
+      return new ParseFailure(input, DecodeError.expectedAtLeast(atLeast, Entity.PREDICATE))
     } else {
       return new ParseSuccess({...input, index }, input.input.substring(input.index, index))
     }
@@ -218,7 +222,7 @@ export const takeCharBetween = (f: (c: string) => boolean, min: number, max: num
       counter++
     }
     if (counter < min) {
-      return new ParseFailure(input, TextError.expectedAtLeast(min, Entity.PREDICATE))
+      return new ParseFailure(input, DecodeError.expectedAtLeast(min, Entity.PREDICATE))
     } else {
       return new ParseSuccess({...input, index }, input.input.substring(input.index, index))
     }

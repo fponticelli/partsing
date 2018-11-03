@@ -27,15 +27,15 @@ import {
 import { TextInput } from '../../src/text/input'
 
 import {
-  TextError,
+  DecodeError,
   ExpectedAtLeast,
-  NoCharOfError,
-  AnyCharOfError,
-  OneEntityError,
-  MatchError,
-  ExpectedEOTError,
-  RegExpError
-} from '../../src/text/error'
+  ExpectedNoneOf,
+  ExpectedAnyOf,
+  ExpectedOnce,
+  ExpectedMatch,
+  ExpectedEoi,
+  PatternMismatch
+} from '../../src/error'
 
 const parseSuccess = <Out>(parser: TextParser<Out>, input: string): [TextInput, Out] => {
   const r = parseText(parser, input)
@@ -46,7 +46,7 @@ const parseSuccess = <Out>(parser: TextParser<Out>, input: string): [TextInput, 
   }
 }
 
-const parseFailure = <Out>(parser: TextParser<Out>, input: string): [TextInput, TextError] => {
+const parseFailure = <Out>(parser: TextParser<Out>, input: string): [TextInput, DecodeError] => {
   const r = parseText(parser, input)
   if (r.isSuccess()) {
     throw 'expected parse failure'
@@ -75,7 +75,7 @@ describe('text_parser', () => {
     const p = regexp(/^\d+/g)
     const [input, failure] = parseFailure(p, 'a123b')
     expect(input.index).toEqual(0)
-    expect(failure).toBeInstanceOf(RegExpError)
+    expect(failure).toBeInstanceOf(PatternMismatch)
     const [input2, parsed] = parseSuccess(p, '123')
     expect(input2.index).toEqual(3)
     expect(parsed).toEqual('123')
@@ -85,14 +85,14 @@ describe('text_parser', () => {
     const p = regexp(/^\d+/)
     const [input, failure] = parseFailure(p, 'a123b')
     expect(input.index).toEqual(0)
-    expect(failure).toBeInstanceOf(RegExpError)
+    expect(failure).toBeInstanceOf(PatternMismatch)
     const [input2, parsed] = parseSuccess(p, '123')
     expect(input2.index).toEqual(3)
     expect(parsed).toEqual('123')
   })
 
   it('withFailure changes error message', () => {
-    const p = regexp(/^\d+/g).withFailure(TextError.custom('number'))
+    const p = regexp(/^\d+/g).withFailure(DecodeError.custom('number'))
     const [input, failure] = parseFailure(p, 'a123b')
     expect(failure.toString()).toEqual('number')
   })
@@ -113,21 +113,21 @@ describe('text_parser', () => {
     const [, parsed] = parseSuccess(rest.skipNext(eot), 'a123b')
     expect(parsed).toEqual('a123b')
     const [, failure] = parseFailure(eot, 'a123b')
-    expect(failure).toBeInstanceOf(ExpectedEOTError)
+    expect(failure).toBeInstanceOf(ExpectedEoi)
   })
 
   it('match', () => {
     const [, parsed] = parseSuccess(match('a12'), 'a123b')
     expect(parsed).toEqual('a12')
     const [, failure] = parseFailure(match('abc'), 'a123b')
-    expect(failure).toBeInstanceOf(MatchError)
+    expect(failure).toBeInstanceOf(ExpectedMatch)
   })
 
   it('letter', () => {
     const [, parsed] = parseSuccess(letter, 'a123b')
     expect(parsed).toEqual('a')
     const [, failure] = parseFailure(letter, '123')
-    expect(failure).toBeInstanceOf(OneEntityError)
+    expect(failure).toBeInstanceOf(ExpectedOnce)
   })
 
   it('letters', () => {
@@ -147,7 +147,7 @@ describe('text_parser', () => {
     const [, parsed] = parseSuccess(lowerCaseLetter, 'a123b')
     expect(parsed).toEqual('a')
     const [, failure] = parseFailure(lowerCaseLetter, 'AB')
-    expect(failure).toBeInstanceOf(OneEntityError)
+    expect(failure).toBeInstanceOf(ExpectedOnce)
   })
 
   it('lowerCaseLetters', () => {
@@ -167,7 +167,7 @@ describe('text_parser', () => {
     const [, parsed] = parseSuccess(upperCaseLetter, 'AabcB')
     expect(parsed).toEqual('A')
     const [, failure] = parseFailure(upperCaseLetter, 'abc')
-    expect(failure).toBeInstanceOf(OneEntityError)
+    expect(failure).toBeInstanceOf(ExpectedOnce)
   })
 
   it('upperCaseLetters', () => {
@@ -187,7 +187,7 @@ describe('text_parser', () => {
     const [, parsed] = parseSuccess(digit, '123abc')
     expect(parsed).toEqual('1')
     const [, failure] = parseFailure(digit, 'abc')
-    expect(failure).toBeInstanceOf(OneEntityError)
+    expect(failure).toBeInstanceOf(ExpectedOnce)
   })
 
   it('digits', () => {
@@ -221,7 +221,7 @@ describe('text_parser', () => {
     const [, parsed] = parseSuccess(char, 'abc')
     expect(parsed).toEqual('a')
     const [, failure] = parseFailure(char, '')
-    expect(failure).toBeInstanceOf(OneEntityError)
+    expect(failure).toBeInstanceOf(ExpectedOnce)
   })
 
   it('testChar', () => {
@@ -237,14 +237,14 @@ describe('text_parser', () => {
     const [, parsed1] = parseSuccess(matchAnyCharOf('abc'), 'cxy')
     expect(parsed1).toEqual('c')
     const [, failure] = parseFailure(matchAnyCharOf('abc'), 'xyz')
-    expect(failure).toBeInstanceOf(AnyCharOfError)
+    expect(failure).toBeInstanceOf(ExpectedAnyOf)
   })
 
   it('matchNoCharOf', () => {
     const [, parsed1] = parseSuccess(matchNoCharOf('abc'), 'xyz')
     expect(parsed1).toEqual('x')
     const [, failure] = parseFailure(matchNoCharOf('abc'), 'cxy')
-    expect(failure).toBeInstanceOf(NoCharOfError)
+    expect(failure).toBeInstanceOf(ExpectedNoneOf)
   })
 
   it('takeCharWhile', () => {

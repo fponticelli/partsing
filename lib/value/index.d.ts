@@ -1,5 +1,5 @@
-import { Parser } from './parser';
-import { ParseResult } from './parse_result';
+import { Parser } from '../core/parser';
+import { ParseResult } from '../core/result';
 export interface ValueInput {
     readonly input: any;
     readonly path: (string | number)[];

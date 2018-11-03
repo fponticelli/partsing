@@ -1,0 +1,1 @@
+{"version":3,"file":"custom_error.js","sourceRoot":"./src/","sources":["error/custom_error.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;AAAA,yDAAqD;AACrD;IAAiC,+BAAe;IAE9C,qBAAqB,OAAe;QAApC,YACE,iBAAO,SACR;QAFoB,aAAO,GAAP,OAAO,CAAQ;QAD3B,UAAI,GAAmB,cAAc,CAAA;;IAG9C,CAAC;IACD,8BAAQ,GAAR;QACE,OAAO,IAAI,CAAC,OAAO,CAAA;IACrB,CAAC;IACH,kBAAC;AAAD,CAAC,AARD,CAAiC,mCAAe,GAQ/C;AARY,kCAAW"}

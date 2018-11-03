@@ -2,7 +2,7 @@ import { regexp, match, TextParser, optionalWhitespace, parseText } from '../../
 import { oneOf, lazy } from '../../src/core/parser'
 import { JSONValue, JSONArray, JSONObject } from './json_value'
 import { ParseResult } from '../../src/core/result'
-import { TextError } from '../../src/text/error'
+import { DecodeError } from '../../src/error'
 import { TextInput } from '../../src/text/input'
 
 const jsonTrue = match('true').withResult(true)
@@ -10,11 +10,11 @@ const jsonFalse = match('false').withResult(false)
   
 const jsonNumber = regexp(/-?(0|[1-9]\d*)([.]\d+)?([eE][+-]?\d+)?/y)
   .map(Number)
-  .withFailure(TextError.custom('expected number'))
+  .withFailure(DecodeError.custom('expected number'))
 
 // this is incomplete as it doesn't convert escaped chars or unicode values
 const jsonString = regexp(/"((:?\\"|[^"])*)"/y, 1)
-  .withFailure(TextError.custom('expected quoted string'))
+  .withFailure(DecodeError.custom('expected quoted string'))
 const jsonNull = match('null').withResult(null)
 const jsonBoolean = jsonTrue.or(jsonFalse)
 
@@ -50,4 +50,4 @@ const jsonObject: TextParser<JSONObject> = lCurly.pickNext(commaSeparated(pair))
     )
 })
 
-export const parseJson = (input: string): ParseResult<TextInput, JSONValue, TextError> => parseText(jsonValue, input)
+export const parseJson = (input: string): ParseResult<TextInput, JSONValue, DecodeError> => parseText(jsonValue, input)
