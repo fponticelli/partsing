@@ -1,20 +1,20 @@
-abstract class ParseResultBase<In, Out, Err> {
+abstract class DecodeResultBase<In, Out, Err> {
   constructor(
     readonly input: In
   ) {}
   abstract match<O>(o: {
-    success: (s: ParseSuccess<In, Out, Err>) => O,
-    failure: (f: ParseFailure<In, Out, Err>) => O
+    success: (s: DecodeSuccess<In, Out, Err>) => O,
+    failure: (f: DecodeFailure<In, Out, Err>) => O
   }): O
     
-  abstract flatMap<Out2>(f: (r: Out) => ParseResult<In, Out2, Err>): ParseResult<In, Out2, Err>
-  abstract flatMapError<Err2>(f: (r: Err) => ParseResult<In, Out, Err2>): ParseResult<In, Out, Err2>
+  abstract flatMap<Out2>(f: (r: Out) => DecodeResult<In, Out2, Err>): DecodeResult<In, Out2, Err>
+  abstract flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2>
   
-  abstract map<Out2>(f: (r: Out) => Out2): ParseResult<In, Out2, Err>
-  abstract mapError<Err2>(f: (r: Err) => Err2): ParseResult<In, Out, Err2>
+  abstract map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err>
+  abstract mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2>
 
-  abstract isSuccess(): this is ParseSuccess<In, Out, Err>
-  abstract isFailure(): this is ParseFailure<In, Out, Err>
+  abstract isSuccess(): this is DecodeSuccess<In, Out, Err>
+  abstract isFailure(): this is DecodeFailure<In, Out, Err>
 
   abstract getUnsafeSuccess(): Out
   abstract getUnsafeFailure(): Err
@@ -22,8 +22,8 @@ abstract class ParseResultBase<In, Out, Err> {
   abstract toString(): string
 }
 
-export class ParseSuccess<In, Out, Err> extends ParseResultBase<In, Out, Err> {
-  readonly kind = 'parse-success'
+export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> {
+  readonly kind = 'decode-success'
   constructor(
     input: In,
     readonly value: Out
@@ -32,29 +32,29 @@ export class ParseSuccess<In, Out, Err> extends ParseResultBase<In, Out, Err> {
   }
 
   match<O>(o: {
-    success: (s: ParseSuccess<In, Out, Err>) => O,
-    failure: (f: ParseFailure<In, Out, Err>) => O
+    success: (s: DecodeSuccess<In, Out, Err>) => O,
+    failure: (f: DecodeFailure<In, Out, Err>) => O
   }): O {
     return o.success(this)
   }
 
-  flatMap<Out2>(f: (r: Out) => ParseResult<In, Out2, Err>): ParseResult<In, Out2, Err> {
+  flatMap<Out2>(f: (r: Out) => DecodeResult<In, Out2, Err>): DecodeResult<In, Out2, Err> {
     return f(this.value)
   }
-  map<Out2>(f: (r: Out) => Out2): ParseResult<In, Out2, Err> {
-    return this.flatMap(v => new ParseSuccess(this.input, f(v)))
+  map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err> {
+    return this.flatMap(v => new DecodeSuccess(this.input, f(v)))
   }
-  flatMapError<Err2>(f: (r: Err) => ParseResult<In, Out, Err2>): ParseResult<In, Out, Err2> {
-    return new ParseSuccess(this.input, this.value)
+  flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
+    return new DecodeSuccess(this.input, this.value)
   }
-  mapError<Err2>(f: (r: Err) => Err2): ParseResult<In, Out, Err2> {
-    return new ParseSuccess(this.input, this.value)
+  mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2> {
+    return new DecodeSuccess(this.input, this.value)
   }
 
-  isSuccess(): this is ParseSuccess<In, Out, Err> {
+  isSuccess(): this is DecodeSuccess<In, Out, Err> {
     return true
   }
-  isFailure(): this is ParseFailure<In, Out, Err> {
+  isFailure(): this is DecodeFailure<In, Out, Err> {
     return false
   }
   
@@ -66,12 +66,12 @@ export class ParseSuccess<In, Out, Err> extends ParseResultBase<In, Out, Err> {
   }
 
   toString(): string {
-    return `ParseSuccess<${JSON.stringify(this.value)}>: ${JSON.stringify(this.input)}`
+    return `DecodeSuccess<${JSON.stringify(this.value)}>: ${JSON.stringify(this.input)}`
   }
 }
 
-export class ParseFailure<In, Out, Err> extends ParseResultBase<In, Out, Err> {
-  readonly kind = 'parse-failure'
+export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> {
+  readonly kind = 'decode-failure'
   constructor(
     input: In,
     readonly failure: Err
@@ -80,29 +80,29 @@ export class ParseFailure<In, Out, Err> extends ParseResultBase<In, Out, Err> {
   }
 
   match<O>(o: {
-    success: (succ: ParseSuccess<In, Out, Err>) => O,
-    failure: (fail: ParseFailure<In, Out, Err>) => O
+    success: (succ: DecodeSuccess<In, Out, Err>) => O,
+    failure: (fail: DecodeFailure<In, Out, Err>) => O
   }): O {
     return o.failure(this)
   }
 
-  flatMap<Out2>(f: (r: Out) => ParseResult<In, Out2, Err>): ParseResult<In, Out2, Err> {
-    return new ParseFailure(this.input, this.failure)
+  flatMap<Out2>(f: (r: Out) => DecodeResult<In, Out2, Err>): DecodeResult<In, Out2, Err> {
+    return new DecodeFailure(this.input, this.failure)
   }
-  map<Out2>(f: (r: Out) => Out2): ParseResult<In, Out2, Err> {
-    return new ParseFailure(this.input, this.failure)
+  map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err> {
+    return new DecodeFailure(this.input, this.failure)
   }
-  flatMapError<Err2>(f: (r: Err) => ParseResult<In, Out, Err2>): ParseResult<In, Out, Err2> {
+  flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
     return f(this.failure)
   }
-  mapError<Err2>(f: (r: Err) => Err2): ParseResult<In, Out, Err2> {
-    return this.flatMapError(e => new ParseFailure(this.input, f(e)))
+  mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2> {
+    return this.flatMapError(e => new DecodeFailure(this.input, f(e)))
   }
 
-  isSuccess(): this is ParseSuccess<In, Out, Err> {
+  isSuccess(): this is DecodeSuccess<In, Out, Err> {
     return false
   }
-  isFailure(): this is ParseFailure<In, Out, Err> {
+  isFailure(): this is DecodeFailure<In, Out, Err> {
     return true
   }
   getUnsafeSuccess(): Out {
@@ -113,15 +113,15 @@ export class ParseFailure<In, Out, Err> extends ParseResultBase<In, Out, Err> {
   }
 
   toString(): string {
-    return `ParseFailure<${JSON.stringify(this.failure)}>: ${JSON.stringify(this.input)}`
+    return `DecodeFailure<${JSON.stringify(this.failure)}>: ${JSON.stringify(this.input)}`
   }
 }
 
-export type ParseResult<In, Out, Err> = ParseSuccess<In, Out, Err> | ParseFailure<In, Out, Err>
+export type DecodeResult<In, Out, Err> = DecodeSuccess<In, Out, Err> | DecodeFailure<In, Out, Err>
 
-export const ParseResult = {
-  success: <In, Out, Err>(input: In, result: Out): ParseResult<In, Out, Err> =>
-    new ParseSuccess(input, result),
-  failure: <In, Out, Err>(input: In, failure: Err): ParseResult<In, Out, Err> =>
-    new ParseFailure(input, failure)  
+export const DecodeResult = {
+  success: <In, Out, Err>(input: In, result: Out): DecodeResult<In, Out, Err> =>
+    new DecodeSuccess(input, result),
+  failure: <In, Out, Err>(input: In, failure: Err): DecodeResult<In, Out, Err> =>
+    new DecodeFailure(input, failure)  
 }

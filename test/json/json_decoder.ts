@@ -1,7 +1,7 @@
-import { regexp, match, TextParser, optionalWhitespace, parseText } from '../../src/text'
-import { oneOf, lazy } from '../../src/core/parser'
+import { regexp, match, TextDecoder, optionalWhitespace, decodeText } from '../../src/text'
+import { oneOf, lazy } from '../../src/core/decoder'
 import { JSONValue, JSONArray, JSONObject } from './json_value'
-import { ParseResult } from '../../src/core/result'
+import { DecodeResult } from '../../src/core/result'
 import { DecodeError } from '../../src/error'
 import { TextInput } from '../../src/text/input'
 
@@ -18,7 +18,7 @@ const jsonString = regexp(/"((:?\\"|[^"])*)"/y, 1)
 const jsonNull = match('null').withResult(null)
 const jsonBoolean = jsonTrue.or(jsonFalse)
 
-const jsonValue: TextParser<JSONValue> = lazy(() =>
+const jsonValue: TextDecoder<JSONValue> = lazy(() =>
   oneOf(
     jsonNumber,
     jsonNull,
@@ -28,8 +28,8 @@ const jsonValue: TextParser<JSONValue> = lazy(() =>
     jsonObject
   ))
 
-const token = <T>(parser: TextParser<T>) => parser.skipNext(optionalWhitespace)
-const commaSeparated = <T>(parser: TextParser<T>) => parser.separatedBy(token(match(',')))
+const token = <T>(parser: TextDecoder<T>) => parser.skipNext(optionalWhitespace)
+const commaSeparated = <T>(parser: TextDecoder<T>) => parser.separatedBy(token(match(',')))
 const lCurly = token(match('{'))
 const rCurly = token(match('}'))
 const lSquare = token(match('['))
@@ -37,10 +37,10 @@ const rSquare = token(match(']'))
 const comma = token(match(','))
 const colon = token(match(':'))
 
-const jsonArray: TextParser<JSONArray> = lSquare.pickNext(commaSeparated(jsonValue)).skipNext(rSquare)
+const jsonArray: TextDecoder<JSONArray> = lSquare.pickNext(commaSeparated(jsonValue)).skipNext(rSquare)
 
 const pair = jsonString.skipNext(colon).join(jsonValue)
-const jsonObject: TextParser<JSONObject> = lCurly.pickNext(commaSeparated(pair)).skipNext(rCurly)
+const jsonObject: TextDecoder<JSONObject> = lCurly.pickNext(commaSeparated(pair)).skipNext(rCurly)
   .map((res: [string, JSONValue][]) => {
     return res.reduce(
       (acc: {}, pair: [string, JSONValue]) => {
@@ -50,4 +50,4 @@ const jsonObject: TextParser<JSONObject> = lCurly.pickNext(commaSeparated(pair))
     )
 })
 
-export const parseJson = (input: string): ParseResult<string, JSONValue, string> => parseText(jsonValue)(input)
+export const decodeJson = (input: string): DecodeResult<string, JSONValue, string> => decodeText(jsonValue)(input)

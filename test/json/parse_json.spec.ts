@@ -1,9 +1,9 @@
-import { parseJson } from './json_parser'
+import { decodeJson } from './json_decoder'
 
-describe('Parse JSON', () => {
-  it('parses a string into an object', () => {
+describe('Decode JSON', () => {
+  it('decodes a string into an object', () => {
     const serialized = '{ "a": "a", "b": 1.1, "c": ["a", 1.1, {},null] }'
-    expect(parseJson(serialized).getUnsafeSuccess())
+    expect(decodeJson(serialized).getUnsafeSuccess())
       .toEqual({ a: 'a', b: 1.1, c: ['a', 1.1, {}, null] })
   })
 })
