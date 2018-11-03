@@ -1,7 +1,7 @@
-import { regexp, match, TextParser, optionalWhitespace, TextInput, parseText, TextParserError } from '../src/text'
-import { oneOf, lazy } from '../src/parser'
+import { regexp, match, TextParser, optionalWhitespace, TextInput, parseText, TextParserError } from '../../src/text'
+import { oneOf, lazy } from '../../src/core/parser'
 import { JSONValue, JSONArray, JSONObject } from './json_value'
-import { ParseResult } from '../src/parse_result'
+import { ParseResult } from '../../src/core/result'
 
 const jsonTrue = match('true').withResult(true)
 const jsonFalse = match('false').withResult(false)

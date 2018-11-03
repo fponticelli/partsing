@@ -1,4 +1,4 @@
-import { ParseResult, ParseFailure, ParseSuccess } from './parse_result'
+import { ParseResult, ParseFailure, ParseSuccess } from './result'
 import { TupleToUnion } from './type_level'
 
 export type Parsing<In, Out, Err> = (input: In) => ParseResult<In, Out, Err>

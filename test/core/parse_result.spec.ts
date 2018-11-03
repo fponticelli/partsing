@@ -1,4 +1,4 @@
-import { ParseResult, ParseSuccess, ParseFailure } from '../src/parse_result'
+import { ParseResult, ParseSuccess, ParseFailure } from '../../src/core/result'
 
 describe('parse_result', () => {
   it('ParseResult.success returns a validate ParseSuccess', () => {

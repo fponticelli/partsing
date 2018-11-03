@@ -1,5 +1,5 @@
-import { Parser } from '../parser'
-import { ParseResult, ParseFailure, ParseSuccess } from '../parse_result'
+import { Parser } from '../core/parser'
+import { ParseResult, ParseFailure, ParseSuccess } from '../core/result'
 
 export interface TextInput {
   readonly input: string

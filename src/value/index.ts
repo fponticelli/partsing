@@ -1,6 +1,6 @@
-import { Parser } from './parser'
-import { ParseResult } from './parse_result'
-import { TupleToUnion } from './type_level'
+import { Parser } from '../core/parser'
+import { ParseResult } from '../core/result'
+import { TupleToUnion } from '../core/type_level'
 
 export interface ValueInput {
   readonly input: any

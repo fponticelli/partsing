@@ -1,5 +1,5 @@
-import { Parser, succeed, fail, lazy, sequence, oneOf } from '../src/parser'
-import { ParseResult, ParseSuccess, ParseFailure } from '../src/parse_result'
+import { Parser, succeed, fail, lazy, sequence, oneOf } from '../../src/core/parser'
+import { ParseResult, ParseSuccess, ParseFailure } from '../../src/core/result'
 import {
   parseText,
   digit,
@@ -8,7 +8,7 @@ import {
   match,
   letter,
   TextParserError
-} from '../src/text'
+} from '../../src/text'
 
 const parseSuccess = <In, Err>() => Parser.of<In, In, Err>(input => ParseResult.success<In, In, Err>(input, input))
 const parseFailure = <In>() => Parser.of<In, In, In>(input => ParseResult.failure<In, In, In>(input, input))

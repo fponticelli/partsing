@@ -16,7 +16,7 @@ import {
   undefineableValue,
   optionalValue,
   anyValue
-} from '../src/value_parser'
+} from '../../src/value'
 
 describe('value_parser', () => {
   it('stringValue', () => {
