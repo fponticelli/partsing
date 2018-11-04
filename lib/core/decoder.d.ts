@@ -25,6 +25,7 @@ export declare class Decoder<In, Out, Err> {
     repeatAtMost(times: number): Decoder<In, Out[], Err>;
     separatedByAtLeastOnce<Separator>(separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err>;
     separatedBy<Separator>(separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err>;
+    separatedByTimes<Separator>(separator: Decoder<In, Separator, Err>, times: number): Decoder<In, Out[], Err>;
     test(predicate: (r: Out) => boolean, failure: Err): Decoder<In, Out, Err>;
     probe(f: (v: DecodeResult<In, Out, Err>) => void): Decoder<In, Out, Err>;
     withResult<Out2>(value: Out2): Decoder<In, Out2, Err>;

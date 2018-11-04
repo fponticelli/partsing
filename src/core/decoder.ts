@@ -144,6 +144,15 @@ export class Decoder<In, Out, Err> {
       .or(this.map(v => [v]))
       .or(succeed([]))
   }
+  
+  separatedByTimes<Separator>(separator: Decoder<In, Separator, Err>, times: number): Decoder<In, Out[], Err> {
+    if (times <= 1)
+      return this.map(v => [v])
+    else {
+      const pairs = separator.pickNext(this).repeat(times - 1)
+      return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
+    }
+  }
 
   test(predicate: (r: Out) => boolean, failure: Err): Decoder<In, Out, Err> {
     return this.flatMap(res => new Decoder<In, Out, Err>(input => {

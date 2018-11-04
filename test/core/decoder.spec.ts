@@ -175,6 +175,17 @@ describe('decoder', () => {
     expect(decodeText(p)('a,b,c').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])    
   })
 
+  it('separatedByTimes', () => {
+    const p1 = letter.separatedByTimes(match(','), 1)
+    expect(decodeText(p1)('a').getUnsafeSuccess()).toEqual(['a'])
+    
+    const p3 = letter.separatedByTimes(match(','), 3)
+    expect(decodeText(p3)('a').getUnsafeFailure()).toBeDefined()
+    expect(decodeText(p3)('a,b').getUnsafeFailure()).toBeDefined()
+    expect(decodeText(p3)('a,b,c').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])
+    // expect(decodeText(p3)('a,b,c,d,e').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])    
+  })
+
   it('separatedByAtLeastOnce', () => {
     const p = letter.separatedByAtLeastOnce(match(','))
     expect(decodeText(p)('a').getUnsafeFailure()).toBeDefined()
