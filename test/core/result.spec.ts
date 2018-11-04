@@ -61,6 +61,13 @@ describe('decode_result', () => {
     expect(f.failure).toEqual('1')
   })
 
+  it('mapInput will transform input regardless if it is success or failure', () => {
+    const v = DecodeResult.success('1', 1).mapInput(Number)
+    expect(v.input).toEqual(1)
+    const f = DecodeResult.failure('1', 1).mapInput(Number)
+    expect(f.input).toEqual(1)
+  })
+
   it('flatMapError will transform failure but not success', () => {
     const v = DecodeResult.success('', 1).flatMapError(e => DecodeResult.success('', 2)) as DecodeSuccess<string, number, string>
     expect(v.value).toEqual(1)

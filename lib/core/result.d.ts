@@ -12,6 +12,7 @@ declare abstract class DecodeResultBase<In, Out, Err> {
     abstract flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2>;
     abstract map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err>;
     abstract mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2>;
+    abstract mapInput<In2>(f: (i: In) => In2): DecodeResult<In2, Out, Err>;
     abstract isSuccess(): this is DecodeSuccess<In, Out, Err>;
     abstract isFailure(): this is DecodeFailure<In, Out, Err>;
     abstract getUnsafeSuccess(): Out;
@@ -30,6 +31,7 @@ export declare class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Ou
     map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err>;
     flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2>;
     mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2>;
+    mapInput<In2>(f: (i: In) => In2): DecodeResult<In2, Out, Err>;
     isSuccess(): this is DecodeSuccess<In, Out, Err>;
     isFailure(): this is DecodeFailure<In, Out, Err>;
     getUnsafeSuccess(): Out;
@@ -48,6 +50,7 @@ export declare class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Ou
     map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err>;
     flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2>;
     mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2>;
+    mapInput<In2>(f: (i: In) => In2): DecodeResult<In2, Out, Err>;
     isSuccess(): this is DecodeSuccess<In, Out, Err>;
     isFailure(): this is DecodeFailure<In, Out, Err>;
     getUnsafeSuccess(): Out;

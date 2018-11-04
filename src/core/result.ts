@@ -16,6 +16,7 @@ abstract class DecodeResultBase<In, Out, Err> {
   
   abstract map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err>
   abstract mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2>
+  abstract mapInput<In2>(f: (i: In) => In2): DecodeResult<In2, Out, Err>
 
   abstract isSuccess(): this is DecodeSuccess<In, Out, Err>
   abstract isFailure(): this is DecodeFailure<In, Out, Err>
@@ -53,6 +54,9 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   }
   mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2> {
     return new DecodeSuccess(this.input, this.value)
+  }
+  mapInput<In2>(f: (i: In) => In2): DecodeResult<In2, Out, Err> {
+    return new DecodeSuccess(f(this.input), this.value)
   }
 
   isSuccess(): this is DecodeSuccess<In, Out, Err> {
@@ -101,6 +105,9 @@ export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   }
   mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2> {
     return this.flatMapError(e => new DecodeFailure(this.input, f(e)))
+  }
+  mapInput<In2>(f: (i: In) => In2): DecodeResult<In2, Out, Err> {
+    return new DecodeFailure(f(this.input), this.failure)
   }
 
   isSuccess(): this is DecodeSuccess<In, Out, Err> {
