@@ -7,8 +7,9 @@ export declare const decodeText: <T>(decoder: Decoder<TextInput, T, DecodeError>
 export declare const regexp: (pattern: RegExp, group?: number) => Decoder<TextInput, string, DecodeError>;
 export declare const withPosition: Decoder<TextInput, number, DecodeError>;
 export declare const rest: Decoder<TextInput, string, DecodeError>;
-export declare const eot: Decoder<TextInput, {} | undefined, DecodeError>;
+export declare const eoi: Decoder<TextInput, void, DecodeError>;
 export declare const match: <V extends string>(s: V) => Decoder<TextInput, V, DecodeError>;
+export declare const matchInsensitive: (s: string) => Decoder<TextInput, string, DecodeError>;
 export declare const letter: Decoder<TextInput, string, DecodeError>;
 export declare const letters: (min?: number, max?: number | undefined) => Decoder<TextInput, string, DecodeError>;
 export declare const upperCaseLetter: Decoder<TextInput, string, DecodeError>;

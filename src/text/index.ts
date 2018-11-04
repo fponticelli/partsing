@@ -61,7 +61,7 @@ export const rest = make(input => {
     return new DecodeSuccess({ ...input, index: input.input.length }, value)
   })
 
-export const eot = make(input => {
+export const eoi: Decoder<TextInput, void, DecodeError> = make(input => {
     const index = input.input.length
     if (input.index === index) {
       return new DecodeSuccess({ ...input, index }, undefined)
@@ -79,6 +79,21 @@ export const match = <V extends string>(s: V): TextDecoder<V> => {
       return new DecodeSuccess({ ...input, index }, s)
     } else {
       return new DecodeFailure(input, DecodeError.expectedMatch(`"${s}"`))
+    }
+  })
+}
+
+export const matchInsensitive = (s: string): TextDecoder<string> => {
+  const t = s.toLowerCase()
+  const length = s.length
+  return make(input => {
+    const index = input.index + length
+    const value = input.input.substring(input.index, index)
+    const valueInsensitive = value.toLowerCase()
+    if (valueInsensitive === t) {
+      return new DecodeSuccess({ ...input, index }, value)
+    } else {
+      return new DecodeFailure(input, DecodeError.expectedMatch(`"${s}" (insensitive)`))
     }
   })
 }

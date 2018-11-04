@@ -2,7 +2,7 @@ import {
   char,
   digit,
   digits,
-  eot,
+  eoi,
   withPosition,
   letter,
   letters,
@@ -13,6 +13,7 @@ import {
   match,
   matchNoCharOf,
   matchAnyCharOf,
+  matchInsensitive,
   optionalWhitespace,
   decodeText,
   regexp,
@@ -109,10 +110,10 @@ describe('text_decoder', () => {
     expect(decoded).toEqual('b')
   })
 
-  it('eot', () => {
-    const [, decoded] = decodeSuccess(rest.skipNext(eot), 'a123b')
+  it('eoi', () => {
+    const [, decoded] = decodeSuccess(rest.skipNext(eoi), 'a123b')
     expect(decoded).toEqual('a123b')
-    const [, failure] = decodeFailure(eot, 'a123b')
+    const [, failure] = decodeFailure(eoi, 'a123b')
     expect(failure).toBeInstanceOf(ExpectedEoi)
   })
 
@@ -120,6 +121,13 @@ describe('text_decoder', () => {
     const [, decoded] = decodeSuccess(match('a12'), 'a123b')
     expect(decoded).toEqual('a12')
     const [, failure] = decodeFailure(match('abc'), 'a123b')
+    expect(failure).toBeInstanceOf(ExpectedMatch)
+  })
+
+  it('matchInsensitive', () => {
+    const [, decoded] = decodeSuccess(matchInsensitive('abc'), 'AbCd')
+    expect(decoded).toEqual('AbC')
+    const [, failure] = decodeFailure(matchInsensitive('abc'), 'a123b')
     expect(failure).toBeInstanceOf(ExpectedMatch)
   })
 
