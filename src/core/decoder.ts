@@ -86,20 +86,25 @@ export class Decoder<In, Out, Err> {
     )
   }
 
-  or<U extends any[]>(...decoders: { [P in keyof U]: Decoder<In, U[P], Err> })
+  or<U extends any[]>(combineErrors: undefined | ((errs: Err[]) => Err), ...decoders: { [P in keyof U]: Decoder<In, U[P], Err> })
       : Decoder<In, Out | TupleToUnion<U>, Err> {
     return this.flatMapError((f: Err) =>
       new Decoder<In, Out | TupleToUnion<U>, Err>(
         (input: In) => {
+          const failures = []
           for (let decoder of decoders) {
             const result = decoder.run(input)
             if (result.isFailure()) {
-              f = result.failure
+              failures.push(result.failure)
             } else {
               return result
             }
           }
-          return new DecodeFailure(input, f)
+          if (combineErrors) {
+            return new DecodeFailure(input, combineErrors(failures))
+          } else {
+            return new DecodeFailure(input, f)
+          }
         }
       )
     )
@@ -158,8 +163,8 @@ export class Decoder<In, Out, Err> {
   
   separatedBy<Separator>(separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
     return this.separatedByAtLeastOnce(separator)
-      .or(this.map(v => [v]))
-      .or(succeed([]))
+      .or(undefined, this.map(v => [v]))
+      .or(undefined, succeed([]))
   }
   
   separatedByTimes<Separator>(separator: Decoder<In, Separator, Err>, times: number): Decoder<In, Out[], Err> {
@@ -219,20 +224,27 @@ export const sequence = <In, U extends any[], Err>
   )
 
 export const oneOf = <In, U extends any[], Err>
-    (...decoders: { [P in keyof U]: Decoder<In, U[P], Err> }) => {
+    (
+      combineErrors: undefined | ((errs: Err[]) => Err),
+      ...decoders: { [P in keyof U]: Decoder<In, U[P], Err> }
+    ) => {
   if (decoders.length === 0) throw new Error('alt needs to be called with at least one argumenr')
   return new Decoder<In, TupleToUnion<U>, Err>(
     (input: In) => {
-      let failure = undefined
+      const failures = []
       for (let decoder of decoders) {
         const result = decoder.run(input)
         if (result.isFailure()) {
-          failure = result
+          failures.push(result.failure)
         } else {
           return result
         }
       }
-      return failure!
+      if (combineErrors) {
+        return DecodeResult.failure(input, combineErrors(failures))
+      } else {
+        return DecodeResult.failure(input, failures[0]) 
+      }
     }
   )
 }

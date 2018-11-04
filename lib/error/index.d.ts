@@ -7,10 +7,11 @@ import { ExpectedField } from './expected_field';
 import { ExpectedMatch } from './expected_match';
 import { ExpectedNoneOf } from './expected_none_of';
 import { ExpectedOnce } from './expected_once';
+import { CombineError } from './combine_error';
 import { ExpectedWithinRange } from './expected_within_range';
 import { PatternMismatch } from './pattern_mismatch';
 import { UnexpectedEoi } from './unexpected_eoi';
-export declare type DecodeError = CustomError | ExpectedAnyOf | ExpectedAtLeast | ExpectedEoi | ExpectedField | ExpectedMatch | ExpectedNoneOf | ExpectedOnce | ExpectedWithinRange | PatternMismatch | UnexpectedEoi;
+export declare type DecodeError = CustomError | ExpectedAnyOf | ExpectedAtLeast | ExpectedEoi | ExpectedField | ExpectedMatch | ExpectedNoneOf | ExpectedOnce | CombineError | ExpectedWithinRange | PatternMismatch | UnexpectedEoi;
 export declare const DecodeError: {
     custom: (value: string) => DecodeError;
     expectedAnyOf: (entity: Entity, values: string[]) => DecodeError;
@@ -20,6 +21,7 @@ export declare const DecodeError: {
     expectedMatch: (value: string) => DecodeError;
     expectedNoneOf: (entity: Entity, values: string[]) => DecodeError;
     expectedOnce: (entity: Entity) => DecodeError;
+    combine: (errors: DecodeError[]) => DecodeError;
     expectedWithinRange: (min: string, max: string) => DecodeError;
     patternMismatch: (pattern: string) => DecodeError;
     unexpectedEoi: DecodeError;
@@ -33,6 +35,7 @@ export { ExpectedField } from './expected_field';
 export { ExpectedMatch } from './expected_match';
 export { ExpectedNoneOf } from './expected_none_of';
 export { ExpectedOnce } from './expected_once';
+export { CombineError } from './combine_error';
 export { ExpectedWithinRange } from './expected_within_range';
 export { PatternMismatch } from './pattern_mismatch';
 export { UnexpectedEoi } from './unexpected_eoi';

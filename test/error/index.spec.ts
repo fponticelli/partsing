@@ -11,7 +11,8 @@ import {
   ExpectedOnce,
   ExpectedWithinRange,
   PatternMismatch,
-  UnexpectedEoi
+  UnexpectedEoi,
+  CombineError
 } from '../../src/error'
 
 describe('errors', () => {
@@ -41,6 +42,12 @@ describe('errors', () => {
     expect(new ExpectedMatch('"match"').toString()).toEqual('expected "match"')
     expect(new ExpectedNoneOf(Entity.CHARACTER, ['a', 'b']).toString()).toEqual('expected no character like a or b')
     expect(new ExpectedOnce(Entity.CHARACTER).toString()).toEqual('expected a character')
+    expect(new CombineError([
+      new CustomError('abc'),
+      new ExpectedEoi()
+    ]).toString()).toEqual(`expected one of:
+  - abc
+  - expected end of input`)
     expect(new ExpectedWithinRange('a', 'b').toString()).toEqual('expected between a and b')
     expect(new PatternMismatch('/a/').toString()).toEqual('expected to match pattern /a/')
     expect(new UnexpectedEoi().toString()).toEqual('unexpected end of input')

@@ -32,9 +32,9 @@ export const testType = <T>(expected: string) => make<T>(input =>
     DecodeResult.failure(input, DecodeError.expectedMatch(expected))
 )
 
-export const nullableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(nullValue)
-export const undefineableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(undefinedValue)
-export const optionalValue = <T>(decoder: ValueDecoder<T>) => decoder.or(undefinedValue).or(nullValue)
+export const nullableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, nullValue)
+export const undefineableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, undefinedValue)
+export const optionalValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, undefinedValue, nullValue)
 
 export const anyValue = make<any>(input => DecodeResult.success(input, input.input))
 export const stringValue = testType<string>('string')

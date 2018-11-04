@@ -3,7 +3,6 @@ import { oneOf, lazy } from '../../src/core/decoder'
 import { JSONValue, JSONArray, JSONObject } from './json_value'
 import { DecodeResult } from '../../src/core/result'
 import { DecodeError } from '../../src/error'
-import { TextInput } from '../../src/text/input'
 
 const jsonTrue = match('true').withResult(true)
 const jsonFalse = match('false').withResult(false)
@@ -16,10 +15,11 @@ const jsonNumber = regexp(/-?(0|[1-9]\d*)([.]\d+)?([eE][+-]?\d+)?/y)
 const jsonString = regexp(/"((:?\\"|[^"])*)"/y, 1)
   .withFailure(DecodeError.custom('expected quoted string'))
 const jsonNull = match('null').withResult(null)
-const jsonBoolean = jsonTrue.or(jsonFalse)
+const jsonBoolean = jsonTrue.or(DecodeError.combine, jsonFalse)
 
 const jsonValue: TextDecoder<JSONValue> = lazy(() =>
   oneOf(
+    DecodeError.combine,
     jsonNumber,
     jsonNull,
     jsonBoolean,

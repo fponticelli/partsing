@@ -88,7 +88,8 @@ describe('decoder', () => {
   })
 
   it('sequence', () => {
-    const decoder = sequence<TextInput, [string, string, string], DecodeError>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const decoder = sequence<TextInput, [string, string, string], DecodeError>(
+      regexp(/^1/), regexp(/^a/), regexp(/^b/))
     const result = decodeText(decoder)('1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
     const result2 = decodeText(decoder)('1ba').getUnsafeFailure()
@@ -141,18 +142,24 @@ describe('decoder', () => {
   })
 
   it('or', () => {
-    const p = digit.or(match('a'))
+    const p = digit.or(DecodeError.combine, match('a'))
     expect(decodeText(p)('1').getUnsafeSuccess()).toEqual('1')
     expect(decodeText(p)('a').getUnsafeSuccess()).toEqual('a')
     expect(decodeText(p)('x').getUnsafeFailure()).toBeDefined()
+
+    const p1 = digit.or(undefined, match('a'))
+    expect(decodeText(p1)('x').getUnsafeFailure()).toBeDefined()
   })
 
   it('oneOf', () => {
-    const p = oneOf<TextInput, [string, string], DecodeError>(digit, match('a'))
+    const p = oneOf<TextInput, [string, string], DecodeError>(DecodeError.combine, digit, match('a'))
     expect(decodeText(p)('1').getUnsafeSuccess()).toEqual('1')
     expect(decodeText(p)('a').getUnsafeSuccess()).toEqual('a')
     expect(decodeText(p)('x').getUnsafeFailure()).toBeDefined()
-    expect(() => decodeText(oneOf())('x')).toThrow(Error)
+    expect(() => decodeText(oneOf(DecodeError.combine))('x')).toThrow(Error)
+
+    const p2 = oneOf<TextInput, [string, string], DecodeError>(undefined, digit, match('a'))
+    expect(decodeText(p2)('x').getUnsafeFailure()).toBeDefined()
   })
 
   it('sequence', () => {

@@ -17,7 +17,7 @@ export declare class Decoder<In, Out, Err> {
     pickNext<Out2>(next: Decoder<In, Out2, Err>): Decoder<In, Out2, Err>;
     skipNext<Out2>(next: Decoder<In, Out2, Err>): Decoder<In, Out, Err>;
     join<Out2>(other: Decoder<In, Out2, Err>): Decoder<In, [Out, Out2], Err>;
-    or<U extends any[]>(...decoders: {
+    or<U extends any[]>(combineErrors: undefined | ((errs: Err[]) => Err), ...decoders: {
         [P in keyof U]: Decoder<In, U[P], Err>;
     }): Decoder<In, Out | TupleToUnion<U>, Err>;
     repeatAtLeast(times?: number): Decoder<In, Out[], Err>;
@@ -33,7 +33,7 @@ export declare class Decoder<In, Out, Err> {
     withFailure<Err2>(e: Err2): Decoder<In, Out, Err2>;
 }
 export declare const sequence: <In, U extends any[], Err>(...decoders: { [P in keyof U]: Decoder<In, U[P], Err>; }) => Decoder<In, { [P in keyof U]: U[P]; }, Err>;
-export declare const oneOf: <In, U extends any[], Err>(...decoders: { [P in keyof U]: Decoder<In, U[P], Err>; }) => Decoder<In, U[number], Err>;
+export declare const oneOf: <In, U extends any[], Err>(combineErrors: ((errs: Err[]) => Err) | undefined, ...decoders: { [P in keyof U]: Decoder<In, U[P], Err>; }) => Decoder<In, U[number], Err>;
 export declare const succeed: <In, Out, Err>(r: Out) => Decoder<In, Out, Err>;
 export declare const fail: <In, Out, Err>(f: Err) => Decoder<In, Out, Err>;
 export declare const lazy: <In, Out, Err>(f: () => Decoder<In, Out, Err>) => Decoder<In, Out, Err>;

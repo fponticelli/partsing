@@ -55,7 +55,7 @@ const ratioDecoder = regexp(/0[.]\d+/y).map(Number)
 const rgbDecoder   = regexp(/[#]([0-9a-f]{6})/iy, 1)
                        .map(v => parseInt(v, 16))
                        .map(v => new RGB(v))
-const greyDecoder  = matchInsensitive('grey').or(matchInsensitive('gray'))
+const greyDecoder  = matchInsensitive('grey').or(DecodeError.combine, matchInsensitive('gray'))
                        .skipNext(optionalWhitespace)
                        .pickNext(ratioDecoder)
                        .map(v => new Grey(v))
@@ -69,6 +69,7 @@ const hslDecoder   = matchInsensitive('hsl(')
 
 const colorTextDecoder = decodeText(
     oneOf<TextInput, Color[], DecodeError>(
+      DecodeError.combine,
       rgbDecoder,
       greyDecoder,
       hslDecoder
@@ -126,6 +127,7 @@ const hslValue = objectValue(
 
 const colorValueDecoder = decodeValue(
     oneOf<ValueInput, Color[], DecodeError>(
+      DecodeError.combine,
       rgbValue,
       greyValue,
       hslValue
