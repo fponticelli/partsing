@@ -2,6 +2,7 @@ import { Decoder, succeed, fail, lazy, sequence, oneOf } from '../../src/core/de
 import { DecodeResult, DecodeSuccess, DecodeFailure } from '../../src/core/result'
 import { TextInput } from '../../src/text/input'
 import { DecodeError } from '../../src/error'
+import { stringValue, decodeValue } from '../../src/value'
 import {
   decodeText,
   digit,
@@ -197,5 +198,14 @@ describe('decoder', () => {
     const p = Decoder.ofGuaranteed<TextInput, string, DecodeError>((input: {input: string, index: number}) => [input, input.input])
     const result = decodeText(p)('1').getUnsafeSuccess()
     expect(result).toBe('1')
+  })
+
+  it('sub', () => {
+    const p = stringValue.sub(regexp(/abc/y), input => ({ input, index: 0 }), v => v)
+    const success = decodeValue(p)('abc').getUnsafeSuccess()
+    expect(success).toBe('abc')
+
+    const failure = decodeValue(p)('123abc').getUnsafeFailure()
+    expect(failure).toBeDefined()
   })
 })

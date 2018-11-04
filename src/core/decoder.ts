@@ -36,6 +36,23 @@ export class Decoder<In, Out, Err> {
     ))
   }
 
+  sub<In2, Out2, Err2>(
+    decoder: Decoder<In2, Out2, Err2>,
+    mapInput: (o: Out) => In2,
+    mapError: (e: Err2) => Err
+  ): Decoder<In, Out2, Err> {
+    return new Decoder<In, Out2, Err>((input: In): DecodeResult<In, Out2, Err> =>
+      this.run(input).match<DecodeResult<In, Out2, Err>>({
+        success: (s: DecodeSuccess<In, Out, Err>) =>
+          decoder
+            .mapError(mapError)
+            .run(mapInput(s.value))
+            .mapInput(_ => s.input),
+        failure: (f: DecodeFailure<In, Out, Err>) => DecodeResult.failure(f.input, f.failure)
+      })
+    )
+  }
+
   flatMapError<Err2>(fun: (res: Err) => Decoder<In, Out, Err2>): Decoder<In, Out, Err2> {
     return new Decoder<In, Out, Err2>((input: In) =>
       this.run(input).match<DecodeResult<In, Out, Err2>>({

@@ -11,6 +11,7 @@ export declare class Decoder<In, Out, Err> {
     constructor(run: (input: In) => DecodeResult<In, Out, Err>);
     flatMap<Out2>(fun: (res: Out) => Decoder<In, Out2, Err>): Decoder<In, Out2, Err>;
     map<Out2>(fun: (res: Out) => Out2): Decoder<In, Out2, Err>;
+    sub<In2, Out2, Err2>(decoder: Decoder<In2, Out2, Err2>, mapInput: (o: Out) => In2, mapError: (e: Err2) => Err): Decoder<In, Out2, Err>;
     flatMapError<Err2>(fun: (res: Err) => Decoder<In, Out, Err2>): Decoder<In, Out, Err2>;
     mapError<Err2>(fun: (e: Err) => Err2): Decoder<In, Out, Err2>;
     pickNext<Out2>(next: Decoder<In, Out2, Err>): Decoder<In, Out2, Err>;
