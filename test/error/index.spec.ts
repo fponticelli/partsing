@@ -42,7 +42,7 @@ describe('errors', () => {
     expect(new ExpectedNoneOf(Entity.CHARACTER, ['a', 'b']).toString()).toEqual('expected no character like a or b')
     expect(new ExpectedOnce(Entity.CHARACTER).toString()).toEqual('expected a character')
     expect(new ExpectedWithinRange('a', 'b').toString()).toEqual('expected between a and b')
-    expect(new PatternMismatch('/a/').toString()).toEqual('doesn\'t match pattern /a/')
+    expect(new PatternMismatch('/a/').toString()).toEqual('expected to match pattern /a/')
     expect(new UnexpectedEoi().toString()).toEqual('unexpected end of input')
   })
 
