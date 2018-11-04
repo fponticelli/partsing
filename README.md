@@ -34,7 +34,7 @@ The `decodeValue` function simplifies the inputs and outputs of decoding values.
 
 ## Example
 
-A simple decoder combinator to parse color values into class instances. 
+A simple decoder combinator to parse color values from strings into class instances. 
 
 ```typescript
 class RGB {
@@ -67,8 +67,8 @@ const hslDecoder   = matchInsensitive('hsl(')
                        )
                        .skipNext(match(')'))
 
-const colorDecoder = decodeText<Color>(
-    oneOf<TextInput, [RGB, Grey, HSL], DecodeError>(
+const colorTextDecoder = decodeText(
+    oneOf<TextInput, Color[], DecodeError>(
       rgbDecoder,
       greyDecoder,
       hslDecoder
@@ -76,8 +76,59 @@ const colorDecoder = decodeText<Color>(
   )
 
 // all results are wrapped in a DecodeSuccess
-// colorDecoder('#003355')          == new RGB(0x003355)
-// colorDecoder('gray 0.3')         == new Grey(0.3)
-// colorDecoder('gray0.2')          == new Grey(0.2)
-// colorDecoder('HSL(0.1,0.2,0.3)') == new HSL(0.1,0.2,0.3)
+// colorTextDecoder('#003355')          == new RGB(0x003355)
+// colorTextDecoder('gray 0.3')         == new Grey(0.3)
+// colorTextDecoder('gray0.2')          == new Grey(0.2)
+// colorTextDecoder('HSL(0.1,0.2,0.3)') == new HSL(0.1,0.2,0.3)
+```
+
+Another scenario where decoding comes in handy is to validate, type and transform payloads from JSON requests. You can decode a value (after being parsed by `JSON.parse`) into one of the `Color` types described above.
+
+A few examples of valid JSON payloads:
+
+```json
+"#003366"
+```
+
+```json
+{ "grey": 0.5 }
+```
+
+```json
+{ "kind": "hsl", "h": 0.2, "s": 0.5, "l": 0.8 }
+```
+
+Here is a `colorValueDecoder` definition that can deal with those cases:
+
+```typescript
+const ratioValue = numberValue.test(v => v >= 0 && v <= 1, DecodeError.expectedWithinRange('0', '1'))
+
+// reuse the rgbDecoder defined above to validate and trasform the string value into an RGB instance
+// example: "#003366"
+const rgbValue = stringValue.sub(rgbDecoder, input => ({ input, index: 0 }), v => v)
+
+// example: { "grey": 0.5 }
+const greyValue = objectValue(
+    { grey: ratioValue },
+    [] // the empty array means that no fields are optional
+  ).map(v => new Grey(v.grey))
+
+// example: { "kind": "hsl", "h": 0.2, "s": 0.5, "l": 0.8 }
+const hslValue = objectValue(
+    {
+      kind: literalValue('hsl'),
+      h: ratioValue,
+      s: ratioValue,
+      l: ratioValue
+    },
+    []
+  ).map(v => new HSL(v.h, v.s, v.l))
+
+const colorValueDecoder = decodeValue(
+    oneOf<ValueInput, Color[], DecodeError>(
+      rgbValue,
+      greyValue,
+      hslValue
+    )
+  )
 ```
