@@ -8,3 +8,8 @@ export declare type Input<T extends {
 export declare type Error<T extends {
     _E: any;
 }> = T['_E'];
+export declare type MarkOptionalFields<T, U extends any[], K extends keyof T = keyof T> = {
+    [k in Exclude<keyof T, TupleToUnion<U>>]: T[k];
+} & {
+    [k in TupleToUnion<U>]+?: T[k];
+};

@@ -77,7 +77,7 @@ describe('value_decoder', () => {
         b: numberValue,
         c: booleanValue
       },
-      'c'
+      ['c']
     )
     expect(decodeValue(p)({ a: 'a', b: 1 }).getUnsafeSuccess()).toEqual({ a: 'a', b: 1 })
     expect(decodeValue(p)({ a: 'a', b: 1, c: false }).getUnsafeSuccess()).toEqual({ a: 'a', b: 1, c: false })

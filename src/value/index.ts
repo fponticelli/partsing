@@ -1,6 +1,6 @@
 import { Decoder } from '../core/decoder'
 import { DecodeResult, DecodeFailure } from '../core/result'
-import { TupleToUnion } from '../core/type_level'
+import { TupleToUnion, MarkOptionalFields } from '../core/type_level'
 import { DecodeError, Entity } from '../error'
 
 export interface ValueInput {
@@ -89,11 +89,8 @@ const testObject = testType<{}>('object')
 
 export const objectValue = <T, K extends keyof T>(
     fieldDecoders: { [k in keyof T]: ValueDecoder<T[k]> },
-    ...optionalFields: K[]
-  ): ValueDecoder<
-    { [k in Exclude<keyof T, TupleToUnion<typeof optionalFields>>]: T[k] } &
-    { [k in TupleToUnion<typeof optionalFields>]+?: T[k] }
-  > => {
+    optionalFields: K[]
+  ): ValueDecoder<MarkOptionalFields<T, typeof optionalFields, K>> => {
     return testObject.flatMap((o: any) => {
       return make(input => {
         const mandatoryFields = Object.keys(fieldDecoders).filter(f => optionalFields.indexOf(f as K) < 0)
