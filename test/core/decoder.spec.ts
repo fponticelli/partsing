@@ -1,15 +1,9 @@
-import { Decoder, succeed, fail, lazy, sequence, oneOf } from '../../src/core/decoder'
-import { DecodeResult, DecodeSuccess, DecodeFailure } from '../../src/core/result'
-import { TextInput } from '../../src/text/input'
+import { Decoder, fail, lazy, oneOf, sequence, succeed } from '../../src/core/decoder'
+import { DecodeFailure, DecodeResult, DecodeSuccess } from '../../src/core/result'
 import { DecodeError } from '../../src/error'
-import { stringValue, decodeValue } from '../../src/value'
-import {
-  decodeText,
-  digit,
-  regexp,
-  match,
-  letter
-} from '../../src/text'
+import { decodeText, digit, letter, match, regexp } from '../../src/text'
+import { TextInput } from '../../src/text/input'
+import { decodeValue, stringValue } from '../../src/value'
 
 const decodeSuccess = <In, Err>() => Decoder.of<In, In, Err>(input => DecodeResult.success<In, In, Err>(input, input))
 const decodeFailure = <In>() => Decoder.of<In, In, In>(input => DecodeResult.failure<In, In, In>(input, input))

@@ -1,4 +1,4 @@
-import { DecodeResult, DecodeSuccess, DecodeFailure } from '../../src/core/result'
+import { DecodeFailure, DecodeResult, DecodeSuccess } from '../../src/core/result'
 
 describe('decode_result', () => {
   it('DecodeResult.success returns a validate DecodeSuccess', () => {

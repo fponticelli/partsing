@@ -1,7 +1,6 @@
 import { Decoder } from '../core/decoder'
-import { DecodeResult, DecodeFailure, DecodeSuccess } from '../core/result'
-import { DecodeError } from '../error'
-import { Entity } from '../error'
+import { DecodeFailure, DecodeResult, DecodeSuccess } from '../core/result'
+import { DecodeError, Entity } from '../error'
 import { TextInput } from './input'
 
 export type TextDecoder<T> = Decoder<TextInput, T, DecodeError>

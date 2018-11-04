@@ -1,5 +1,5 @@
 import { Decoder } from '../core/decoder';
-import { DecodeResult, DecodeFailure } from '../core/result';
+import { DecodeFailure, DecodeResult } from '../core/result';
 import { DecodeError } from '../error';
 import { TextInput } from './input';
 export declare type TextDecoder<T> = Decoder<TextInput, T, DecodeError>;

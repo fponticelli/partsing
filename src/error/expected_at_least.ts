@@ -1,6 +1,5 @@
 import { DecodeErrorBase } from './decode_error_base'
-import { pluralize } from './Entity'
-import { Entity } from './Entity'
+import { Entity, pluralize } from './entity'
 
 export class ExpectedAtLeast extends DecodeErrorBase {
   readonly kind: 'expected-at-least' = 'expected-at-least'

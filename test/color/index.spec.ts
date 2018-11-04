@@ -1,9 +1,11 @@
-import { regexp, matchInsensitive, optionalWhitespace, match, decodeText, eoi } from '../../src/text'
-import { oneOf, Decoder } from '../../src/core/decoder'
-import { TextInput } from '../../src/text/input'
-import { DecodeError } from '../../src/error'
-import { stringValue, objectValue, numberValue, literalValue, decodeValue } from '../../src/value'
 import { ValueInput } from '../../lib/value'
+import { Decoder, oneOf } from '../../src/core/decoder'
+import { DecodeError } from '../../src/error'
+import {
+    decodeText, eoi, match, matchInsensitive, optionalWhitespace, regexp
+} from '../../src/text'
+import { TextInput } from '../../src/text/input'
+import { decodeValue, literalValue, numberValue, objectValue, stringValue } from '../../src/value'
 
 class RGB {
   constructor(readonly rgb: number) {}

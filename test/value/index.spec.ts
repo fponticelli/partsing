@@ -1,22 +1,7 @@
 import {
-  arrayValue,
-  booleanValue,
-  decodeValue,
-  nullValue,
-  numberValue,
-  objectValue,
-  undefinedValue,
-  literalValue,
-  stringValue,
-  tupleValue,
-  integerValue,
-  safeIntegerValue,
-  finiteNumberValue,
-  nullableValue,
-  undefineableValue,
-  optionalValue,
-  anyValue,
-  pathToString
+    anyValue, arrayValue, booleanValue, decodeValue, finiteNumberValue, integerValue, literalValue,
+    nullableValue, nullValue, numberValue, objectValue, optionalValue, pathToString,
+    safeIntegerValue, stringValue, tupleValue, undefineableValue, undefinedValue
 } from '../../src/value'
 
 describe('value_decoder', () => {

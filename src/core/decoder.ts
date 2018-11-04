@@ -1,4 +1,4 @@
-import { DecodeResult, DecodeFailure, DecodeSuccess } from './result'
+import { DecodeFailure, DecodeResult, DecodeSuccess } from './result'
 import { TupleToUnion } from './type_level'
 
 export type Decoding<In, Out, Err> = (input: In) => DecodeResult<In, Out, Err>

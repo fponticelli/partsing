@@ -1,8 +1,8 @@
-import { regexp, match, TextDecoder, optionalWhitespace, decodeText } from '../../src/text'
-import { oneOf, lazy } from '../../src/core/decoder'
-import { JSONValue, JSONArray, JSONObject } from './json_value'
+import { lazy, oneOf } from '../../src/core/decoder'
 import { DecodeResult } from '../../src/core/result'
 import { DecodeError } from '../../src/error'
+import { decodeText, match, optionalWhitespace, regexp, TextDecoder } from '../../src/text'
+import { JSONArray, JSONObject, JSONValue } from './json_value'
 
 const jsonTrue = match('true').withResult(true)
 const jsonFalse = match('false').withResult(false)

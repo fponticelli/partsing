@@ -1,5 +1,5 @@
 import { Decoder } from '../core/decoder';
-import { DecodeResult, DecodeFailure } from '../core/result';
+import { DecodeFailure, DecodeResult } from '../core/result';
 import { MarkOptionalFields } from '../core/type_level';
 import { DecodeError } from '../error';
 export interface ValueInput {

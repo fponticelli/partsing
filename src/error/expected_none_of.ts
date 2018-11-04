@@ -1,5 +1,5 @@
 import { DecodeErrorBase } from './decode_error_base'
-import { Entity, pluralize } from './Entity'
+import { Entity, pluralize } from './entity'
 import { concatOr } from './expected_any_of'
 
 export class ExpectedNoneOf extends DecodeErrorBase {

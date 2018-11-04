@@ -1,18 +1,7 @@
 import {
-  concatOr,
-  pluralize,
-  Entity,
-  CustomError,
-  ExpectedAnyOf,
-  ExpectedAtLeast,
-  ExpectedEoi,
-  ExpectedMatch,
-  ExpectedNoneOf,
-  ExpectedOnce,
-  ExpectedWithinRange,
-  PatternMismatch,
-  UnexpectedEoi,
-  CombineError
+    CombineErrors, concatOr, CustomError, Entity, ExpectedAnyOf, ExpectedAtLeast, ExpectedEoi,
+    ExpectedMatch, ExpectedNoneOf, ExpectedOnce, ExpectedWithinRange, PatternMismatch, pluralize,
+    UnexpectedEoi
 } from '../../src/error'
 
 describe('errors', () => {
@@ -42,7 +31,7 @@ describe('errors', () => {
     expect(new ExpectedMatch('"match"').toString()).toEqual('expected "match"')
     expect(new ExpectedNoneOf(Entity.CHARACTER, ['a', 'b']).toString()).toEqual('expected no character like a or b')
     expect(new ExpectedOnce(Entity.CHARACTER).toString()).toEqual('expected a character')
-    expect(new CombineError([
+    expect(new CombineErrors([
       new CustomError('abc'),
       new ExpectedEoi()
     ]).toString()).toEqual(`expected one of:

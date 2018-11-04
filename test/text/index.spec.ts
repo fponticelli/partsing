@@ -1,42 +1,14 @@
 import {
-  char,
-  digit,
-  digits,
-  eoi,
-  withPosition,
-  letter,
-  letters,
-  lowerCaseLetter,
-  lowerCaseLetters,
-  upperCaseLetter,
-  upperCaseLetters,
-  match,
-  matchNoCharOf,
-  matchAnyCharOf,
-  matchInsensitive,
-  optionalWhitespace,
-  decodeText,
-  regexp,
-  rest,
-  takeCharBetween,
-  takeCharWhile,
-  testChar,
-  TextDecoder,
-  whitespace
-} from '../../src/text'
-
-import { TextInput } from '../../src/text/input'
-
-import {
-  DecodeError,
-  ExpectedAtLeast,
-  ExpectedNoneOf,
-  ExpectedAnyOf,
-  ExpectedOnce,
-  ExpectedMatch,
-  ExpectedEoi,
-  PatternMismatch
+    DecodeError, ExpectedAnyOf, ExpectedAtLeast, ExpectedEoi, ExpectedMatch, ExpectedNoneOf,
+    ExpectedOnce, PatternMismatch
 } from '../../src/error'
+import {
+    char, decodeText, digit, digits, eoi, letter, letters, lowerCaseLetter, lowerCaseLetters, match,
+    matchAnyCharOf, matchInsensitive, matchNoCharOf, optionalWhitespace, regexp, rest,
+    takeCharBetween, takeCharWhile, testChar, TextDecoder, upperCaseLetter, upperCaseLetters,
+    whitespace, withPosition
+} from '../../src/text'
+import { TextInput } from '../../src/text/input'
 
 const decodeSuccess = <Out>(decoder: TextDecoder<Out>, input: string): [TextInput, Out] => {
   const r = decoder.run({ input, index: 0 })

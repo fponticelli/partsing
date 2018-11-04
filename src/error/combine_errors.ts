@@ -1,9 +1,8 @@
+import { DecodeError } from './'
 import { DecodeErrorBase } from './decode_error_base'
-import { Entity, pluralize } from './entity'
-import { DecodeError } from '.'
 
-export class CombineError extends DecodeErrorBase {
-  readonly kind: 'combine-error' = 'combine-error'
+export class CombineErrors extends DecodeErrorBase {
+  readonly kind: 'combine-errors' = 'combine-errors'
   constructor(
     readonly errors: DecodeError[]
   ) {

@@ -1,5 +1,5 @@
 import { DecodeErrorBase } from './decode_error_base'
-import { Entity, pluralize } from './Entity'
+import { Entity, pluralize } from './entity'
 
 export const concatOr = (values: string[]) => {
   const length = values.length

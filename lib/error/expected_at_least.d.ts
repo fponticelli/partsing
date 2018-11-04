@@ -1,5 +1,5 @@
 import { DecodeErrorBase } from './decode_error_base';
-import { Entity } from './Entity';
+import { Entity } from './entity';
 export declare class ExpectedAtLeast extends DecodeErrorBase {
     readonly min: number;
     readonly entity: Entity;

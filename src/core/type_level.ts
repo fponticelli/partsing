@@ -1,5 +1,3 @@
-import { Decoder } from './decoder'
-
 export type TupleToUnion<T extends any[]> = T[number] | never
 
 export type Output<T extends { _O: any }> = T['_O']

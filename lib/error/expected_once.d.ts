@@ -1,5 +1,5 @@
 import { DecodeErrorBase } from './decode_error_base';
-import { Entity } from './Entity';
+import { Entity } from './entity';
 export declare class ExpectedOnce extends DecodeErrorBase {
     readonly entity: Entity;
     readonly kind: 'expected-once';
