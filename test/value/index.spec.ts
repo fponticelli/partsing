@@ -1,12 +1,12 @@
 import {
   arrayValue,
   booleanValue,
+  decodeValue,
   nullValue,
   numberValue,
   objectValue,
   undefinedValue,
   literalValue,
-  decodeValue,
   stringValue,
   tupleValue,
   integerValue,

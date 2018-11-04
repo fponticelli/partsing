@@ -1,5 +1,8 @@
 declare abstract class DecodeResultBase<In, Out, Err> {
     readonly input: In;
+    readonly _I: In;
+    readonly _O: Out;
+    readonly _E: Err;
     constructor(input: In);
     abstract match<O>(o: {
         success: (s: DecodeSuccess<In, Out, Err>) => O;

@@ -5,6 +5,9 @@ export declare class Decoder<In, Out, Err> {
     readonly run: (input: In) => DecodeResult<In, Out, Err>;
     static of<In, Out, Err>(run: (input: In) => DecodeResult<In, Out, Err>): Decoder<In, Out, Err>;
     static ofGuaranteed<In, Out, Err>(run: (input: In) => [In, Out]): Decoder<In, Out, Err>;
+    readonly _I: In;
+    readonly _O: Out;
+    readonly _E: Err;
     constructor(run: (input: In) => DecodeResult<In, Out, Err>);
     flatMap<Out2>(fun: (res: Out) => Decoder<In, Out2, Err>): Decoder<In, Out2, Err>;
     map<Out2>(fun: (res: Out) => Out2): Decoder<In, Out2, Err>;

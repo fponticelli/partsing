@@ -1,4 +1,8 @@
 abstract class DecodeResultBase<In, Out, Err> {
+  readonly _I!: In
+  readonly _O!: Out
+  readonly _E!: Err
+  
   constructor(
     readonly input: In
   ) {}

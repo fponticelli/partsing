@@ -14,6 +14,9 @@ export class Decoder<In, Out, Err> {
     )
   }
 
+  readonly _I!: In
+  readonly _O!: Out
+  readonly _E!: Err
   constructor(readonly run: (input: In) => DecodeResult<In, Out, Err>) {}
 
   flatMap<Out2>(fun: (res: Out) => Decoder<In, Out2, Err>): Decoder<In, Out2, Err> {
@@ -136,8 +139,7 @@ export class Decoder<In, Out, Err> {
     return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
   }
   
-  separatedBy<Separator>(separator: Decoder<In, Separator, Err>)
-      : Decoder<In, Out[], Err> {
+  separatedBy<Separator>(separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
     return this.separatedByAtLeastOnce(separator)
       .or(this.map(v => [v]))
       .or(succeed([]))
@@ -153,8 +155,7 @@ export class Decoder<In, Out, Err> {
     }))
   }
 
-  probe(f: (v: DecodeResult<In, Out, Err>) => void)
-      : Decoder<In, Out, Err> {
+  probe(f: (v: DecodeResult<In, Out, Err>) => void): Decoder<In, Out, Err> {
     return new Decoder((input: In) => {
       const result = this.run(input)
       f(result)
@@ -173,8 +174,8 @@ export class Decoder<In, Out, Err> {
 
 export const sequence = <In, U extends any[], Err>
     (...decoders: { [P in keyof U]: Decoder<In, U[P], Err> })
-    : Decoder<In, { [P in keyof U]: U[P] }, Err> => {
-  return new Decoder<In, { [P in keyof U]: U[P] }, Err>(
+    : Decoder<In, { [P in keyof U]: U[P] }, Err> =>
+  new Decoder<In, { [P in keyof U]: U[P] }, Err>(
     (input: In) => {
       const buff: { [P in keyof U]: U[P] } = [] as never
       for (let i = 0; i < decoders.length; i++) {
@@ -190,7 +191,6 @@ export const sequence = <In, U extends any[], Err>
       return new DecodeSuccess(input, buff)
     }
   )
-}
 
 export const oneOf = <In, U extends any[], Err>
     (...decoders: { [P in keyof U]: Decoder<In, U[P], Err> }) => {
