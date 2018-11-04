@@ -1,8 +1,24 @@
 {
   "name": "partsing",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib",
   "license": "MIT",
+  "homepage": "https://github.com/fponticelli/partsing",
+  "bugs": {
+    "url": "https://github.com/fponticelli/partsing/issues"
+  },
+  "author": {
+    "name": "Franco Ponticelli",
+    "email": "franco.ponticelli@gmail.com",
+    "url": "https://github.com/fponticelli"
+  },
+  "description": "decoder library for TypeScript",
+  "keywords": [
+    "typescript",
+    "parser",
+    "decoder",
+    "combinator"
+  ],
   "devDependencies": {
     "@types/jest": "^23.3.5",
     "@types/node": "^10.12.0",
@@ -12,6 +28,15 @@
     "tslint": "^5.11.0",
     "typedoc": "^0.13.0",
     "typescript": "^3.1.6"
+  },
+  "directories": {
+    "doc": "docs",
+    "lib": "src",
+    "test": "test"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/fponticelli/partsing.git"
   },
   "scripts": {
     "build": "rm -rf lib && tsc",
