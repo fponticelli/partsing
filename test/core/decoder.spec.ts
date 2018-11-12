@@ -1,3 +1,17 @@
+// Copyright 2018 Google LLC
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+
+//     https://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import { Decoder, fail, lazy, oneOf, sequence, succeed } from '../../src/core/decoder'
 import { DecodeFailure, DecodeResult, DecodeSuccess } from '../../src/core/result'
 import { DecodeError } from '../../src/error'
@@ -27,7 +41,7 @@ describe('decoder', () => {
     const [input, value] = runSuccess(decodeSuccess(), 'a')
     expect(value).toEqual('a')
     expect(input).toEqual('a')
-    
+
     const [source2, failure] = runFailure(decodeFailure(), 'b')
     expect(failure).toEqual('b')
     expect(source2).toEqual('b')
@@ -174,18 +188,18 @@ describe('decoder', () => {
     expect(decodeText(p)('1').getUnsafeSuccess()).toEqual([])
     expect(decodeText(p)('a').getUnsafeSuccess()).toEqual(['a'])
     expect(decodeText(p)('a,b').getUnsafeSuccess()).toEqual(['a', 'b'])
-    expect(decodeText(p)('a,b,c').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])    
+    expect(decodeText(p)('a,b,c').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])
   })
 
   it('separatedByTimes', () => {
     const p1 = letter.separatedByTimes(match(','), 1)
     expect(decodeText(p1)('a').getUnsafeSuccess()).toEqual(['a'])
-    
+
     const p3 = letter.separatedByTimes(match(','), 3)
     expect(decodeText(p3)('a').getUnsafeFailure()).toBeDefined()
     expect(decodeText(p3)('a,b').getUnsafeFailure()).toBeDefined()
     expect(decodeText(p3)('a,b,c').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])
-    // expect(decodeText(p3)('a,b,c,d,e').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])    
+    // expect(decodeText(p3)('a,b,c,d,e').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])
   })
 
   it('separatedByAtLeastOnce', () => {

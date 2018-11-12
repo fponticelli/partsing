@@ -1,8 +1,22 @@
+// Copyright 2018 Google LLC
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+
+//     https://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 abstract class DecodeResultBase<In, Out, Err> {
   readonly _I!: In
   readonly _O!: Out
   readonly _E!: Err
-  
+
   constructor(
     readonly input: In
   ) {}
@@ -10,10 +24,10 @@ abstract class DecodeResultBase<In, Out, Err> {
     success: (s: DecodeSuccess<In, Out, Err>) => O,
     failure: (f: DecodeFailure<In, Out, Err>) => O
   }): O
-    
+
   abstract flatMap<Out2>(f: (r: Out) => DecodeResult<In, Out2, Err>): DecodeResult<In, Out2, Err>
   abstract flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2>
-  
+
   abstract map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err>
   abstract mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2>
   abstract mapInput<In2>(f: (i: In) => In2): DecodeResult<In2, Out, Err>
@@ -65,7 +79,7 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   isFailure(): this is DecodeFailure<In, Out, Err> {
     return false
   }
-  
+
   getUnsafeSuccess(): Out {
     return this.value
   }
@@ -134,5 +148,5 @@ export const DecodeResult = {
   success: <In, Out, Err>(input: In, result: Out): DecodeResult<In, Out, Err> =>
     new DecodeSuccess(input, result),
   failure: <In, Out, Err>(input: In, failure: Err): DecodeResult<In, Out, Err> =>
-    new DecodeFailure(input, failure)  
+    new DecodeFailure(input, failure)
 }

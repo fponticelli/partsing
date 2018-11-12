@@ -1,3 +1,17 @@
+// Copyright 2018 Google LLC
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+
+//     https://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import { Decoder } from '../core/decoder'
 import { DecodeFailure, DecodeResult } from '../core/result'
 import { MarkOptionalFields } from '../core/type_level'
@@ -20,8 +34,8 @@ export const decodeValue = <T>(decoder: ValueDecoder<T>) => (input: any): Decode
       failure: (f) => DecodeResult.failure(input, failureToString(f))
     })
 
-export const testValue = <T>(f: (input: T) => boolean, expected: string) => make<T>(input => 
-  f(input.input) ?  
+export const testValue = <T>(f: (input: T) => boolean, expected: string) => make<T>(input =>
+  f(input.input) ?
     DecodeResult.success(input, input.input) :
     DecodeResult.failure(input, DecodeError.expectedMatch(expected))
 )
@@ -49,7 +63,7 @@ export const literalValue = <T>(value: T, eq: (a: T, b: T) => boolean = (a, b) =
   testValue((v: T) => eq(v, value), String(value)).withResult(value)
 
 export const anyArrayValue = testValue<any[]>(Array.isArray, 'array')
-export const arrayValue = <T>(decoder: ValueDecoder<T>) => 
+export const arrayValue = <T>(decoder: ValueDecoder<T>) =>
   anyArrayValue.flatMap((values: any[]) =>
     make<T[]>((input: ValueInput) => {
       const length = values.length
@@ -67,7 +81,7 @@ export const arrayValue = <T>(decoder: ValueDecoder<T>) =>
     })
   )
 
-export const tupleValue = <U extends any[]>(...decoders: { [k in keyof U]: ValueDecoder<U[k]>}) => 
+export const tupleValue = <U extends any[]>(...decoders: { [k in keyof U]: ValueDecoder<U[k]>}) =>
   anyArrayValue.flatMap((values: any[]) =>
     make<U>((input: ValueInput) => {
       const length = values.length
@@ -140,7 +154,7 @@ export const pathToString = (path: (string | number)[]): string => {
     ''
   )
 }
- 
+
 export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeError>): string => {
   const { failure, input } = err
   const msg = failure.toString() + ' but got ' + String(input.input)

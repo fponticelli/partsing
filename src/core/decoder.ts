@@ -1,3 +1,17 @@
+// Copyright 2018 Google LLC
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+
+//     https://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import { DecodeFailure, DecodeResult, DecodeSuccess } from './result'
 import { TupleToUnion } from './type_level'
 
@@ -29,7 +43,7 @@ export class Decoder<In, Out, Err> {
       }
     })
   }
-  
+
   map<Out2>(fun: (res: Out) => Out2): Decoder<In, Out2, Err> {
     return this.flatMap<Out2>(r => new Decoder<In, Out2, Err>((input: In) =>
       new DecodeSuccess(input, fun(r))
@@ -61,7 +75,7 @@ export class Decoder<In, Out, Err> {
       })
     )
   }
-  
+
   mapError<Err2>(fun: (e: Err) => Err2): Decoder<In, Out, Err2> {
     return new Decoder<In, Out, Err2>((input: In) =>
       this.run(input).match<DecodeResult<In, Out, Err2>>({
@@ -109,7 +123,7 @@ export class Decoder<In, Out, Err> {
       )
     )
   }
-  
+
   repeatAtLeast(times = 1) {
     return new Decoder<In, Out[], Err>((input: In) => {
       const buff: Out[] = []
@@ -160,13 +174,13 @@ export class Decoder<In, Out, Err> {
     const pairs = separator.pickNext(this).repeatAtLeast(1)
     return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
   }
-  
+
   separatedBy<Separator>(separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
     return this.separatedByAtLeastOnce(separator)
       .or(undefined, this.map(v => [v]))
       .or(undefined, succeed([]))
   }
-  
+
   separatedByTimes<Separator>(separator: Decoder<In, Separator, Err>, times: number): Decoder<In, Out[], Err> {
     if (times <= 1)
       return this.map(v => [v])
@@ -243,7 +257,7 @@ export const oneOf = <In, U extends any[], Err>
       if (combineErrors) {
         return DecodeResult.failure(input, combineErrors(failures))
       } else {
-        return DecodeResult.failure(input, failures[0]) 
+        return DecodeResult.failure(input, failures[0])
       }
     }
   )
