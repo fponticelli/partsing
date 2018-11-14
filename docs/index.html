@@ -918,7 +918,7 @@ img { max-width: 100%; }
 			<p><em>ParTSing</em> is a decoder combinator library. You can use it to build parsers/decoders from string or really any input values.</p>
 			<p>If you want full control over what to decode your should start from <code>partsing/core/decoder</code>. It provides 3 types parameters</p>
 			<ul>
-				<li><code>In</code> for the input. Remember that you will need to decode one portion of your input at the time and your input probably needs to track somehow the current postion.</li>
+				<li><code>In</code> for the input. Remember that you will need to decode one portion of your input at the time and your input probably needs to track somehow the current position.</li>
 				<li><code>Out</code> it&#39;s the type of the value if successfully decoded.</li>
 				<li><code>Err</code> it&#39;s the type of the failure returned when the parser fails.</li>
 			</ul>
@@ -935,7 +935,7 @@ img { max-width: 100%; }
 			<p>To be able to keep track of the position of the decoding within <code>any</code> value, Value Decoding uses <code>ValueInput</code> to track both the <code>input</code> value and the current position within it using a <code>path</code>. <code>path</code> is an array of either <code>string</code> (object field name) or <code>number</code> (array/tuple index position).</p>
 			<p>The <code>decodeValue</code> function simplifies the inputs and outputs of decoding values. It takes a value decoder (<code>Decoder&lt;ValueInput, T, DecoderError&gt;</code>) and return a function that takes <code>any</code> and returns a <code>DecodeResult&lt;any, T, string&gt;</code> (where input is of type <code>any</code> and error is of type <code>string</code>).</p>
 			<h2 id="example">Example</h2>
-			<p>A simple decoder combinator to parse color values from strings into class instances. </p>
+			<p>A simple decoder combinator to parse color values from strings into class instances.</p>
 			<pre><code class="language-typescript"><span class="hljs-keyword">class</span> RGB {
   <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly rgb: <span class="hljs-built_in">number</span></span>) {}
 }
