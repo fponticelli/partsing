@@ -4,7 +4,7 @@
 
 If you want full control over what to decode your should start from `partsing/core/decoder`. It provides 3 types parameters
 
-* `In` for the input. Remember that you will need to decode one portion of your input at the time and your input probably needs to track somehow the current postion.
+* `In` for the input. Remember that you will need to decode one portion of your input at the time and your input probably needs to track somehow the current position.
 * `Out` it's the type of the value if successfully decoded.
 * `Err` it's the type of the failure returned when the parser fails.
 
@@ -34,7 +34,7 @@ The `decodeValue` function simplifies the inputs and outputs of decoding values.
 
 ## Example
 
-A simple decoder combinator to parse color values from strings into class instances. 
+A simple decoder combinator to parse color values from strings into class instances.
 
 ```typescript
 class RGB {
