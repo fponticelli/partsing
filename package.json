@@ -2,7 +2,7 @@
   "name": "partsing",
   "version": "0.0.1",
   "main": "lib",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "homepage": "https://github.com/fponticelli/partsing",
   "bugs": {
     "url": "https://github.com/fponticelli/partsing/issues"
