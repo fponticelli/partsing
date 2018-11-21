@@ -44,8 +44,8 @@ const jsonValue: TextDecoder<JSONValue> = lazy(() =>
     jsonObject
   ))
 
-const token = <T>(parser: TextDecoder<T>) => parser.skipNext(optionalWhitespace)
-const commaSeparated = <T>(parser: TextDecoder<T>) => parser.separatedBy(token(match(',')))
+const token = <T>(decoder: TextDecoder<T>) => decoder.skipNext(optionalWhitespace)
+const commaSeparated = <T>(decoder: TextDecoder<T>) => decoder.separatedBy(token(match(',')))
 const lCurly = token(match('{'))
 const rCurly = token(match('}'))
 const lSquare = token(match('['))
