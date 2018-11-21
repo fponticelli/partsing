@@ -211,12 +211,6 @@ describe('decoder', () => {
     expect(decodeText(p)('a,b,c').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])
   })
 
-  it('ofGuaranteed', () => {
-    const p = Decoder.ofGuaranteed<TextInput, string, DecodeError>((input: {input: string, index: number}) => [input, input.input])
-    const result = decodeText(p)('1').getUnsafeSuccess()
-    expect(result).toBe('1')
-  })
-
   it('sub', () => {
     const p = stringValue.sub(regexp(/abc/y), input => ({ input, index: 0 }), v => v)
     const success = decodeValue(p)('abc').getUnsafeSuccess()

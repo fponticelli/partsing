@@ -57,21 +57,6 @@ export class Decoder<In, Out, Err> {
   }
 
   /**
-   * Creates a decoder that always succeeds from a function.
-   * The argument function `run` takes an input value and returns a tuple of
-   * a new input (for continuation) and the output.
-   *
-   * This function should be used sparingly and it is strongly encouraged to not
-   * use this for functions that can throw since the decoder cannot recover
-   * from that.
-   */
-  static ofGuaranteed<In, Out, Err>(run: (input: In) => [In, Out]) {
-    return Decoder.of((input: In) =>
-      DecodeResult.success<In, Out, Err>(...run(input))
-    )
-  }
-
-  /**
    * These placeholder (`_I`, `_O`, `_E`) types are not expected to bring any
    * value. They exist to allow inspecting the main types of a Decoder at
    * compile time.
