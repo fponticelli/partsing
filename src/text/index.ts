@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Decoder } from '../core/decoder'
+import { Decoder, Decoding } from '../core/decoder'
 import { DecodeFailure, DecodeResult, DecodeSuccess } from '../core/result'
 import { DecodeError, Entity } from '../error'
 import { TextInput } from './input'
 
 export type TextDecoder<T> = Decoder<TextInput, T, DecodeError>
 
-const make = <T>(f: (input: TextInput) => DecodeResult<TextInput, T, DecodeError>): TextDecoder<T> =>
-  new Decoder<TextInput, T, DecodeError>(f)
+const make = <T>(f: Decoding<TextInput, T, DecodeError>): TextDecoder<T> =>
+  Decoder.of<TextInput, T, DecodeError>(f)
 
 export const decodeText = <T>(decoder: TextDecoder<T>) => (input: string): DecodeResult<string, T, string> =>
   decoder.run({ input, index: 0})

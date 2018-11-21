@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Decoder } from '../core/decoder'
+import { Decoder, Decoding } from '../core/decoder'
 import { DecodeFailure, DecodeResult } from '../core/result'
 import { MarkOptionalFields } from '../core/type_level'
 import { DecodeError } from '../error'
@@ -26,8 +26,8 @@ export interface ValueInput {
 
 export type ValueDecoder<T> = Decoder<ValueInput, T, DecodeError>
 
-const make = <T>(f: (input: ValueInput) => DecodeResult<ValueInput, T, DecodeError>): ValueDecoder<T> =>
-  new Decoder<ValueInput, T, DecodeError>(f)
+const make = <T>(f: Decoding<ValueInput, T, DecodeError>): ValueDecoder<T> =>
+  Decoder.of<ValueInput, T, DecodeError>(f)
 
 export const decodeValue = <T>(decoder: ValueDecoder<T>) => (input: any): DecodeResult<any, T, string> =>
   decoder.run({ input, path: []})
