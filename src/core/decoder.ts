@@ -30,21 +30,23 @@ export type Decoding<In, Out, Err> = (input: In) => DecodeResult<In, Out, Err>
  * * `In` for input. The input to a decoder can be any raw value that your decoder
  * can extract information from. In a simple case it could be a `string` value
  * or an array of bytes. If decoders are chained, the input needs to be
- * transferred from one decoder to the following one. That is why [DecodeResult]
- * has an `Input` as well. It is important to notice that what is passed to the
- * next decoder needs to be the relative input and not the original one. For
- * efficiency reasons, most decoders will wrap their own input into some more
- * sophisticated type to allow tracking the current position in the stream.
+ * transferred from one decoder to the following one. That is why
+ * {@link DecodeResult} has an `Input` as well. It is important to notice that
+ * what is passed to the next decoder needs to be the relative input and not the
+ * original one. For efficiency reasons, most decoders will wrap their own input
+ * into some more sophisticated type to allow tracking the current position in
+ * the stream.
  *
  * * `Out` for output. It's the type of the value return by the decoder if it
- * succeeds. Through operations like [Decoder.map] and [Decoder.flatMap], this
- * type can be changed.
+ * succeeds. Through operations like {@link Decoder.map} and
+ * {@link Decoder.flatMap}, this type can be changed.
  *
  * * `Err` for error. It's the type of the error message. In some
  * implementations it might be as simple as `string`. For the embedded decoders
- * ([text] and [value]), the error is fixed to the [DecodeError] unione type.
- * The constructors for [DecodeError] have more semantic value than strings and
- * can be properly used for localization.
+ * (text and value), the error is fixed to the
+ * {@link DecodeError} unione type.
+ * The constructors for {@link DecodeError} have more semantic value than
+ * strings and can be properly used for localization.
  */
 export class Decoder<In, Out, Err> {
   /**
@@ -74,15 +76,15 @@ export class Decoder<In, Out, Err> {
    * value. They exist to allow inspecting the main types of a Decoder at
    * compile time.
    */
+  readonly _E!: Err
+  /**
+   * @see {@link _E}
+   */
   readonly _I!: In
   /**
-   * @see {@link _I}
+   * @see {@link _E}
    */
   readonly _O!: Out
-  /**
-   * @see {@link _I}
-   */
-  readonly _E!: Err
   private constructor(readonly run: Decoding<In, Out, Err>) {}
 
   /**
@@ -109,8 +111,9 @@ export class Decoder<In, Out, Err> {
    * of decoding.
    *
    * @example
-   *
+   * ```typescript
    * regexp(/\d{4}-\d{2}-\d{2}/y).map(Date.parse)
+   * ```
    */
   map<Out2>(fun: (res: Out) => Out2): Decoder<In, Out2, Err> {
     return this.flatMap<Out2>(r => Decoder.of<In, Out2, Err>((input: In) =>
@@ -140,7 +143,7 @@ export class Decoder<In, Out, Err> {
   }
 
   /**
-   * Like [flatMap] but for the failure case. It is also usefult to recover
+   * Like {@link flatMap} but for the failure case. It is also useful to recover
    * from an error.
    */
   flatMapError<Err2>(fun: (res: Err) => Decoder<In, Out, Err2>): Decoder<In, Out, Err2> {
@@ -153,7 +156,7 @@ export class Decoder<In, Out, Err> {
   }
 
   /**
-   * Like [map] but for the failure case.
+   * Like {@link map} but for the failure case.
    */
   mapError<Err2>(fun: (e: Err) => Err2): Decoder<In, Out, Err2> {
     return Decoder.of<In, Out, Err2>((input: In) =>
@@ -197,8 +200,8 @@ export class Decoder<In, Out, Err> {
    *
    * The first argument `combineErrors` is optional (if omitted `undefined`
    * needs to be passed). The provided function is used to combine an array of
-   * `Err` into one. If you are using `DecodeError` you can pass
-   * `DecodeError.combine`.
+   * `Err` into one. If you are using {@link DecodeError} you can pass
+   * {@link DecodeError.combine}.
    * If not passed, the failure will report the failure of the current decoder.
    */
   or<U extends any[]>(combineErrors: undefined | ((errs: Err[]) => Err), ...decoders: { [P in keyof U]: Decoder<In, U[P], Err> })
@@ -299,8 +302,8 @@ export class Decoder<In, Out, Err> {
   }
 
   /**
-   * Like [separatedByAtLeastOnce] but without the expectation that at least two
-   * values are captured.
+   * Like {@link separatedByAtLeastOnce} but without the expectation that at
+   * least two values are captured.
    */
   separatedBy<Separator>(separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
     return this.separatedByAtLeastOnce(separator)
@@ -339,10 +342,11 @@ export class Decoder<In, Out, Err> {
   /**
    * The `probe` method is used to perform a side-effecty function somewhere in
    * the decoder chain. It is mostly used as a debugging mechanism.
+   *
    * @example
-   *
+   * ```typescript
    * decoder.probe(console.log).map(v -> ...)
-   *
+   * ```
    */
   probe(f: (v: DecodeResult<In, Out, Err>) => void): Decoder<In, Out, Err> {
     return Decoder.of((input: In) => {
@@ -397,7 +401,7 @@ export const sequence = <In, U extends any[], Err>
  * Given an array of decoders, it traverses them all until one succeeds or they
  * all fail.
  *
- * `combineErrors` works the same as in [Decoder.or].
+ * `combineErrors` works the same as in {@link or}.
  */
 export const oneOf = <In, U extends any[], Err>
     (
