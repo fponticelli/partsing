@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "lib": ["es6", "es7"],
+    "lib": ["es6"],
     "sourceRoot": "./src",
     "sourceMap": true,
     "declaration": true,
     "outDir": "./lib",
     "target": "es5",
     "moduleResolution": "node",
+    "removeComments": false,
     "strict": true
   },
   "exclude": [
