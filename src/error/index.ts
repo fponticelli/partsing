@@ -32,8 +32,8 @@ import { ExpectedWithinRange } from './expected_within_range'
 import { PatternMismatch } from './pattern_mismatch'
 import { UnexpectedEoi } from './unexpected_eoi'
 
-export type DecodeError
-  = CustomError
+export type DecodeError =
+  | CustomError
   | ExpectedAnyOf
   | ExpectedAtLeast
   | ExpectedEoi

@@ -24,10 +24,7 @@ import { concatOr } from './expected_any_of'
 
 export class ExpectedNoneOf extends DecodeErrorBase {
   readonly kind: 'no-char-of-error' = 'no-char-of-error'
-  constructor(
-    readonly entity: Entity,
-    readonly values: string[]
-  ) {
+  constructor(readonly entity: Entity, readonly values: string[]) {
     super()
   }
   toString() {

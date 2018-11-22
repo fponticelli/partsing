@@ -15,9 +15,24 @@ limitations under the License.
 */
 
 import {
-    anyValue, arrayValue, booleanValue, decodeValue, finiteNumberValue, integerValue, literalValue,
-    nullableValue, nullValue, numberValue, objectValue, optionalValue, pathToString,
-    safeIntegerValue, stringValue, tupleValue, undefineableValue, undefinedValue
+  anyValue,
+  arrayValue,
+  booleanValue,
+  decodeValue,
+  finiteNumberValue,
+  integerValue,
+  literalValue,
+  nullableValue,
+  nullValue,
+  numberValue,
+  objectValue,
+  optionalValue,
+  pathToString,
+  safeIntegerValue,
+  stringValue,
+  tupleValue,
+  undefineableValue,
+  undefinedValue
 } from '../../src/value'
 
 describe('value_decoder', () => {
@@ -49,7 +64,9 @@ describe('value_decoder', () => {
 
   it('literalValue', () => {
     expect(decodeValue(literalValue('abc'))('abc').getUnsafeSuccess()).toEqual('abc')
-    expect(decodeValue(literalValue({ id: 1 }, (a, b) => a.id === b.id))({ id: 1 }).getUnsafeSuccess()).toEqual({ id: 1 })
+    expect(decodeValue(literalValue({ id: 1 }, (a, b) => a.id === b.id))({ id: 1 }).getUnsafeSuccess()).toEqual({
+      id: 1
+    })
     expect(decodeValue(literalValue('abc'))(undefined).getUnsafeFailure()).toEqual('expected abc but got undefined')
     expect(decodeValue(literalValue('abc'))('ab').getUnsafeFailure()).toEqual('expected abc but got ab')
   })
@@ -99,8 +116,9 @@ describe('value_decoder', () => {
   it('safeIntegerValue', () => {
     expect(decodeValue(safeIntegerValue)('abc').getUnsafeFailure()).toBeDefined()
     expect(decodeValue(safeIntegerValue)(1.1).getUnsafeFailure()).toEqual('expected safe integer but got 1.1')
-    expect(decodeValue(safeIntegerValue)(12345678901234567890).getUnsafeFailure())
-      .toEqual('expected safe integer but got 12345678901234567000')
+    expect(decodeValue(safeIntegerValue)(12345678901234567890).getUnsafeFailure()).toEqual(
+      'expected safe integer but got 12345678901234567000'
+    )
     expect(decodeValue(safeIntegerValue)(1).getUnsafeSuccess()).toEqual(1)
   })
 

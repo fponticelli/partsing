@@ -26,27 +26,21 @@ import { ValueInput } from './input'
 
 export type ValueDecoder<T> = Decoder<ValueInput, T, DecodeError>
 
-const make = <T>(f: Decoding<ValueInput, T, DecodeError>): ValueDecoder<T> =>
-  Decoder.of<ValueInput, T, DecodeError>(f)
+const make = <T>(f: Decoding<ValueInput, T, DecodeError>): ValueDecoder<T> => Decoder.of<ValueInput, T, DecodeError>(f)
 
 export const decodeValue = <T>(decoder: ValueDecoder<T>) => (input: any): DecodeResult<any, T, string> =>
-  decoder.run({ input, path: []})
-    .match({
-      success: (s) => success(input, s.value),
-      failure: (f) => failure(input, failureToString(f))
-    })
+  decoder.run({ input, path: [] }).match({
+    success: s => success(input, s.value),
+    failure: f => failure(input, failureToString(f))
+  })
 
-export const testValue = <T>(f: (input: T) => boolean, expected: string) => make<T>(input =>
-  f(input.input) ?
-    success(input, input.input) :
-    failure(input, DecodeError.expectedMatch(expected))
-)
+export const testValue = <T>(f: (input: T) => boolean, expected: string) =>
+  make<T>(input => (f(input.input) ? success(input, input.input) : failure(input, DecodeError.expectedMatch(expected))))
 
-export const testType = <T>(expected: string) => make<T>(input =>
-  typeof input.input === expected ?
-    success(input, input.input) :
-    failure(input, DecodeError.expectedMatch(expected))
-)
+export const testType = <T>(expected: string) =>
+  make<T>(input =>
+    typeof input.input === expected ? success(input, input.input) : failure(input, DecodeError.expectedMatch(expected))
+  )
 
 export const nullableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, nullValue)
 export const undefineableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, undefinedValue)
@@ -83,7 +77,7 @@ export const arrayValue = <T>(decoder: ValueDecoder<T>) =>
     })
   )
 
-export const tupleValue = <U extends any[]>(...decoders: { [k in keyof U]: ValueDecoder<U[k]>}) =>
+export const tupleValue = <U extends any[]>(...decoders: { [k in keyof U]: ValueDecoder<U[k]> }) =>
   anyArrayValue.flatMap((values: any[]) =>
     make<U>((input: ValueInput) => {
       const length = values.length
@@ -104,67 +98,62 @@ export const tupleValue = <U extends any[]>(...decoders: { [k in keyof U]: Value
 const testObject = testType<{}>('object')
 
 export const objectValue = <T, K extends keyof T>(
-    fieldDecoders: { [k in keyof T]: ValueDecoder<T[k]> },
-    optionalFields: K[]
-  ): ValueDecoder<MarkOptionalFields<T, typeof optionalFields, K>> => {
-    return testObject.flatMap((o: any) => {
-      return make(input => {
-        const mandatoryFields = Object.keys(fieldDecoders).filter(f => optionalFields.indexOf(f as K) < 0)
-        const buff = {} as any
-        for (let field of mandatoryFields) {
-          if (o.hasOwnProperty(field)) {
-            const s = { input: o[field], path: input.path.concat([field]) }
-            const result = fieldDecoders[field as K].run(s)
-            if (result.isSuccess()) {
-              buff[field] = result.value
-            } else {
-              return failure(result.input, result.failure)
-            }
+  fieldDecoders: { [k in keyof T]: ValueDecoder<T[k]> },
+  optionalFields: K[]
+): ValueDecoder<MarkOptionalFields<T, typeof optionalFields, K>> => {
+  return testObject.flatMap((o: any) => {
+    return make(input => {
+      const mandatoryFields = Object.keys(fieldDecoders).filter(f => optionalFields.indexOf(f as K) < 0)
+      const buff = {} as any
+      for (let field of mandatoryFields) {
+        if (o.hasOwnProperty(field)) {
+          const s = { input: o[field], path: input.path.concat([field]) }
+          const result = fieldDecoders[field as K].run(s)
+          if (result.isSuccess()) {
+            buff[field] = result.value
           } else {
-            return failure(input, DecodeError.expectedField(field))
+            return failure(result.input, result.failure)
+          }
+        } else {
+          return failure(input, DecodeError.expectedField(field))
+        }
+      }
+      for (let field of optionalFields) {
+        if (o.hasOwnProperty(field)) {
+          const s = { input: o[field], path: input.path.concat([field as never]) }
+          const result = fieldDecoders[field as K].run(s)
+          if (result.isSuccess()) {
+            buff[field] = result.value
+          } else {
+            return failure(result.input, result.failure)
           }
         }
-        for (let field of optionalFields) {
-          if (o.hasOwnProperty(field)) {
-            const s = { input: o[field], path: input.path.concat([field as never]) }
-            const result = fieldDecoders[field as K].run(s)
-            if (result.isSuccess()) {
-              buff[field] = result.value
-            } else {
-              return failure(result.input, result.failure)
-            }
-          }
-        }
-        return success(input, buff as never)
-      })
+      }
+      return success(input, buff as never)
     })
-  }
+  })
+}
 
 const isToken = /^[a-z$_]+$/i
 export const pathToString = (path: (string | number)[]): string => {
-  return path.reduce(
-    (acc: string, curr: string | number) => {
-      if (typeof curr === 'number') {
-        return `${acc}[${curr}]`
-      } else if (isToken.test(curr)) {
-        return acc.length === 0 ? curr : `${acc}.${curr}`
-      } else {
-        const t = curr.replace('"', '\\"')
-        return `${acc}["${t}"]`
-      }
-    },
-    ''
-  )
+  return path.reduce((acc: string, curr: string | number) => {
+    if (typeof curr === 'number') {
+      return `${acc}[${curr}]`
+    } else if (isToken.test(curr)) {
+      return acc.length === 0 ? curr : `${acc}.${curr}`
+    } else {
+      const t = curr.replace('"', '\\"')
+      return `${acc}["${t}"]`
+    }
+  }, '')
 }
 
 export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeError>): string => {
   const { failure, input } = err
   const msg = failure.toString() + ' but got ' + String(input.input)
   const path = pathToString(input.path)
-  if (path === '')
-    return msg
-  else
-    return `${msg} at ${path}`
+  if (path === '') return msg
+  else return `${msg} at ${path}`
 }
 
 export { ValueInput } from './input'

@@ -23,6 +23,7 @@
     "@types/jest": "^23.3.5",
     "@types/node": "^10.12.0",
     "jest": "^23.6.0",
+    "prettier": "^1.15.2",
     "ts-jest": "^23.10.4",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
@@ -43,7 +44,9 @@
     "build": "rm -rf lib && tsc",
     "doc": "rm -rf docs && typedoc --out docs --ignoreCompilerErrors --theme minimal --name ParTSing ./src",
     "lint": "tslint --fix --project .",
-    "prep": "yarn test-coverage && yarn build && yarn doc",
+    "prettier": "prettier --list-different \"./{src,test}/**/*.ts\"",
+    "fix-prettier": "prettier --write \"./{src,test}/**/*.ts\"",
+    "prep": "yarn test-coverage && yarn prettier && yarn build && yarn doc",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "watch": "jest --watch --coverage"

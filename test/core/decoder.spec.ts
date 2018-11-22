@@ -26,15 +26,13 @@ const decodeFailure = <In>() => Decoder.of<In, In, In>(input => failure<In, In, 
 
 const runSuccess = <In, Out, Err>(p: Decoder<In, Out, Err>, input: In) => {
   const r = p.run(input)
-  if (r.isFailure())
-    fail(`decoder ${p} was supposed to succeed decoding '${input}'`)
+  if (r.isFailure()) fail(`decoder ${p} was supposed to succeed decoding '${input}'`)
   return [r.input, (r as DecodeSuccess<In, Out, Err>).value]
 }
 
 const runFailure = <In, Out, Err>(p: Decoder<In, Out, Err>, input: In) => {
   const r = p.run(input)
-  if (r.isSuccess())
-    fail(`decoder ${p} was supposed to fail decoding '${input}'`)
+  if (r.isSuccess()) fail(`decoder ${p} was supposed to fail decoding '${input}'`)
   return [r.input, (r as DecodeFailure<In, Out, Err>).failure]
 }
 
@@ -51,46 +49,63 @@ describe('decoder', () => {
 
   it('Decoder.flatMap transform the decoded value', () => {
     const result = decodeSuccess()
-      .flatMap(x => Decoder.of(v => success('1', `${x}${v}`))).run(2) as DecodeSuccess<string, string, number>
+      .flatMap(x => Decoder.of(v => success('1', `${x}${v}`)))
+      .run(2) as DecodeSuccess<string, string, number>
     expect(result.value).toEqual('22')
     const f = decodeSuccess()
-      .flatMap(x => Decoder.of(v => failure('1', 'x'))).run(1) as DecodeFailure<string, string, number>
+      .flatMap(x => Decoder.of(v => failure('1', 'x')))
+      .run(1) as DecodeFailure<string, string, number>
     expect(f.failure).toEqual('x')
   })
 
   it('Decoder.map transform the decoded value', () => {
-    const result = decodeSuccess().map(String).run(1) as DecodeSuccess<string, string, number>
+    const result = decodeSuccess()
+      .map(String)
+      .run(1) as DecodeSuccess<string, string, number>
     expect(result.value).toEqual('1')
-    const f = decodeFailure().map(String).run(1) as DecodeFailure<number, string, number>
+    const f = decodeFailure()
+      .map(String)
+      .run(1) as DecodeFailure<number, string, number>
     expect(f.failure).toEqual(1)
   })
 
   it('Decoder.flatMapError transform the failure value', () => {
     const result = decodeSuccess()
-      .flatMapError(e => Decoder.of(v => success('1', String(v)))).run(1) as DecodeSuccess<number, string, string>
+      .flatMapError(e => Decoder.of(v => success('1', String(v))))
+      .run(1) as DecodeSuccess<number, string, string>
     expect(result.value).toEqual(1)
     const f = decodeFailure()
-      .flatMapError(e => Decoder.of(v => failure('1', e))).run(1) as DecodeFailure<string, number, string>
+      .flatMapError(e => Decoder.of(v => failure('1', e)))
+      .run(1) as DecodeFailure<string, number, string>
     expect(f.failure).toEqual(1)
     const s = decodeFailure()
-      .flatMapError(e => Decoder.of(v => success('1', e))).run(1) as DecodeSuccess<string, number, string>
+      .flatMapError(e => Decoder.of(v => success('1', e)))
+      .run(1) as DecodeSuccess<string, number, string>
     expect(s.value).toEqual(1)
   })
 
   it('Decoder.mapError transform the failure value', () => {
-    const result = decodeSuccess().mapError(String).run(1) as DecodeSuccess<number, string, string>
+    const result = decodeSuccess()
+      .mapError(String)
+      .run(1) as DecodeSuccess<number, string, string>
     expect(result.value).toEqual(1)
-    const f = decodeFailure().mapError(String).run(1) as DecodeFailure<number, string, string>
+    const f = decodeFailure()
+      .mapError(String)
+      .run(1) as DecodeFailure<number, string, string>
     expect(f.failure).toEqual('1')
   })
 
   it('Decoder.result returns the passed value', () => {
-    const result = decodeSuccess().withResult(2).run(1) as DecodeSuccess<string, number, string>
+    const result = decodeSuccess()
+      .withResult(2)
+      .run(1) as DecodeSuccess<string, number, string>
     expect(result.value).toEqual(2)
   })
 
   it('Decoder.join', () => {
-    const decoder = regexp(/^1/).join(regexp(/^a/)).join(regexp(/^b/))
+    const decoder = regexp(/^1/)
+      .join(regexp(/^a/))
+      .join(regexp(/^b/))
     const result = decodeText(decoder)('1ab').getUnsafeSuccess()
     expect(result).toEqual([['1', 'a'], 'b'])
     const result2 = decodeText(decoder)('1ba').getUnsafeFailure()
@@ -98,8 +113,7 @@ describe('decoder', () => {
   })
 
   it('sequence', () => {
-    const decoder = sequence<TextInput, [string, string, string], DecodeError>(
-      regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const decoder = sequence<TextInput, [string, string, string], DecodeError>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
     const result = decodeText(decoder)('1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
     const result2 = decodeText(decoder)('1ba').getUnsafeFailure()
@@ -108,13 +122,17 @@ describe('decoder', () => {
 
   it('succeed', () => {
     expect(
-      succeed('s').run('any').getUnsafeSuccess()
+      succeed('s')
+        .run('any')
+        .getUnsafeSuccess()
     ).toEqual('s')
   })
 
   it('fail', () => {
     expect(
-      fail('s').run('any').getUnsafeFailure()
+      fail('s')
+        .run('any')
+        .getUnsafeFailure()
     ).toEqual('s')
   })
 
@@ -180,7 +198,7 @@ describe('decoder', () => {
 
   it('probe', () => {
     let value = undefined
-    const p = digit.probe(v => value = v)
+    const p = digit.probe(v => (value = v))
     const result = p.run({ input: '1', index: 0 })
     expect(result).toBe(value)
   })

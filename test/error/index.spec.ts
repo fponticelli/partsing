@@ -15,9 +15,20 @@ limitations under the License.
 */
 
 import {
-    CombineErrors, concatOr, CustomError, Entity, ExpectedAnyOf, ExpectedAtLeast, ExpectedEoi,
-    ExpectedMatch, ExpectedNoneOf, ExpectedOnce, ExpectedWithinRange, PatternMismatch, pluralize,
-    UnexpectedEoi
+  CombineErrors,
+  concatOr,
+  CustomError,
+  Entity,
+  ExpectedAnyOf,
+  ExpectedAtLeast,
+  ExpectedEoi,
+  ExpectedMatch,
+  ExpectedNoneOf,
+  ExpectedOnce,
+  ExpectedWithinRange,
+  PatternMismatch,
+  pluralize,
+  UnexpectedEoi
 } from '../../src/error'
 
 describe('errors', () => {
@@ -47,10 +58,7 @@ describe('errors', () => {
     expect(new ExpectedMatch('"match"').toString()).toEqual('expected "match"')
     expect(new ExpectedNoneOf(Entity.CHARACTER, ['a', 'b']).toString()).toEqual('expected no character like a or b')
     expect(new ExpectedOnce(Entity.CHARACTER).toString()).toEqual('expected a character')
-    expect(new CombineErrors([
-      new CustomError('abc'),
-      new ExpectedEoi()
-    ]).toString()).toEqual(`expected one of:
+    expect(new CombineErrors([new CustomError('abc'), new ExpectedEoi()]).toString()).toEqual(`expected one of:
   - abc
   - expected end of input`)
     expect(new ExpectedWithinRange('a', 'b').toString()).toEqual('expected between a and b')

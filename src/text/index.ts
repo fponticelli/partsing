@@ -25,15 +25,13 @@ import { TextInput } from './input'
 
 export type TextDecoder<T> = Decoder<TextInput, T, DecodeError>
 
-const make = <T>(f: Decoding<TextInput, T, DecodeError>): TextDecoder<T> =>
-  Decoder.of<TextInput, T, DecodeError>(f)
+const make = <T>(f: Decoding<TextInput, T, DecodeError>): TextDecoder<T> => Decoder.of<TextInput, T, DecodeError>(f)
 
 export const decodeText = <T>(decoder: TextDecoder<T>) => (input: string): DecodeResult<string, T, string> =>
-  decoder.run({ input, index: 0})
-    .match({
-      success: (r) => success(input, r.value),
-      failure: (f) => failure(input, failureToString(f))
-    })
+  decoder.run({ input, index: 0 }).match({
+    success: r => success(input, r.value),
+    failure: f => failure(input, failureToString(f))
+  })
 
 export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
   if (pattern.sticky) {
@@ -76,18 +74,18 @@ export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
 export const withPosition = make(input => new DecodeSuccess(input, input.index))
 
 export const rest = make(input => {
-    const value = input.input.substring(input.index)
-    return new DecodeSuccess({ ...input, index: input.input.length }, value)
-  })
+  const value = input.input.substring(input.index)
+  return new DecodeSuccess({ ...input, index: input.input.length }, value)
+})
 
 export const eoi: Decoder<TextInput, void, DecodeError> = make(input => {
-    const index = input.input.length
-    if (input.index === index) {
-      return new DecodeSuccess({ ...input, index }, undefined)
-    } else {
-      return new DecodeFailure(input, DecodeError.expectedEot)
-    }
-  })
+  const index = input.input.length
+  if (input.index === index) {
+    return new DecodeSuccess({ ...input, index }, undefined)
+  } else {
+    return new DecodeFailure(input, DecodeError.expectedEot)
+  }
+})
 
 export const match = <V extends string>(s: V): TextDecoder<V> => {
   const length = s.length
@@ -135,10 +133,10 @@ const {
     } catch (_) {
       return false
     }
-   })()
+  })()
   if (testSticky) {
     return {
-      letterPattern: /[a-z]/yi,
+      letterPattern: /[a-z]/iy,
       lettersPattern: (min: string, max: string) => new RegExp(`[a-z]{${min},${max}}`, 'yi'),
       upperCaseLetterPattern: /[A-Z]/y,
       upperCaseLettersPattern: (min: string, max: string) => new RegExp(`[A-Z]{${min},${max}}`, 'y'),
@@ -173,8 +171,9 @@ export const letters = (min = 1, max?: number): TextDecoder<string> => {
   return regexp(lettersPattern(String(min), maxs)).withFailure(message)
 }
 
-export const upperCaseLetter = regexp(upperCaseLetterPattern)
-  .withFailure(DecodeError.expectedOnce(Entity.UPPERCASE_LETTER))
+export const upperCaseLetter = regexp(upperCaseLetterPattern).withFailure(
+  DecodeError.expectedOnce(Entity.UPPERCASE_LETTER)
+)
 
 export const upperCaseLetters = (min = 1, max?: number): TextDecoder<string> => {
   const message = DecodeError.expectedAtLeast(min, Entity.UPPERCASE_LETTER)
@@ -182,8 +181,9 @@ export const upperCaseLetters = (min = 1, max?: number): TextDecoder<string> => 
   return regexp(upperCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
 
-export const lowerCaseLetter = regexp(lowerCaseLetterPattern)
-  .withFailure(DecodeError.expectedOnce(Entity.LOWER_CASE_LETTER))
+export const lowerCaseLetter = regexp(lowerCaseLetterPattern).withFailure(
+  DecodeError.expectedOnce(Entity.LOWER_CASE_LETTER)
+)
 
 export const lowerCaseLetters = (min = 1, max?: number): TextDecoder<string> => {
   const message = DecodeError.expectedAtLeast(min, Entity.LOWER_CASE_LETTER)
@@ -199,20 +199,19 @@ export const digits = (min = 1, max?: number): TextDecoder<string> => {
   return regexp(digitsPattern(String(min), maxs)).withFailure(message)
 }
 
-export const whitespace = regexp(whitespacePattern)
-  .withFailure(DecodeError.expectedAtLeast(1, Entity.WHITESPACE))
+export const whitespace = regexp(whitespacePattern).withFailure(DecodeError.expectedAtLeast(1, Entity.WHITESPACE))
 
 export const optionalWhitespace = regexp(optionalWhitespacePattern)
 
 export const char = make((input: TextInput) => {
-    if (input.index < input.input.length) {
-      const c = input.input.charAt(input.index)
-      return new DecodeSuccess({ ...input, index: input.index + 1 }, c)
-    } else {
-      // no more characters
-      return new DecodeFailure(input, DecodeError.expectedOnce(Entity.CHARACTER))
-    }
-  })
+  if (input.index < input.input.length) {
+    const c = input.input.charAt(input.index)
+    return new DecodeSuccess({ ...input, index: input.index + 1 }, c)
+  } else {
+    // no more characters
+    return new DecodeFailure(input, DecodeError.expectedOnce(Entity.CHARACTER))
+  }
+})
 
 export const testChar = (f: (c: string) => boolean): TextDecoder<string> =>
   make((input: TextInput) => {
@@ -221,7 +220,7 @@ export const testChar = (f: (c: string) => boolean): TextDecoder<string> =>
     } else {
       const char = input.input.charAt(input.index)
       if (f(char)) {
-        return new DecodeSuccess({...input, index: input.index + 1}, char)
+        return new DecodeSuccess({ ...input, index: input.index + 1 }, char)
       } else {
         return new DecodeFailure(input, DecodeError.expectedOnce(Entity.PREDICATE))
       }
@@ -229,14 +228,14 @@ export const testChar = (f: (c: string) => boolean): TextDecoder<string> =>
   })
 
 export const matchAnyCharOf = (anyOf: string): TextDecoder<string> =>
-  testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure(DecodeError.expectedAnyOf(
-    Entity.CHARACTER,
-    anyOf.split('').map(v => `"${v}"`)))
+  testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure(
+    DecodeError.expectedAnyOf(Entity.CHARACTER, anyOf.split('').map(v => `"${v}"`))
+  )
 
 export const matchNoCharOf = (noneOf: string): TextDecoder<string> =>
-  testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(DecodeError.expectedNoneOf(
-    Entity.CHARACTER,
-    noneOf.split('').map(v => `"${v}"`)))
+  testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(
+    DecodeError.expectedNoneOf(Entity.CHARACTER, noneOf.split('').map(v => `"${v}"`))
+  )
 
 export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextDecoder<string> =>
   make((input: TextInput) => {
@@ -247,7 +246,7 @@ export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextDecod
     if (index - input.index < atLeast) {
       return new DecodeFailure(input, DecodeError.expectedAtLeast(atLeast, Entity.PREDICATE))
     } else {
-      return new DecodeSuccess({...input, index }, input.input.substring(input.index, index))
+      return new DecodeSuccess({ ...input, index }, input.input.substring(input.index, index))
     }
   })
 
@@ -262,7 +261,7 @@ export const takeCharBetween = (f: (c: string) => boolean, min: number, max: num
     if (counter < min) {
       return new DecodeFailure(input, DecodeError.expectedAtLeast(min, Entity.PREDICATE))
     } else {
-      return new DecodeSuccess({...input, index }, input.input.substring(input.index, index))
+      return new DecodeSuccess({ ...input, index }, input.input.substring(input.index, index))
     }
   })
 

@@ -15,14 +15,40 @@ limitations under the License.
 */
 
 import {
-    DecodeError, ExpectedAnyOf, ExpectedAtLeast, ExpectedEoi, ExpectedMatch, ExpectedNoneOf,
-    ExpectedOnce, PatternMismatch
+  DecodeError,
+  ExpectedAnyOf,
+  ExpectedAtLeast,
+  ExpectedEoi,
+  ExpectedMatch,
+  ExpectedNoneOf,
+  ExpectedOnce,
+  PatternMismatch
 } from '../../src/error'
 import {
-    char, decodeText, digit, digits, eoi, letter, letters, lowerCaseLetter, lowerCaseLetters, match,
-    matchAnyCharOf, matchInsensitive, matchNoCharOf, optionalWhitespace, regexp, rest,
-    takeCharBetween, takeCharWhile, testChar, TextDecoder, upperCaseLetter, upperCaseLetters,
-    whitespace, withPosition
+  char,
+  decodeText,
+  digit,
+  digits,
+  eoi,
+  letter,
+  letters,
+  lowerCaseLetter,
+  lowerCaseLetters,
+  match,
+  matchAnyCharOf,
+  matchInsensitive,
+  matchNoCharOf,
+  optionalWhitespace,
+  regexp,
+  rest,
+  takeCharBetween,
+  takeCharWhile,
+  testChar,
+  TextDecoder,
+  upperCaseLetter,
+  upperCaseLetters,
+  whitespace,
+  withPosition
 } from '../../src/text'
 import { TextInput } from '../../src/text/input'
 

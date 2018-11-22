@@ -1109,7 +1109,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">char<span class="tsd-signature-symbol">:</span> <a href="../classes/core.decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/text.textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">, </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make((input: TextInput) &#x3D;&gt; {if (input.index &lt; input.input.length) {const c &#x3D; input.input.charAt(input.index)return new DecodeSuccess({ ...input, index: input.index + 1 }, c)} else {// no more charactersreturn new DecodeFailure(input, DecodeError.expectedOnce(Entity.CHARACTER))}})</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:207</li>
+						<li>Defined in text/index.ts:206</li>
 					</ul>
 				</aside>
 			</section>
@@ -1129,7 +1129,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">digit<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:127</li>
+						<li>Defined in text/index.ts:125</li>
 					</ul>
 				</aside>
 			</section>
@@ -1139,7 +1139,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">digits<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:128</li>
+						<li>Defined in text/index.ts:126</li>
 					</ul>
 				</aside>
 			</section>
@@ -1149,7 +1149,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">eoi<span class="tsd-signature-symbol">:</span> <a href="../classes/core.decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/text.textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">, </span><a href="error.html#decodeerror" class="tsd-signature-type">DecodeError</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make(input &#x3D;&gt; {const index &#x3D; input.input.lengthif (input.index &#x3D;&#x3D;&#x3D; index) {return new DecodeSuccess({ ...input, index }, undefined)} else {return new DecodeFailure(input, DecodeError.expectedEot)}})</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:83</li>
+						<li>Defined in text/index.ts:81</li>
 					</ul>
 				</aside>
 			</section>
@@ -1159,7 +1159,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">letter<span class="tsd-signature-symbol">:</span> <a href="../classes/core.decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/text.textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;regexp(letterPattern).withFailure(DecodeError.expectedOnce(Entity.LETTER))</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:168</li>
+						<li>Defined in text/index.ts:166</li>
 					</ul>
 				</aside>
 			</section>
@@ -1169,7 +1169,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">letter<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:121</li>
+						<li>Defined in text/index.ts:119</li>
 					</ul>
 				</aside>
 			</section>
@@ -1179,7 +1179,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">letters<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:122</li>
+						<li>Defined in text/index.ts:120</li>
 					</ul>
 				</aside>
 			</section>
@@ -1189,7 +1189,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">lower<wbr>Case<wbr>Letter<span class="tsd-signature-symbol">:</span> <a href="../classes/core.decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/text.textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;regexp(lowerCaseLetterPattern).withFailure(DecodeError.expectedOnce(Entity.LOWER_CASE_LETTER))</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:185</li>
+						<li>Defined in text/index.ts:184</li>
 					</ul>
 				</aside>
 			</section>
@@ -1199,7 +1199,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">lower<wbr>Case<wbr>Letter<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:125</li>
+						<li>Defined in text/index.ts:123</li>
 					</ul>
 				</aside>
 			</section>
@@ -1209,7 +1209,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">lower<wbr>Case<wbr>Letters<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:126</li>
+						<li>Defined in text/index.ts:124</li>
 					</ul>
 				</aside>
 			</section>
@@ -1219,7 +1219,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">optional<wbr>Whitespace<span class="tsd-signature-symbol">:</span> <a href="../classes/core.decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/text.textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;regexp(optionalWhitespacePattern)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:205</li>
+						<li>Defined in text/index.ts:204</li>
 					</ul>
 				</aside>
 			</section>
@@ -1229,7 +1229,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">optional<wbr>Whitespace<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:130</li>
+						<li>Defined in text/index.ts:128</li>
 					</ul>
 				</aside>
 			</section>
@@ -1239,7 +1239,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">rest<span class="tsd-signature-symbol">:</span> <a href="../classes/core.decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/text.textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make(input &#x3D;&gt; {const value &#x3D; input.input.substring(input.index)return new DecodeSuccess({ ...input, index: input.input.length }, value)})</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:78</li>
+						<li>Defined in text/index.ts:76</li>
 					</ul>
 				</aside>
 			</section>
@@ -1249,7 +1249,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">upper<wbr>Case<wbr>Letter<span class="tsd-signature-symbol">:</span> <a href="../classes/core.decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/text.textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;regexp(upperCaseLetterPattern).withFailure(DecodeError.expectedOnce(Entity.UPPERCASE_LETTER))</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:176</li>
+						<li>Defined in text/index.ts:174</li>
 					</ul>
 				</aside>
 			</section>
@@ -1259,7 +1259,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">upper<wbr>Case<wbr>Letter<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:123</li>
+						<li>Defined in text/index.ts:121</li>
 					</ul>
 				</aside>
 			</section>
@@ -1269,7 +1269,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">upper<wbr>Case<wbr>Letters<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:124</li>
+						<li>Defined in text/index.ts:122</li>
 					</ul>
 				</aside>
 			</section>
@@ -1289,7 +1289,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">whitespace<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:129</li>
+						<li>Defined in text/index.ts:127</li>
 					</ul>
 				</aside>
 			</section>
@@ -1299,7 +1299,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">with<wbr>Position<span class="tsd-signature-symbol">:</span> <a href="../classes/core.decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/text.textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make(input &#x3D;&gt; new DecodeSuccess(input, input.index))</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in text/index.ts:76</li>
+						<li>Defined in text/index.ts:74</li>
 					</ul>
 				</aside>
 			</section>
@@ -1316,7 +1316,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:31</li>
+								<li>Defined in text/index.ts:30</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1371,7 +1371,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:269</li>
+								<li>Defined in text/index.ts:268</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1400,7 +1400,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:170</li>
+								<li>Defined in text/index.ts:168</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1481,7 +1481,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:92</li>
+								<li>Defined in text/index.ts:90</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1510,7 +1510,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:231</li>
+								<li>Defined in text/index.ts:230</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1533,7 +1533,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:105</li>
+								<li>Defined in text/index.ts:103</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1556,7 +1556,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:236</li>
+								<li>Defined in text/index.ts:235</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1579,7 +1579,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:38</li>
+								<li>Defined in text/index.ts:36</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1605,7 +1605,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:254</li>
+								<li>Defined in text/index.ts:253</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1652,7 +1652,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:241</li>
+								<li>Defined in text/index.ts:240</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1696,7 +1696,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:217</li>
+								<li>Defined in text/index.ts:216</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1737,7 +1737,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in text/index.ts:179</li>
+								<li>Defined in text/index.ts:178</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>

@@ -20,18 +20,16 @@ limitations under the License.
 
 /**
  * DecodeResult is a union type that has two possible constructors
- * {@link DecodeSuccess} and {@link DecodeFailure}
+ * {@link DecodeSuccess} and {@link DecodeFailure}.
  */
 abstract class DecodeResultBase<In, Out, Err> {
   readonly _I!: In
   readonly _O!: Out
   readonly _E!: Err
 
-  constructor(
-    readonly input: In
-  ) {}
+  constructor(readonly input: In) {}
   abstract match<O>(o: {
-    success: (s: DecodeSuccess<In, Out, Err>) => O,
+    success: (s: DecodeSuccess<In, Out, Err>) => O
     failure: (f: DecodeFailure<In, Out, Err>) => O
   }): O
 
@@ -53,17 +51,11 @@ abstract class DecodeResultBase<In, Out, Err> {
 
 export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> {
   readonly kind = 'decode-success'
-  constructor(
-    input: In,
-    readonly value: Out
-  ) {
+  constructor(input: In, readonly value: Out) {
     super(input)
   }
 
-  match<O>(o: {
-    success: (s: DecodeSuccess<In, Out, Err>) => O,
-    failure: (f: DecodeFailure<In, Out, Err>) => O
-  }): O {
+  match<O>(o: { success: (s: DecodeSuccess<In, Out, Err>) => O; failure: (f: DecodeFailure<In, Out, Err>) => O }): O {
     return o.success(this)
   }
 
@@ -94,7 +86,7 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
     return this.value
   }
   getUnsafeFailure(): Err {
-    throw new Error('can\'t get failure from success')
+    throw new Error("can't get failure from success")
   }
 
   toString(): string {
@@ -104,15 +96,12 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
 
 export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> {
   readonly kind = 'decode-failure'
-  constructor(
-    input: In,
-    readonly failure: Err
-  ) {
+  constructor(input: In, readonly failure: Err) {
     super(input)
   }
 
   match<O>(o: {
-    success: (succ: DecodeSuccess<In, Out, Err>) => O,
+    success: (succ: DecodeSuccess<In, Out, Err>) => O
     failure: (fail: DecodeFailure<In, Out, Err>) => O
   }): O {
     return o.failure(this)
@@ -141,7 +130,7 @@ export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
     return true
   }
   getUnsafeSuccess(): Out {
-    throw new Error('can\'t get success from failure')
+    throw new Error("can't get success from failure")
   }
   getUnsafeFailure(): Err {
     return this.failure
@@ -155,6 +144,6 @@ export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
 export type DecodeResult<In, Out, Err> = DecodeSuccess<In, Out, Err> | DecodeFailure<In, Out, Err>
 
 export const success = <In, Out, Err>(input: In, result: Out): DecodeResult<In, Out, Err> =>
-    new DecodeSuccess(input, result)
-export const failure =  <In, Out, Err>(input: In, failure: Err): DecodeResult<In, Out, Err> =>
-    new DecodeFailure(input, failure)
+  new DecodeSuccess(input, result)
+export const failure = <In, Out, Err>(input: In, failure: Err): DecodeResult<In, Out, Err> =>
+  new DecodeFailure(input, failure)

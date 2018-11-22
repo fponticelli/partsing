@@ -23,8 +23,7 @@ describe('decode_result', () => {
     expect(result.isFailure()).toEqual(false)
     expect(result.input).toEqual('some')
     expect(result.kind).toEqual('decode-success')
-    if (result.isSuccess())
-      expect(result.value).toEqual(1)
+    if (result.isSuccess()) expect(result.value).toEqual(1)
     expect(result.toString()).toEqual('DecodeSuccess<1>: "some"')
   })
 
@@ -34,22 +33,21 @@ describe('decode_result', () => {
     expect(result.isFailure()).toEqual(true)
     expect(result.input).toEqual('some')
     expect(result.kind).toEqual('decode-failure')
-    if (result.isFailure())
-      expect(result.failure).toEqual({ error: 'error' })
+    if (result.isFailure()) expect(result.failure).toEqual({ error: 'error' })
     expect(result.toString()).toEqual('DecodeFailure<{"error":"error"}>: "some"')
   })
 
   it('match will return a value for each constructor', () => {
     expect(
       success('', 1).match({
-        success: (s) => String(s.value),
-        failure: (_) => 'nah'
+        success: s => String(s.value),
+        failure: _ => 'nah'
       })
     ).toEqual('1')
     expect(
       failure('', 1).match({
-        failure: (f) => String(f.failure),
-        success: (_) => 'nah'
+        failure: f => String(f.failure),
+        success: _ => 'nah'
       })
     ).toEqual('1')
   })

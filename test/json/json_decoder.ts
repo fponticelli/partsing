@@ -28,21 +28,13 @@ const jsonNumber = regexp(/-?(0|[1-9]\d*)([.]\d+)?([eE][+-]?\d+)?/y)
   .withFailure(DecodeError.custom('expected number'))
 
 // this is incomplete as it doesn't convert escaped chars or unicode values
-const jsonString = regexp(/"((:?\\"|[^"])*)"/y, 1)
-  .withFailure(DecodeError.custom('expected quoted string'))
+const jsonString = regexp(/"((:?\\"|[^"])*)"/y, 1).withFailure(DecodeError.custom('expected quoted string'))
 const jsonNull = match('null').withResult(null)
 const jsonBoolean = jsonTrue.or(DecodeError.combine, jsonFalse)
 
 const jsonValue: TextDecoder<JSONValue> = lazy(() =>
-  oneOf(
-    DecodeError.combine,
-    jsonNumber,
-    jsonNull,
-    jsonBoolean,
-    jsonString,
-    jsonArray,
-    jsonObject
-  ))
+  oneOf(DecodeError.combine, jsonNumber, jsonNull, jsonBoolean, jsonString, jsonArray, jsonObject)
+)
 
 const token = <T>(decoder: TextDecoder<T>) => decoder.skipNext(optionalWhitespace)
 const commaSeparated = <T>(decoder: TextDecoder<T>) => decoder.separatedBy(token(match(',')))
@@ -56,14 +48,13 @@ const colon = token(match(':'))
 const jsonArray: TextDecoder<JSONArray> = lSquare.pickNext(commaSeparated(jsonValue)).skipNext(rSquare)
 
 const pair = jsonString.skipNext(colon).join(jsonValue)
-const jsonObject: TextDecoder<JSONObject> = lCurly.pickNext(commaSeparated(pair)).skipNext(rCurly)
+const jsonObject: TextDecoder<JSONObject> = lCurly
+  .pickNext(commaSeparated(pair))
+  .skipNext(rCurly)
   .map((res: [string, JSONValue][]) => {
-    return res.reduce(
-      (acc: {}, pair: [string, JSONValue]) => {
-        return {...acc, [pair[0]]: pair[1]}
-      },
-      {}
-    )
-})
+    return res.reduce((acc: {}, pair: [string, JSONValue]) => {
+      return { ...acc, [pair[0]]: pair[1] }
+    }, {})
+  })
 
 export const decodeJson = (input: string): DecodeResult<string, JSONValue, string> => decodeText(jsonValue)(input)

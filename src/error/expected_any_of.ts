@@ -36,10 +36,7 @@ export const concatOr = (values: string[]) => {
 
 export class ExpectedAnyOf extends DecodeErrorBase {
   readonly kind: 'expected-any-of' = 'expected-any-of'
-  constructor(
-    readonly entity: Entity,
-    readonly values: string[]
-  ) {
+  constructor(readonly entity: Entity, readonly values: string[]) {
     super()
   }
   toString() {
