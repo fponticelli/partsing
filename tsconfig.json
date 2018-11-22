@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "lib": ["es6"],
-    "sourceRoot": "./src",
     "sourceMap": true,
     "declaration": true,
     "outDir": "./lib",
@@ -10,6 +9,9 @@
     "removeComments": false,
     "strict": true
   },
+  "include": [
+    "./src/**/*.ts"
+  ],
   "exclude": [
     "./node_modules/",
     "./lib/",

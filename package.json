@@ -20,6 +20,7 @@
     "combinator"
   ],
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.6",
     "@types/jest": "^23.3.5",
     "@types/node": "^10.12.0",
     "jest": "^23.6.0",
@@ -42,7 +43,8 @@
   },
   "scripts": {
     "build": "rm -rf lib && tsc",
-    "doc": "rm -rf docs && typedoc --out docs --ignoreCompilerErrors --theme minimal --name ParTSing ./src",
+    "doc": "rm -rf docs && compodoc src",
+    "serve-doc": "rm -rf docs && compodoc src -s",
     "lint": "tslint \"./{src,test}/**/*.ts\"",
     "fix-lint": "tslint --fix \"./{src,test}/**/*.ts\"",
     "prettier": "prettier --list-different \"./{src,test}/**/*.ts\"",
@@ -54,6 +56,7 @@
   },
   "eslint.packageManager": "yarn",
   "jest": {
+    "rootDir": ".",
     "collectCoverageFrom": [
       "src/**/*.ts"
     ],
@@ -62,6 +65,7 @@
     ],
     "coverageReporters": [
       "json",
+      "json-summary",
       "lcov",
       "text"
     ],
