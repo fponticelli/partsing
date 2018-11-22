@@ -61,7 +61,8 @@ const hslDecoder = matchInsensitive('hsl(')
   .skipNext(match(')'))
 
 const colorTextDecoder = decodeText(
-  oneOf<TextInput, Color[], DecodeError>(DecodeError.combine, rgbDecoder, greyDecoder, hslDecoder).skipNext(eoi) // make sure that there is nothing left to decode
+  // the `eoi` at the end, makes sure that there is nothing left to decode
+  oneOf<TextInput, Color[], DecodeError>(DecodeError.combine, rgbDecoder, greyDecoder, hslDecoder).skipNext(eoi)
 )
 
 describe('text color decoder', () => {
