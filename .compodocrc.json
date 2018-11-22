@@ -1,5 +1,5 @@
 {
-  "output": "./doc",
+  "output": "./docs",
   "name": "ParTSing",
   "tsconfig": "./tsconfig.json",
   "hideGenerator": true
