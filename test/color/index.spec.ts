@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ValueInput } from '../../src/value'
+import { ValueInput } from '../../src/value/input'
 import { Decoder, oneOf } from '../../src/core/decoder'
 import { DecodeError } from '../../src/error'
 import {

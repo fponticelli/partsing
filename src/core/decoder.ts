@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DecodeFailure, DecodeResult, DecodeSuccess } from './result'
+/**
+ * @module core
+ */
+
+import { DecodeFailure, DecodeResult, DecodeSuccess, failure, success } from './result'
 import { TupleToUnion } from './type_level'
 
 /**
@@ -122,7 +126,7 @@ export class Decoder<In, Out, Err> {
             .mapError(mapError)
             .run(mapInput(s.value))
             .mapInput(_ => s.input),
-        failure: (f: DecodeFailure<In, Out, Err>) => DecodeResult.failure(f.input, f.failure)
+        failure: (f: DecodeFailure<In, Out, Err>) => failure(f.input, f.failure)
       })
     )
   }
@@ -135,7 +139,7 @@ export class Decoder<In, Out, Err> {
     return Decoder.of<In, Out, Err2>((input: In) =>
       this.run(input).match<DecodeResult<In, Out, Err2>>({
         failure: (f: DecodeFailure<In, Out, Err>) => fun(f.failure).run(input),
-        success: (s: DecodeSuccess<In, Out, Err>) => new DecodeSuccess<In, Out, Err2>(s.input, s.value)
+        success: (s: DecodeSuccess<In, Out, Err>) => success<In, Out, Err2>(s.input, s.value)
       })
     )
   }
@@ -314,12 +318,12 @@ export class Decoder<In, Out, Err> {
    *
    * `failure` is provided to have an explicit error if `predicate` fails.
    */
-  test(predicate: (r: Out) => boolean, failure: Err): Decoder<In, Out, Err> {
+  test(predicate: (r: Out) => boolean, err: Err): Decoder<In, Out, Err> {
     return this.flatMap(res => Decoder.of<In, Out, Err>(input => {
       if (predicate(res)) {
-        return DecodeResult.success(input, res)
+        return success(input, res)
       } else {
-        return DecodeResult.failure(input, failure)
+        return failure(input, err)
       }
     }))
   }
@@ -406,9 +410,9 @@ export const oneOf = <In, U extends any[], Err>
         }
       }
       if (combineErrors) {
-        return DecodeResult.failure(input, combineErrors(failures))
+        return failure(input, combineErrors(failures))
       } else {
-        return DecodeResult.failure(input, failures[0])
+        return failure(input, failures[0])
       }
     }
   )

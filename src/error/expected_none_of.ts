@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * @module error
+ */
+
 import { DecodeErrorBase } from './decode_error_base'
 import { Entity, pluralize } from './entity'
 import { concatOr } from './expected_any_of'

@@ -14,6 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * @module core
+ */
+
+/**
+ * DecodeResult is a union type that has two possible constructors
+ * {@link DecodeSuccess} and {@link DecodeFailure}
+ */
 abstract class DecodeResultBase<In, Out, Err> {
   readonly _I!: In
   readonly _O!: Out
@@ -146,9 +154,7 @@ export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
 
 export type DecodeResult<In, Out, Err> = DecodeSuccess<In, Out, Err> | DecodeFailure<In, Out, Err>
 
-export const DecodeResult = {
-  success: <In, Out, Err>(input: In, result: Out): DecodeResult<In, Out, Err> =>
-    new DecodeSuccess(input, result),
-  failure: <In, Out, Err>(input: In, failure: Err): DecodeResult<In, Out, Err> =>
+export const success = <In, Out, Err>(input: In, result: Out): DecodeResult<In, Out, Err> =>
+    new DecodeSuccess(input, result)
+export const failure =  <In, Out, Err>(input: In, failure: Err): DecodeResult<In, Out, Err> =>
     new DecodeFailure(input, failure)
-}

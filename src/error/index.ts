@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * @module error
+ */
+
 import { Entity } from './entity'
 import { CustomError } from './custom_error'
 import { ExpectedAnyOf } from './expected_any_of'

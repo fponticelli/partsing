@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * @module value
+ */
+
 import { Decoder, Decoding } from '../core/decoder'
-import { DecodeFailure, DecodeResult } from '../core/result'
+import { DecodeFailure, DecodeResult, success, failure } from '../core/result'
 import { MarkOptionalFields } from '../core/type_level'
 import { DecodeError } from '../error'
-
-export interface ValueInput {
-  readonly input: any
-  readonly path: (string | number)[]
-}
+import { ValueInput } from './input'
 
 export type ValueDecoder<T> = Decoder<ValueInput, T, DecodeError>
 
@@ -32,27 +32,27 @@ const make = <T>(f: Decoding<ValueInput, T, DecodeError>): ValueDecoder<T> =>
 export const decodeValue = <T>(decoder: ValueDecoder<T>) => (input: any): DecodeResult<any, T, string> =>
   decoder.run({ input, path: []})
     .match({
-      success: (s) => DecodeResult.success(input, s.value),
-      failure: (f) => DecodeResult.failure(input, failureToString(f))
+      success: (s) => success(input, s.value),
+      failure: (f) => failure(input, failureToString(f))
     })
 
 export const testValue = <T>(f: (input: T) => boolean, expected: string) => make<T>(input =>
   f(input.input) ?
-    DecodeResult.success(input, input.input) :
-    DecodeResult.failure(input, DecodeError.expectedMatch(expected))
+    success(input, input.input) :
+    failure(input, DecodeError.expectedMatch(expected))
 )
 
 export const testType = <T>(expected: string) => make<T>(input =>
   typeof input.input === expected ?
-    DecodeResult.success(input, input.input) :
-    DecodeResult.failure(input, DecodeError.expectedMatch(expected))
+    success(input, input.input) :
+    failure(input, DecodeError.expectedMatch(expected))
 )
 
 export const nullableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, nullValue)
 export const undefineableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, undefinedValue)
 export const optionalValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, undefinedValue, nullValue)
 
-export const anyValue = make<any>(input => DecodeResult.success(input, input.input))
+export const anyValue = make<any>(input => success(input, input.input))
 export const stringValue = testType<string>('string')
 export const numberValue = testType<number>('number')
 export const integerValue = numberValue.test(Number.isInteger, DecodeError.expectedMatch('integer'))
@@ -76,10 +76,10 @@ export const arrayValue = <T>(decoder: ValueDecoder<T>) =>
         if (r.isSuccess()) {
           buff[i] = r.value
         } else {
-          return DecodeResult.failure(r.input, r.failure)
+          return failure(r.input, r.failure)
         }
       }
-      return DecodeResult.success(input, buff)
+      return success(input, buff)
     })
   )
 
@@ -94,10 +94,10 @@ export const tupleValue = <U extends any[]>(...decoders: { [k in keyof U]: Value
         if (r.isSuccess()) {
           buff[i] = r.value
         } else {
-          return DecodeResult.failure(r.input, r.failure)
+          return failure(r.input, r.failure)
         }
       }
-      return DecodeResult.success(input, buff)
+      return success(input, buff)
     })
   )
 
@@ -118,10 +118,10 @@ export const objectValue = <T, K extends keyof T>(
             if (result.isSuccess()) {
               buff[field] = result.value
             } else {
-              return DecodeResult.failure(result.input, result.failure)
+              return failure(result.input, result.failure)
             }
           } else {
-            return DecodeResult.failure(input, DecodeError.expectedField(field))
+            return failure(input, DecodeError.expectedField(field))
           }
         }
         for (let field of optionalFields) {
@@ -131,11 +131,11 @@ export const objectValue = <T, K extends keyof T>(
             if (result.isSuccess()) {
               buff[field] = result.value
             } else {
-              return DecodeResult.failure(result.input, result.failure)
+              return failure(result.input, result.failure)
             }
           }
         }
-        return DecodeResult.success(input, buff as never)
+        return success(input, buff as never)
       })
     })
   }
@@ -166,3 +166,5 @@ export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeE
   else
     return `${msg} at ${path}`
 }
+
+export { ValueInput } from './input'

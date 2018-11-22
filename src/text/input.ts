@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * @module text
+ */
+
 export interface TextInput {
   readonly input: string
   readonly index: number

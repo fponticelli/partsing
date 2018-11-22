@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import { Decoder, fail, lazy, oneOf, sequence, succeed } from '../../src/core/decoder'
-import { DecodeFailure, DecodeResult, DecodeSuccess } from '../../src/core/result'
+import { DecodeFailure, DecodeSuccess, success, failure } from '../../src/core/result'
 import { DecodeError } from '../../src/error'
 import { decodeText, digit, letter, match, regexp } from '../../src/text'
 import { TextInput } from '../../src/text/input'
 import { decodeValue, stringValue } from '../../src/value'
 
-const decodeSuccess = <In, Err>() => Decoder.of<In, In, Err>(input => DecodeResult.success<In, In, Err>(input, input))
-const decodeFailure = <In>() => Decoder.of<In, In, In>(input => DecodeResult.failure<In, In, In>(input, input))
+const decodeSuccess = <In, Err>() => Decoder.of<In, In, Err>(input => success<In, In, Err>(input, input))
+const decodeFailure = <In>() => Decoder.of<In, In, In>(input => failure<In, In, In>(input, input))
 
 const runSuccess = <In, Out, Err>(p: Decoder<In, Out, Err>, input: In) => {
   const r = p.run(input)
@@ -51,10 +51,10 @@ describe('decoder', () => {
 
   it('Decoder.flatMap transform the decoded value', () => {
     const result = decodeSuccess()
-      .flatMap(x => Decoder.of(v => DecodeResult.success('1', `${x}${v}`))).run(2) as DecodeSuccess<string, string, number>
+      .flatMap(x => Decoder.of(v => success('1', `${x}${v}`))).run(2) as DecodeSuccess<string, string, number>
     expect(result.value).toEqual('22')
     const f = decodeSuccess()
-      .flatMap(x => Decoder.of(v => DecodeResult.failure('1', 'x'))).run(1) as DecodeFailure<string, string, number>
+      .flatMap(x => Decoder.of(v => failure('1', 'x'))).run(1) as DecodeFailure<string, string, number>
     expect(f.failure).toEqual('x')
   })
 
@@ -67,13 +67,13 @@ describe('decoder', () => {
 
   it('Decoder.flatMapError transform the failure value', () => {
     const result = decodeSuccess()
-      .flatMapError(e => Decoder.of(v => DecodeResult.success('1', String(v)))).run(1) as DecodeSuccess<number, string, string>
+      .flatMapError(e => Decoder.of(v => success('1', String(v)))).run(1) as DecodeSuccess<number, string, string>
     expect(result.value).toEqual(1)
     const f = decodeFailure()
-      .flatMapError(e => Decoder.of(v => DecodeResult.failure('1', e))).run(1) as DecodeFailure<string, number, string>
+      .flatMapError(e => Decoder.of(v => failure('1', e))).run(1) as DecodeFailure<string, number, string>
     expect(f.failure).toEqual(1)
     const s = decodeFailure()
-      .flatMapError(e => Decoder.of(v => DecodeResult.success('1', e))).run(1) as DecodeSuccess<string, number, string>
+      .flatMapError(e => Decoder.of(v => success('1', e))).run(1) as DecodeSuccess<string, number, string>
     expect(s.value).toEqual(1)
   })
 
@@ -201,7 +201,7 @@ describe('decoder', () => {
     expect(decodeText(p3)('a').getUnsafeFailure()).toBeDefined()
     expect(decodeText(p3)('a,b').getUnsafeFailure()).toBeDefined()
     expect(decodeText(p3)('a,b,c').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])
-    // expect(decodeText(p3)('a,b,c,d,e').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])
+    expect(decodeText(p3)('a,b,c,d,e').getUnsafeSuccess()).toEqual(['a', 'b', 'c'])
   })
 
   it('separatedByAtLeastOnce', () => {

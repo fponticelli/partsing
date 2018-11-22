@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * @module error
+ */
+
 export abstract class DecodeErrorBase {
   abstract toString(): string
 }

@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * @module text
+ */
+
 import { Decoder, Decoding } from '../core/decoder'
-import { DecodeFailure, DecodeResult, DecodeSuccess } from '../core/result'
+import { DecodeFailure, DecodeResult, DecodeSuccess, success, failure } from '../core/result'
 import { DecodeError, Entity } from '../error'
 import { TextInput } from './input'
 
@@ -27,8 +31,8 @@ const make = <T>(f: Decoding<TextInput, T, DecodeError>): TextDecoder<T> =>
 export const decodeText = <T>(decoder: TextDecoder<T>) => (input: string): DecodeResult<string, T, string> =>
   decoder.run({ input, index: 0})
     .match({
-      success: (r) => DecodeResult.success(input, r.value),
-      failure: (f) => DecodeResult.failure(input, failureToString(f))
+      success: (r) => success(input, r.value),
+      failure: (f) => failure(input, failureToString(f))
     })
 
 export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
@@ -271,3 +275,5 @@ export const failureToString = <Out>(err: DecodeFailure<TextInput, Out, DecodeEr
   const extract = input.input.substr(input.index, length)
   return `${msg} at "${prefix}${extract}${suffix}"`
 }
+
+export { TextInput } from './input'

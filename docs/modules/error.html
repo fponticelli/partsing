@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ParTSing | ParTSing</title>
+	<title>error | ParTSing</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -879,7 +879,7 @@ img { max-width: 100%; }
 		<div class="container">
 			<div class="table-wrap">
 				<div class="table-cell">
-					<strong><a href="index.html">ParTSing</a></strong>
+					<strong><a href="../index.html">ParTSing</a></strong>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -909,130 +909,661 @@ img { max-width: 100%; }
 </header>
 <nav class="tsd-navigation secondary">
 	<ul>
+		<li class=" tsd-kind-enum tsd-parent-kind-external-module">
+			<a href="../enums/error.entity.html" class="tsd-kind-icon">Entity</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.combineerrors.html" class="tsd-kind-icon">Combine<wbr>Errors</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.customerror.html" class="tsd-kind-icon">Custom<wbr>Error</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.decodeerrorbase.html" class="tsd-kind-icon">Decode<wbr>Error<wbr>Base</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.expectedanyof.html" class="tsd-kind-icon">Expected<wbr>Any<wbr>Of</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.expectedatleast.html" class="tsd-kind-icon">Expected<wbr>AtLeast</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.expectedeoi.html" class="tsd-kind-icon">Expected<wbr>Eoi</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.expectedfield.html" class="tsd-kind-icon">Expected<wbr>Field</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.expectedmatch.html" class="tsd-kind-icon">Expected<wbr>Match</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.expectednoneof.html" class="tsd-kind-icon">Expected<wbr>None<wbr>Of</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.expectedonce.html" class="tsd-kind-icon">Expected<wbr>Once</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.expectedwithinrange.html" class="tsd-kind-icon">Expected<wbr>Within<wbr>Range</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.patternmismatch.html" class="tsd-kind-icon">Pattern<wbr>Mismatch</a>
+		</li>
+		<li class=" tsd-kind-class tsd-parent-kind-external-module">
+			<a href="../classes/error.unexpectedeoi.html" class="tsd-kind-icon">Unexpected<wbr>Eoi</a>
+		</li>
+		<li class=" tsd-kind-function tsd-parent-kind-external-module">
+			<a href="error.html#concator" class="tsd-kind-icon">concat<wbr>Or</a>
+		</li>
+		<li class=" tsd-kind-function tsd-parent-kind-external-module">
+			<a href="error.html#pluralize" class="tsd-kind-icon">pluralize</a>
+		</li>
+		<li class=" tsd-kind-object-literal tsd-parent-kind-external-module">
+			<a href="error.html#decodeerror" class="tsd-kind-icon">Decode<wbr>Error</a>
+		</li>
 	</ul>
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
-		<div class="tsd-panel tsd-typography">
-			<h1 id="partsing">ParTSing</h1>
-			<p><em>ParTSing</em> is a decoder combinator library. You can use it to build parsers/decoders from string or really any input values.</p>
-			<p>If you want full control over what to decode your should start from <code>partsing/core/decoder</code>. It provides 3 types parameters</p>
-			<ul>
-				<li><code>In</code> for the input. Remember that you will need to decode one portion of your input at the time and your input probably needs to track somehow the current position.</li>
-				<li><code>Out</code> it&#39;s the type of the value if successfully decoded.</li>
-				<li><code>Err</code> it&#39;s the type of the failure returned when the parser fails.</li>
-			</ul>
-			<p>The library provides two additional set of utility functions to decode <code>string</code> values (<code>partsing/text</code>) and native JS values (<code>partsing/value</code>).</p>
-			<h2 id="decoder-error">Decoder Error</h2>
-			<p>If you adopt the generic <code>Decoder</code> directly, you can define the shape of your error. The library provides a <code>DecoderError</code> type that should fit most decoding needs. The type of errors available are defined in <code>partsing/error</code>.</p>
-			<p><code>DecoderError</code> provides a simple method to debug the result of the decoding (<code>toString</code>) but still leaves the flexibility to give granular control on the representation of the error.</p>
-			<p>Both [Text Decoding] and [Value Decoding] use <code>DecodeError</code>.</p>
-			<h2 id="text-decoding">Text Decoding</h2>
-			<p>To be able to keep track of the position of the decoding within a <code>string</code>, Text Decoding uses <code>TextInput</code> to track both the entire text <code>input</code> and the current <code>index</code>.</p>
-			<p>The <code>decodeText</code> function simplifies the inputs and outputs of decoding text. It takes a text decoder (<code>Decoder&lt;TextInput, T, DecoderError&gt;</code>) and return a function that takes a string input and returns a <code>DecodeResult&lt;string, T, string&gt;</code> (where input and error are of type <code>string</code>).</p>
-			<p>If you intend to write your own regular expressions decoder functions, consider using the <code>y</code> (<code>sticky</code>) flag. When used, there is no need to reallocate slices of the input string saving memory and CPU cycles. The <code>sticky</code> flag is not available for all implementations of JS.</p>
-			<h2 id="value-decoding">Value Decoding</h2>
-			<p>To be able to keep track of the position of the decoding within <code>any</code> value, Value Decoding uses <code>ValueInput</code> to track both the <code>input</code> value and the current position within it using a <code>path</code>. <code>path</code> is an array of either <code>string</code> (object field name) or <code>number</code> (array/tuple index position).</p>
-			<p>The <code>decodeValue</code> function simplifies the inputs and outputs of decoding values. It takes a value decoder (<code>Decoder&lt;ValueInput, T, DecoderError&gt;</code>) and return a function that takes <code>any</code> and returns a <code>DecodeResult&lt;any, T, string&gt;</code> (where input is of type <code>any</code> and error is of type <code>string</code>).</p>
-			<h2 id="example">Example</h2>
-			<p>A simple decoder combinator to parse color values from strings into class instances.</p>
-			<pre><code class="language-typescript"><span class="hljs-keyword">class</span> RGB {
-  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly rgb: <span class="hljs-built_in">number</span></span>) {}
-}
-
-<span class="hljs-keyword">class</span> Grey {
-  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly value: <span class="hljs-built_in">number</span></span>) {}
-}
-
-<span class="hljs-keyword">class</span> HSL {
-  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly hue: <span class="hljs-built_in">number</span>, readonly saturation: <span class="hljs-built_in">number</span>, readonly lightness: <span class="hljs-built_in">number</span></span>) {}
-}
-
-<span class="hljs-keyword">type</span> Color = RGB | Grey | HSL
-
-<span class="hljs-keyword">const</span> ratioDecoder = regexp(<span class="hljs-regexp">/0[.]\d+/y</span>).map(<span class="hljs-built_in">Number</span>)
-<span class="hljs-keyword">const</span> rgbDecoder   = regexp(<span class="hljs-regexp">/[#]([0-9a-f]{6})/iy</span>, <span class="hljs-number">1</span>)
-                       .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-built_in">parseInt</span>(v, <span class="hljs-number">16</span>))
-                       .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> RGB(v))
-<span class="hljs-keyword">const</span> greyDecoder  = matchInsensitive(<span class="hljs-string">'grey'</span>).or(DecodeError.combine, matchInsensitive(<span class="hljs-string">'gray'</span>))
-                       .skipNext(optionalWhitespace)
-                       .pickNext(ratioDecoder)
-                       .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> Grey(v))
-<span class="hljs-keyword">const</span> hslDecoder   = matchInsensitive(<span class="hljs-string">'hsl('</span>)
-                       .pickNext(
-                         ratioDecoder
-                           .separatedByTimes(match(<span class="hljs-string">','</span>), <span class="hljs-number">3</span>)
-                           .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> HSL(v[<span class="hljs-number">0</span>], v[<span class="hljs-number">1</span>], v[<span class="hljs-number">2</span>]))
-                       )
-                       .skipNext(match(<span class="hljs-string">')'</span>))
-
-<span class="hljs-keyword">const</span> colorTextDecoder = decodeText(
-    oneOf&lt;TextInput, Color[], DecodeError&gt;(
-      DecodeError.combine,
-      rgbDecoder,
-      greyDecoder,
-      hslDecoder
-    ).skipNext(eoi) <span class="hljs-comment">// make sure that there is nothing left to decode</span>
-  )
-
-<span class="hljs-comment">// all results are wrapped in a DecodeSuccess</span>
-<span class="hljs-comment">// colorTextDecoder('#003355')          == new RGB(0x003355)</span>
-<span class="hljs-comment">// colorTextDecoder('gray 0.3')         == new Grey(0.3)</span>
-<span class="hljs-comment">// colorTextDecoder('gray0.2')          == new Grey(0.2)</span>
-<span class="hljs-comment">// colorTextDecoder('HSL(0.1,0.2,0.3)') == new HSL(0.1,0.2,0.3)</span></code></pre>
-			<p>Another scenario where decoding comes in handy is to validate, type and transform payloads from JSON requests. You can decode a value (after being parsed by <code>JSON.parse</code>) into one of the <code>Color</code> types described above.</p>
-			<p>A few examples of valid JSON payloads:</p>
-			<pre><code class="language-json"><span class="hljs-string">"#003366"</span></code></pre>
-			<pre><code class="language-json">{ <span class="hljs-attr">"grey"</span>: <span class="hljs-number">0.5</span> }</code></pre>
-			<pre><code class="language-json">{ <span class="hljs-attr">"kind"</span>: <span class="hljs-string">"hsl"</span>, <span class="hljs-attr">"h"</span>: <span class="hljs-number">0.2</span>, <span class="hljs-attr">"s"</span>: <span class="hljs-number">0.5</span>, <span class="hljs-attr">"l"</span>: <span class="hljs-number">0.8</span> }</code></pre>
-			<p>Here is a <code>colorValueDecoder</code> definition that can deal with those cases:</p>
-			<pre><code class="language-typescript"><span class="hljs-keyword">const</span> ratioValue = numberValue.test(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> v &gt;= <span class="hljs-number">0</span> &amp;&amp; v &lt;= <span class="hljs-number">1</span>, DecodeError.expectedWithinRange(<span class="hljs-string">'0'</span>, <span class="hljs-string">'1'</span>))
-
-<span class="hljs-comment">// reuse the rgbDecoder defined above to validate and trasform the string value into an RGB instance</span>
-<span class="hljs-comment">// example: "#003366"</span>
-<span class="hljs-keyword">const</span> rgbValue = stringValue.sub(rgbDecoder, <span class="hljs-function"><span class="hljs-params">input</span> =&gt;</span> ({ input, index: <span class="hljs-number">0</span> }), <span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> v)
-
-<span class="hljs-comment">// example: { "grey": 0.5 }</span>
-<span class="hljs-keyword">const</span> greyValue = objectValue(
-    { grey: ratioValue },
-    [] <span class="hljs-comment">// the empty array means that no fields are optional</span>
-  ).map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> Grey(v.grey))
-
-<span class="hljs-comment">// example: { "kind": "hsl", "h": 0.2, "s": 0.5, "l": 0.8 }</span>
-<span class="hljs-keyword">const</span> hslValue = objectValue(
-    {
-      kind: literalValue(<span class="hljs-string">'hsl'</span>),
-      h: ratioValue,
-      s: ratioValue,
-      l: ratioValue
-    },
-    []
-  ).map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> HSL(v.h, v.s, v.l))
-
-<span class="hljs-keyword">const</span> colorValueDecoder = decodeValue(
-    oneOf&lt;ValueInput, Color[], DecodeError&gt;(
-      DecodeError.combine,
-      rgbValue,
-      greyValue,
-      hslValue
-    )
-  )</code></pre>
-		</div>
-		<div style="position:relative;"><a name="typedoc-main-index" class="tsd-anchor"></a></div>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
 			<section class="tsd-panel tsd-index-panel">
 				<div class="tsd-index-content">
 					<section class="tsd-index-section ">
-						<h3>External modules</h3>
+						<h3>Enumerations</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-external-module"><a href="modules/core.html" class="tsd-kind-icon">core</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/error.html" class="tsd-kind-icon">error</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/text.html" class="tsd-kind-icon">text</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/value.html" class="tsd-kind-icon">value</a></li>
+							<li class="tsd-kind-enum tsd-parent-kind-external-module"><a href="../enums/error.entity.html" class="tsd-kind-icon">Entity</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section ">
+						<h3>Classes</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.combineerrors.html" class="tsd-kind-icon">Combine<wbr>Errors</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.customerror.html" class="tsd-kind-icon">Custom<wbr>Error</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.decodeerrorbase.html" class="tsd-kind-icon">Decode<wbr>Error<wbr>Base</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.expectedanyof.html" class="tsd-kind-icon">Expected<wbr>Any<wbr>Of</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.expectedatleast.html" class="tsd-kind-icon">Expected<wbr>AtLeast</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.expectedeoi.html" class="tsd-kind-icon">Expected<wbr>Eoi</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.expectedfield.html" class="tsd-kind-icon">Expected<wbr>Field</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.expectedmatch.html" class="tsd-kind-icon">Expected<wbr>Match</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.expectednoneof.html" class="tsd-kind-icon">Expected<wbr>None<wbr>Of</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.expectedonce.html" class="tsd-kind-icon">Expected<wbr>Once</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.expectedwithinrange.html" class="tsd-kind-icon">Expected<wbr>Within<wbr>Range</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.patternmismatch.html" class="tsd-kind-icon">Pattern<wbr>Mismatch</a></li>
+							<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/error.unexpectedeoi.html" class="tsd-kind-icon">Unexpected<wbr>Eoi</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section ">
+						<h3>Functions</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="error.html#concator" class="tsd-kind-icon">concat<wbr>Or</a></li>
+							<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="error.html#pluralize" class="tsd-kind-icon">pluralize</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section ">
+						<h3>Object literals</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-object-literal tsd-parent-kind-external-module"><a href="error.html#decodeerror" class="tsd-kind-icon">Decode<wbr>Error</a></li>
 						</ul>
 					</section>
 				</div>
+			</section>
+		</section>
+		<section class="tsd-panel-group tsd-member-group ">
+			<h2>Functions</h2>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+				<a name="concator" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> concat<wbr>Or</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+					<li class="tsd-signature tsd-kind-icon">concat<wbr>Or<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in error/expected_any_of.ts:24</li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>values: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+				<a name="pluralize" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> pluralize</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+					<li class="tsd-signature tsd-kind-icon">pluralize<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="../enums/error.entity.html" class="tsd-signature-type">Entity</a>, qt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in error/entity.ts:31</li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>entity: <a href="../enums/error.entity.html" class="tsd-signature-type">Entity</a></h5>
+							</li>
+							<li>
+								<h5>qt: <span class="tsd-signature-type">number</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+					</li>
+				</ul>
+			</section>
+		</section>
+		<section class="tsd-panel-group tsd-member-group ">
+			<h2>Object literals</h2>
+			<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-external-module">
+				<a name="decodeerror" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> Decode<wbr>Error</h3>
+				<div class="tsd-signature tsd-kind-icon">Decode<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in error/index.ts:35</li>
+						<li>Defined in error/index.ts:49</li>
+					</ul>
+				</aside>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+					<a name="decodeerror.expectedeot" class="tsd-anchor"></a>
+					<h3>expected<wbr>Eot</h3>
+					<div class="tsd-signature tsd-kind-icon">expected<wbr>Eot<span class="tsd-signature-symbol">:</span> <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a><span class="tsd-signature-symbol"> =&nbsp;new ExpectedEoi() as DecodeError</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in error/index.ts:53</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+					<a name="decodeerror.unexpectedeoi-1" class="tsd-anchor"></a>
+					<h3>unexpected<wbr>Eoi</h3>
+					<div class="tsd-signature tsd-kind-icon">unexpected<wbr>Eoi<span class="tsd-signature-symbol">:</span> <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a><span class="tsd-signature-symbol"> =&nbsp;new UnexpectedEoi() as DecodeError</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in error/index.ts:61</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="decodeerror.combine" class="tsd-anchor"></a>
+					<h3>combine</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">combine<span class="tsd-signature-symbol">(</span>errors<span class="tsd-signature-symbol">: </span><a href="error.html#decodeerror" class="tsd-signature-type">DecodeError</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in error/index.ts:58</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>errors: <a href="error.html#decodeerror" class="tsd-signature-type">DecodeError</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="decodeerror.custom" class="tsd-anchor"></a>
+					<h3>custom</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">custom<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in error/index.ts:50</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="decodeerror.expectedanyof-1" class="tsd-anchor"></a>
+					<h3>expected<wbr>Any<wbr>Of</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">expected<wbr>Any<wbr>Of<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="../enums/error.entity.html" class="tsd-signature-type">Entity</a>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in error/index.ts:51</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>entity: <a href="../enums/error.entity.html" class="tsd-signature-type">Entity</a></h5>
+								</li>
+								<li>
+									<h5>values: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="decodeerror.expectedatleast-1" class="tsd-anchor"></a>
+					<h3>expected<wbr>AtLeast</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">expected<wbr>AtLeast<span class="tsd-signature-symbol">(</span>min<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, entity<span class="tsd-signature-symbol">: </span><a href="../enums/error.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in error/index.ts:52</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>min: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>entity: <a href="../enums/error.entity.html" class="tsd-signature-type">Entity</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="decodeerror.expectedfield-1" class="tsd-anchor"></a>
+					<h3>expected<wbr>Field</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">expected<wbr>Field<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in error/index.ts:54</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="decodeerror.expectedmatch-1" class="tsd-anchor"></a>
+					<h3>expected<wbr>Match</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">expected<wbr>Match<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in error/index.ts:55</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="decodeerror.expectednoneof-1" class="tsd-anchor"></a>
+					<h3>expected<wbr>None<wbr>Of</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">expected<wbr>None<wbr>Of<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="../enums/error.entity.html" class="tsd-signature-type">Entity</a>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in error/index.ts:56</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>entity: <a href="../enums/error.entity.html" class="tsd-signature-type">Entity</a></h5>
+								</li>
+								<li>
+									<h5>values: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="decodeerror.expectedonce-1" class="tsd-anchor"></a>
+					<h3>expected<wbr>Once</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">expected<wbr>Once<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="../enums/error.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in error/index.ts:57</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>entity: <a href="../enums/error.entity.html" class="tsd-signature-type">Entity</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="decodeerror.expectedwithinrange-1" class="tsd-anchor"></a>
+					<h3>expected<wbr>Within<wbr>Range</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">expected<wbr>Within<wbr>Range<span class="tsd-signature-symbol">(</span>min<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, max<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in error/index.ts:59</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>min: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>max: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="decodeerror.patternmismatch-1" class="tsd-anchor"></a>
+					<h3>pattern<wbr>Mismatch</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">pattern<wbr>Mismatch<span class="tsd-signature-symbol">(</span>pattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in error/index.ts:60</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>pattern: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/error.customerror.html" class="tsd-signature-type">CustomError</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedfield.html" class="tsd-signature-type">ExpectedField</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedonce.html" class="tsd-signature-type">ExpectedOnce</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.patternmismatch.html" class="tsd-signature-type">PatternMismatch</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../classes/error.combineerrors.html" class="tsd-signature-type">CombineErrors</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</section>
 		<footer class="with-border-bottom">
