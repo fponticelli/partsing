@@ -146,9 +146,8 @@ export const pathToString = (path: (string | number)[]): string => {
 
 export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeError>): string => {
   const { failures, input } = err
-  const expected = failures.length === 1 ?
-    failures[0].toString() :
-    `one of:\n * ${failures.map(v => v.toString()).join('\n * ')}\n`
+  const expected =
+    failures.length === 1 ? failures[0].toString() : `one of:\n * ${failures.map(v => v.toString()).join('\n * ')}\n`
   const msg = `${expected} but got ${String(input.input)}`
   const path = pathToString(input.path)
   if (path === '') return msg

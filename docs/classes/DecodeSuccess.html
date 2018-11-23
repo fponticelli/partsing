@@ -120,7 +120,7 @@
                                 <a href="#flatMapError">flatMapError</a>
                             </li>
                             <li>
-                                <a href="#getUnsafeFailure">getUnsafeFailure</a>
+                                <a href="#getUnsafeFailures">getUnsafeFailures</a>
                             </li>
                             <li>
                                 <a href="#getUnsafeSuccess">getUnsafeSuccess</a>
@@ -156,7 +156,7 @@
                             </li>
                             <li>
                                     <span class="modifier">Abstract</span>
-                                <a href="#getUnsafeFailure">getUnsafeFailure</a>
+                                <a href="#getUnsafeFailures">getUnsafeFailures</a>
                             </li>
                             <li>
                                     <span class="modifier">Abstract</span>
@@ -530,7 +530,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>flatMapError(f: (r: Err) => void)</code>
+<code>flatMapError(f: (r: Err[]) => void)</code>
                     </td>
                 </tr>
 
@@ -596,18 +596,18 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="getUnsafeFailure"></a>
+                        <a name="getUnsafeFailures"></a>
                         <span class="name">
                             <b>
-                            getUnsafeFailure
+                            getUnsafeFailures
                             </b>
-                            <a href="#getUnsafeFailure"><span class="icon ion-ios-link"></span></a>
+                            <a href="#getUnsafeFailures"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>getUnsafeFailure()</code>
+<code>getUnsafeFailures()</code>
                     </td>
                 </tr>
 
@@ -623,7 +623,7 @@
                     <td class="col-md-4">
 
                             <div class="io-description">
-                                <b>Returns : </b>    <code>Err</code>
+                                <b>Returns : </b>    <code>Err[]</code>
 
                             </div>
                     </td>
@@ -1192,7 +1192,7 @@
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>flatMapError(f: (r: Err) => void)</code>
+                        <code>flatMapError(f: (r: Err[]) => void)</code>
                     </td>
                 </tr>
 
@@ -1264,20 +1264,20 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="getUnsafeFailure"></a>
+                        <a name="getUnsafeFailures"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Abstract</span>
-                            getUnsafeFailure
+                            getUnsafeFailures
                             </b>
-                            <a href="#getUnsafeFailure"><span class="icon ion-ios-link"></span></a>
+                            <a href="#getUnsafeFailures"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>getUnsafeFailure()</code>
+                        <code>getUnsafeFailures()</code>
                     </td>
                 </tr>
 
@@ -1299,7 +1299,7 @@
                     <td class="col-md-4">
 
                             <div class="io-description">
-                                <b>Returns : </b>    <code>Err</code>
+                                <b>Returns : </b>    <code>Err[]</code>
 
                             </div>
                     </td>
@@ -1853,7 +1853,7 @@
   }): O
 
   abstract flatMap&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; DecodeResult&lt;In, Out2, Err&gt;): DecodeResult&lt;In, Out2, Err&gt;
-  abstract flatMapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt;
+  abstract flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt;
 
   abstract map&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; Out2): DecodeResult&lt;In, Out2, Err&gt;
   abstract mapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; Err2): DecodeResult&lt;In, Out, Err2&gt;
@@ -1863,7 +1863,7 @@
   abstract isFailure(): this is DecodeFailure&lt;In, Out, Err&gt;
 
   abstract getUnsafeSuccess(): Out
-  abstract getUnsafeFailure(): Err
+  abstract getUnsafeFailures(): Err[]
 
   abstract toString(): string
 }
@@ -1884,7 +1884,7 @@ export class DecodeSuccess&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   map&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; Out2): DecodeResult&lt;In, Out2, Err&gt; {
     return this.flatMap(v &#x3D;&gt; new DecodeSuccess(this.input, f(v)))
   }
-  flatMapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
+  flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
     return new DecodeSuccess(this.input, this.value)
   }
   mapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; Err2): DecodeResult&lt;In, Out, Err2&gt; {
@@ -1904,8 +1904,8 @@ export class DecodeSuccess&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   getUnsafeSuccess(): Out {
     return this.value
   }
-  getUnsafeFailure(): Err {
-    throw new Error(&quot;can&#x27;t get failure from success&quot;)
+  getUnsafeFailures(): Err[] {
+    throw new Error(&quot;can&#x27;t get failures from success&quot;)
   }
 
   toString(): string {
@@ -1915,8 +1915,10 @@ export class DecodeSuccess&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
 
 export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, Out, Err&gt; {
   readonly kind &#x3D; &#x27;decode-failure&#x27;
-  constructor(input: In, readonly failure: Err) {
+  readonly failures: Err[]
+  constructor(input: In, ...failures: Err[]) {
     super(input)
+    this.failures &#x3D; failures
   }
 
   match&lt;O&gt;(o: {
@@ -1927,19 +1929,19 @@ export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   }
 
   flatMap&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; DecodeResult&lt;In, Out2, Err&gt;): DecodeResult&lt;In, Out2, Err&gt; {
-    return new DecodeFailure(this.input, this.failure)
+    return new DecodeFailure(this.input, ...this.failures)
   }
   map&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; Out2): DecodeResult&lt;In, Out2, Err&gt; {
-    return new DecodeFailure(this.input, this.failure)
+    return new DecodeFailure(this.input, ...this.failures)
   }
-  flatMapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
-    return f(this.failure)
+  flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
+    return f(this.failures)
   }
   mapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; Err2): DecodeResult&lt;In, Out, Err2&gt; {
-    return this.flatMapError(e &#x3D;&gt; new DecodeFailure(this.input, f(e)))
+    return failure(this.input, ...this.failures.map(f))
   }
   mapInput&lt;In2&gt;(f: (i: In) &#x3D;&gt; In2): DecodeResult&lt;In2, Out, Err&gt; {
-    return new DecodeFailure(f(this.input), this.failure)
+    return failure(f(this.input), ...this.failures)
   }
 
   isSuccess(): this is DecodeSuccess&lt;In, Out, Err&gt; {
@@ -1951,12 +1953,12 @@ export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   getUnsafeSuccess(): Out {
     throw new Error(&quot;can&#x27;t get success from failure&quot;)
   }
-  getUnsafeFailure(): Err {
-    return this.failure
+  getUnsafeFailures(): Err[] {
+    return this.failures
   }
 
   toString(): string {
-    return &#x60;DecodeFailure&lt;${JSON.stringify(this.failure)}&gt;: ${JSON.stringify(this.input)}&#x60;
+    return &#x60;DecodeFailure&lt;${JSON.stringify(this.failures)}&gt;: ${JSON.stringify(this.input)}&#x60;
   }
 }
 
@@ -1964,8 +1966,8 @@ export type DecodeResult&lt;In, Out, Err&gt; &#x3D; DecodeSuccess&lt;In, Out, Er
 
 export const success &#x3D; &lt;In, Out, Err&gt;(input: In, result: Out): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
   new DecodeSuccess(input, result)
-export const failure &#x3D; &lt;In, Out, Err&gt;(input: In, failure: Err): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
-  new DecodeFailure(input, failure)
+export const failure &#x3D; &lt;In, Out, Err&gt;(input: In, ...failures: Err[]): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
+  new DecodeFailure(input, ...failures)
 </code></pre>
     </div>
 </div>

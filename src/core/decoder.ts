@@ -133,10 +133,8 @@ export class Decoder<In, Out, Err> {
   flatMapError<Err2>(fun: (res: Err[]) => Decoder<In, Out, Err2>): Decoder<In, Out, Err2> {
     return Decoder.of<In, Out, Err2>((input: In) =>
       this.run(input).match<DecodeResult<In, Out, Err2>>({
-        failure:
-          (f: DecodeFailure<In, Out, Err>) => fun(f.failures).run(input),
-        success:
-          (s: DecodeSuccess<In, Out, Err>) => success<In, Out, Err2>(s.input, s.value)
+        failure: (f: DecodeFailure<In, Out, Err>) => fun(f.failures).run(input),
+        success: (s: DecodeSuccess<In, Out, Err>) => success<In, Out, Err2>(s.input, s.value)
       })
     )
   }
@@ -147,10 +145,8 @@ export class Decoder<In, Out, Err> {
   mapError<Err2>(fun: (e: Err) => Err2): Decoder<In, Out, Err2> {
     return Decoder.of<In, Out, Err2>((input: In) =>
       this.run(input).match<DecodeResult<In, Out, Err2>>({
-        failure:
-          (f: DecodeFailure<In, Out, Err>) => failure<In, Out, Err2>(f.input, ...f.failures.map(fun)),
-        success:
-          s => success<In, Out, Err2>(s.input, s.value)
+        failure: (f: DecodeFailure<In, Out, Err>) => failure<In, Out, Err2>(f.input, ...f.failures.map(fun)),
+        success: s => success<In, Out, Err2>(s.input, s.value)
       })
     )
   }
@@ -381,9 +377,7 @@ export const sequence = <In, U extends any[], Err>(
  *
  * `combineErrors` works the same as in {@link or}.
  */
-export const oneOf = <In, U extends any[], Err>(
-  ...decoders: { [P in keyof U]: Decoder<In, U[P], Err> }
-) => {
+export const oneOf = <In, U extends any[], Err>(...decoders: { [P in keyof U]: Decoder<In, U[P], Err> }) => {
   if (decoders.length === 0) throw new Error('alt needs to be called with at least one argumenr')
   return Decoder.of<In, TupleToUnion<U>, Err>((input: In) => {
     let failures: Err[] = []
@@ -403,8 +397,7 @@ export const oneOf = <In, U extends any[], Err>(
  * Returns a decoder that always succeeds with the given result. The decoder
  * doesn't consume anything from the input.
  */
-export const succeed = <In, Out, Err>(result: Out) =>
-  Decoder.of<In, Out, Err>(input => success(input, result))
+export const succeed = <In, Out, Err>(result: Out) => Decoder.of<In, Out, Err>(input => success(input, result))
 
 /**
  * Returns a decoder that always fails with the given error.

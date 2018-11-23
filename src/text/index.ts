@@ -263,9 +263,8 @@ export const takeCharBetween = (f: (c: string) => boolean, min: number, max: num
 
 export const failureToString = <Out>(err: DecodeFailure<TextInput, Out, DecodeError>): string => {
   const { failures, input } = err
-  const msg = failures.length === 1 ?
-    failures[0].toString() :
-    `one of:\n * ${failures.map(v => v.toString()).join('\n * ')}\n`
+  const msg =
+    failures.length === 1 ? failures[0].toString() : `one of:\n * ${failures.map(v => v.toString()).join('\n * ')}\n`
   const length = Math.min(25, Math.max(msg.length, 10), input.input.length - input.index)
   const prefix = input.index === 0 ? '' : '…'
   const suffix = input.index < input.input.length - 1 ? '…' : ''

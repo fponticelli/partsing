@@ -122,15 +122,14 @@ describe('value_decoder', () => {
   it('safeIntegerValue', () => {
     expect(decodeValue(safeIntegerValue)('abc').getUnsafeFailures()).toBeDefined()
     expect(decodeValue(safeIntegerValue)(1.1).getUnsafeFailures()).toEqual(['safe integer but got 1.1'])
-    expect(decodeValue(safeIntegerValue)(12345678901234567890).getUnsafeFailures()).toEqual(
-      ['safe integer but got 12345678901234567000']
-    )
+    expect(decodeValue(safeIntegerValue)(12345678901234567890).getUnsafeFailures()).toEqual([
+      'safe integer but got 12345678901234567000'
+    ])
     expect(decodeValue(safeIntegerValue)(1).getUnsafeSuccess()).toEqual(1)
   })
 
   it('finiteNumber', () => {
-    expect(decodeValue(finiteNumberValue)(1 / 0).getUnsafeFailures())
-      .toEqual(['finite number but got Infinity'])
+    expect(decodeValue(finiteNumberValue)(1 / 0).getUnsafeFailures()).toEqual(['finite number but got Infinity'])
     expect(decodeValue(finiteNumberValue)(1.1).getUnsafeSuccess()).toEqual(1.1)
   })
 

@@ -273,7 +273,7 @@ export class ExpectedNoneOf {
   readonly kind: &#x27;no-char-of-error&#x27; &#x3D; &#x27;no-char-of-error&#x27;
   constructor(readonly entity: Entity, readonly values: string[]) {}
   toString() {
-    return &#x60;expected no ${pluralize(this.entity, 1)} like ${concatOr(this.values)}&#x60;
+    return &#x60;no ${pluralize(this.entity, 1)} like ${concatOr(this.values)}&#x60;
   }
 }
 </code></pre>

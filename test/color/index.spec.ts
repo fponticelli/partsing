@@ -113,9 +113,7 @@ const hslValue = objectValue(
   []
 ).map(v => new HSL(v.h, v.s, v.l))
 
-const colorValueDecoder = decodeValue(
-  oneOf<ValueInput, Color[], DecodeError>(rgbValue, greyValue, hslValue)
-)
+const colorValueDecoder = decodeValue(oneOf<ValueInput, Color[], DecodeError>(rgbValue, greyValue, hslValue))
 
 describe('value color decoder', () => {
   it('decodes color from value', () => {
