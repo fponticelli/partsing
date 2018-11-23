@@ -14,13 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DecodeErrorBase } from './decode_error_base'
-
-export class UnexpectedEoi extends DecodeErrorBase {
+export class UnexpectedEoi {
   readonly kind: 'unexpected-eoi' = 'unexpected-eoi'
-  constructor() {
-    super()
-  }
   toString() {
     return `unexpected end of input`
   }

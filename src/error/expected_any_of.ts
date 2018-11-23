@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DecodeErrorBase } from './decode_error_base'
 import { Entity, pluralize } from './entity'
 
 export const concatOr = (values: string[]) => {
@@ -30,11 +29,9 @@ export const concatOr = (values: string[]) => {
   }
 }
 
-export class ExpectedAnyOf extends DecodeErrorBase {
+export class ExpectedAnyOf {
   readonly kind: 'expected-any-of' = 'expected-any-of'
-  constructor(readonly entity: Entity, readonly values: string[]) {
-    super()
-  }
+  constructor(readonly entity: Entity, readonly values: string[]) {}
   toString() {
     return `expected any ${pluralize(this.entity, 1)} in ${concatOr(this.values)}`
   }

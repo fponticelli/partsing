@@ -15,13 +15,10 @@ limitations under the License.
 */
 
 import { DecodeError } from './'
-import { DecodeErrorBase } from './decode_error_base'
 
-export class CombineErrors extends DecodeErrorBase {
+export class CombineErrors {
   readonly kind: 'combine-errors' = 'combine-errors'
-  constructor(readonly errors: DecodeError[]) {
-    super()
-  }
+  constructor(readonly errors: DecodeError[]) {}
   toString() {
     const errors: string = this.errors
       .map(e => e.toString())
