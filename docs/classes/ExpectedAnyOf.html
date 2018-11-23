@@ -63,6 +63,14 @@
             <code>src/error/expected_any_of.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Error for any <a href="../miscellaneous/enumerations.html#Entity">Entity</a> that should match at least one of the conditions
+described in the <code>descriptions</code> array.</p>
+
+            </p>
 
 
 
@@ -116,12 +124,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(entity: <a href="../undefineds/Entity.html">Entity</a>, values: string[])</code>
+<code>constructor(entity: <a href="../miscellaneous/Entity.html">Entity</a>, descriptions: string[])</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/error/expected_any_of.ts:33</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/error/expected_any_of.ts:41</a></div>
                             </td>
                         </tr>
 
@@ -151,7 +159,7 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>values</td>
+                                                        <td>descriptions</td>
                                                   
                                                         <td>
                                                                     <code>string[]</code>
@@ -203,7 +211,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/error/expected_any_of.ts:33</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/error/expected_any_of.ts:41</a></div>
                             </td>
                         </tr>
 
@@ -239,7 +247,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/error/expected_any_of.ts:35</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/error/expected_any_of.ts:43</a></div>
                             </td>
                         </tr>
 
@@ -266,8 +274,12 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Entity, pluralize } from &#x27;./entity&#x27;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Entity, entityToString } from &#x27;./entity&#x27;
 
+/**
+ * Utility function to generate a comma separate list of values where the last
+ * one is concatenated by &#x60;or&#x60;.
+ */
 export const concatOr &#x3D; (values: string[]) &#x3D;&gt; {
   const length &#x3D; values.length
   if (length &#x3D;&#x3D;&#x3D; 0) {
@@ -281,11 +293,15 @@ export const concatOr &#x3D; (values: string[]) &#x3D;&gt; {
   }
 }
 
+/**
+ * Error for any {@link Entity} that should match at least one of the conditions
+ * described in the &#x60;descriptions&#x60; array.
+ */
 export class ExpectedAnyOf {
   readonly kind: &#x27;expected-any-of&#x27; &#x3D; &#x27;expected-any-of&#x27;
-  constructor(readonly entity: Entity, readonly values: string[]) {}
+  constructor(readonly entity: Entity, readonly descriptions: string[]) {}
   toString() {
-    return &#x60;any ${pluralize(this.entity, 1)} in ${concatOr(this.values)}&#x60;
+    return &#x60;any ${entityToString(this.entity, 1)} in ${concatOr(this.descriptions)}&#x60;
   }
 }
 </code></pre>

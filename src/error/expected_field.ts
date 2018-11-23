@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * Error for missing fieeld.
+ */
 export class ExpectedField {
   readonly kind: 'expected-field' = 'expected-field'
   constructor(readonly field: string) {}

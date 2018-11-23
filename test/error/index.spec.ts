@@ -26,27 +26,28 @@ import {
   ExpectedOnce,
   ExpectedWithinRange,
   PatternMismatch,
-  pluralize,
+  entityToString,
   UnexpectedEoi
 } from '../../src/error'
 
 describe('errors', () => {
   it('entity pluralize', () => {
-    expect(pluralize(Entity.CHARACTER, 1)).toEqual('character')
-    expect(pluralize(Entity.CHARACTER, 2)).toEqual('characters')
-    expect(pluralize(Entity.PREDICATE, 1)).toEqual('predicate')
-    expect(pluralize(Entity.PREDICATE, 2)).toEqual('predicates')
-    expect(pluralize(Entity.LETTER, 1)).toEqual('letter')
-    expect(pluralize(Entity.LETTER, 2)).toEqual('letters')
-    expect(pluralize(Entity.UPPERCASE_LETTER, 1)).toEqual('uppercase letter')
-    expect(pluralize(Entity.UPPERCASE_LETTER, 2)).toEqual('uppercase letters')
-    expect(pluralize(Entity.LOWER_CASE_LETTER, 1)).toEqual('lowercase letter')
-    expect(pluralize(Entity.LOWER_CASE_LETTER, 2)).toEqual('lowercase letters')
-    expect(pluralize(Entity.DIGIT, 1)).toEqual('digit')
-    expect(pluralize(Entity.DIGIT, 2)).toEqual('digits')
-    expect(pluralize(Entity.WHITESPACE, 1)).toEqual('whitespace')
-    expect(pluralize(Entity.WHITESPACE, 2)).toEqual('whitespaces')
-    expect(() => pluralize(1 as never, 2)).toThrow()
+    expect(entityToString(Entity.CHARACTER, 1)).toEqual('character')
+    expect(entityToString(Entity.CHARACTER, 2)).toEqual('characters')
+    expect(entityToString(Entity.PREDICATE, 1)).toEqual('predicate')
+    expect(entityToString(Entity.PREDICATE, 2)).toEqual('predicates')
+    expect(entityToString(Entity.LETTER, 1)).toEqual('letter')
+    expect(entityToString(Entity.LETTER, 2)).toEqual('letters')
+    expect(entityToString(Entity.UPPERCASE_LETTER, 1)).toEqual('uppercase letter')
+    expect(entityToString(Entity.UPPERCASE_LETTER, 2)).toEqual('uppercase letters')
+    expect(entityToString(Entity.LOWER_CASE_LETTER, 1)).toEqual('lowercase letter')
+    expect(entityToString(Entity.LOWER_CASE_LETTER, 2)).toEqual('lowercase letters')
+    expect(entityToString(Entity.DIGIT, 1)).toEqual('digit')
+    expect(entityToString(Entity.DIGIT, 2)).toEqual('digits')
+    expect(entityToString(Entity.WHITESPACE, 1)).toEqual('whitespace')
+    expect(entityToString(Entity.WHITESPACE, 2)).toEqual('whitespaces')
+    expect(() => entityToString(true as never, 1)).toThrow()
+    expect(() => entityToString(true as never, 2)).toThrow()
   })
 
   it('error messages', () => {

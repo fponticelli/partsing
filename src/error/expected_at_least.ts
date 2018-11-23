@@ -14,12 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Entity, pluralize } from './entity'
+import { Entity, entityToString } from './entity'
 
+/**
+ * Error for an {@link Entity} that was not repeated at least `min` times.
+ */
 export class ExpectedAtLeast {
   readonly kind: 'expected-at-least' = 'expected-at-least'
   constructor(readonly min: number, readonly entity: Entity) {}
   toString() {
-    return `at least ${this.min} ${pluralize(this.entity, this.min)}`
+    return `at least ${this.min} ${entityToString(this.entity, this.min)}`
   }
 }

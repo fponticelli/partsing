@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * Expected error for a decoder that wasn't able to match `pattern`.
+ */
 export class PatternMismatch {
   readonly kind: 'pattern-mismatch' = 'pattern-mismatch'
   constructor(readonly pattern: string) {}

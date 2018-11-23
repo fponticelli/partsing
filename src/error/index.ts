@@ -54,7 +54,7 @@ export const DecodeError = {
   unexpectedEoi: new UnexpectedEoi() as DecodeError
 }
 
-export { Entity, pluralize } from './entity'
+export { Entity, entityToString } from './entity'
 export { CustomError } from './custom_error'
 export { ExpectedAnyOf, concatOr } from './expected_any_of'
 export { ExpectedAtLeast } from './expected_at_least'

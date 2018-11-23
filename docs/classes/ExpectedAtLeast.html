@@ -63,6 +63,13 @@
             <code>src/error/expected_at_least.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Error for an <a href="../miscellaneous/enumerations.html#Entity">Entity</a> that was not repeated at least <code>min</code> times.</p>
+
+            </p>
 
 
 
@@ -116,12 +123,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(min: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, entity: <a href="../undefineds/Entity.html">Entity</a>)</code>
+<code>constructor(min: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, entity: <a href="../miscellaneous/Entity.html">Entity</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/error/expected_at_least.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/error/expected_at_least.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -203,7 +210,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/error/expected_at_least.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/error/expected_at_least.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -239,7 +246,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/error/expected_at_least.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/error/expected_at_least.ts:25</a></div>
                             </td>
                         </tr>
 
@@ -266,13 +273,16 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Entity, pluralize } from &#x27;./entity&#x27;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Entity, entityToString } from &#x27;./entity&#x27;
 
+/**
+ * Error for an {@link Entity} that was not repeated at least &#x60;min&#x60; times.
+ */
 export class ExpectedAtLeast {
   readonly kind: &#x27;expected-at-least&#x27; &#x3D; &#x27;expected-at-least&#x27;
   constructor(readonly min: number, readonly entity: Entity) {}
   toString() {
-    return &#x60;at least ${this.min} ${pluralize(this.entity, this.min)}&#x60;
+    return &#x60;at least ${this.min} ${entityToString(this.entity, this.min)}&#x60;
   }
 }
 </code></pre>

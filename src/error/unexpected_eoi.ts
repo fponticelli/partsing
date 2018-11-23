@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * Error for a decoder that is not expecting an end of input.
+ */
 export class UnexpectedEoi {
   readonly kind: 'unexpected-eoi' = 'unexpected-eoi'
   toString() {

@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * Error for an exact match that failed. The expectation is described as a
+ * string.
+ */
 export class ExpectedMatch {
   readonly kind: 'expected-match' = 'expected-match'
   constructor(readonly value: string) {}
