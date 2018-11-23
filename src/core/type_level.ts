@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * @module core
- */
-
 export type TupleToUnion<T extends any[]> = T[number] | never
 
 export type Output<T extends { _O: any }> = T['_O']

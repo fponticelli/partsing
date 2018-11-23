@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * @module value
- */
-
 import { Decoder, Decoding } from '../core/decoder'
 import { DecodeFailure, DecodeResult, success, failure } from '../core/result'
 import { MarkOptionalFields } from '../core/type_level'

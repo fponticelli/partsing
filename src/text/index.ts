@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * @module text
- */
-
 import { Decoder, Decoding } from '../core/decoder'
 import { DecodeFailure, DecodeResult, DecodeSuccess, success, failure } from '../core/result'
 import { DecodeError, Entity } from '../error'

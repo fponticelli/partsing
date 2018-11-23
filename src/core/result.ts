@@ -15,10 +15,6 @@ limitations under the License.
 */
 
 /**
- * @module core
- */
-
-/**
  * DecodeResult is a union type that has two possible constructors
  * {@link DecodeSuccess} and {@link DecodeFailure}.
  */
