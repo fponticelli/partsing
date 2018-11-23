@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * Error for expected end of input.
+ */
 export class ExpectedEoi {
   readonly kind: 'expected-eot' = 'expected-eot'
   toString() {

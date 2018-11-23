@@ -14,13 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Entity, pluralize } from './entity'
+import { Entity, entityToString } from './entity'
 import { concatOr } from './expected_any_of'
 
+/**
+ * Error for a decoder that is expected to fail decoding an {@link Entity} for
+ * any of the values as they are described in the `descriptions` array.
+ */
 export class ExpectedNoneOf {
-  readonly kind: 'no-char-of-error' = 'no-char-of-error'
-  constructor(readonly entity: Entity, readonly values: string[]) {}
+  readonly kind: 'none-of-error' = 'none-of-error'
+  constructor(readonly entity: Entity, readonly descriptions: string[]) {}
   toString() {
-    return `expected no ${pluralize(this.entity, 1)} like ${concatOr(this.values)}`
+    return `expected no ${entityToString(this.entity, 1)} like ${concatOr(this.descriptions)}`
   }
 }

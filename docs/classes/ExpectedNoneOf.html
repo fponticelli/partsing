@@ -63,6 +63,14 @@
             <code>src/error/expected_none_of.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Error for a decoder that is expected to fail decoding an <a href="../miscellaneous/enumerations.html#Entity">Entity</a> for
+any of the values as they are described in the <code>descriptions</code> array.</p>
+
+            </p>
 
 
 
@@ -116,12 +124,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(entity: <a href="../undefineds/Entity.html">Entity</a>, values: string[])</code>
+<code>constructor(entity: <a href="../miscellaneous/Entity.html">Entity</a>, descriptions: string[])</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/error/expected_none_of.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/error/expected_none_of.ts:25</a></div>
                             </td>
                         </tr>
 
@@ -151,7 +159,7 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>values</td>
+                                                        <td>descriptions</td>
                                                   
                                                         <td>
                                                                     <code>string[]</code>
@@ -198,12 +206,12 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&#x27;no-char-of-error&#x27;</code>
+                            <i>Default value : </i><code>&#x27;none-of-error&#x27;</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/error/expected_none_of.ts:21</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/error/expected_none_of.ts:25</a></div>
                             </td>
                         </tr>
 
@@ -239,7 +247,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/error/expected_none_of.ts:23</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/error/expected_none_of.ts:27</a></div>
                             </td>
                         </tr>
 
@@ -266,14 +274,18 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Entity, pluralize } from &#x27;./entity&#x27;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Entity, entityToString } from &#x27;./entity&#x27;
 import { concatOr } from &#x27;./expected_any_of&#x27;
 
+/**
+ * Error for a decoder that is expected to fail decoding an {@link Entity} for
+ * any of the values as they are described in the &#x60;descriptions&#x60; array.
+ */
 export class ExpectedNoneOf {
-  readonly kind: &#x27;no-char-of-error&#x27; &#x3D; &#x27;no-char-of-error&#x27;
-  constructor(readonly entity: Entity, readonly values: string[]) {}
+  readonly kind: &#x27;none-of-error&#x27; &#x3D; &#x27;none-of-error&#x27;
+  constructor(readonly entity: Entity, readonly descriptions: string[]) {}
   toString() {
-    return &#x60;expected no ${pluralize(this.entity, 1)} like ${concatOr(this.values)}&#x60;
+    return &#x60;expected no ${entityToString(this.entity, 1)} like ${concatOr(this.descriptions)}&#x60;
   }
 }
 </code></pre>

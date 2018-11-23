@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * Error for a decoder that should have captured a value between twp values
+ * as described in `min` and `max`.
+ */
 export class ExpectedWithinRange {
   readonly kind: 'expected-within-range' = 'expected-within-range'
   constructor(readonly min: string, readonly max: string) {}

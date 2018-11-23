@@ -14,12 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Entity, pluralize } from './entity'
+import { Entity, entityToString } from './entity'
 
+/**
+ * Error for an {@link Entity} that was expected to be captured once by a
+ * decoder.
+ */
 export class ExpectedOnce {
   readonly kind: 'expected-once' = 'expected-once'
   constructor(readonly entity: Entity) {}
   toString() {
-    return `expected a ${pluralize(this.entity, 1)}`
+    return `expected a ${entityToString(this.entity, 1)}`
   }
 }

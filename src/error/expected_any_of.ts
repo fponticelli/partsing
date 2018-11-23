@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Entity, pluralize } from './entity'
+import { Entity, entityToString } from './entity'
 
+/**
+ * Utility function to generate a comma separate list of values where the last
+ * one is concatenated by `or`.
+ */
 export const concatOr = (values: string[]) => {
   const length = values.length
   if (length === 0) {
@@ -29,10 +33,14 @@ export const concatOr = (values: string[]) => {
   }
 }
 
+/**
+ * Error for any {@link Entity} that should match at least one of the conditions
+ * described in the `descriptions` array.
+ */
 export class ExpectedAnyOf {
   readonly kind: 'expected-any-of' = 'expected-any-of'
-  constructor(readonly entity: Entity, readonly values: string[]) {}
+  constructor(readonly entity: Entity, readonly descriptions: string[]) {}
   toString() {
-    return `expected any ${pluralize(this.entity, 1)} in ${concatOr(this.values)}`
+    return `expected any ${entityToString(this.entity, 1)} in ${concatOr(this.descriptions)}`
   }
 }

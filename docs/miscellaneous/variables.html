@@ -90,6 +90,9 @@
                             <a href="#digits" title="src/text/index.ts"><b>digits</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
+                            <a href="#entityToString" title="src/error/entity.ts"><b>entityToString</b>&nbsp;&nbsp;&nbsp;(src/.../entity.ts)</a>
+                        </li>
+                        <li>
                             <a href="#eoi" title="src/text/index.ts"><b>eoi</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
@@ -99,10 +102,10 @@
                             <a href="#failure" title="src/core/result.ts"><b>failure</b>&nbsp;&nbsp;&nbsp;(src/.../result.ts)</a>
                         </li>
                         <li>
-                            <a href="#failureToString" title="src/text/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#failureToString" title="src/value/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#failureToString" title="src/value/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#failureToString" title="src/text/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#finiteNumberValue" title="src/value/index.ts"><b>finiteNumberValue</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -132,13 +135,10 @@
                             <a href="#lowerCaseLetters" title="src/text/index.ts"><b>lowerCaseLetters</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#make" title="src/text/index.ts"><b>make</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
-                        </li>
-                        <li>
                             <a href="#make" title="src/value/index.ts"><b>make</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#" title="src/text/index.ts"><b></b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#make" title="src/text/index.ts"><b>make</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#match" title="src/text/index.ts"><b>match</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -177,7 +177,7 @@
                             <a href="#pathToString" title="src/value/index.ts"><b>pathToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#pluralize" title="src/error/entity.ts"><b>pluralize</b>&nbsp;&nbsp;&nbsp;(src/.../entity.ts)</a>
+                            <a href="#" title="src/text/index.ts"><b></b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#regexp" title="src/text/index.ts"><b>regexp</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -1403,69 +1403,6 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name=""></a>
-                        <span class="name">
-                            <b>
-                            
-                            </b>
-                            <a href="#"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <code>:     <code></code>
-</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>(() &#x3D;&gt; {
-  const testSticky &#x3D; (() &#x3D;&gt; {
-    try {
-      return /test/y.sticky
-    } catch (_) {
-      return false
-    }
-  })()
-  if (testSticky) {
-    return {
-      letterPattern: /[a-z]/iy,
-      lettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[a-z]{${min},${max}}&#x60;, &#x27;yi&#x27;),
-      upperCaseLetterPattern: /[A-Z]/y,
-      upperCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[A-Z]{${min},${max}}&#x60;, &#x27;y&#x27;),
-      lowerCaseLetterPattern: /[a-z]/y,
-      lowerCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[a-z]{${min},${max}}&#x60;, &#x27;y&#x27;),
-      digitPattern: /\d/y,
-      digitsPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[0-9]{${min},${max}}&#x60;, &#x27;yi&#x27;),
-      whitespacePattern: /\s+/y,
-      optionalWhitespacePattern: /\s*/y
-    }
-  } else {
-    return {
-      letterPattern: /^[a-z]/i,
-      lettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[a-z]{${min},${max}}&#x60;, &#x27;i&#x27;),
-      upperCaseLetterPattern: /^[A-Z]/,
-      upperCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[A-Z]{${min},${max}}&#x60;, &#x27;&#x27;),
-      lowerCaseLetterPattern: /^[a-z]/,
-      lowerCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[a-z]{${min},${max}}&#x60;, &#x27;&#x27;),
-      digitPattern: /^\d/,
-      digitsPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[0-9]{${min},${max}}&#x60;, &#x27;i&#x27;),
-      whitespacePattern: /^\s+/,
-      optionalWhitespacePattern: /^\s*/
-    }
-  }
-})()</code>
-                        </td>
-                    </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
                         <a name="match"></a>
                         <span class="name">
                             <b>
@@ -1626,6 +1563,69 @@
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>regexp(optionalWhitespacePattern)</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name=""></a>
+                        <span class="name">
+                            <b>
+                            
+                            </b>
+                            <a href="#"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>:     <code></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>(() &#x3D;&gt; {
+  const testSticky &#x3D; (() &#x3D;&gt; {
+    try {
+      return /test/y.sticky
+    } catch (_) {
+      return false
+    }
+  })()
+  if (testSticky) {
+    return {
+      letterPattern: /[a-z]/iy,
+      lettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[a-z]{${min},${max}}&#x60;, &#x27;yi&#x27;),
+      upperCaseLetterPattern: /[A-Z]/y,
+      upperCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[A-Z]{${min},${max}}&#x60;, &#x27;y&#x27;),
+      lowerCaseLetterPattern: /[a-z]/y,
+      lowerCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[a-z]{${min},${max}}&#x60;, &#x27;y&#x27;),
+      digitPattern: /\d/y,
+      digitsPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[0-9]{${min},${max}}&#x60;, &#x27;yi&#x27;),
+      whitespacePattern: /\s+/y,
+      optionalWhitespacePattern: /\s*/y
+    }
+  } else {
+    return {
+      letterPattern: /^[a-z]/i,
+      lettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[a-z]{${min},${max}}&#x60;, &#x27;i&#x27;),
+      upperCaseLetterPattern: /^[A-Z]/,
+      upperCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[A-Z]{${min},${max}}&#x60;, &#x27;&#x27;),
+      lowerCaseLetterPattern: /^[a-z]/,
+      lowerCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[a-z]{${min},${max}}&#x60;, &#x27;&#x27;),
+      digitPattern: /^\d/,
+      digitsPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[0-9]{${min},${max}}&#x60;, &#x27;i&#x27;),
+      whitespacePattern: /^\s+/,
+      optionalWhitespacePattern: /^\s*/
+    }
+  }
+})()</code>
                         </td>
                     </tr>
 
@@ -2004,6 +2004,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Utility function to generate a comma separate list of values where the last
+one is concatenated by <code>or</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -2054,6 +2061,83 @@
                         </td>
                     </tr>
 
+
+            </tbody>
+        </table>
+</section>
+    <h3>src/error/entity.ts</h3>
+    <section>
+    <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entityToString"></a>
+                        <span class="name">
+                            <b>
+                            entityToString
+                            </b>
+                            <a href="#entityToString"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>entityToString:     <code></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>(entity: Entity, qt: number) &#x3D;&gt; {
+  if (qt &#x3D;&#x3D;&#x3D; 1) {
+    switch (entity) {
+      case Entity.CHARACTER:
+        return &#x27;character&#x27;
+      case Entity.PREDICATE:
+        return &#x27;predicate&#x27;
+      case Entity.LETTER:
+        return &#x27;letter&#x27;
+      case Entity.UPPERCASE_LETTER:
+        return &#x27;uppercase letter&#x27;
+      case Entity.LOWER_CASE_LETTER:
+        return &#x27;lowercase letter&#x27;
+      case Entity.DIGIT:
+        return &#x27;digit&#x27;
+      case Entity.WHITESPACE:
+        return &#x27;whitespace&#x27;
+      default:
+        throw new Error(&#x27;unreacheable code&#x27;)
+    }
+  } else {
+    switch (entity) {
+      case Entity.CHARACTER:
+        return &#x27;characters&#x27;
+      case Entity.PREDICATE:
+        return &#x27;predicates&#x27;
+      case Entity.LETTER:
+        return &#x27;letters&#x27;
+      case Entity.UPPERCASE_LETTER:
+        return &#x27;uppercase letters&#x27;
+      case Entity.LOWER_CASE_LETTER:
+        return &#x27;lowercase letters&#x27;
+      case Entity.DIGIT:
+        return &#x27;digits&#x27;
+      case Entity.WHITESPACE:
+        return &#x27;whitespaces&#x27;
+      default:
+        throw new Error(&#x27;unreacheable code&#x27;)
+    }
+  }
+}</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Make <code>Entity</code> into english words accounting for pluralization by using <code>qt</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -2338,57 +2422,6 @@ doesn&#39;t consume anything from the input.</p>
                         <td class="col-md-4">
                             <i>Default value : </i><code>&lt;In, Out, Err&gt;(input: In, result: Out): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
   new DecodeSuccess(input, result)</code>
-                        </td>
-                    </tr>
-
-
-            </tbody>
-        </table>
-</section>
-    <h3>src/error/entity.ts</h3>
-    <section>
-    <h3></h3>        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="pluralize"></a>
-                        <span class="name">
-                            <b>
-                            pluralize
-                            </b>
-                            <a href="#pluralize"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <code>pluralize:     <code></code>
-</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>(entity: Entity, qt: number) &#x3D;&gt; {
-  if (qt &#x3D;&#x3D;&#x3D; 1) return String(entity)
-  switch (entity) {
-    case Entity.CHARACTER:
-      return &#x27;characters&#x27;
-    case Entity.PREDICATE:
-      return &#x27;predicates&#x27;
-    case Entity.LETTER:
-      return &#x27;letters&#x27;
-    case Entity.UPPERCASE_LETTER:
-      return &#x27;uppercase letters&#x27;
-    case Entity.LOWER_CASE_LETTER:
-      return &#x27;lowercase letters&#x27;
-    case Entity.DIGIT:
-      return &#x27;digits&#x27;
-    case Entity.WHITESPACE:
-      return &#x27;whitespaces&#x27;
-    default:
-      throw new Error(&#x27;unreacheable code&#x27;)
-  }
-}</code>
                         </td>
                     </tr>
 
