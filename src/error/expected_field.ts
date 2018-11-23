@@ -25,7 +25,7 @@ export class ExpectedField {
   constructor(readonly field: string) {}
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return `expected field "${this.field}"`

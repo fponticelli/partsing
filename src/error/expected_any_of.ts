@@ -45,7 +45,7 @@ export class ExpectedAnyOf {
   constructor(readonly entity: Entity, readonly descriptions: string[]) {}
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return `expected any ${entityToString(this.entity, 1)} in ${concatOr(this.descriptions)}`

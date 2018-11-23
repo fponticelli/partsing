@@ -27,7 +27,7 @@ export class ExpectedAtLeast {
   constructor(readonly min: number, readonly entity: Entity) {}
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return `expected at least ${this.min} ${entityToString(this.entity, this.min)}`

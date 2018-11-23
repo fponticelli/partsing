@@ -26,7 +26,7 @@ export class ExpectedMatch {
   constructor(readonly value: string) {}
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return `expected ${this.value}`

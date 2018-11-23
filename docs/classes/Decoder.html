@@ -500,7 +500,7 @@ on the result of a previous step.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="132" class="link-to-prism">src/core/decoder.ts:132</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">src/core/decoder.ts:133</a></div>
                             </td>
                         </tr>
 
@@ -580,7 +580,7 @@ from an error.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="173" class="link-to-prism">src/core/decoder.ts:173</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="174" class="link-to-prism">src/core/decoder.ts:174</a></div>
                             </td>
                         </tr>
 
@@ -660,7 +660,7 @@ them as tuple of two if they are both successful.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">src/core/decoder.ts:102</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="103" class="link-to-prism">src/core/decoder.ts:103</a></div>
                             </td>
                         </tr>
 
@@ -678,7 +678,9 @@ them as tuple of two if they are both successful.</p>
                             <div class="io-description"><p>Convert and/or transform the result of a decoding into a different value.</p>
 <p>The applied function argument is executed exclusively on a succesful result
 of decoding.</p>
-</div>
+<p><em>example</em></p>
+<div><pre class="line-numbers"><code class="language-ts">   * regexp(/\d{4}-\d{2}-\d{2}/y).map(Date.parse)
+   *</code></pre></div></div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -707,10 +709,6 @@ of decoding.</p>
                                     </table>
                             </div>
                             <div>
-                                    <b>Example :</b>
-                                        <div>
-                                            <pre class="line-numbers"><code class="language-html">regexp(/\d{4}-\d{2}-\d{2}/y).map(Date.parse)</code></pre>
-                                        </div>
                             </div>
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, Out2, Err&gt;</a></code>
@@ -745,7 +743,7 @@ of decoding.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="144" class="link-to-prism">src/core/decoder.ts:144</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="145" class="link-to-prism">src/core/decoder.ts:145</a></div>
                             </td>
                         </tr>
 
@@ -907,7 +905,7 @@ of decoding.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="187" class="link-to-prism">src/core/decoder.ts:187</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="188" class="link-to-prism">src/core/decoder.ts:188</a></div>
                             </td>
                         </tr>
 
@@ -1003,7 +1001,7 @@ If not passed, the failure will report the failure of the current decoder.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="157" class="link-to-prism">src/core/decoder.ts:157</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="158" class="link-to-prism">src/core/decoder.ts:158</a></div>
                             </td>
                         </tr>
 
@@ -1083,7 +1081,7 @@ returning only its result.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="332" class="link-to-prism">src/core/decoder.ts:332</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="333" class="link-to-prism">src/core/decoder.ts:333</a></div>
                             </td>
                         </tr>
 
@@ -1092,7 +1090,9 @@ returning only its result.</p>
                     <td class="col-md-4">
                             <div class="io-description"><p>The <code>probe</code> method is used to perform a side-effecty function somewhere in
 the decoder chain. It is mostly used as a debugging mechanism.</p>
-</div>
+<p>  <em>example</em></p>
+<div><pre class="line-numbers"><code class="language-ts">   * decoder.probe(console.log).map(v =&gt; ...)
+   *</code></pre></div></div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -1121,10 +1121,6 @@ the decoder chain. It is mostly used as a debugging mechanism.</p>
                                     </table>
                             </div>
                             <div>
-                                    <b>Example :</b>
-                                        <div>
-                                            <pre class="line-numbers"><code class="language-html">decoder.probe(console.log).map(v -&amp;gt; ...)</code></pre>
-                                        </div>
                             </div>
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, Out, Err&gt;</a></code>
@@ -1159,7 +1155,7 @@ the decoder chain. It is mostly used as a debugging mechanism.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="260" class="link-to-prism">src/core/decoder.ts:260</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="261" class="link-to-prism">src/core/decoder.ts:261</a></div>
                             </td>
                         </tr>
 
@@ -1230,7 +1226,7 @@ the decoder chain. It is mostly used as a debugging mechanism.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="216" class="link-to-prism">src/core/decoder.ts:216</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="217" class="link-to-prism">src/core/decoder.ts:217</a></div>
                             </td>
                         </tr>
 
@@ -1306,7 +1302,7 @@ the decoder chain. It is mostly used as a debugging mechanism.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="270" class="link-to-prism">src/core/decoder.ts:270</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="271" class="link-to-prism">src/core/decoder.ts:271</a></div>
                             </td>
                         </tr>
 
@@ -1379,7 +1375,7 @@ optional.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="236" class="link-to-prism">src/core/decoder.ts:236</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="237" class="link-to-prism">src/core/decoder.ts:237</a></div>
                             </td>
                         </tr>
 
@@ -1462,7 +1458,7 @@ optional.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="288" class="link-to-prism">src/core/decoder.ts:288</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="289" class="link-to-prism">src/core/decoder.ts:289</a></div>
                             </td>
                         </tr>
 
@@ -1542,7 +1538,7 @@ least two values are captured.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="279" class="link-to-prism">src/core/decoder.ts:279</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="280" class="link-to-prism">src/core/decoder.ts:280</a></div>
                             </td>
                         </tr>
 
@@ -1623,7 +1619,7 @@ decoder.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="297" class="link-to-prism">src/core/decoder.ts:297</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="298" class="link-to-prism">src/core/decoder.ts:298</a></div>
                             </td>
                         </tr>
 
@@ -1714,7 +1710,7 @@ decoder.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="165" class="link-to-prism">src/core/decoder.ts:165</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="166" class="link-to-prism">src/core/decoder.ts:166</a></div>
                             </td>
                         </tr>
 
@@ -1794,7 +1790,7 @@ but it ignores its result.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">src/core/decoder.ts:110</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">src/core/decoder.ts:111</a></div>
                             </td>
                         </tr>
 
@@ -1900,7 +1896,7 @@ can be used to use different kind of decoders together.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="311" class="link-to-prism">src/core/decoder.ts:311</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="312" class="link-to-prism">src/core/decoder.ts:312</a></div>
                             </td>
                         </tr>
 
@@ -1985,7 +1981,7 @@ and succeed the decoding if the function returns <code>true</code>.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="351" class="link-to-prism">src/core/decoder.ts:351</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="352" class="link-to-prism">src/core/decoder.ts:352</a></div>
                             </td>
                         </tr>
 
@@ -2064,7 +2060,7 @@ and succeed the decoding if the function returns <code>true</code>.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="344" class="link-to-prism">src/core/decoder.ts:344</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="345" class="link-to-prism">src/core/decoder.ts:345</a></div>
                             </td>
                         </tr>
 
@@ -2214,9 +2210,10 @@ export class Decoder&lt;In, Out, Err&gt; {
    * The applied function argument is executed exclusively on a succesful result
    * of decoding.
    *
-   * @example
-   *
+   * *example*
+   * &#x60;&#x60;&#x60;ts
    * regexp(/\d{4}-\d{2}-\d{2}/y).map(Date.parse)
+   * &#x60;&#x60;&#x60;
    */
   map&lt;Out2&gt;(fun: (res: Out) &#x3D;&gt; Out2): Decoder&lt;In, Out2, Err&gt; {
     return this.flatMap&lt;Out2&gt;(r &#x3D;&gt; Decoder.of&lt;In, Out2, Err&gt;((input: In) &#x3D;&gt; new DecodeSuccess(input, fun(r))))
@@ -2443,10 +2440,10 @@ export class Decoder&lt;In, Out, Err&gt; {
    * The &#x60;probe&#x60; method is used to perform a side-effecty function somewhere in
    * the decoder chain. It is mostly used as a debugging mechanism.
    *
-   * @example
-   *
-   * decoder.probe(console.log).map(v -&gt; ...)
-   *
+   *  *example*
+   * &#x60;&#x60;&#x60;ts
+   * decoder.probe(console.log).map(v &#x3D;&gt; ...)
+   * &#x60;&#x60;&#x60;
    */
   probe(f: (v: DecodeResult&lt;In, Out, Err&gt;) &#x3D;&gt; void): Decoder&lt;In, Out, Err&gt; {
     return Decoder.of((input: In) &#x3D;&gt; {

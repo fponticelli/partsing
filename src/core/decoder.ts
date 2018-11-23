@@ -95,9 +95,10 @@ export class Decoder<In, Out, Err> {
    * The applied function argument is executed exclusively on a succesful result
    * of decoding.
    *
-   * @example
-   *
+   * *example*
+   * ```ts
    * regexp(/\d{4}-\d{2}-\d{2}/y).map(Date.parse)
+   * ```
    */
   map<Out2>(fun: (res: Out) => Out2): Decoder<In, Out2, Err> {
     return this.flatMap<Out2>(r => Decoder.of<In, Out2, Err>((input: In) => new DecodeSuccess(input, fun(r))))
@@ -324,10 +325,10 @@ export class Decoder<In, Out, Err> {
    * The `probe` method is used to perform a side-effecty function somewhere in
    * the decoder chain. It is mostly used as a debugging mechanism.
    *
-   * @example
-   *
-   * decoder.probe(console.log).map(v -> ...)
-   *
+   *  *example*
+   * ```ts
+   * decoder.probe(console.log).map(v => ...)
+   * ```
    */
   probe(f: (v: DecodeResult<In, Out, Err>) => void): Decoder<In, Out, Err> {
     return Decoder.of((input: In) => {

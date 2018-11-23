@@ -260,7 +260,7 @@ any of the values as they are described in the <code>descriptions</code> array.<
 
                 <tr>
                     <td class="col-md-4">
-                            <div class="io-description"><p>Prvide a human readable representation of the value. Mostly for debugging.</p>
+                            <div class="io-description"><p>Provides a human readable representation of the value. Mostly for debugging.</p>
 </div>
 
                             <div class="io-description">
@@ -297,7 +297,7 @@ export class ExpectedNoneOf {
   constructor(readonly entity: Entity, readonly descriptions: string[]) {}
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return &#x60;expected no ${entityToString(this.entity, 1)} like ${concatOr(this.descriptions)}&#x60;

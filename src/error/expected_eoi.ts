@@ -24,7 +24,7 @@ export class ExpectedEoi {
   readonly kind: 'expected-eot' = 'expected-eot'
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return `expected end of input`

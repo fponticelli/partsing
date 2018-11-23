@@ -29,7 +29,7 @@ export class ExpectedNoneOf {
   constructor(readonly entity: Entity, readonly descriptions: string[]) {}
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return `expected no ${entityToString(this.entity, 1)} like ${concatOr(this.descriptions)}`

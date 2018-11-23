@@ -25,7 +25,7 @@ export class CustomError {
   constructor(readonly message: string) {}
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return this.message

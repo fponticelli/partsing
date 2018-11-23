@@ -24,7 +24,7 @@ export class UnexpectedEoi {
   readonly kind: 'unexpected-eoi' = 'unexpected-eoi'
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return `unexpected end of input`

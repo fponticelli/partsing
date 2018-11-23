@@ -25,7 +25,7 @@ export class PatternMismatch {
   constructor(readonly pattern: string) {}
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return `expected to match pattern ${this.pattern}`

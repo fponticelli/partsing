@@ -26,7 +26,7 @@ export class ExpectedWithinRange {
   constructor(readonly min: string, readonly max: string) {}
 
   /**
-   * Prvide a human readable representation of the value. Mostly for debugging.
+   * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
     return `expected between ${this.min} and ${this.max}`
