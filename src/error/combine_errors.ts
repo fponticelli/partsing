@@ -21,6 +21,11 @@ export class CombineErrors {
    * Type discriminator
    */
   readonly kind: 'combine-errors' = 'combine-errors'
+
+  /**
+   * Construct an instance of `CombineErrors`
+   * @param errors the sub-errors to combine.
+   */
   constructor(readonly errors: DecodeError[]) {}
 
   /**

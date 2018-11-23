@@ -22,6 +22,11 @@ export class CustomError {
    * Type discriminator
    */
   readonly kind: 'custom-error' = 'custom-error'
+
+  /**
+   * Construct an instance of `CustomerError`.
+   * @param message The human readable message that justifies the failure.
+   */
   constructor(readonly message: string) {}
 
   /**

@@ -23,6 +23,11 @@ export class ExpectedMatch {
    * Type discriminator
    */
   readonly kind: 'expected-match' = 'expected-match'
+
+  /**
+   * Construct an instance of `ExpectedMatch`
+   * @param value Human readable description of the missed match.
+   */
   constructor(readonly value: string) {}
 
   /**

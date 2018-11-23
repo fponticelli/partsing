@@ -24,6 +24,12 @@ export class ExpectedAtLeast {
    * Type discriminator
    */
   readonly kind: 'expected-at-least' = 'expected-at-least'
+
+  /**
+   * Construct an instance of `ExpectedAtLeast`
+   * @param min minimum (inclusive) number of expected repetitions
+   * @param entity
+   */
   constructor(readonly min: number, readonly entity: Entity) {}
 
   /**

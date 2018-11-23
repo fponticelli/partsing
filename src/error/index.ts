@@ -28,6 +28,9 @@ import { ExpectedWithinRange } from './expected_within_range'
 import { PatternMismatch } from './pattern_mismatch'
 import { UnexpectedEoi } from './unexpected_eoi'
 
+/**
+ * Union type of all possible decoding errors.
+ */
 export type DecodeError =
   | CustomError
   | ExpectedAnyOf
@@ -42,18 +45,58 @@ export type DecodeError =
   | PatternMismatch
   | UnexpectedEoi
 
+/**
+ * Static object that contains utility functions to generate any of the existing
+ * decoding errors typed as `DecodeError` instances.
+ */
 export const DecodeError = {
+  /**
+   * Generate an instance of `{@link CustomError}`.
+   */
   custom: (value: string) => new CustomError(value) as DecodeError,
+  /**
+   * Generate an instance of `{@link ExpectedAnyOf}`.
+   */
   expectedAnyOf: (entity: Entity, values: string[]) => new ExpectedAnyOf(entity, values) as DecodeError,
+  /**
+   * Generate an instance of `{@link ExpectedAtLeast}`.
+   */
   expectedAtLeast: (min: number, entity: Entity) => new ExpectedAtLeast(min, entity) as DecodeError,
+  /**
+   * Generate an instance of `{@link CustomError}`.
+   */
   expectedEot: new ExpectedEoi() as DecodeError,
+  /**
+   * Generate an instance of `{@link ExpectedField}`.
+   */
   expectedField: (field: string) => new ExpectedField(field) as DecodeError,
+  /**
+   * Generate an instance of `{@link ExpectedMatch}`.
+   */
   expectedMatch: (value: string) => new ExpectedMatch(value) as DecodeError,
+  /**
+   * Generate an instance of `{@link ExpectedNoneOf}`.
+   */
   expectedNoneOf: (entity: Entity, values: string[]) => new ExpectedNoneOf(entity, values) as DecodeError,
+  /**
+   * Generate an instance of `{@link ExpectedOnce}`.
+   */
   expectedOnce: (entity: Entity) => new ExpectedOnce(entity) as DecodeError,
+  /**
+   * Generate an instance of `{@link CombineErrors}`.
+   */
   combine: (errors: DecodeError[]) => new CombineErrors(errors) as DecodeError,
+  /**
+   * Generate an instance of `{@link ExpectedWithinRange}`.
+   */
   expectedWithinRange: (min: string, max: string) => new ExpectedWithinRange(min, max) as DecodeError,
+  /**
+   * Generate an instance of `{@link PatternMismatch}`.
+   */
   patternMismatch: (pattern: string) => new PatternMismatch(pattern) as DecodeError,
+  /**
+   * Generate an instance of `{@link UnexpectedEoi}`.
+   */
   unexpectedEoi: new UnexpectedEoi() as DecodeError
 }
 

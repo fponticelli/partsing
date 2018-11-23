@@ -22,6 +22,11 @@ export class PatternMismatch {
    * Type discriminator
    */
   readonly kind: 'pattern-mismatch' = 'pattern-mismatch'
+
+  /**
+   * Construct an instance of `PatternMismatch`.
+   * @param pattern Human readeable description of the pattern that wasn't matched.
+   */
   constructor(readonly pattern: string) {}
 
   /**

@@ -42,6 +42,12 @@ export class ExpectedAnyOf {
    * Type discriminator
    */
   readonly kind: 'expected-any-of' = 'expected-any-of'
+
+  /**
+   * Construct an instance of `ExpectedAnyOf`
+   * @param entity
+   * @param descriptions Human readable descriptions of all the missed matches.
+   */
   constructor(readonly entity: Entity, readonly descriptions: string[]) {}
 
   /**

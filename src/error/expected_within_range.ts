@@ -23,6 +23,12 @@ export class ExpectedWithinRange {
    * Type discriminator
    */
   readonly kind: 'expected-within-range' = 'expected-within-range'
+
+  /**
+   * Construct an instance of `ExpectedWithinRange`.
+   * @param min minimum number of occurrances expected (inclusive).
+   * @param max maximum number of occurrances expected (inclusive).
+   */
   constructor(readonly min: string, readonly max: string) {}
 
   /**

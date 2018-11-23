@@ -25,6 +25,10 @@ export class ExpectedOnce {
    * Type discriminator
    */
   readonly kind: 'expected-once' = 'expected-once'
+
+  /**
+   * Construct an instance of `ExpectedOnce`.
+   */
   constructor(readonly entity: Entity) {}
 
   /**

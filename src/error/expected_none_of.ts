@@ -26,6 +26,13 @@ export class ExpectedNoneOf {
    * Type discriminator
    */
   readonly kind: 'none-of-error' = 'none-of-error'
+
+  /**
+   * Construct an instance of `ExpectedNoneOf`
+   * @param entity
+   * @param descriptions Human readable descriptions of the conditions that should
+   * not have been matched.
+   */
   constructor(readonly entity: Entity, readonly descriptions: string[]) {}
 
   /**

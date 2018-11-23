@@ -22,6 +22,11 @@ export class ExpectedField {
    * Type discriminator
    */
   readonly kind: 'expected-field' = 'expected-field'
+
+  /**
+   * Construct an instance of `ExpectedField`
+   * @param field name of the missing field in a record/object.
+   */
   constructor(readonly field: string) {}
 
   /**
