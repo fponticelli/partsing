@@ -22,8 +22,15 @@ import { concatOr } from './expected_any_of'
  * any of the values as they are described in the `descriptions` array.
  */
 export class ExpectedNoneOf {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'none-of-error' = 'none-of-error'
   constructor(readonly entity: Entity, readonly descriptions: string[]) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return `expected no ${entityToString(this.entity, 1)} like ${concatOr(this.descriptions)}`
   }

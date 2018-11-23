@@ -18,8 +18,15 @@ limitations under the License.
  * Expected error for a decoder that wasn't able to match `pattern`.
  */
 export class PatternMismatch {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'pattern-mismatch' = 'pattern-mismatch'
   constructor(readonly pattern: string) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return `expected to match pattern ${this.pattern}`
   }

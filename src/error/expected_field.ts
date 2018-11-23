@@ -18,8 +18,15 @@ limitations under the License.
  * Error for missing fieeld.
  */
 export class ExpectedField {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'expected-field' = 'expected-field'
   constructor(readonly field: string) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return `expected field "${this.field}"`
   }

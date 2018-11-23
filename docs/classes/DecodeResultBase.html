@@ -991,13 +991,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/core/result.ts:45</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/core/result.ts:48</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Prvide a human readable representation of the value. Mostly for debugging.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -1042,6 +1044,9 @@
   abstract getUnsafeSuccess(): Out
   abstract getUnsafeFailure(): Err
 
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   abstract toString(): string
 }
 

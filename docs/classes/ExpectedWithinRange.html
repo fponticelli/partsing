@@ -129,7 +129,7 @@ as described in <code>min</code> and <code>max</code>.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/error/expected_within_range.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/error/expected_within_range.ts:25</a></div>
                             </td>
                         </tr>
 
@@ -211,10 +211,16 @@ as described in <code>min</code> and <code>max</code>.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/error/expected_within_range.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/error/expected_within_range.ts:25</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Type discriminator</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -247,13 +253,15 @@ as described in <code>min</code> and <code>max</code>.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/error/expected_within_range.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/error/expected_within_range.ts:31</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Prvide a human readable representation of the value. Mostly for debugging.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -275,8 +283,15 @@ as described in <code>min</code> and <code>max</code>.</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class ExpectedWithinRange {
+  /**
+   * Type discriminator
+   */
   readonly kind: &#x27;expected-within-range&#x27; &#x3D; &#x27;expected-within-range&#x27;
   constructor(readonly min: string, readonly max: string) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return &#x60;expected between ${this.min} and ${this.max}&#x60;
   }

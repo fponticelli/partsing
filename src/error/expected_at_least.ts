@@ -20,8 +20,15 @@ import { Entity, entityToString } from './entity'
  * Error for an {@link Entity} that was not repeated at least `min` times.
  */
 export class ExpectedAtLeast {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'expected-at-least' = 'expected-at-least'
   constructor(readonly min: number, readonly entity: Entity) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return `expected at least ${this.min} ${entityToString(this.entity, this.min)}`
   }

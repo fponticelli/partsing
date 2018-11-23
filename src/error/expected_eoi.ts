@@ -18,7 +18,14 @@ limitations under the License.
  * Error for expected end of input.
  */
 export class ExpectedEoi {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'expected-eot' = 'expected-eot'
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return `expected end of input`
   }

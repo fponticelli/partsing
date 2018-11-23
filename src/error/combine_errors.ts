@@ -17,8 +17,15 @@ limitations under the License.
 import { DecodeError } from './'
 
 export class CombineErrors {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'combine-errors' = 'combine-errors'
   constructor(readonly errors: DecodeError[]) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     const errors: string = this.errors
       .map(e => e.toString())

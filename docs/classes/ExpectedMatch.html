@@ -129,7 +129,7 @@ string.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/error/expected_match.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/error/expected_match.ts:25</a></div>
                             </td>
                         </tr>
 
@@ -199,10 +199,16 @@ string.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/error/expected_match.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/error/expected_match.ts:25</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Type discriminator</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -235,13 +241,15 @@ string.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/error/expected_match.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/error/expected_match.ts:31</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Prvide a human readable representation of the value. Mostly for debugging.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -263,8 +271,15 @@ string.</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class ExpectedMatch {
+  /**
+   * Type discriminator
+   */
   readonly kind: &#x27;expected-match&#x27; &#x3D; &#x27;expected-match&#x27;
   constructor(readonly value: string) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return &#x60;expected ${this.value}&#x60;
   }

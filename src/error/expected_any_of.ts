@@ -38,8 +38,15 @@ export const concatOr = (values: string[]) => {
  * described in the `descriptions` array.
  */
 export class ExpectedAnyOf {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'expected-any-of' = 'expected-any-of'
   constructor(readonly entity: Entity, readonly descriptions: string[]) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return `expected any ${entityToString(this.entity, 1)} in ${concatOr(this.descriptions)}`
   }

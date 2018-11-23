@@ -19,8 +19,15 @@ limitations under the License.
  * string.
  */
 export class ExpectedMatch {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'expected-match' = 'expected-match'
   constructor(readonly value: string) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return `expected ${this.value}`
   }

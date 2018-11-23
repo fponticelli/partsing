@@ -129,7 +129,7 @@ described in the <code>descriptions</code> array.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/error/expected_any_of.ts:41</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/error/expected_any_of.ts:44</a></div>
                             </td>
                         </tr>
 
@@ -211,10 +211,16 @@ described in the <code>descriptions</code> array.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/error/expected_any_of.ts:41</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/error/expected_any_of.ts:44</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Type discriminator</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -247,13 +253,15 @@ described in the <code>descriptions</code> array.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/error/expected_any_of.ts:43</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/error/expected_any_of.ts:50</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Prvide a human readable representation of the value. Mostly for debugging.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -298,8 +306,15 @@ export const concatOr &#x3D; (values: string[]) &#x3D;&gt; {
  * described in the &#x60;descriptions&#x60; array.
  */
 export class ExpectedAnyOf {
+  /**
+   * Type discriminator
+   */
   readonly kind: &#x27;expected-any-of&#x27; &#x3D; &#x27;expected-any-of&#x27;
   constructor(readonly entity: Entity, readonly descriptions: string[]) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return &#x60;expected any ${entityToString(this.entity, 1)} in ${concatOr(this.descriptions)}&#x60;
   }

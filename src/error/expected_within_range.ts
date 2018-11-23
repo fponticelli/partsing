@@ -19,8 +19,15 @@ limitations under the License.
  * as described in `min` and `max`.
  */
 export class ExpectedWithinRange {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'expected-within-range' = 'expected-within-range'
   constructor(readonly min: string, readonly max: string) {}
+
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return `expected between ${this.min} and ${this.max}`
   }

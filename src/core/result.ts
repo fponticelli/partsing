@@ -42,6 +42,9 @@ abstract class DecodeResultBase<In, Out, Err> {
   abstract getUnsafeSuccess(): Out
   abstract getUnsafeFailure(): Err
 
+  /**
+   * Prvide a human readable representation of the value. Mostly for debugging.
+   */
   abstract toString(): string
 }
 
