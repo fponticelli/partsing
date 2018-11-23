@@ -63,11 +63,11 @@ export class Decoder<In, Out, Err> {
    */
   readonly _E!: Err
   /**
-   * @see {@link _E}
+   * See {@link _E}.
    */
   readonly _I!: In
   /**
-   * @see {@link _E}
+   * See {@link _E}.
    */
   readonly _O!: Out
   private constructor(readonly run: Decoding<In, Out, Err>) {}
@@ -75,7 +75,7 @@ export class Decoder<In, Out, Err> {
   /**
    * `flatMap` allows to combine the result of a decoder with a new one.
    *
-   * That can be used to conditionally pick the next decoder in a chain based
+   * It can be used to conditionally pick the next decoder in a chain based
    * on the result of a previous step.
    */
   flatMap<Out2>(fun: (res: Out) => Decoder<In, Out2, Err>): Decoder<In, Out2, Err> {
@@ -96,9 +96,7 @@ export class Decoder<In, Out, Err> {
    * of decoding.
    *
    * @example
-   * ```typescript
    * regexp(/\d{4}-\d{2}-\d{2}/y).map(Date.parse)
-   * ```
    */
   map<Out2>(fun: (res: Out) => Out2): Decoder<In, Out2, Err> {
     return this.flatMap<Out2>(r => Decoder.of<In, Out2, Err>((input: In) => new DecodeSuccess(input, fun(r))))
