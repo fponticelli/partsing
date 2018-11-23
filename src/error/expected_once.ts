@@ -14,18 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * @module error
- */
-
-import { DecodeErrorBase } from './decode_error_base'
 import { Entity, pluralize } from './entity'
 
-export class ExpectedOnce extends DecodeErrorBase {
+export class ExpectedOnce {
   readonly kind: 'expected-once' = 'expected-once'
-  constructor(readonly entity: Entity) {
-    super()
-  }
+  constructor(readonly entity: Entity) {}
   toString() {
     return `a ${pluralize(this.entity, 1)}`
   }

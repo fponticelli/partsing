@@ -14,18 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * @module error
- */
-
-import { DecodeErrorBase } from './decode_error_base'
 import { Entity, pluralize } from './entity'
 
-export class ExpectedAtLeast extends DecodeErrorBase {
+export class ExpectedAtLeast {
   readonly kind: 'expected-at-least' = 'expected-at-least'
-  constructor(readonly min: number, readonly entity: Entity) {
-    super()
-  }
+  constructor(readonly min: number, readonly entity: Entity) {}
   toString() {
     return `at least ${this.min} ${pluralize(this.entity, this.min)}`
   }

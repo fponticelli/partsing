@@ -42,7 +42,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>UnexpectedEoi</li>
+  <li>ExpectedAnyOf</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -60,16 +60,10 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/error/unexpected_eoi.ts</code>
+            <code>src/error/expected_any_of.ts</code>
         </p>
 
 
-            <p class="comment">
-                <h3>Extends</h3>
-            </p>
-            <p class="comment">
-                    <code><a href="../classes/DecodeErrorBase.html" target="_self" >DecodeErrorBase</a></code>
-            </p>
 
 
 
@@ -104,10 +98,6 @@
                             <li>
                                 <a href="#toString">toString</a>
                             </li>
-                            <li>
-                                    <span class="modifier">Abstract</span>
-                                <a href="#toString">toString</a>
-                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -126,15 +116,57 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor()</code>
+<code>constructor(entity: <a href="../undefineds/Entity.html">Entity</a>, values: string[])</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/error/unexpected_eoi.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/error/expected_any_of.ts:33</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>entity</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../miscellaneous/enumerations.html#Entity" target="_self" >Entity</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>values</td>
+                                                  
+                                                        <td>
+                                                                    <code>string[]</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -166,12 +198,12 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&#x27;unexpected-eoi&#x27;</code>
+                            <i>Default value : </i><code>&#x27;expected-any-of&#x27;</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/error/unexpected_eoi.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/error/expected_any_of.ts:33</a></div>
                             </td>
                         </tr>
 
@@ -207,53 +239,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/error/unexpected_eoi.ts:28</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="toString"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Abstract</span>
-                            toString
-                            </b>
-                            <a href="#toString"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>toString()</code>
-                    </td>
-                </tr>
-
-
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeErrorBase.html" target="_self" >DecodeErrorBase</a></code>
-</div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeErrorBase:22</div>
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/error/expected_any_of.ts:35</a></div>
                             </td>
                         </tr>
 
@@ -280,15 +266,26 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DecodeErrorBase } from &#x27;./decode_error_base&#x27;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Entity, pluralize } from &#x27;./entity&#x27;
 
-export class UnexpectedEoi extends DecodeErrorBase {
-  readonly kind: &#x27;unexpected-eoi&#x27; &#x3D; &#x27;unexpected-eoi&#x27;
-  constructor() {
-    super()
+export const concatOr &#x3D; (values: string[]) &#x3D;&gt; {
+  const length &#x3D; values.length
+  if (length &#x3D;&#x3D;&#x3D; 0) {
+    return &#x27;&lt;empty&gt;&#x27;
+  } else if (length &lt;&#x3D; 2) {
+    return values.join(&#x27; or &#x27;)
+  } else {
+    const last &#x3D; values[length - 1]
+    const head &#x3D; values.slice(0, length - 1)
+    return &#x60;${head.join(&#x27;, &#x27;)} or ${last}&#x60;
   }
+}
+
+export class ExpectedAnyOf {
+  readonly kind: &#x27;expected-any-of&#x27; &#x3D; &#x27;expected-any-of&#x27;
+  constructor(readonly entity: Entity, readonly values: string[]) {}
   toString() {
-    return &#x60;unexpected end of input&#x60;
+    return &#x60;expected any ${pluralize(this.entity, 1)} in ${concatOr(this.values)}&#x60;
   }
 }
 </code></pre>
@@ -318,7 +315,7 @@ export class UnexpectedEoi extends DecodeErrorBase {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'UnexpectedEoi.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'ExpectedAnyOf.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

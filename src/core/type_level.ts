@@ -15,15 +15,33 @@ limitations under the License.
 */
 
 /**
- * @module core
+ * This module contains type-level functions for compile-time usage.
  */
 
+/**
+ * Transform a tuple type into the union of all the types in the tuple.
+ */
 export type TupleToUnion<T extends any[]> = T[number] | never
 
+/**
+ * Extracts the `Out` type from a `Decoder` type.
+ */
 export type Output<T extends { _O: any }> = T['_O']
+
+/**
+ * Extracts the `Int` type from a `Decoder` type.
+ */
 export type Input<T extends { _I: any }> = T['_I']
+
+/**
+ * Extracts the `Err` type from a `Decoder` type.
+ */
 export type Error<T extends { _E: any }> = T['_E']
 
+/**
+ * Given a type for an object `T` and an array `U` of field names from `U`,
+ * return a new object type with the specified fields `U` marked as optional.
+ */
 export type MarkOptionalFields<T, U extends any[], K extends keyof T = keyof T> = {
   [k in Exclude<keyof T, TupleToUnion<U>>]: T[k]
 } &

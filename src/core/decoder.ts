@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * @module core
- */
-
 import { DecodeFailure, DecodeResult, DecodeSuccess, failure, success } from './result'
 import { TupleToUnion } from './type_level'
 

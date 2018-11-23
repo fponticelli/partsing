@@ -42,7 +42,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>DecodeErrorBase</li>
+  <li>ExpectedOnce</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -60,22 +60,32 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/error/decode_error_base.ts</code>
+            <code>src/error/expected_once.ts</code>
         </p>
 
 
 
 
-            <p class="comment">
-                <h3>Example</h3>
-            </p>
-            <div class="io-description">
-            </div>
 
             <section>
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#kind">kind</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -86,7 +96,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Abstract</span>
                                 <a href="#toString">toString</a>
                             </li>
                         </ul>
@@ -101,7 +110,95 @@
     </table>
 </section>
 
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(entity: <a href="../undefineds/Entity.html">Entity</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/error/expected_once.ts:20</a></div>
+                            </td>
+                        </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>entity</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../miscellaneous/enumerations.html#Entity" target="_self" >Entity</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="kind"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Readonly</span>
+                            kind
+                            </b>
+                            <a href="#kind"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>kind:     <code></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;expected-once&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/error/expected_once.ts:20</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
 
             <section>
     
@@ -115,7 +212,6 @@
                         <a name="toString"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Abstract</span>
                             toString
                             </b>
                             <a href="#toString"><span class="icon ion-ios-link"></span></a>
@@ -124,15 +220,14 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>toString()</code>
+<code>toString()</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/error/decode_error_base.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/error/expected_once.ts:22</a></div>
                             </td>
                         </tr>
 
@@ -159,8 +254,14 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export abstract class DecodeErrorBase {
-  abstract toString(): string
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Entity, pluralize } from &#x27;./entity&#x27;
+
+export class ExpectedOnce {
+  readonly kind: &#x27;expected-once&#x27; &#x3D; &#x27;expected-once&#x27;
+  constructor(readonly entity: Entity) {}
+  toString() {
+    return &#x60;expected a ${pluralize(this.entity, 1)}&#x60;
+  }
 }
 </code></pre>
     </div>
@@ -189,7 +290,7 @@
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'DecodeErrorBase.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'ExpectedOnce.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

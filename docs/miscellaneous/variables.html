@@ -99,10 +99,10 @@
                             <a href="#failure" title="src/core/result.ts"><b>failure</b>&nbsp;&nbsp;&nbsp;(src/.../result.ts)</a>
                         </li>
                         <li>
-                            <a href="#failureToString" title="src/value/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#failureToString" title="src/text/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#failureToString" title="src/text/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#failureToString" title="src/value/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#finiteNumberValue" title="src/value/index.ts"><b>finiteNumberValue</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -115,9 +115,6 @@
                         </li>
                         <li>
                             <a href="#lazy" title="src/core/decoder.ts"><b>lazy</b>&nbsp;&nbsp;&nbsp;(src/.../decoder.ts)</a>
-                        </li>
-                        <li>
-                            <a href="#" title="src/text/index.ts"><b></b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#letter" title="src/text/index.ts"><b>letter</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -139,6 +136,9 @@
                         </li>
                         <li>
                             <a href="#make" title="src/value/index.ts"><b>make</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#" title="src/text/index.ts"><b></b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#match" title="src/text/index.ts"><b>match</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -1253,69 +1253,6 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name=""></a>
-                        <span class="name">
-                            <b>
-                            
-                            </b>
-                            <a href="#"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <code>:     <code></code>
-</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>(() &#x3D;&gt; {
-  const testSticky &#x3D; (() &#x3D;&gt; {
-    try {
-      return /test/y.sticky
-    } catch (_) {
-      return false
-    }
-  })()
-  if (testSticky) {
-    return {
-      letterPattern: /[a-z]/iy,
-      lettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[a-z]{${min},${max}}&#x60;, &#x27;yi&#x27;),
-      upperCaseLetterPattern: /[A-Z]/y,
-      upperCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[A-Z]{${min},${max}}&#x60;, &#x27;y&#x27;),
-      lowerCaseLetterPattern: /[a-z]/y,
-      lowerCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[a-z]{${min},${max}}&#x60;, &#x27;y&#x27;),
-      digitPattern: /\d/y,
-      digitsPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[0-9]{${min},${max}}&#x60;, &#x27;yi&#x27;),
-      whitespacePattern: /\s+/y,
-      optionalWhitespacePattern: /\s*/y
-    }
-  } else {
-    return {
-      letterPattern: /^[a-z]/i,
-      lettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[a-z]{${min},${max}}&#x60;, &#x27;i&#x27;),
-      upperCaseLetterPattern: /^[A-Z]/,
-      upperCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[A-Z]{${min},${max}}&#x60;, &#x27;&#x27;),
-      lowerCaseLetterPattern: /^[a-z]/,
-      lowerCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[a-z]{${min},${max}}&#x60;, &#x27;&#x27;),
-      digitPattern: /^\d/,
-      digitsPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[0-9]{${min},${max}}&#x60;, &#x27;i&#x27;),
-      whitespacePattern: /^\s+/,
-      optionalWhitespacePattern: /^\s*/
-    }
-  }
-})()</code>
-                        </td>
-                    </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
                         <a name="letter"></a>
                         <span class="name">
                             <b>
@@ -1456,6 +1393,69 @@
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>&lt;T&gt;(f: Decoding&lt;TextInput, T, DecodeError&gt;): TextDecoder&lt;T&gt; &#x3D;&gt; Decoder.of&lt;TextInput, T, DecodeError&gt;(f)</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name=""></a>
+                        <span class="name">
+                            <b>
+                            
+                            </b>
+                            <a href="#"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>:     <code></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>(() &#x3D;&gt; {
+  const testSticky &#x3D; (() &#x3D;&gt; {
+    try {
+      return /test/y.sticky
+    } catch (_) {
+      return false
+    }
+  })()
+  if (testSticky) {
+    return {
+      letterPattern: /[a-z]/iy,
+      lettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[a-z]{${min},${max}}&#x60;, &#x27;yi&#x27;),
+      upperCaseLetterPattern: /[A-Z]/y,
+      upperCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[A-Z]{${min},${max}}&#x60;, &#x27;y&#x27;),
+      lowerCaseLetterPattern: /[a-z]/y,
+      lowerCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[a-z]{${min},${max}}&#x60;, &#x27;y&#x27;),
+      digitPattern: /\d/y,
+      digitsPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;[0-9]{${min},${max}}&#x60;, &#x27;yi&#x27;),
+      whitespacePattern: /\s+/y,
+      optionalWhitespacePattern: /\s*/y
+    }
+  } else {
+    return {
+      letterPattern: /^[a-z]/i,
+      lettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[a-z]{${min},${max}}&#x60;, &#x27;i&#x27;),
+      upperCaseLetterPattern: /^[A-Z]/,
+      upperCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[A-Z]{${min},${max}}&#x60;, &#x27;&#x27;),
+      lowerCaseLetterPattern: /^[a-z]/,
+      lowerCaseLettersPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[a-z]{${min},${max}}&#x60;, &#x27;&#x27;),
+      digitPattern: /^\d/,
+      digitsPattern: (min: string, max: string) &#x3D;&gt; new RegExp(&#x60;^[0-9]{${min},${max}}&#x60;, &#x27;i&#x27;),
+      whitespacePattern: /^\s+/,
+      optionalWhitespacePattern: /^\s*/
+    }
+  }
+})()</code>
                         </td>
                     </tr>
 

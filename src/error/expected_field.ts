@@ -14,17 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * @module error
- */
-
-import { DecodeErrorBase } from './decode_error_base'
-
-export class ExpectedField extends DecodeErrorBase {
+export class ExpectedField {
   readonly kind: 'expected-field' = 'expected-field'
-  constructor(readonly field: string) {
-    super()
-  }
+  constructor(readonly field: string) {}
   toString() {
     return `field "${this.field}"`
   }

@@ -42,7 +42,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>DecodeSuccess</li>
+  <li>DecodeResultBase</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -63,13 +63,15 @@
             <code>src/core/result.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>DecodeResult is a union type that has two possible constructors
+<a href="../classes/DecodeSuccess.html">DecodeSuccess</a> and <a href="../classes/DecodeFailure.html">DecodeFailure</a>.</p>
 
-            <p class="comment">
-                <h3>Extends</h3>
             </p>
-            <p class="comment">
-                    <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-            </p>
+
 
 
 
@@ -85,10 +87,6 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
-                            <li>
-                                    <span class="modifier">Readonly</span>
-                                <a href="#kind">kind</a>
-                            </li>
                             <li>
                                     <span class="modifier">Readonly</span>
                                 <a href="#_E">_E</a>
@@ -113,39 +111,6 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
-                            <li>
-                                <a href="#flatMap">flatMap</a>
-                            </li>
-                            <li>
-                                <a href="#flatMapError">flatMapError</a>
-                            </li>
-                            <li>
-                                <a href="#getUnsafeFailure">getUnsafeFailure</a>
-                            </li>
-                            <li>
-                                <a href="#getUnsafeSuccess">getUnsafeSuccess</a>
-                            </li>
-                            <li>
-                                <a href="#isFailure">isFailure</a>
-                            </li>
-                            <li>
-                                <a href="#isSuccess">isSuccess</a>
-                            </li>
-                            <li>
-                                <a href="#map">map</a>
-                            </li>
-                            <li>
-                                <a href="#mapError">mapError</a>
-                            </li>
-                            <li>
-                                <a href="#mapInput">mapInput</a>
-                            </li>
-                            <li>
-                                <a href="#match">match</a>
-                            </li>
-                            <li>
-                                <a href="#toString">toString</a>
-                            </li>
                             <li>
                                     <span class="modifier">Abstract</span>
                                 <a href="#flatMap">flatMap</a>
@@ -208,12 +173,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(input: In, value: Out)</code>
+<code>constructor(input: In)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/core/result.ts:53</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/core/result.ts:24</a></div>
                             </td>
                         </tr>
 
@@ -242,18 +207,6 @@
                                                     </td>
                                                     
                                                 </tr>
-                                                <tr>
-                                                        <td>value</td>
-                                                  
-                                                        <td>
-                                                                    <code>Out</code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -268,46 +221,6 @@
         <h3 id="inputs">
             Properties
         </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="kind"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Readonly</span>
-                            kind
-                            </b>
-                            <a href="#kind"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>kind:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>&#x27;decode-success&#x27;</code>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/core/result.ts:53</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -334,15 +247,9 @@
 
                         </td>
                     </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:28</div>
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/core/result.ts:24</a></div>
                             </td>
                         </tr>
 
@@ -375,15 +282,9 @@
 
                         </td>
                     </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:26</div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/core/result.ts:22</a></div>
                             </td>
                         </tr>
 
@@ -416,15 +317,9 @@
 
                         </td>
                     </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:27</div>
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/core/result.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -438,658 +333,6 @@
         <h3 id="methods">
             Methods
         </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="flatMap"></a>
-                        <span class="name">
-                            <b>
-                            flatMap
-                            </b>
-                            <a href="#flatMap"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>flatMap(f: (r: Out) => void)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/core/result.ts:62</a></div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="col-md-4">
-                                <b>Type parameters :</b>
-                                <ul class="type-parameters">
-                                        <li>Out2</li>
-                                </ul>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>f</td>
-                                                        <td>
-                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../miscellaneous/typealiases.html#DecodeResult" target="_self" >DecodeResult&lt;In, Out2, Err&gt;</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="flatMapError"></a>
-                        <span class="name">
-                            <b>
-                            flatMapError
-                            </b>
-                            <a href="#flatMapError"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>flatMapError(f: (r: Err) => void)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/core/result.ts:68</a></div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="col-md-4">
-                                <b>Type parameters :</b>
-                                <ul class="type-parameters">
-                                        <li>Err2</li>
-                                </ul>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>f</td>
-                                                        <td>
-                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../miscellaneous/typealiases.html#DecodeResult" target="_self" >DecodeResult&lt;In, Out, Err2&gt;</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="getUnsafeFailure"></a>
-                        <span class="name">
-                            <b>
-                            getUnsafeFailure
-                            </b>
-                            <a href="#getUnsafeFailure"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>getUnsafeFailure()</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">src/core/result.ts:88</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Returns : </b>    <code>Err</code>
-
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="getUnsafeSuccess"></a>
-                        <span class="name">
-                            <b>
-                            getUnsafeSuccess
-                            </b>
-                            <a href="#getUnsafeSuccess"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>getUnsafeSuccess()</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/core/result.ts:85</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Returns : </b>    <code>Out</code>
-
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="isFailure"></a>
-                        <span class="name">
-                            <b>
-                            isFailure
-                            </b>
-                            <a href="#isFailure"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>isFailure()</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/core/result.ts:81</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../classes/DecodeFailure.html" target="_self" >DecodeFailure&lt;In | Out | Err&gt;</a></code>
-
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="isSuccess"></a>
-                        <span class="name">
-                            <b>
-                            isSuccess
-                            </b>
-                            <a href="#isSuccess"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>isSuccess()</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/core/result.ts:78</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../classes/DecodeSuccess.html" target="_self" >DecodeSuccess&lt;In | Out | Err&gt;</a></code>
-
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="map"></a>
-                        <span class="name">
-                            <b>
-                            map
-                            </b>
-                            <a href="#map"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>map(f: (r: Out) => void)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/core/result.ts:65</a></div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="col-md-4">
-                                <b>Type parameters :</b>
-                                <ul class="type-parameters">
-                                        <li>Out2</li>
-                                </ul>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>f</td>
-                                                        <td>
-                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../miscellaneous/typealiases.html#DecodeResult" target="_self" >DecodeResult&lt;In, Out2, Err&gt;</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="mapError"></a>
-                        <span class="name">
-                            <b>
-                            mapError
-                            </b>
-                            <a href="#mapError"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>mapError(f: (r: Err) => void)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/core/result.ts:71</a></div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="col-md-4">
-                                <b>Type parameters :</b>
-                                <ul class="type-parameters">
-                                        <li>Err2</li>
-                                </ul>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>f</td>
-                                                        <td>
-                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../miscellaneous/typealiases.html#DecodeResult" target="_self" >DecodeResult&lt;In, Out, Err2&gt;</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="mapInput"></a>
-                        <span class="name">
-                            <b>
-                            mapInput
-                            </b>
-                            <a href="#mapInput"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>mapInput(f: (i: In) => void)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/core/result.ts:74</a></div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="col-md-4">
-                                <b>Type parameters :</b>
-                                <ul class="type-parameters">
-                                        <li>In2</li>
-                                </ul>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>f</td>
-                                                        <td>
-                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../miscellaneous/typealiases.html#DecodeResult" target="_self" >DecodeResult&lt;In2, Out, Err&gt;</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="match"></a>
-                        <span class="name">
-                            <b>
-                            match
-                            </b>
-                            <a href="#match"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>match(o: literal type)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/core/result.ts:58</a></div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="col-md-4">
-                                <b>Type parameters :</b>
-                                <ul class="type-parameters">
-                                        <li>O</li>
-                                </ul>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>o</td>
-                                                        <td>
-                                                                    <code>literal type</code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code>O</code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="toString"></a>
-                        <span class="name">
-                            <b>
-                            toString
-                            </b>
-                            <a href="#toString"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>toString()</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">src/core/result.ts:92</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -1112,15 +355,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:36</div>
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/core/result.ts:32</a></div>
                             </td>
                         </tr>
 
@@ -1197,15 +434,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:37</div>
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/core/result.ts:33</a></div>
                             </td>
                         </tr>
 
@@ -1282,15 +513,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:47</div>
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/core/result.ts:43</a></div>
                             </td>
                         </tr>
 
@@ -1328,15 +553,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:46</div>
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/core/result.ts:42</a></div>
                             </td>
                         </tr>
 
@@ -1374,15 +593,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:44</div>
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/core/result.ts:40</a></div>
                             </td>
                         </tr>
 
@@ -1420,15 +633,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:43</div>
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/core/result.ts:39</a></div>
                             </td>
                         </tr>
 
@@ -1466,15 +673,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:39</div>
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/core/result.ts:35</a></div>
                             </td>
                         </tr>
 
@@ -1551,15 +752,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:40</div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/core/result.ts:36</a></div>
                             </td>
                         </tr>
 
@@ -1636,15 +831,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:41</div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/core/result.ts:37</a></div>
                             </td>
                         </tr>
 
@@ -1721,15 +910,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:31</div>
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/core/result.ts:27</a></div>
                             </td>
                         </tr>
 
@@ -1806,15 +989,9 @@
                 </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:49</div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/core/result.ts:45</a></div>
                             </td>
                         </tr>
 
@@ -1993,7 +1170,7 @@ export const failure &#x3D; &lt;In, Out, Err&gt;(input: In, failure: Err): Decod
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'DecodeSuccess.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'DecodeResultBase.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

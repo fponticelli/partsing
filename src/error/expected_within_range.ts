@@ -14,17 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * @module error
- */
-
-import { DecodeErrorBase } from './decode_error_base'
-
-export class ExpectedWithinRange extends DecodeErrorBase {
+export class ExpectedWithinRange {
   readonly kind: 'expected-within-range' = 'expected-within-range'
-  constructor(readonly min: string, readonly max: string) {
-    super()
-  }
+  constructor(readonly min: string, readonly max: string) {}
   toString() {
     return `between ${this.min} and ${this.max}`
   }

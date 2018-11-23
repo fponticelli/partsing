@@ -15,16 +15,11 @@ limitations under the License.
 */
 
 /**
- * @module error
+ * Error type that allows for a customized message.
  */
-
-import { DecodeErrorBase } from './decode_error_base'
-
-export class CustomError extends DecodeErrorBase {
+export class CustomError {
   readonly kind: 'custom-error' = 'custom-error'
-  constructor(readonly message: string) {
-    super()
-  }
+  constructor(readonly message: string) {}
   toString() {
     return this.message
   }
