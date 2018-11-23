@@ -27,6 +27,6 @@ export class ExpectedAtLeast extends DecodeErrorBase {
     super()
   }
   toString() {
-    return `expected at least ${this.min} ${pluralize(this.entity, this.min)}`
+    return `at least ${this.min} ${pluralize(this.entity, this.min)}`
   }
 }

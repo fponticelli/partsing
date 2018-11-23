@@ -26,6 +26,6 @@ export class UnexpectedEoi extends DecodeErrorBase {
     super()
   }
   toString() {
-    return `unexpected end of input`
+    return `NOT end of input`
   }
 }

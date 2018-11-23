@@ -42,9 +42,9 @@ export const testType = <T>(expected: string) =>
     typeof input.input === expected ? success(input, input.input) : failure(input, DecodeError.expectedMatch(expected))
   )
 
-export const nullableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, nullValue)
-export const undefineableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, undefinedValue)
-export const optionalValue = <T>(decoder: ValueDecoder<T>) => decoder.or(DecodeError.combine, undefinedValue, nullValue)
+export const nullableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(nullValue)
+export const undefineableValue = <T>(decoder: ValueDecoder<T>) => decoder.or(undefinedValue)
+export const optionalValue = <T>(decoder: ValueDecoder<T>) => decoder.or(undefinedValue, nullValue)
 
 export const anyValue = make<any>(input => success(input, input.input))
 export const stringValue = testType<string>('string')
@@ -70,7 +70,7 @@ export const arrayValue = <T>(decoder: ValueDecoder<T>) =>
         if (r.isSuccess()) {
           buff[i] = r.value
         } else {
-          return failure(r.input, r.failure)
+          return failure(r.input, ...r.failures)
         }
       }
       return success(input, buff)
@@ -88,7 +88,7 @@ export const tupleValue = <U extends any[]>(...decoders: { [k in keyof U]: Value
         if (r.isSuccess()) {
           buff[i] = r.value
         } else {
-          return failure(r.input, r.failure)
+          return failure(r.input, ...r.failures)
         }
       }
       return success(input, buff)
@@ -112,7 +112,7 @@ export const objectValue = <T, K extends keyof T>(
           if (result.isSuccess()) {
             buff[field] = result.value
           } else {
-            return failure(result.input, result.failure)
+            return failure(result.input, ...result.failures)
           }
         } else {
           return failure(input, DecodeError.expectedField(field))
@@ -125,7 +125,7 @@ export const objectValue = <T, K extends keyof T>(
           if (result.isSuccess()) {
             buff[field] = result.value
           } else {
-            return failure(result.input, result.failure)
+            return failure(result.input, ...result.failures)
           }
         }
       }
@@ -149,11 +149,14 @@ export const pathToString = (path: (string | number)[]): string => {
 }
 
 export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeError>): string => {
-  const { failure, input } = err
-  const msg = failure.toString() + ' but got ' + String(input.input)
+  const { failures, input } = err
+  const expected = failures.length === 1 ?
+    failures[0].toString() :
+    `one of:\n * ${failures.map(v => v.toString()).join('\n * ')}\n`
+  const msg = `${expected} but got ${String(input.input)}`
   const path = pathToString(input.path)
   if (path === '') return msg
-  else return `${msg} at ${path}`
+  else return `expected ${msg} at ${path}`
 }
 
 export { ValueInput } from './input'

@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import {
-  CombineErrors,
   concatOr,
   CustomError,
   Entity,
@@ -52,18 +51,15 @@ describe('errors', () => {
 
   it('error messages', () => {
     expect(new CustomError('abc').toString()).toEqual('abc')
-    expect(new ExpectedAnyOf(Entity.CHARACTER, ['a', 'b']).toString()).toEqual('expected any character in a or b')
-    expect(new ExpectedAtLeast(1, Entity.CHARACTER).toString()).toEqual('expected at least 1 character')
-    expect(new ExpectedEoi().toString()).toEqual('expected end of input')
-    expect(new ExpectedMatch('"match"').toString()).toEqual('expected "match"')
-    expect(new ExpectedNoneOf(Entity.CHARACTER, ['a', 'b']).toString()).toEqual('expected no character like a or b')
-    expect(new ExpectedOnce(Entity.CHARACTER).toString()).toEqual('expected a character')
-    expect(new CombineErrors([new CustomError('abc'), new ExpectedEoi()]).toString()).toEqual(`expected one of:
-  - abc
-  - expected end of input`)
-    expect(new ExpectedWithinRange('a', 'b').toString()).toEqual('expected between a and b')
-    expect(new PatternMismatch('/a/').toString()).toEqual('expected to match pattern /a/')
-    expect(new UnexpectedEoi().toString()).toEqual('unexpected end of input')
+    expect(new ExpectedAnyOf(Entity.CHARACTER, ['a', 'b']).toString()).toEqual('any character in a or b')
+    expect(new ExpectedAtLeast(1, Entity.CHARACTER).toString()).toEqual('at least 1 character')
+    expect(new ExpectedEoi().toString()).toEqual('end of input')
+    expect(new ExpectedMatch('"match"').toString()).toEqual('"match"')
+    expect(new ExpectedNoneOf(Entity.CHARACTER, ['a', 'b']).toString()).toEqual('no character like a or b')
+    expect(new ExpectedOnce(Entity.CHARACTER).toString()).toEqual('a character')
+    expect(new ExpectedWithinRange('a', 'b').toString()).toEqual('between a and b')
+    expect(new PatternMismatch('/a/').toString()).toEqual('to match pattern /a/')
+    expect(new UnexpectedEoi().toString()).toEqual('NOT end of input')
   })
 
   it('concatOr', () => {

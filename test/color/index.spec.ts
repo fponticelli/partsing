@@ -52,7 +52,7 @@ const rgbDecoder = regexp(/[#]([0-9a-f]{6})/iy, 1)
   .map(v => parseInt(v, 16))
   .map(v => new RGB(v))
 const greyDecoder = matchInsensitive('grey')
-  .or(DecodeError.combine, matchInsensitive('gray'))
+  .or(matchInsensitive('gray'))
   .skipNext(optionalWhitespace)
   .pickNext(ratioDecoder)
   .map(v => new Grey(v))
@@ -62,7 +62,7 @@ const hslDecoder = matchInsensitive('hsl(')
 
 const colorTextDecoder = decodeText(
   // the `eoi` at the end, makes sure that there is nothing left to decode
-  oneOf<TextInput, Color[], DecodeError>(DecodeError.combine, rgbDecoder, greyDecoder, hslDecoder).skipNext(eoi)
+  oneOf<TextInput, Color[], DecodeError>(rgbDecoder, greyDecoder, hslDecoder).skipNext(eoi)
 )
 
 describe('text color decoder', () => {
@@ -114,7 +114,7 @@ const hslValue = objectValue(
 ).map(v => new HSL(v.h, v.s, v.l))
 
 const colorValueDecoder = decodeValue(
-  oneOf<ValueInput, Color[], DecodeError>(DecodeError.combine, rgbValue, greyValue, hslValue)
+  oneOf<ValueInput, Color[], DecodeError>(rgbValue, greyValue, hslValue)
 )
 
 describe('value color decoder', () => {

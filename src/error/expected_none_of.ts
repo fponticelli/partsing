@@ -28,6 +28,6 @@ export class ExpectedNoneOf extends DecodeErrorBase {
     super()
   }
   toString() {
-    return `expected no ${pluralize(this.entity, 1)} like ${concatOr(this.values)}`
+    return `no ${pluralize(this.entity, 1)} like ${concatOr(this.values)}`
   }
 }

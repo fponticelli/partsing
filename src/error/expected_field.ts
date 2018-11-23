@@ -26,6 +26,6 @@ export class ExpectedField extends DecodeErrorBase {
     super()
   }
   toString() {
-    return `expected field "${this.field}"`
+    return `field "${this.field}"`
   }
 }

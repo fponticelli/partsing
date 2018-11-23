@@ -26,6 +26,6 @@ export class ExpectedMatch extends DecodeErrorBase {
     super()
   }
   toString() {
-    return `expected ${this.value}`
+    return `${this.value}`
   }
 }

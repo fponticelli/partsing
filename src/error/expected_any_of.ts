@@ -40,6 +40,6 @@ export class ExpectedAnyOf extends DecodeErrorBase {
     super()
   }
   toString() {
-    return `expected any ${pluralize(this.entity, 1)} in ${concatOr(this.values)}`
+    return `any ${pluralize(this.entity, 1)} in ${concatOr(this.values)}`
   }
 }

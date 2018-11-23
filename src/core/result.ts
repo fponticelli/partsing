@@ -34,7 +34,7 @@ abstract class DecodeResultBase<In, Out, Err> {
   }): O
 
   abstract flatMap<Out2>(f: (r: Out) => DecodeResult<In, Out2, Err>): DecodeResult<In, Out2, Err>
-  abstract flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2>
+  abstract flatMapError<Err2>(f: (r: Err[]) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2>
 
   abstract map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err>
   abstract mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2>
@@ -44,7 +44,7 @@ abstract class DecodeResultBase<In, Out, Err> {
   abstract isFailure(): this is DecodeFailure<In, Out, Err>
 
   abstract getUnsafeSuccess(): Out
-  abstract getUnsafeFailure(): Err
+  abstract getUnsafeFailures(): Err[]
 
   abstract toString(): string
 }
@@ -65,7 +65,7 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err> {
     return this.flatMap(v => new DecodeSuccess(this.input, f(v)))
   }
-  flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
+  flatMapError<Err2>(f: (r: Err[]) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
     return new DecodeSuccess(this.input, this.value)
   }
   mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2> {
@@ -85,8 +85,8 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   getUnsafeSuccess(): Out {
     return this.value
   }
-  getUnsafeFailure(): Err {
-    throw new Error("can't get failure from success")
+  getUnsafeFailures(): Err[] {
+    throw new Error("can't get failures from success")
   }
 
   toString(): string {
@@ -96,8 +96,10 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
 
 export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> {
   readonly kind = 'decode-failure'
-  constructor(input: In, readonly failure: Err) {
+  readonly failures: Err[]
+  constructor(input: In, ...failures: Err[]) {
     super(input)
+    this.failures = failures
   }
 
   match<O>(o: {
@@ -108,19 +110,19 @@ export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   }
 
   flatMap<Out2>(f: (r: Out) => DecodeResult<In, Out2, Err>): DecodeResult<In, Out2, Err> {
-    return new DecodeFailure(this.input, this.failure)
+    return new DecodeFailure(this.input, ...this.failures)
   }
   map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err> {
-    return new DecodeFailure(this.input, this.failure)
+    return new DecodeFailure(this.input, ...this.failures)
   }
-  flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
-    return f(this.failure)
+  flatMapError<Err2>(f: (r: Err[]) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
+    return f(this.failures)
   }
   mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2> {
-    return this.flatMapError(e => new DecodeFailure(this.input, f(e)))
+    return failure(this.input, ...this.failures.map(f))
   }
   mapInput<In2>(f: (i: In) => In2): DecodeResult<In2, Out, Err> {
-    return new DecodeFailure(f(this.input), this.failure)
+    return failure(f(this.input), ...this.failures)
   }
 
   isSuccess(): this is DecodeSuccess<In, Out, Err> {
@@ -132,12 +134,12 @@ export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   getUnsafeSuccess(): Out {
     throw new Error("can't get success from failure")
   }
-  getUnsafeFailure(): Err {
-    return this.failure
+  getUnsafeFailures(): Err[] {
+    return this.failures
   }
 
   toString(): string {
-    return `DecodeFailure<${JSON.stringify(this.failure)}>: ${JSON.stringify(this.input)}`
+    return `DecodeFailure<${JSON.stringify(this.failures)}>: ${JSON.stringify(this.input)}`
   }
 }
 
@@ -145,5 +147,5 @@ export type DecodeResult<In, Out, Err> = DecodeSuccess<In, Out, Err> | DecodeFai
 
 export const success = <In, Out, Err>(input: In, result: Out): DecodeResult<In, Out, Err> =>
   new DecodeSuccess(input, result)
-export const failure = <In, Out, Err>(input: In, failure: Err): DecodeResult<In, Out, Err> =>
-  new DecodeFailure(input, failure)
+export const failure = <In, Out, Err>(input: In, ...failures: Err[]): DecodeResult<In, Out, Err> =>
+  new DecodeFailure(input, ...failures)

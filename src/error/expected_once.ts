@@ -27,6 +27,6 @@ export class ExpectedOnce extends DecodeErrorBase {
     super()
   }
   toString() {
-    return `expected a ${pluralize(this.entity, 1)}`
+    return `a ${pluralize(this.entity, 1)}`
   }
 }

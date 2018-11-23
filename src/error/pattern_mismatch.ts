@@ -26,6 +26,6 @@ export class PatternMismatch extends DecodeErrorBase {
     super()
   }
   toString() {
-    return `expected to match pattern ${this.pattern}`
+    return `to match pattern ${this.pattern}`
   }
 }

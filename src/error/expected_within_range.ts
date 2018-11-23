@@ -26,6 +26,6 @@ export class ExpectedWithinRange extends DecodeErrorBase {
     super()
   }
   toString() {
-    return `expected between ${this.min} and ${this.max}`
+    return `between ${this.min} and ${this.max}`
   }
 }

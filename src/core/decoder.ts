@@ -88,7 +88,7 @@ export class Decoder<In, Out, Err> {
       if (result.isSuccess()) {
         return fun(result.value).run(result.input)
       } else {
-        return new DecodeFailure(input, result.failure)
+        return failure(input, ...result.failures)
       }
     })
   }
@@ -105,7 +105,7 @@ export class Decoder<In, Out, Err> {
    * ```
    */
   map<Out2>(fun: (res: Out) => Out2): Decoder<In, Out2, Err> {
-    return this.flatMap<Out2>(r => Decoder.of<In, Out2, Err>((input: In) => new DecodeSuccess(input, fun(r))))
+    return this.flatMap<Out2>(r => Decoder.of<In, Out2, Err>((input: In) => success(input, fun(r))))
   }
 
   /**
@@ -125,7 +125,7 @@ export class Decoder<In, Out, Err> {
               .mapError(mapError)
               .run(mapInput(s.value))
               .mapInput(_ => s.input),
-          failure: (f: DecodeFailure<In, Out, Err>) => failure(f.input, f.failure)
+          failure: (f: DecodeFailure<In, Out, Err>) => failure(f.input, ...f.failures)
         })
     )
   }
@@ -134,11 +134,13 @@ export class Decoder<In, Out, Err> {
    * Like {@link flatMap} but for the failure case. It is also useful to recover
    * from an error.
    */
-  flatMapError<Err2>(fun: (res: Err) => Decoder<In, Out, Err2>): Decoder<In, Out, Err2> {
+  flatMapError<Err2>(fun: (res: Err[]) => Decoder<In, Out, Err2>): Decoder<In, Out, Err2> {
     return Decoder.of<In, Out, Err2>((input: In) =>
       this.run(input).match<DecodeResult<In, Out, Err2>>({
-        failure: (f: DecodeFailure<In, Out, Err>) => fun(f.failure).run(input),
-        success: (s: DecodeSuccess<In, Out, Err>) => success<In, Out, Err2>(s.input, s.value)
+        failure:
+          (f: DecodeFailure<In, Out, Err>) => fun(f.failures).run(input),
+        success:
+          (s: DecodeSuccess<In, Out, Err>) => success<In, Out, Err2>(s.input, s.value)
       })
     )
   }
@@ -149,8 +151,10 @@ export class Decoder<In, Out, Err> {
   mapError<Err2>(fun: (e: Err) => Err2): Decoder<In, Out, Err2> {
     return Decoder.of<In, Out, Err2>((input: In) =>
       this.run(input).match<DecodeResult<In, Out, Err2>>({
-        failure: (f: DecodeFailure<In, Out, Err>) => new DecodeFailure<In, Out, Err2>(f.input, fun(f.failure)),
-        success: s => new DecodeSuccess<In, Out, Err2>(s.input, s.value)
+        failure:
+          (f: DecodeFailure<In, Out, Err>) => failure<In, Out, Err2>(f.input, ...f.failures.map(fun)),
+        success:
+          s => success<In, Out, Err2>(s.input, s.value)
       })
     )
   }
@@ -190,25 +194,19 @@ export class Decoder<In, Out, Err> {
    * If not passed, the failure will report the failure of the current decoder.
    */
   or<U extends any[]>(
-    combineErrors: undefined | ((errs: Err[]) => Err),
     ...decoders: { [P in keyof U]: Decoder<In, U[P], Err> }
   ): Decoder<In, Out | TupleToUnion<U>, Err> {
-    return this.flatMapError((f: Err) =>
+    return this.flatMapError((errs: Err[]) =>
       Decoder.of<In, Out | TupleToUnion<U>, Err>((input: In) => {
-        const failures = []
         for (let decoder of decoders) {
           const result = decoder.run(input)
           if (result.isFailure()) {
-            failures.push(result.failure)
+            errs = errs.concat(result.failures)
           } else {
             return result
           }
         }
-        if (combineErrors) {
-          return new DecodeFailure(input, combineErrors(failures))
-        } else {
-          return new DecodeFailure(input, f)
-        }
+        return failure(input, ...errs)
       })
     )
   }
@@ -227,9 +225,9 @@ export class Decoder<In, Out, Err> {
           buff.push(result.value)
           input = result.input
         } else if (buff.length < times) {
-          return new DecodeFailure(input, result.failure)
+          return failure(input, ...result.failures)
         } else {
-          return new DecodeSuccess<In, Out[], Err>(input, buff)
+          return success<In, Out[], Err>(input, buff)
         }
       }
     })
@@ -241,21 +239,21 @@ export class Decoder<In, Out, Err> {
   repeatBetween(min: number, max: number) {
     return Decoder.of<In, Out[], Err>((input: In) => {
       const buff: Out[] = []
-      let failure = undefined
+      let failures = undefined
       for (let i = 0; i < max; i++) {
         const result = this.run(input)
         if (result.isSuccess()) {
           buff.push(result.value)
           input = result.input
         } else {
-          failure = result.failure
+          failures = result.failures
           break
         }
       }
       if (buff.length < min) {
-        return new DecodeFailure(input, failure!)
+        return failure(input, ...failures!)
       }
-      return new DecodeSuccess<In, Out[], Err>(input, buff)
+      return success<In, Out[], Err>(input, buff)
     })
   }
 
@@ -292,8 +290,8 @@ export class Decoder<In, Out, Err> {
    */
   separatedBy<Separator>(separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
     return this.separatedByAtLeastOnce(separator)
-      .or(undefined, this.map(v => [v]))
-      .or(undefined, succeed([]))
+      .or(this.map(v => [v]))
+      .or(succeed([]))
   }
 
   /**
@@ -372,13 +370,13 @@ export const sequence = <In, U extends any[], Err>(
       const decoder = decoders[i]
       const result = decoder.run(input)
       if (result.isFailure()) {
-        return new DecodeFailure(input, result.failure)
+        return failure(input, ...result.failures)
       } else {
         input = result.input
         buff[i] = result.value
       }
     }
-    return new DecodeSuccess(input, buff)
+    return success(input, buff)
   })
 
 /**
@@ -388,25 +386,20 @@ export const sequence = <In, U extends any[], Err>(
  * `combineErrors` works the same as in {@link or}.
  */
 export const oneOf = <In, U extends any[], Err>(
-  combineErrors: undefined | ((errs: Err[]) => Err),
   ...decoders: { [P in keyof U]: Decoder<In, U[P], Err> }
 ) => {
   if (decoders.length === 0) throw new Error('alt needs to be called with at least one argumenr')
   return Decoder.of<In, TupleToUnion<U>, Err>((input: In) => {
-    const failures = []
+    let failures: Err[] = []
     for (let decoder of decoders) {
       const result = decoder.run(input)
       if (result.isFailure()) {
-        failures.push(result.failure)
+        failures = failures.concat(result.failures)
       } else {
         return result
       }
     }
-    if (combineErrors) {
-      return failure(input, combineErrors(failures))
-    } else {
-      return failure(input, failures[0])
-    }
+    return failure(input, ...failures)
   })
 }
 
@@ -415,12 +408,13 @@ export const oneOf = <In, U extends any[], Err>(
  * doesn't consume anything from the input.
  */
 export const succeed = <In, Out, Err>(result: Out) =>
-  Decoder.of<In, Out, Err>(input => new DecodeSuccess(input, result))
+  Decoder.of<In, Out, Err>(input => success(input, result))
 
 /**
  * Returns a decoder that always fails with the given error.
  */
-export const fail = <In, Out, Err>(failure: Err) => Decoder.of<In, Out, Err>(input => new DecodeFailure(input, failure))
+export const fail = <In, Out, Err>(err: Err) =>
+  Decoder.of<In, Out, Err>((input: In) => failure<In, Out, Err>(input, err))
 
 /**
  * Often time decoders are defined recursively. The language and type-system
