@@ -2,5 +2,6 @@
   "output": "./docs",
   "name": "ParTSing",
   "tsconfig": "./tsconfig.json",
-  "hideGenerator": true
+  "hideGenerator": true,
+  "theme": "material"
 }

@@ -246,6 +246,7 @@ export const objectValue = <T, K extends keyof T>(
  * Pattern to recognize if a field name is in a format that doesn't require quotes.
  */
 const isToken = /^[a-z$_]+$/i
+
 /**
  * Pretty prints a `ValueInput.path` value.
  */
