@@ -9,5 +9,7 @@ module.exports = {
   theme: 'default',
   target: 'ES5',
   excludePrivate: true,
-  gitRevision: 'master'
+  gitRevision: 'master',
+  gaID: 'UA-589893-22',
+  gaSite: 'auto'
 };
