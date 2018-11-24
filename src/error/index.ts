@@ -65,7 +65,7 @@ export const DecodeError = {
   /**
    * Generate an instance of `{@link CustomError}`.
    */
-  expectedEot: new ExpectedEoi() as DecodeError,
+  expectedEoi: new ExpectedEoi() as DecodeError,
   /**
    * Generate an instance of `{@link ExpectedField}`.
    */
