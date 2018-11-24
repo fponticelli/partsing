@@ -19,6 +19,14 @@ limitations under the License.
  * an `index` as the current character position inside the stream.
  */
 export interface TextInput {
+  /**
+   * The string input. Its value is never modified by the decoders at any point
+   * in the chain.
+   */
   readonly input: string
+
+  /**
+   * The current position reached by a decoder.
+   */
   readonly index: number
 }

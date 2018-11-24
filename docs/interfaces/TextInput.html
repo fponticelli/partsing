@@ -130,6 +130,12 @@ an <code>index</code> as the current character position inside the stream.</p>
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>The current position reached by a decoder.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -159,6 +165,13 @@ an <code>index</code> as the current character position inside the stream.</p>
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>The string input. Its value is never modified by the decoders at any point
+in the chain.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -167,7 +180,15 @@ an <code>index</code> as the current character position inside the stream.</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface TextInput {
+  /**
+   * The string input. Its value is never modified by the decoders at any point
+   * in the chain.
+   */
   readonly input: string
+
+  /**
+   * The current position reached by a decoder.
+   */
   readonly index: number
 }
 </code></pre>

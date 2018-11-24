@@ -16,6 +16,10 @@ limitations under the License.
 
 import { DecodeError } from './'
 
+/**
+ * Error class to combine multiple errors together. This happen mostly for
+ * decoders that have alternatives.
+ */
 export class CombineErrors {
   /**
    * Type discriminator
