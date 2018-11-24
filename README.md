@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/fponticelli/partsing.svg?branch=master)](https://travis-ci.org/fponticelli/partsing)
+
 # ParTSing
 
 *ParTSing* is a decoder combinator library. You can use it to build parsers/decoders from string or really any input values.
