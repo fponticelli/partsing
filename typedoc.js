@@ -1,6 +1,6 @@
 module.exports = {
   out: './docs',
-  name: 'ParTSing 2',
+  name: 'ParTSing',
   readme: './README.md',
   externalPattern: 'node_modules',
   hideGenerator: true,

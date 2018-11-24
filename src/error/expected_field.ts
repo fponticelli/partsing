@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 /**
- * Error for missing fieeld.
+ * Error for missing field.
  */
 export class ExpectedField {
   /**
