@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ExpectedAnyOf | ParTSing</title>
+	<title>ExpectedMatch | ParTSing 2</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ParTSing</a>
+					<a href="../index.html" class="title">ParTSing 2</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,13 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_error_expected_any_of_.html">&quot;error/expected_any_of&quot;</a>
-				</li>
-				<li>
-					<a href="_error_expected_any_of_.expectedanyof.html">ExpectedAnyOf</a>
+					<a href="expectedmatch.html">ExpectedMatch</a>
 				</li>
 			</ul>
-			<h1>Class ExpectedAnyOf</h1>
+			<h1>Class ExpectedMatch</h1>
 		</div>
 	</div>
 </header>
@@ -72,8 +69,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Error for any <a href="../enums/_error_entity_.entity.html">Entity</a> that should match at least one of the conditions
-						described in the <code>descriptions</code> array.</p>
+						<p>Error for an exact match that failed. The expectation is described as a
+						string.</p>
 					</div>
 				</div>
 			</section>
@@ -81,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ExpectedAnyOf</span>
+						<span class="target">ExpectedMatch</span>
 					</li>
 				</ul>
 			</section>
@@ -92,21 +89,20 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_error_expected_any_of_.expectedanyof.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="expectedmatch.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_error_expected_any_of_.expectedanyof.html#descriptions" class="tsd-kind-icon">descriptions</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_error_expected_any_of_.expectedanyof.html#entity" class="tsd-kind-icon">entity</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_error_expected_any_of_.expectedanyof.html#kind" class="tsd-kind-icon">kind</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expectedmatch.html#kind" class="tsd-kind-icon">kind</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expectedmatch.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_error_expected_any_of_.expectedanyof.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expectedmatch.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
 							</ul>
 						</section>
 					</div>
@@ -118,35 +114,32 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Expected<wbr>Any<wbr>Of<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="../enums/_error_entity_.entity.html" class="tsd-signature-type">Entity</a>, descriptions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_error_expected_any_of_.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Expected<wbr>Match<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/c69efd8/src/error/expected_any_of.ts#L44">error/expected_any_of.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/3085da4/src/error/expected_match.ts#L25">error/expected_match.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Construct an instance of <code>ExpectedAnyOf</code></p>
+									<p>Construct an instance of <code>ExpectedMatch</code></p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>entity: <a href="../enums/_error_entity_.entity.html" class="tsd-signature-type">Entity</a></h5>
-								</li>
-								<li>
-									<h5>descriptions: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>value: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>Human readable descriptions of all the missed matches.</p>
+											<p>Human readable description of the missed match.</p>
 										</div>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_error_expected_any_of_.expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -154,42 +147,32 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="descriptions" class="tsd-anchor"></a>
-					<h3>descriptions</h3>
-					<div class="tsd-signature tsd-kind-icon">descriptions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/c69efd8/src/error/expected_any_of.ts#L51">error/expected_any_of.ts:51</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Human readable descriptions of all the missed matches.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="entity" class="tsd-anchor"></a>
-					<h3>entity</h3>
-					<div class="tsd-signature tsd-kind-icon">entity<span class="tsd-signature-symbol">:</span> <a href="../enums/_error_entity_.entity.html" class="tsd-signature-type">Entity</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/c69efd8/src/error/expected_any_of.ts#L51">error/expected_any_of.ts:51</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="kind" class="tsd-anchor"></a>
 					<h3>kind</h3>
-					<div class="tsd-signature tsd-kind-icon">kind<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"expected-any-of"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;expected-any-of&quot;</span></div>
+					<div class="tsd-signature tsd-kind-icon">kind<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"expected-match"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;expected-match&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/c69efd8/src/error/expected_any_of.ts#L44">error/expected_any_of.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/3085da4/src/error/expected_match.ts#L25">error/expected_match.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Type discriminator</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="value" class="tsd-anchor"></a>
+					<h3>value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/3085da4/src/error/expected_match.ts#L31">error/expected_match.ts:31</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Human readable description of the missed match.</p>
 						</div>
 					</div>
 				</section>
@@ -206,7 +189,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/c69efd8/src/error/expected_any_of.ts#L56">error/expected_any_of.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/3085da4/src/error/expected_match.ts#L36">error/expected_match.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -226,97 +209,31 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_decoder_.html">"core/decoder"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_result_.html">"core/result"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_type_level_.html">"core/type_<wbr>level"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_custom_error_.html">"error/custom_<wbr>error"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_entity_.html">"error/entity"</a>
-					</li>
-					<li class="current tsd-kind-external-module">
-						<a href="../modules/_error_expected_any_of_.html">"error/expected_<wbr>any_<wbr>of"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_at_least_.html">"error/expected_<wbr>at_<wbr>least"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_eoi_.html">"error/expected_<wbr>eoi"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_field_.html">"error/expected_<wbr>field"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_match_.html">"error/expected_<wbr>match"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_none_of_.html">"error/expected_<wbr>none_<wbr>of"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_once_.html">"error/expected_<wbr>once"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_within_range_.html">"error/expected_<wbr>within_<wbr>range"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_index_.html">"error/index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_pattern_mismatch_.html">"error/pattern_<wbr>mismatch"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_unexpected_eoi_.html">"error/unexpected_<wbr>eoi"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_text_index_.html">"text/index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_text_input_.html">"text/input"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_value_index_.html">"value/index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_value_input_.html">"value/input"</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_error_expected_any_of_.expectedanyof.html" class="tsd-kind-icon">Expected<wbr>Any<wbr>Of</a>
+					<li class="current tsd-kind-class">
+						<a href="expectedmatch.html" class="tsd-kind-icon">Expected<wbr>Match</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_error_expected_any_of_.expectedanyof.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="expectedmatch.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_error_expected_any_of_.expectedanyof.html#descriptions" class="tsd-kind-icon">descriptions</a>
+								<a href="expectedmatch.html#kind" class="tsd-kind-icon">kind</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_error_expected_any_of_.expectedanyof.html#entity" class="tsd-kind-icon">entity</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_error_expected_any_of_.expectedanyof.html#kind" class="tsd-kind-icon">kind</a>
+								<a href="expectedmatch.html#value" class="tsd-kind-icon">value</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_error_expected_any_of_.expectedanyof.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
+								<a href="expectedmatch.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="../modules/_error_expected_any_of_.html#concator" class="tsd-kind-icon">concat<wbr>Or</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

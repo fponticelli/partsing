@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ExpectedMatch | ParTSing</title>
+	<title>ExpectedWithinRange | ParTSing 2</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ParTSing</a>
+					<a href="../index.html" class="title">ParTSing 2</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,13 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_error_expected_match_.html">&quot;error/expected_match&quot;</a>
-				</li>
-				<li>
-					<a href="_error_expected_match_.expectedmatch.html">ExpectedMatch</a>
+					<a href="expectedwithinrange.html">ExpectedWithinRange</a>
 				</li>
 			</ul>
-			<h1>Class ExpectedMatch</h1>
+			<h1>Class ExpectedWithinRange</h1>
 		</div>
 	</div>
 </header>
@@ -72,8 +69,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Error for an exact match that failed. The expectation is described as a
-						string.</p>
+						<p>Error for a decoder that should have captured a value between twp values
+						as described in <code>min</code> and <code>max</code>.</p>
 					</div>
 				</div>
 			</section>
@@ -81,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ExpectedMatch</span>
+						<span class="target">ExpectedWithinRange</span>
 					</li>
 				</ul>
 			</section>
@@ -92,20 +89,21 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_error_expected_match_.expectedmatch.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="expectedwithinrange.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_error_expected_match_.expectedmatch.html#kind" class="tsd-kind-icon">kind</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_error_expected_match_.expectedmatch.html#value" class="tsd-kind-icon">value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expectedwithinrange.html#kind" class="tsd-kind-icon">kind</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expectedwithinrange.html#max" class="tsd-kind-icon">max</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expectedwithinrange.html#min" class="tsd-kind-icon">min</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_error_expected_match_.expectedmatch.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="expectedwithinrange.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
 							</ul>
 						</section>
 					</div>
@@ -117,32 +115,40 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Expected<wbr>Match<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_error_expected_match_.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Expected<wbr>Within<wbr>Range<span class="tsd-signature-symbol">(</span>min<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, max<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/c69efd8/src/error/expected_match.ts#L25">error/expected_match.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/3085da4/src/error/expected_within_range.ts#L25">error/expected_within_range.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Construct an instance of <code>ExpectedMatch</code></p>
+									<p>Construct an instance of <code>ExpectedWithinRange</code>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>value: <span class="tsd-signature-type">string</span></h5>
+									<h5>min: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>Human readable description of the missed match.</p>
+											<p>minimum number of occurrances expected (inclusive).</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>max: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>maximum number of occurrances expected (inclusive).</p>
 										</div>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_error_expected_match_.expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -152,10 +158,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="kind" class="tsd-anchor"></a>
 					<h3>kind</h3>
-					<div class="tsd-signature tsd-kind-icon">kind<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"expected-match"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;expected-match&quot;</span></div>
+					<div class="tsd-signature tsd-kind-icon">kind<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"expected-within-range"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;expected-within-range&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/c69efd8/src/error/expected_match.ts#L25">error/expected_match.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/3085da4/src/error/expected_within_range.ts#L25">error/expected_within_range.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -165,17 +171,32 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="value" class="tsd-anchor"></a>
-					<h3>value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="max" class="tsd-anchor"></a>
+					<h3>max</h3>
+					<div class="tsd-signature tsd-kind-icon">max<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/c69efd8/src/error/expected_match.ts#L31">error/expected_match.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/3085da4/src/error/expected_within_range.ts#L32">error/expected_within_range.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Human readable description of the missed match.</p>
+							<p>maximum number of occurrances expected (inclusive).</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="min" class="tsd-anchor"></a>
+					<h3>min</h3>
+					<div class="tsd-signature tsd-kind-icon">min<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/3085da4/src/error/expected_within_range.ts#L32">error/expected_within_range.ts:32</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>minimum number of occurrances expected (inclusive).</p>
 						</div>
 					</div>
 				</section>
@@ -192,7 +213,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/c69efd8/src/error/expected_match.ts#L36">error/expected_match.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/3085da4/src/error/expected_within_range.ts#L37">error/expected_within_range.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -212,86 +233,29 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_decoder_.html">"core/decoder"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_result_.html">"core/result"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_core_type_level_.html">"core/type_<wbr>level"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_custom_error_.html">"error/custom_<wbr>error"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_entity_.html">"error/entity"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_any_of_.html">"error/expected_<wbr>any_<wbr>of"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_at_least_.html">"error/expected_<wbr>at_<wbr>least"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_eoi_.html">"error/expected_<wbr>eoi"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_field_.html">"error/expected_<wbr>field"</a>
-					</li>
-					<li class="current tsd-kind-external-module">
-						<a href="../modules/_error_expected_match_.html">"error/expected_<wbr>match"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_none_of_.html">"error/expected_<wbr>none_<wbr>of"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_once_.html">"error/expected_<wbr>once"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_expected_within_range_.html">"error/expected_<wbr>within_<wbr>range"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_index_.html">"error/index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_pattern_mismatch_.html">"error/pattern_<wbr>mismatch"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_error_unexpected_eoi_.html">"error/unexpected_<wbr>eoi"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_text_index_.html">"text/index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_text_input_.html">"text/input"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_value_index_.html">"value/index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_value_input_.html">"value/input"</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_error_expected_match_.expectedmatch.html" class="tsd-kind-icon">Expected<wbr>Match</a>
+					<li class="current tsd-kind-class">
+						<a href="expectedwithinrange.html" class="tsd-kind-icon">Expected<wbr>Within<wbr>Range</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_error_expected_match_.expectedmatch.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="expectedwithinrange.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_error_expected_match_.expectedmatch.html#kind" class="tsd-kind-icon">kind</a>
+								<a href="expectedwithinrange.html#kind" class="tsd-kind-icon">kind</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_error_expected_match_.expectedmatch.html#value" class="tsd-kind-icon">value</a>
+								<a href="expectedwithinrange.html#max" class="tsd-kind-icon">max</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="expectedwithinrange.html#min" class="tsd-kind-icon">min</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_error_expected_match_.expectedmatch.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
+								<a href="expectedwithinrange.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
 							</li>
 						</ul>
 					</li>

@@ -43,13 +43,13 @@
   },
   "scripts": {
     "build": "rm -rf lib && tsc",
-    "doc": "rm -rf docs && typedoc --out docs --name ParTSing --readme README.md --theme default --module commonjs --target ES5 --hideGenerator ./src",
+    "docs": "rm -rf docs && typedoc --options typedoc.js ./src",
     "serve-doc": "rm -rf docs && compodoc src -s",
     "lint": "tslint \"./{src,test}/**/*.ts\"",
     "fix-lint": "tslint --fix \"./{src,test}/**/*.ts\"",
     "prettier": "prettier --list-different \"./{src,test}/**/*.ts\"",
     "fix-prettier": "prettier --write \"./{src,test}/**/*.ts\"",
-    "prep": "yarn test-coverage && yarn lint && yarn prettier && yarn build && yarn doc",
+    "prep": "yarn test-coverage && yarn lint && yarn prettier && yarn build && yarn docs",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "watch": "jest --watch --coverage"
