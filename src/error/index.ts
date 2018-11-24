@@ -23,7 +23,6 @@ import { ExpectedField } from './expected_field'
 import { ExpectedMatch } from './expected_match'
 import { ExpectedNoneOf } from './expected_none_of'
 import { ExpectedOnce } from './expected_once'
-import { CombineErrors } from './combine_errors'
 import { ExpectedWithinRange } from './expected_within_range'
 import { PatternMismatch } from './pattern_mismatch'
 import { UnexpectedEoi } from './unexpected_eoi'
@@ -40,7 +39,6 @@ export type DecodeError =
   | ExpectedMatch
   | ExpectedNoneOf
   | ExpectedOnce
-  | CombineErrors
   | ExpectedWithinRange
   | PatternMismatch
   | UnexpectedEoi
@@ -83,10 +81,6 @@ export const DecodeError = {
    */
   expectedOnce: (entity: Entity) => new ExpectedOnce(entity) as DecodeError,
   /**
-   * Generate an instance of `{@link CombineErrors}`.
-   */
-  combine: (errors: DecodeError[]) => new CombineErrors(errors) as DecodeError,
-  /**
    * Generate an instance of `{@link ExpectedWithinRange}`.
    */
   expectedWithinRange: (min: string, max: string) => new ExpectedWithinRange(min, max) as DecodeError,
@@ -109,7 +103,6 @@ export { ExpectedField } from './expected_field'
 export { ExpectedMatch } from './expected_match'
 export { ExpectedNoneOf } from './expected_none_of'
 export { ExpectedOnce } from './expected_once'
-export { CombineErrors } from './combine_errors'
 export { ExpectedWithinRange } from './expected_within_range'
 export { PatternMismatch } from './pattern_mismatch'
 export { UnexpectedEoi } from './unexpected_eoi'

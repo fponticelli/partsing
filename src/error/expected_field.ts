@@ -33,6 +33,6 @@ export class ExpectedField {
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
-    return `expected field "${this.field}"`
+    return `field "${this.field}"`
   }
 }

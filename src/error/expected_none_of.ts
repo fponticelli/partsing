@@ -39,6 +39,6 @@ export class ExpectedNoneOf {
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
-    return `expected no ${entityToString(this.entity, 1)} like ${concatOr(this.descriptions)}`
+    return `no ${entityToString(this.entity, 1)} like ${concatOr(this.descriptions)}`
   }
 }

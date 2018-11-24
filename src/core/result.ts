@@ -73,7 +73,7 @@ abstract class DecodeResultBase<In, Out, Err> {
    * Transfom the result of a `DecodeFailure` into a new `DecodeResult` by applying
    * the function `f` to it. This operation allows to recover form a failed result.
    */
-  abstract flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2>
+  abstract flatMapError<Err2>(f: (r: Err[]) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2>
 
   /**
    * Transfom the result of a `DecodeSuccess` into a new value of type `Out2` by
@@ -119,7 +119,7 @@ abstract class DecodeResultBase<In, Out, Err> {
    * type `DecodeSuccess` then this function will throw an exception.
    * Do not use unless you are protecting from exceptions.
    */
-  abstract getUnsafeFailure(): Err
+  abstract getUnsafeFailures(): Err[]
 
   /**
    * Provides a human readable representation of the value. Mostly for debugging.
@@ -166,7 +166,7 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   /**
    * See {@link DecodeResultBase.flatMapError}
    */
-  flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
+  flatMapError<Err2>(f: (r: Err[]) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
     return new DecodeSuccess(this.input, this.value)
   }
 
@@ -206,9 +206,9 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   }
 
   /**
-   * See {@link DecodeResultBase.getUnsafeFailure}
+   * See {@link DecodeResultBase.getUnsafeFailures}
    */
-  getUnsafeFailure(): Err {
+  getUnsafeFailures(): Err[] {
     throw new Error("can't get failure from success")
   }
 
@@ -227,14 +227,20 @@ export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   readonly kind = 'decode-failure'
 
   /**
+   * Contains all the possible reasons of why a decoder failed.
+   */
+  readonly failures: Err[]
+
+  /**
    * Contruct an instance of `DecodeFailure`.
    * @param input The input value that corresponds to the place where the decoder
    * failed to generate a valid result.
-   * @param failure The error message associated with the reason why the decoder
+   * @param failures The error messages associated with the reason why the decoder
    * failed.
    */
-  constructor(input: In, readonly failure: Err) {
+  constructor(input: In, ...failures: Err[]) {
     super(input)
+    this.failures = failures
   }
 
   /**
@@ -251,35 +257,35 @@ export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
    * See {@link DecodeResultBase.flatMap}
    */
   flatMap<Out2>(f: (r: Out) => DecodeResult<In, Out2, Err>): DecodeResult<In, Out2, Err> {
-    return new DecodeFailure(this.input, this.failure)
+    return new DecodeFailure(this.input, ...this.failures)
   }
 
   /**
    * See {@link DecodeResultBase.map}
    */
   map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err> {
-    return new DecodeFailure(this.input, this.failure)
+    return new DecodeFailure(this.input, ...this.failures)
   }
 
   /**
    * See {@link DecodeResultBase.flatMapError}
    */
-  flatMapError<Err2>(f: (r: Err) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
-    return f(this.failure)
+  flatMapError<Err2>(f: (r: Err[]) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
+    return f(this.failures)
   }
 
   /**
    * See {@link DecodeResultBase.mapError}
    */
   mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2> {
-    return this.flatMapError(e => new DecodeFailure(this.input, f(e)))
+    return failure(this.input, ...this.failures.map(f))
   }
 
   /**
    * See {@link DecodeResultBase.mapInput}
    */
   mapInput<In2>(f: (i: In) => In2): DecodeResult<In2, Out, Err> {
-    return new DecodeFailure(f(this.input), this.failure)
+    return failure(f(this.input), ...this.failures)
   }
 
   /**
@@ -306,15 +312,15 @@ export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   /**
    * See {@link DecodeResultBase.getUnsafeFailure}
    */
-  getUnsafeFailure(): Err {
-    return this.failure
+  getUnsafeFailures(): Err[] {
+    return this.failures
   }
 
   /**
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString(): string {
-    return `DecodeFailure<${JSON.stringify(this.failure)}>: ${JSON.stringify(this.input)}`
+    return `DecodeFailure<${JSON.stringify(this.failures)}>: ${JSON.stringify(this.input)}`
   }
 }
 
@@ -342,5 +348,5 @@ export const success = <In, Out, Err>(input: In, result: Out): DecodeResult<In, 
 /**
  * Helper function to create an instance of `DecodeResult` from a failed decoding.
  */
-export const failure = <In, Out, Err>(input: In, failure: Err): DecodeResult<In, Out, Err> =>
-  new DecodeFailure(input, failure)
+export const failure = <In, Out, Err>(input: In, ...failures: Err[]): DecodeResult<In, Out, Err> =>
+  new DecodeFailure(input, ...failures)

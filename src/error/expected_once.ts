@@ -35,6 +35,6 @@ export class ExpectedOnce {
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
-    return `expected a ${entityToString(this.entity, 1)}`
+    return `a ${entityToString(this.entity, 1)}`
   }
 }

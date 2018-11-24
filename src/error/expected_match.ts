@@ -34,6 +34,6 @@ export class ExpectedMatch {
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
-    return `expected ${this.value}`
+    return `${this.value}`
   }
 }

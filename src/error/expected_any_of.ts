@@ -54,6 +54,6 @@ export class ExpectedAnyOf {
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
-    return `expected any ${entityToString(this.entity, 1)} in ${concatOr(this.descriptions)}`
+    return `any ${entityToString(this.entity, 1)} in ${concatOr(this.descriptions)}`
   }
 }

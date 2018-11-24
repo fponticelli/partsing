@@ -103,10 +103,10 @@
                             <a href="#failure" title="src/core/result.ts"><b>failure</b>&nbsp;&nbsp;&nbsp;(src/.../result.ts)</a>
                         </li>
                         <li>
-                            <a href="#failureToString" title="src/text/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#failureToString" title="src/value/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#failureToString" title="src/value/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#failureToString" title="src/text/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#finiteNumberValue" title="src/value/index.ts"><b>finiteNumberValue</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -187,10 +187,10 @@
                             <a href="#safeIntegerValue" title="src/value/index.ts"><b>safeIntegerValue</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#" title="src/text/index.ts"><b></b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#sequence" title="src/core/decoder.ts"><b>sequence</b>&nbsp;&nbsp;&nbsp;(src/.../decoder.ts)</a>
                         </li>
                         <li>
-                            <a href="#sequence" title="src/core/decoder.ts"><b>sequence</b>&nbsp;&nbsp;&nbsp;(src/.../decoder.ts)</a>
+                            <a href="#" title="src/text/index.ts"><b></b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#stringValue" title="src/value/index.ts"><b>stringValue</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -350,7 +350,7 @@ as <code>any</code>.</p>
         if (r.isSuccess()) {
           buff[i] &#x3D; r.value
         } else {
-          return failure(r.input, r.failure)
+          return failure(r.input, ...r.failures)
         }
       }
       return success(input, buff)
@@ -466,11 +466,13 @@ type <a href="interfaces/ValueInput.html">ValueInput</a> and not just <code>any<
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>&lt;Out&gt;(err: DecodeFailure&lt;ValueInput, Out, DecodeError&gt;): string &#x3D;&gt; {
-  const { failure, input } &#x3D; err
-  const msg &#x3D; failure.toString() + &#x27; but got &#x27; + String(input.input)
+  const { failures, input } &#x3D; err
+  const expected &#x3D;
+    failures.length &#x3D;&#x3D;&#x3D; 1 ? failures[0].toString() : &#x60;one of:\n * ${failures.map(v &#x3D;&gt; v.toString()).join(&#x27;\n * &#x27;)}\n&#x60;
+  const msg &#x3D; &#x60;${expected} but got ${String(input.input)}&#x60;
   const path &#x3D; pathToString(input.path)
   if (path &#x3D;&#x3D;&#x3D; &#x27;&#x27;) return msg
-  else return &#x60;${msg} at ${path}&#x60;
+  else return &#x60;expected ${msg} at ${path}&#x60;
 }</code>
                         </td>
                     </tr>
@@ -678,7 +680,7 @@ behavior, an equality function can be provided.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&lt;T&gt;(decoder: ValueDecoder&lt;T&gt;) &#x3D;&gt; decoder.or(DecodeError.combine, nullValue)</code>
+                            <i>Default value : </i><code>&lt;T&gt;(decoder: ValueDecoder&lt;T&gt;) &#x3D;&gt; decoder.or(nullValue)</code>
                         </td>
                     </tr>
 
@@ -796,7 +798,7 @@ or <code>null</code>.</p>
           if (result.isSuccess()) {
             buff[field] &#x3D; result.value
           } else {
-            return failure(result.input, result.failure)
+            return failure(result.input, ...result.failures)
           }
         } else {
           return failure(input, DecodeError.expectedField(field))
@@ -809,7 +811,7 @@ or <code>null</code>.</p>
           if (result.isSuccess()) {
             buff[field] &#x3D; result.value
           } else {
-            return failure(result.input, result.failure)
+            return failure(result.input, ...result.failures)
           }
         }
       }
@@ -853,7 +855,7 @@ for a matching field in the input object.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&lt;T&gt;(decoder: ValueDecoder&lt;T&gt;) &#x3D;&gt; decoder.or(DecodeError.combine, undefinedValue, nullValue)</code>
+                            <i>Default value : </i><code>&lt;T&gt;(decoder: ValueDecoder&lt;T&gt;) &#x3D;&gt; decoder.or(undefinedValue, nullValue)</code>
                         </td>
                     </tr>
 
@@ -1121,7 +1123,7 @@ is really of type <code>T</code>. Such check must be performed by predicate itse
         if (r.isSuccess()) {
           buff[i] &#x3D; r.value
         } else {
-          return failure(r.input, r.failure)
+          return failure(r.input, ...r.failures)
         }
       }
       return success(input, buff)
@@ -1162,7 +1164,7 @@ decoders.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&lt;T&gt;(decoder: ValueDecoder&lt;T&gt;) &#x3D;&gt; decoder.or(DecodeError.combine, undefinedValue)</code>
+                            <i>Default value : </i><code>&lt;T&gt;(decoder: ValueDecoder&lt;T&gt;) &#x3D;&gt; decoder.or(undefinedValue)</code>
                         </td>
                     </tr>
 
@@ -1440,13 +1442,14 @@ The boundaries <code>min</code> and <code>max</code> are both inclusive and opti
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>&lt;Out&gt;(err: DecodeFailure&lt;TextInput, Out, DecodeError&gt;): string &#x3D;&gt; {
-  const { failure, input } &#x3D; err
-  const msg &#x3D; failure.toString()
+  const { failures, input } &#x3D; err
+  const msg &#x3D;
+    failures.length &#x3D;&#x3D;&#x3D; 1 ? failures[0].toString() : &#x60;one of:\n * ${failures.map(v &#x3D;&gt; v.toString()).join(&#x27;\n * &#x27;)}\n&#x60;
   const length &#x3D; Math.min(25, Math.max(msg.length, 10), input.input.length - input.index)
   const prefix &#x3D; input.index &#x3D;&#x3D;&#x3D; 0 ? &#x27;&#x27; : &#x27;…&#x27;
   const suffix &#x3D; input.index &lt; input.input.length - 1 ? &#x27;…&#x27; : &#x27;&#x27;
   const extract &#x3D; input.input.substr(input.index, length)
-  return &#x60;${msg} at &quot;${prefix}${extract}${suffix}&quot;&#x60;
+  return &#x60;expected ${msg} at &quot;${prefix}${extract}${suffix}&quot;&#x60;
 }</code>
                         </td>
                     </tr>
@@ -2433,10 +2436,6 @@ one is concatenated by <code>or</code>.</p>
    */
   expectedOnce: (entity: Entity) &#x3D;&gt; new ExpectedOnce(entity) as DecodeError,
   /**
-   * Generate an instance of &#x60;{@link CombineErrors}&#x60;.
-   */
-  combine: (errors: DecodeError[]) &#x3D;&gt; new CombineErrors(errors) as DecodeError,
-  /**
    * Generate an instance of &#x60;{@link ExpectedWithinRange}&#x60;.
    */
   expectedWithinRange: (min: string, max: string) &#x3D;&gt; new ExpectedWithinRange(min, max) as DecodeError,
@@ -2563,7 +2562,8 @@ decoding errors typed as <code>DecodeError</code> instances.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&lt;In, Out, Err&gt;(failure: Err) &#x3D;&gt; Decoder.of&lt;In, Out, Err&gt;(input &#x3D;&gt; new DecodeFailure(input, failure))</code>
+                            <i>Default value : </i><code>&lt;In, Out, Err&gt;(err: Err) &#x3D;&gt;
+  Decoder.of&lt;In, Out, Err&gt;((input: In) &#x3D;&gt; failure&lt;In, Out, Err&gt;(input, err))</code>
                         </td>
                     </tr>
 
@@ -2641,26 +2641,19 @@ mutliple times if needed.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&lt;In, U extends any[], Err&gt;(
-  combineErrors: undefined | ((errs: Err[]) &#x3D;&gt; Err),
-  ...decoders: { [P in keyof U]: Decoder&lt;In, U[P], Err&gt; }
-) &#x3D;&gt; {
+                            <i>Default value : </i><code>&lt;In, U extends any[], Err&gt;(...decoders: { [P in keyof U]: Decoder&lt;In, U[P], Err&gt; }) &#x3D;&gt; {
   if (decoders.length &#x3D;&#x3D;&#x3D; 0) throw new Error(&#x27;alt needs to be called with at least one argumenr&#x27;)
   return Decoder.of&lt;In, TupleToUnion&lt;U&gt;, Err&gt;((input: In) &#x3D;&gt; {
-    const failures &#x3D; []
+    let failures: Err[] &#x3D; []
     for (let decoder of decoders) {
       const result &#x3D; decoder.run(input)
       if (result.isFailure()) {
-        failures.push(result.failure)
+        failures &#x3D; failures.concat(result.failures)
       } else {
         return result
       }
     }
-    if (combineErrors) {
-      return failure(input, combineErrors(failures))
-    } else {
-      return failure(input, failures[0])
-    }
+    return failure(input, ...failures)
   })
 }</code>
                         </td>
@@ -2707,13 +2700,13 @@ all fail.</p>
       const decoder &#x3D; decoders[i]
       const result &#x3D; decoder.run(input)
       if (result.isFailure()) {
-        return new DecodeFailure(input, result.failure)
+        return failure(input, ...result.failures)
       } else {
         input &#x3D; result.input
         buff[i] &#x3D; result.value
       }
     }
-    return new DecodeSuccess(input, buff)
+    return success(input, buff)
   })</code>
                         </td>
                     </tr>
@@ -2750,8 +2743,7 @@ matches the expected type of the corresponding decoder.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&lt;In, Out, Err&gt;(result: Out) &#x3D;&gt;
-  Decoder.of&lt;In, Out, Err&gt;(input &#x3D;&gt; new DecodeSuccess(input, result))</code>
+                            <i>Default value : </i><code>&lt;In, Out, Err&gt;(result: Out) &#x3D;&gt; Decoder.of&lt;In, Out, Err&gt;(input &#x3D;&gt; success(input, result))</code>
                         </td>
                     </tr>
 
@@ -2789,8 +2781,8 @@ doesn&#39;t consume anything from the input.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>&lt;In, Out, Err&gt;(input: In, failure: Err): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
-  new DecodeFailure(input, failure)</code>
+                            <i>Default value : </i><code>&lt;In, Out, Err&gt;(input: In, ...failures: Err[]): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
+  new DecodeFailure(input, ...failures)</code>
                         </td>
                     </tr>
 

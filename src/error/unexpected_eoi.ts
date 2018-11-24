@@ -27,6 +27,6 @@ export class UnexpectedEoi {
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
-    return `unexpected end of input`
+    return `NOT end of input`
   }
 }

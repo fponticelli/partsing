@@ -61,12 +61,12 @@ const decodeSuccess = <Out>(decoder: TextDecoder<Out>, input: string): [TextInpu
   }
 }
 
-const decodeFailure = <Out>(decoder: TextDecoder<Out>, input: string): [TextInput, DecodeError] => {
+const decodeFailure = <Out>(decoder: TextDecoder<Out>, input: string): [TextInput, DecodeError[]] => {
   const r = decoder.run({ input, index: 0 })
   if (r.isSuccess()) {
     throw 'expected decode failure'
   } else {
-    return [r.input, r.failure]
+    return [r.input, r.failures]
   }
 }
 
@@ -90,7 +90,7 @@ describe('text_decoder', () => {
     const p = regexp(/^\d+/g)
     const [input, failure] = decodeFailure(p, 'a123b')
     expect(input.index).toEqual(0)
-    expect(failure).toBeInstanceOf(PatternMismatch)
+    expect(failure[0]).toBeInstanceOf(PatternMismatch)
     const [input2, decoded] = decodeSuccess(p, '123')
     expect(input2.index).toEqual(3)
     expect(decoded).toEqual('123')
@@ -100,7 +100,7 @@ describe('text_decoder', () => {
     const p = regexp(/^\d+/)
     const [input, failure] = decodeFailure(p, 'a123b')
     expect(input.index).toEqual(0)
-    expect(failure).toBeInstanceOf(PatternMismatch)
+    expect(failure[0]).toBeInstanceOf(PatternMismatch)
     const [input2, decoded] = decodeSuccess(p, '123')
     expect(input2.index).toEqual(3)
     expect(decoded).toEqual('123')
@@ -128,28 +128,28 @@ describe('text_decoder', () => {
     const [, decoded] = decodeSuccess(rest.skipNext(eoi), 'a123b')
     expect(decoded).toEqual('a123b')
     const [, failure] = decodeFailure(eoi, 'a123b')
-    expect(failure).toBeInstanceOf(ExpectedEoi)
+    expect(failure[0]).toBeInstanceOf(ExpectedEoi)
   })
 
   it('match', () => {
     const [, decoded] = decodeSuccess(match('a12'), 'a123b')
     expect(decoded).toEqual('a12')
     const [, failure] = decodeFailure(match('abc'), 'a123b')
-    expect(failure).toBeInstanceOf(ExpectedMatch)
+    expect(failure[0]).toBeInstanceOf(ExpectedMatch)
   })
 
   it('matchInsensitive', () => {
     const [, decoded] = decodeSuccess(matchInsensitive('abc'), 'AbCd')
     expect(decoded).toEqual('AbC')
     const [, failure] = decodeFailure(matchInsensitive('abc'), 'a123b')
-    expect(failure).toBeInstanceOf(ExpectedMatch)
+    expect(failure[0]).toBeInstanceOf(ExpectedMatch)
   })
 
   it('letter', () => {
     const [, decoded] = decodeSuccess(letter, 'a123b')
     expect(decoded).toEqual('a')
     const [, failure] = decodeFailure(letter, '123')
-    expect(failure).toBeInstanceOf(ExpectedOnce)
+    expect(failure[0]).toBeInstanceOf(ExpectedOnce)
   })
 
   it('letters', () => {
@@ -158,18 +158,18 @@ describe('text_decoder', () => {
     const [, decoded1] = decodeSuccess(letters(0), 'abc123')
     expect(decoded1).toEqual('abc')
     const [, failure2] = decodeFailure(letters(1), '123abc')
-    expect(failure2).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure2[0]).toBeInstanceOf(ExpectedAtLeast)
     const [, decoded3] = decodeSuccess(letters(0, 2), 'abc123')
     expect(decoded3).toEqual('ab')
     const [, failure4] = decodeFailure(letters(3, 4), 'ab123')
-    expect(failure4).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure4[0]).toBeInstanceOf(ExpectedAtLeast)
   })
 
   it('lowerCaseLetter', () => {
     const [, decoded] = decodeSuccess(lowerCaseLetter, 'a123b')
     expect(decoded).toEqual('a')
     const [, failure] = decodeFailure(lowerCaseLetter, 'AB')
-    expect(failure).toBeInstanceOf(ExpectedOnce)
+    expect(failure[0]).toBeInstanceOf(ExpectedOnce)
   })
 
   it('lowerCaseLetters', () => {
@@ -178,18 +178,18 @@ describe('text_decoder', () => {
     const [, decoded1] = decodeSuccess(lowerCaseLetters(0), 'abcABC')
     expect(decoded1).toEqual('abc')
     const [, failure2] = decodeFailure(lowerCaseLetters(1), 'ABCabc')
-    expect(failure2).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure2[0]).toBeInstanceOf(ExpectedAtLeast)
     const [, decoded3] = decodeSuccess(lowerCaseLetters(0, 2), 'abcABC')
     expect(decoded3).toEqual('ab')
     const [, failure4] = decodeFailure(lowerCaseLetters(3, 4), 'abABC')
-    expect(failure4).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure4[0]).toBeInstanceOf(ExpectedAtLeast)
   })
 
   it('upperCaseLetter', () => {
     const [, decoded] = decodeSuccess(upperCaseLetter, 'AabcB')
     expect(decoded).toEqual('A')
     const [, failure] = decodeFailure(upperCaseLetter, 'abc')
-    expect(failure).toBeInstanceOf(ExpectedOnce)
+    expect(failure[0]).toBeInstanceOf(ExpectedOnce)
   })
 
   it('upperCaseLetters', () => {
@@ -198,18 +198,18 @@ describe('text_decoder', () => {
     const [, decoded1] = decodeSuccess(upperCaseLetters(0), 'ABCabc')
     expect(decoded1).toEqual('ABC')
     const [, failure2] = decodeFailure(upperCaseLetters(1), 'abcABC')
-    expect(failure2).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure2[0]).toBeInstanceOf(ExpectedAtLeast)
     const [, decoded3] = decodeSuccess(upperCaseLetters(0, 2), 'ABCabc')
     expect(decoded3).toEqual('AB')
     const [, failure4] = decodeFailure(upperCaseLetters(3, 4), 'ABabc')
-    expect(failure4).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure4[0]).toBeInstanceOf(ExpectedAtLeast)
   })
 
   it('digit', () => {
     const [, decoded] = decodeSuccess(digit, '123abc')
     expect(decoded).toEqual('1')
     const [, failure] = decodeFailure(digit, 'abc')
-    expect(failure).toBeInstanceOf(ExpectedOnce)
+    expect(failure[0]).toBeInstanceOf(ExpectedOnce)
   })
 
   it('digits', () => {
@@ -220,16 +220,16 @@ describe('text_decoder', () => {
     const [, decoded2] = decodeSuccess(digits(3, 4), '123abc')
     expect(decoded2).toEqual('123')
     const [, failure] = decodeFailure(digits(1), 'abc123')
-    expect(failure).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure[0]).toBeInstanceOf(ExpectedAtLeast)
     const [, failure2] = decodeFailure(digits(3, 4), '12abc')
-    expect(failure2).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure2[0]).toBeInstanceOf(ExpectedAtLeast)
   })
 
   it('whitespace', () => {
     const [, decoded] = decodeSuccess(whitespace, '  abc')
     expect(decoded).toEqual('  ')
     const [, failure] = decodeFailure(whitespace, 'abc')
-    expect(failure).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure[0]).toBeInstanceOf(ExpectedAtLeast)
   })
 
   it('optionalWhitespace', () => {
@@ -243,7 +243,7 @@ describe('text_decoder', () => {
     const [, decoded] = decodeSuccess(char, 'abc')
     expect(decoded).toEqual('a')
     const [, failure] = decodeFailure(char, '')
-    expect(failure).toBeInstanceOf(ExpectedOnce)
+    expect(failure[0]).toBeInstanceOf(ExpectedOnce)
   })
 
   it('testChar', () => {
@@ -259,31 +259,31 @@ describe('text_decoder', () => {
     const [, decoded1] = decodeSuccess(matchAnyCharOf('abc'), 'cxy')
     expect(decoded1).toEqual('c')
     const [, failure] = decodeFailure(matchAnyCharOf('abc'), 'xyz')
-    expect(failure).toBeInstanceOf(ExpectedAnyOf)
+    expect(failure[0]).toBeInstanceOf(ExpectedAnyOf)
   })
 
   it('matchNoCharOf', () => {
     const [, decoded1] = decodeSuccess(matchNoCharOf('abc'), 'xyz')
     expect(decoded1).toEqual('x')
     const [, failure] = decodeFailure(matchNoCharOf('abc'), 'cxy')
-    expect(failure).toBeInstanceOf(ExpectedNoneOf)
+    expect(failure[0]).toBeInstanceOf(ExpectedNoneOf)
   })
 
   it('takeCharWhile', () => {
     const [, decoded1] = decodeSuccess(takeCharWhile(v => v.toLowerCase() === v), 'xyZ')
     expect(decoded1).toEqual('xy')
     const [, failure2] = decodeFailure(takeCharWhile(v => v.toLowerCase() === v), 'XYZ')
-    expect(failure2).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure2[0]).toBeInstanceOf(ExpectedAtLeast)
     const [, failure3] = decodeFailure(takeCharWhile(v => v.toLowerCase() === v, 2), 'xYZ')
-    expect(failure3).toBeDefined()
+    expect(failure3[0]).toBeDefined()
   })
 
   it('takeCharBetween', () => {
     const [, decoded1] = decodeSuccess(takeCharBetween(v => v.toLowerCase() === v, 2, 3), 'xyzabc')
     expect(decoded1).toEqual('xyz')
     const [, failure2] = decodeFailure(takeCharBetween(v => v.toLowerCase() === v, 2, 3), 'xYZ')
-    expect(failure2).toBeInstanceOf(ExpectedAtLeast)
+    expect(failure2[0]).toBeInstanceOf(ExpectedAtLeast)
     const [, failure3] = decodeFailure(takeCharBetween(v => v.toLowerCase() === v, 2, 3), '')
-    expect(failure3).toBeDefined()
+    expect(failure3[0]).toBeDefined()
   })
 })
