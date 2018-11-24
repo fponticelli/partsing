@@ -127,6 +127,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Construct an instance of <code>CombineErrors</code></p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -135,6 +137,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -149,6 +152,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>the sub-errors to combine.</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -233,7 +240,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/error/combine_errors.ts:29</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/error/combine_errors.ts:34</a></div>
                             </td>
                         </tr>
 
@@ -269,6 +276,11 @@ export class CombineErrors {
    * Type discriminator
    */
   readonly kind: &#x27;combine-errors&#x27; &#x3D; &#x27;combine-errors&#x27;
+
+  /**
+   * Construct an instance of &#x60;CombineErrors&#x60;
+   * @param errors the sub-errors to combine.
+   */
   constructor(readonly errors: DecodeError[]) {}
 
   /**

@@ -103,6 +103,12 @@
                         <span class="name"><b>DecodeError</b><a href="#DecodeError"><span class="icon ion-ios-link"></span></a></span>
                     </td>
                 </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Union type of all possible decoding errors.</p>
+</div>
+                        </td>
+                    </tr>
                 <tr>
                     <td class="col-md-4">
                         <code>DecodeError:     <code><a href="../classes/UnexpectedEoi.html" target="_self" >CustomError | ExpectedAnyOf | ExpectedAtLeast | ExpectedEoi | ExpectedField | ExpectedMatch | ExpectedNoneOf | ExpectedOnce | CombineErrors | ExpectedWithinRange | PatternMismatch | UnexpectedEoi</a></code>
@@ -122,6 +128,23 @@
                         <span class="name"><b>DecodeResult</b><a href="#DecodeResult"><span class="icon ion-ios-link"></span></a></span>
                     </td>
                 </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p><code>DecodeResult</code> it&#39;s an either type, aunion type of two possible constructors.
+It can either be:</p>
+<ul>
+<li><code>DecodeSuccess</code>: a decoder was able to successfully decode a value</li>
+<li><code>DecodeFailure</code>: a decoder failed to decode a value</li>
+</ul>
+<p>A <code>DecodeResult</code> brings three type parameters like in <code><a href="classes/Decoder.html">Decoder</a></code>:</p>
+<ul>
+<li><code>In</code>: The input stream for a decoder.</li>
+<li><code>Out</code>: The expected result from a decoder.</li>
+<li><code>Err</code>: The type that contains information on why a decoder failed.</li>
+</ul>
+</div>
+                        </td>
+                    </tr>
                 <tr>
                     <td class="col-md-4">
                         <code>DecodeResult:     <code><a href="../classes/DecodeSuccess.html" target="_self" >DecodeSuccess&lt;In | Out | Err&gt; | DecodeFailure&lt;In | Out | Err&gt;</a></code>
@@ -281,6 +304,13 @@ return a new object type with the specified fields <code>U</code> marked as opti
                         <span class="name"><b>TextDecoder</b><a href="#TextDecoder"><span class="icon ion-ios-link"></span></a></span>
                     </td>
                 </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Type alias for a decoder specialized in consuming values of type <code><a href="interfaces/TextInput.html">TextInput</a></code>
+and generate errors of type <code><a href="miscellaneous/typealiases.html#DecodeError">DecodeError</a></code>.</p>
+</div>
+                        </td>
+                    </tr>
                 <tr>
                     <td class="col-md-4">
                         <code>TextDecoder:     <code><a href="../interfaces/TextInput.html" target="_self" >Decoder&lt;TextInput | T | DecodeError&gt;</a></code>
@@ -300,6 +330,13 @@ return a new object type with the specified fields <code>U</code> marked as opti
                         <span class="name"><b>ValueDecoder</b><a href="#ValueDecoder"><span class="icon ion-ios-link"></span></a></span>
                     </td>
                 </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Type alias for a decoder specialized in consuming values of type <code><a href="interfaces/ValueInput.html">ValueInput</a></code>
+and generate errors of type <code><a href="miscellaneous/typealiases.html#DecodeError">DecodeError</a></code>.</p>
+</div>
+                        </td>
+                    </tr>
                 <tr>
                     <td class="col-md-4">
                         <code>ValueDecoder:     <code><a href="../interfaces/ValueInput.html" target="_self" >Decoder&lt;ValueInput | T | DecodeError&gt;</a></code>

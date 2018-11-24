@@ -102,10 +102,10 @@
                             <a href="#failure" title="src/core/result.ts"><b>failure</b>&nbsp;&nbsp;&nbsp;(src/.../result.ts)</a>
                         </li>
                         <li>
-                            <a href="#failureToString" title="src/text/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#failureToString" title="src/value/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#failureToString" title="src/value/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#failureToString" title="src/text/index.ts"><b>failureToString</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#finiteNumberValue" title="src/value/index.ts"><b>finiteNumberValue</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -135,10 +135,10 @@
                             <a href="#lowerCaseLetters" title="src/text/index.ts"><b>lowerCaseLetters</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#make" title="src/text/index.ts"><b>make</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#make" title="src/value/index.ts"><b>make</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#make" title="src/value/index.ts"><b>make</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#make" title="src/text/index.ts"><b>make</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#match" title="src/text/index.ts"><b>match</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -186,10 +186,10 @@
                             <a href="#safeIntegerValue" title="src/value/index.ts"><b>safeIntegerValue</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
-                            <a href="#" title="src/text/index.ts"><b></b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
+                            <a href="#sequence" title="src/core/decoder.ts"><b>sequence</b>&nbsp;&nbsp;&nbsp;(src/.../decoder.ts)</a>
                         </li>
                         <li>
-                            <a href="#sequence" title="src/core/decoder.ts"><b>sequence</b>&nbsp;&nbsp;&nbsp;(src/.../decoder.ts)</a>
+                            <a href="#" title="src/text/index.ts"><b></b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
                         </li>
                         <li>
                             <a href="#stringValue" title="src/value/index.ts"><b>stringValue</b>&nbsp;&nbsp;&nbsp;(src/.../index.ts)</a>
@@ -273,6 +273,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches an array. Element values are not decoded and are typed
+as <code>any</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -301,6 +308,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that always retun the input value as an untyped (<code>any</code>) value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -345,6 +358,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Create a decoder that matches an array. Each element is decoded applying
+the passed <code>decoder</code> argument.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -373,6 +393,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches a boolean value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -405,6 +431,15 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Helper function that return a function to decode from an <code>input</code> of type <code>any</code> to a <code>DecodeResult</code>.</p>
+<p>The function takes a <code>ValueDecoder</code> as the only argument.</p>
+<p>This convenience function exists because <code>ValueDecoder</code> requires an input of
+type <a href="interfaces/ValueInput.html">ValueInput</a> and not just <code>any</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -439,6 +474,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Pretty prints a <code>DecodeFailure&lt;ValueInput, Out, DecodeError&gt;</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -467,6 +508,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches a finite-number value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -495,6 +542,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches an integer value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -552,6 +605,14 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches exactly a specified literal value of type <code>T</code>.</p>
+<p>By default this function uses strict equality. If that is not the desired
+behavior, an equality function can be provided.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -580,6 +641,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Utility function to generate a decoder of type <code><a href="miscellaneous/typealiases.html#ValueDecoder">ValueDecoder</a></code> from a function <code>f</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -608,6 +675,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Transform a decoder into one that consumes either the value from the passed decoder
+or <code>null</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -636,6 +710,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches a <code>null</code> value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -664,6 +744,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches a numeric value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -727,6 +813,15 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Create a decoder to validate objects.</p>
+<p>Each field in the passed object argument <code>fieldDecoders</code> is a distinct decoder
+for a matching field in the input object.</p>
+<p>The second argument <code>optionalFields</code>, marks the fields to consider optionals.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -755,6 +850,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Transform a decoder into one that consumes either the value from the passed decoder,
+<code>null</code> or <code>undefined</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -794,6 +896,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Pretty prints a <code>ValueInput.path</code> value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -822,6 +930,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches a safe-integer value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -850,6 +964,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches a string value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -878,6 +998,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that validates a value to be an object.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -909,6 +1035,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Given a type in <code>string</code> format, it checks that the current <code>input</code> matches it
+using <code>typeof</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -938,6 +1071,14 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>It expects an input of type <code>T</code> to pass the check made by the predicate
+function <code>f</code>. Notice that testValue doesn&#39;t (cannot) check that the input
+is really of type <code>T</code>. Such check must be performed by predicate itself.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -982,6 +1123,14 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>It creates a tuple decoder by passing any number of decoders.</p>
+<p>The number of expected elements in the tuple must match the number of provided
+decoders.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1010,6 +1159,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Transform a decoder into one that consumes either the value from the passed decoder
+or <code>undefined</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1038,6 +1194,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches an <code>undefined</code> value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1077,6 +1239,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Decoder that matches one single character. This decoder will only fail if it
+encounters the <code>EOI</code> (end of input).</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1109,6 +1278,15 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Helper function that return a function to decode from an <code>input</code> of type <code>string</code> to a <code>DecodeResult</code>.</p>
+<p>The function takes a <code>TextDecoder</code> as the only argument.</p>
+<p>This convenience function exists because <code>TextDecoder</code> requires an input of
+type <a href="interfaces/TextInput.html">TextInput</a> and not <code>string</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1137,6 +1315,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match a single digit character.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1169,6 +1353,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match a sequence of digit characters. It expects at least one occurance.
+The boundaries <code>min</code> and <code>max</code> are both inclusive and optional.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1204,12 +1395,19 @@
   if (input.index &#x3D;&#x3D;&#x3D; index) {
     return new DecodeSuccess({ ...input, index }, undefined)
   } else {
-    return new DecodeFailure(input, DecodeError.expectedEot)
+    return new DecodeFailure(input, DecodeError.expectedEoi)
   }
 })</code>
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A decoder that doesn&#39;t consume anything from the <code>TextInput</code> and produces
+<code>undefined</code> if it matches the end of the input.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1246,6 +1444,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Pretty prints a <code>DecodeFailure&lt;TextInput, Out, DecodeError&gt;</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1274,6 +1478,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match any alphabetical character in a case insensitive matter.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1306,6 +1516,14 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match a sequence of case-insensitve alphabetical characters. It expects at
+least one occurance. The boundaries <code>min</code> and <code>max</code> are both inclusive and
+optional.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1336,6 +1554,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match any alphabetical lower-ccase-character.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1368,6 +1592,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match a sequence of lower-case alphabetical characters. It expects at least
+one occurance. The boundaries <code>min</code> and <code>max</code> are both inclusive and optional.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1396,6 +1627,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Utility function to generate a decoder of type <code><a href="miscellaneous/typealiases.html#ValueDecoder">ValueDecoder</a></code> from a function <code>f</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1435,6 +1672,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Create a decoder that consume and produces an exact string match.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1466,6 +1709,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match any single char from a list of possible values <code>anyOf</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1507,6 +1756,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Same as <a href="miscellaneous/variables.html#match">match</a> but case-insensitive.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1538,6 +1793,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match any single char that is not included in the list of possible values <code>noneOf</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1566,6 +1827,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match an optional whitespace character. If no whitespace is matched, the result
+is the empty string <code>&quot;&quot;</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1630,6 +1898,18 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Generate a <code>TextDecoder</code> that uses a <code>RegExp</code> pattern to match a result.</p>
+<p>By default, this decoder will capture the first group (group 0) returned from
+the regular expression. This can be changed by providing a different value to
+<code>group</code>.</p>
+<p>If the JS runtime you are working with allows it, it is suggested to use the
+<strong>stycky</strong> modifier <code>y</code>. Its main advantage is that it doesn&#39;t need to reallocate
+a substring of the original input to perform its matching.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1661,6 +1941,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A decoder that produces all the remaining characters in <code>TextInput</code>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1765,6 +2051,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Same as <a href="miscellaneous/variables.html#takeCharWhile">takeCharWhile</a> but with a minimum (<code>min</code>) and maximum (<code>max</code>)
+constraints. They are both inclusive and mandatory.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1783,10 +2076,16 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <code>takeCharWhile:     <code></code>
+                        <code>takeCharWhile:     <code>miscellaneou</code>
 </code>
                     </td>
                 </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>miscellaneou</code>
+
+                        </td>
+                    </tr>
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>(f: (c: string) &#x3D;&gt; boolean, atLeast &#x3D; 1): TextDecoder&lt;string&gt; &#x3D;&gt;
@@ -1804,6 +2103,15 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Take a sequence of char that all satisfy the predicate <code>f</code>. It works much like
+<a href="miscellaneous/variables.html#testChar">testChar</a> but for a sequence of charecters. The default is that the
+decoder should match at least one result. That can be changed by passing
+the second optional argument <code>atLeast</code> with a different value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1822,10 +2130,16 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <code>testChar:     <code></code>
+                        <code>testChar:     <code>miscellaneou</code>
 </code>
                     </td>
                 </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>miscellaneou</code>
+
+                        </td>
+                    </tr>
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>(f: (c: string) &#x3D;&gt; boolean): TextDecoder&lt;string&gt; &#x3D;&gt;
@@ -1844,6 +2158,14 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Produces a decoder similar to <a href="miscellaneous/variables.html#char">char</a> but the char is tested through
+the predicate function <code>f</code>. The character value is produced only if the predicate
+succeeds.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1874,6 +2196,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match any alphabetical upper-case-character.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1906,6 +2234,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match a sequence of upper-case alphabetical characters. It expects at least
+one occurance. The boundaries <code>min</code> and <code>max</code> are both inclusive and optional.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1934,6 +2269,12 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Match a single whitespace character.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1962,6 +2303,13 @@
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A decoder that doesn&#39;t consume any portion of the string but does
+return the current position as its result value.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -2045,22 +2393,65 @@ one is concatenated by <code>or</code>.</p>
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>{
+  /**
+   * Generate an instance of &#x60;{@link CustomError}&#x60;.
+   */
   custom: (value: string) &#x3D;&gt; new CustomError(value) as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link ExpectedAnyOf}&#x60;.
+   */
   expectedAnyOf: (entity: Entity, values: string[]) &#x3D;&gt; new ExpectedAnyOf(entity, values) as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link ExpectedAtLeast}&#x60;.
+   */
   expectedAtLeast: (min: number, entity: Entity) &#x3D;&gt; new ExpectedAtLeast(min, entity) as DecodeError,
-  expectedEot: new ExpectedEoi() as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link CustomError}&#x60;.
+   */
+  expectedEoi: new ExpectedEoi() as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link ExpectedField}&#x60;.
+   */
   expectedField: (field: string) &#x3D;&gt; new ExpectedField(field) as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link ExpectedMatch}&#x60;.
+   */
   expectedMatch: (value: string) &#x3D;&gt; new ExpectedMatch(value) as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link ExpectedNoneOf}&#x60;.
+   */
   expectedNoneOf: (entity: Entity, values: string[]) &#x3D;&gt; new ExpectedNoneOf(entity, values) as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link ExpectedOnce}&#x60;.
+   */
   expectedOnce: (entity: Entity) &#x3D;&gt; new ExpectedOnce(entity) as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link CombineErrors}&#x60;.
+   */
   combine: (errors: DecodeError[]) &#x3D;&gt; new CombineErrors(errors) as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link ExpectedWithinRange}&#x60;.
+   */
   expectedWithinRange: (min: string, max: string) &#x3D;&gt; new ExpectedWithinRange(min, max) as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link PatternMismatch}&#x60;.
+   */
   patternMismatch: (pattern: string) &#x3D;&gt; new PatternMismatch(pattern) as DecodeError,
+  /**
+   * Generate an instance of &#x60;{@link UnexpectedEoi}&#x60;.
+   */
   unexpectedEoi: new UnexpectedEoi() as DecodeError
 }</code>
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Static object that contains utility functions to generate any of the existing
+decoding errors typed as <code>DecodeError</code> instances.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -2396,6 +2787,12 @@ doesn&#39;t consume anything from the input.</p>
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Helper function to create an instance of <code>DecodeResult</code> from a failed decoding.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -2425,6 +2822,12 @@ doesn&#39;t consume anything from the input.</p>
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Helper function to create an instance of <code>DecodeResult</code> from a succeeded decoding.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>

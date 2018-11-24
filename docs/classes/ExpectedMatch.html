@@ -135,6 +135,8 @@ string.</p>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Construct an instance of <code>ExpectedMatch</code></p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -143,6 +145,7 @@ string.</p>
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -157,6 +160,10 @@ string.</p>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>Human readable description of the missed match.</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -241,7 +248,7 @@ string.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/error/expected_match.ts:31</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/error/expected_match.ts:36</a></div>
                             </td>
                         </tr>
 
@@ -275,6 +282,11 @@ string.</p>
    * Type discriminator
    */
   readonly kind: &#x27;expected-match&#x27; &#x3D; &#x27;expected-match&#x27;
+
+  /**
+   * Construct an instance of &#x60;ExpectedMatch&#x60;
+   * @param value Human readable description of the missed match.
+   */
   constructor(readonly value: string) {}
 
   /**

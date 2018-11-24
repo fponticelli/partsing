@@ -135,6 +135,8 @@ described in the <code>descriptions</code> array.</p>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Construct an instance of <code>ExpectedAnyOf</code></p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -143,6 +145,7 @@ described in the <code>descriptions</code> array.</p>
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -157,6 +160,8 @@ described in the <code>descriptions</code> array.</p>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>descriptions</td>
@@ -169,6 +174,10 @@ described in the <code>descriptions</code> array.</p>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>Human readable descriptions of all the missed matches.</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -253,7 +262,7 @@ described in the <code>descriptions</code> array.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/error/expected_any_of.ts:50</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/error/expected_any_of.ts:56</a></div>
                             </td>
                         </tr>
 
@@ -310,6 +319,12 @@ export class ExpectedAnyOf {
    * Type discriminator
    */
   readonly kind: &#x27;expected-any-of&#x27; &#x3D; &#x27;expected-any-of&#x27;
+
+  /**
+   * Construct an instance of &#x60;ExpectedAnyOf&#x60;
+   * @param entity
+   * @param descriptions Human readable descriptions of all the missed matches.
+   */
   constructor(readonly entity: Entity, readonly descriptions: string[]) {}
 
   /**

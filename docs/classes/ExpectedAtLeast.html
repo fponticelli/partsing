@@ -134,6 +134,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Construct an instance of <code>ExpectedAtLeast</code></p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -142,6 +144,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -156,6 +159,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>minimum (inclusive) number of expected repetitions</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>entity</td>
@@ -168,6 +175,8 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -252,7 +261,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/error/expected_at_least.ts:32</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/error/expected_at_least.ts:38</a></div>
                             </td>
                         </tr>
 
@@ -291,6 +300,12 @@ export class ExpectedAtLeast {
    * Type discriminator
    */
   readonly kind: &#x27;expected-at-least&#x27; &#x3D; &#x27;expected-at-least&#x27;
+
+  /**
+   * Construct an instance of &#x60;ExpectedAtLeast&#x60;
+   * @param min minimum (inclusive) number of expected repetitions
+   * @param entity
+   */
   constructor(readonly min: number, readonly entity: Entity) {}
 
   /**

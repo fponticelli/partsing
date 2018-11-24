@@ -135,6 +135,8 @@ any of the values as they are described in the <code>descriptions</code> array.<
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Construct an instance of <code>ExpectedNoneOf</code></p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -143,6 +145,7 @@ any of the values as they are described in the <code>descriptions</code> array.<
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -157,6 +160,8 @@ any of the values as they are described in the <code>descriptions</code> array.<
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>descriptions</td>
@@ -169,6 +174,11 @@ any of the values as they are described in the <code>descriptions</code> array.<
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>Human readable descriptions of the conditions that should
+not have been matched.</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -253,7 +263,7 @@ any of the values as they are described in the <code>descriptions</code> array.<
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/error/expected_none_of.ts:34</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/error/expected_none_of.ts:41</a></div>
                             </td>
                         </tr>
 
@@ -294,6 +304,13 @@ export class ExpectedNoneOf {
    * Type discriminator
    */
   readonly kind: &#x27;none-of-error&#x27; &#x3D; &#x27;none-of-error&#x27;
+
+  /**
+   * Construct an instance of &#x60;ExpectedNoneOf&#x60;
+   * @param entity
+   * @param descriptions Human readable descriptions of the conditions that should
+   * not have been matched.
+   */
   constructor(readonly entity: Entity, readonly descriptions: string[]) {}
 
   /**

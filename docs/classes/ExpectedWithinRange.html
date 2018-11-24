@@ -135,6 +135,8 @@ as described in <code>min</code> and <code>max</code>.</p>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Construct an instance of <code>ExpectedWithinRange</code>.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -143,6 +145,7 @@ as described in <code>min</code> and <code>max</code>.</p>
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -157,6 +160,10 @@ as described in <code>min</code> and <code>max</code>.</p>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>minimum number of occurrances expected (inclusive).</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>max</td>
@@ -169,6 +176,10 @@ as described in <code>min</code> and <code>max</code>.</p>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>maximum number of occurrances expected (inclusive).</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -253,7 +264,7 @@ as described in <code>min</code> and <code>max</code>.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/error/expected_within_range.ts:31</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/error/expected_within_range.ts:37</a></div>
                             </td>
                         </tr>
 
@@ -287,6 +298,12 @@ as described in <code>min</code> and <code>max</code>.</p>
    * Type discriminator
    */
   readonly kind: &#x27;expected-within-range&#x27; &#x3D; &#x27;expected-within-range&#x27;
+
+  /**
+   * Construct an instance of &#x60;ExpectedWithinRange&#x60;.
+   * @param min minimum number of occurrances expected (inclusive).
+   * @param max maximum number of occurrances expected (inclusive).
+   */
   constructor(readonly min: string, readonly max: string) {}
 
   /**

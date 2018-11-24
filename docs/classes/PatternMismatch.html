@@ -134,6 +134,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Construct an instance of <code>PatternMismatch</code>.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -142,6 +144,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -156,6 +159,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>Human readeable description of the pattern that wasn&#39;t matched.</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -240,7 +247,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/error/pattern_mismatch.ts:30</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/error/pattern_mismatch.ts:35</a></div>
                             </td>
                         </tr>
 
@@ -274,6 +281,11 @@
    * Type discriminator
    */
   readonly kind: &#x27;pattern-mismatch&#x27; &#x3D; &#x27;pattern-mismatch&#x27;
+
+  /**
+   * Construct an instance of &#x60;PatternMismatch&#x60;.
+   * @param pattern Human readeable description of the pattern that wasn&#x27;t matched.
+   */
   constructor(readonly pattern: string) {}
 
   /**
