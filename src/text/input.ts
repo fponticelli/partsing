@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * `TextInput` stores the entire `input` value as a `string` and contains
+ * an `index` as the current character position inside the stream.
+ */
 export interface TextInput {
   readonly input: string
   readonly index: number

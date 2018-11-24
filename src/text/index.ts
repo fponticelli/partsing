@@ -19,16 +19,42 @@ import { DecodeFailure, DecodeResult, DecodeSuccess, success, failure } from '..
 import { DecodeError, Entity } from '../error'
 import { TextInput } from './input'
 
+/**
+ * Type alias for a decoder specialized in consuming values of type `{@link TextInput}`
+ * and generate errors of type `{@link DecodeError}`.
+ */
 export type TextDecoder<T> = Decoder<TextInput, T, DecodeError>
 
+/**
+ * Utility function to generate a decoder of type `{@link ValueDecoder}` from a function `f`.
+ */
 const make = <T>(f: Decoding<TextInput, T, DecodeError>): TextDecoder<T> => Decoder.of<TextInput, T, DecodeError>(f)
 
+/**
+ * Helper function that return a function to decode from an `input` of type `string` to a `DecodeResult`.
+ *
+ * The function takes a `TextDecoder` as the only argument.
+ *
+ * This convenience function exists because `TextDecoder` requires an input of
+ * type {@link TextInput} and not `string`.
+ */
 export const decodeText = <T>(decoder: TextDecoder<T>) => (input: string): DecodeResult<string, T, string> =>
   decoder.run({ input, index: 0 }).match({
     success: r => success(input, r.value),
     failure: f => failure(input, failureToString(f))
   })
 
+/**
+ * Generate a `TextDecoder` that uses a `RegExp` pattern to match a result.
+ *
+ * By default, this decoder will capture the first group (group 0) returned from
+ * the regular expression. This can be changed by providing a different value to
+ * `group`.
+ *
+ * If the JS runtime you are working with allows it, it is suggested to use the
+ * **stycky** modifier `y`. Its main advantage is that it doesn't need to reallocate
+ * a substring of the original input to perform its matching.
+ */
 export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
   if (pattern.sticky) {
     return make((input: TextInput) => {
@@ -67,22 +93,36 @@ export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
   }
 }
 
+/**
+ * A decoder that doesn't consume any portion of the string but does
+ * return the current position as its result value.
+ */
 export const withPosition = make(input => new DecodeSuccess(input, input.index))
 
+/**
+ * A decoder that produces all the remaining characters in `TextInput`.
+ */
 export const rest = make(input => {
   const value = input.input.substring(input.index)
   return new DecodeSuccess({ ...input, index: input.input.length }, value)
 })
 
+/**
+ * A decoder that doesn't consume anything from the `TextInput` and produces
+ * `undefined` if it matches the end of the input.
+ */
 export const eoi: Decoder<TextInput, void, DecodeError> = make(input => {
   const index = input.input.length
   if (input.index === index) {
     return new DecodeSuccess({ ...input, index }, undefined)
   } else {
-    return new DecodeFailure(input, DecodeError.expectedEot)
+    return new DecodeFailure(input, DecodeError.expectedEoi)
   }
 })
 
+/**
+ * Create a decoder that consume and produces an exact string match.
+ */
 export const match = <V extends string>(s: V): TextDecoder<V> => {
   const length = s.length
   return make(input => {
@@ -96,6 +136,9 @@ export const match = <V extends string>(s: V): TextDecoder<V> => {
   })
 }
 
+/**
+ * Same as {@link match} but case-insensitive.
+ */
 export const matchInsensitive = (s: string): TextDecoder<string> => {
   const t = s.toLowerCase()
   const length = s.length
@@ -159,46 +202,86 @@ const {
   }
 })()
 
+/**
+ * Match any alphabetical character in a case insensitive matter.
+ */
 export const letter = regexp(letterPattern).withFailure(DecodeError.expectedOnce(Entity.LETTER))
 
+/**
+ * Match a sequence of case-insensitve alphabetical characters. It expects at
+ * least one occurance. The boundaries `min` and `max` are both inclusive and
+ * optional.
+ */
 export const letters = (min = 1, max?: number): TextDecoder<string> => {
   const message = DecodeError.expectedAtLeast(min, Entity.LETTER)
   const maxs = max === undefined ? '' : String(max)
   return regexp(lettersPattern(String(min), maxs)).withFailure(message)
 }
 
+/**
+ * Match any alphabetical upper-case-character.
+ */
 export const upperCaseLetter = regexp(upperCaseLetterPattern).withFailure(
   DecodeError.expectedOnce(Entity.UPPERCASE_LETTER)
 )
 
+/**
+ * Match a sequence of upper-case alphabetical characters. It expects at least
+ * one occurance. The boundaries `min` and `max` are both inclusive and optional.
+ */
 export const upperCaseLetters = (min = 1, max?: number): TextDecoder<string> => {
   const message = DecodeError.expectedAtLeast(min, Entity.UPPERCASE_LETTER)
   const maxs = max === undefined ? '' : String(max)
   return regexp(upperCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
 
+/**
+ * Match any alphabetical lower-ccase-character.
+ */
 export const lowerCaseLetter = regexp(lowerCaseLetterPattern).withFailure(
   DecodeError.expectedOnce(Entity.LOWER_CASE_LETTER)
 )
 
+/**
+ * Match a sequence of lower-case alphabetical characters. It expects at least
+ * one occurance. The boundaries `min` and `max` are both inclusive and optional.
+ */
 export const lowerCaseLetters = (min = 1, max?: number): TextDecoder<string> => {
   const message = DecodeError.expectedAtLeast(min, Entity.LOWER_CASE_LETTER)
   const maxs = max === undefined ? '' : String(max)
   return regexp(lowerCaseLettersPattern(String(min), maxs)).withFailure(message)
 }
 
+/**
+ * Match a single digit character.
+ */
 export const digit = regexp(digitPattern).withFailure(DecodeError.expectedOnce(Entity.DIGIT))
 
+/**
+ * Match a sequence of digit characters. It expects at least one occurance.
+ * The boundaries `min` and `max` are both inclusive and optional.
+ */
 export const digits = (min = 1, max?: number): TextDecoder<string> => {
   const message = DecodeError.expectedAtLeast(min, Entity.DIGIT)
   const maxs = max === undefined ? '' : String(max)
   return regexp(digitsPattern(String(min), maxs)).withFailure(message)
 }
 
+/**
+ * Match a single whitespace character.
+ */
 export const whitespace = regexp(whitespacePattern).withFailure(DecodeError.expectedAtLeast(1, Entity.WHITESPACE))
 
+/**
+ * Match an optional whitespace character. If no whitespace is matched, the result
+ * is the empty string `""`.
+ */
 export const optionalWhitespace = regexp(optionalWhitespacePattern)
 
+/**
+ * Decoder that matches one single character. This decoder will only fail if it
+ * encounters the `EOI` (end of input).
+ */
 export const char = make((input: TextInput) => {
   if (input.index < input.input.length) {
     const c = input.input.charAt(input.index)
@@ -209,6 +292,11 @@ export const char = make((input: TextInput) => {
   }
 })
 
+/**
+ * Produces a decoder similar to {@link char} but the char is tested through
+ * the predicate function `f`. The character value is produced only if the predicate
+ * succeeds.
+ */
 export const testChar = (f: (c: string) => boolean): TextDecoder<string> =>
   make((input: TextInput) => {
     if (input.index >= input.input.length) {
@@ -223,16 +311,28 @@ export const testChar = (f: (c: string) => boolean): TextDecoder<string> =>
     }
   })
 
+/**
+ * Match any single char from a list of possible values `anyOf`.
+ */
 export const matchAnyCharOf = (anyOf: string): TextDecoder<string> =>
   testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure(
     DecodeError.expectedAnyOf(Entity.CHARACTER, anyOf.split('').map(v => `"${v}"`))
   )
 
+/**
+ * Match any single char that is not included in the list of possible values `noneOf`.
+ */
 export const matchNoCharOf = (noneOf: string): TextDecoder<string> =>
   testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(
     DecodeError.expectedNoneOf(Entity.CHARACTER, noneOf.split('').map(v => `"${v}"`))
   )
 
+/**
+ * Take a sequence of char that all satisfy the predicate `f`. It works much like
+ * {@link testChar} but for a sequence of charecters. The default is that the
+ * decoder should match at least one result. That can be changed by passing
+ * the second optional argument `atLeast` with a different value.
+ */
 export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextDecoder<string> =>
   make((input: TextInput) => {
     let index = input.index
@@ -246,6 +346,10 @@ export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextDecod
     }
   })
 
+/**
+ * Same as {@link takeCharWhile} but with a minimum (`min`) and maximum (`max`)
+ * constraints. They are both inclusive and mandatory.
+ */
 export const takeCharBetween = (f: (c: string) => boolean, min: number, max: number): TextDecoder<string> =>
   make((input: TextInput) => {
     let index = input.index
@@ -261,6 +365,9 @@ export const takeCharBetween = (f: (c: string) => boolean, min: number, max: num
     }
   })
 
+/**
+ * Pretty prints a `DecodeFailure<TextInput, Out, DecodeError>`.
+ */
 export const failureToString = <Out>(err: DecodeFailure<TextInput, Out, DecodeError>): string => {
   const { failures, input } = err
   const msg =

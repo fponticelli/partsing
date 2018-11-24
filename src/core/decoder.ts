@@ -63,11 +63,11 @@ export class Decoder<In, Out, Err> {
    */
   readonly _E!: Err
   /**
-   * @see {@link _E}
+   * See {@link _E}.
    */
   readonly _I!: In
   /**
-   * @see {@link _E}
+   * See {@link _E}.
    */
   readonly _O!: Out
   private constructor(readonly run: Decoding<In, Out, Err>) {}
@@ -75,7 +75,7 @@ export class Decoder<In, Out, Err> {
   /**
    * `flatMap` allows to combine the result of a decoder with a new one.
    *
-   * That can be used to conditionally pick the next decoder in a chain based
+   * It can be used to conditionally pick the next decoder in a chain based
    * on the result of a previous step.
    */
   flatMap<Out2>(fun: (res: Out) => Decoder<In, Out2, Err>): Decoder<In, Out2, Err> {
@@ -95,8 +95,8 @@ export class Decoder<In, Out, Err> {
    * The applied function argument is executed exclusively on a succesful result
    * of decoding.
    *
-   * @example
-   * ```typescript
+   * *example*
+   * ```ts
    * regexp(/\d{4}-\d{2}-\d{2}/y).map(Date.parse)
    * ```
    */
@@ -319,9 +319,9 @@ export class Decoder<In, Out, Err> {
    * The `probe` method is used to perform a side-effecty function somewhere in
    * the decoder chain. It is mostly used as a debugging mechanism.
    *
-   * @example
-   * ```typescript
-   * decoder.probe(console.log).map(v -> ...)
+   *  *example*
+   * ```ts
+   * decoder.probe(console.log).map(v => ...)
    * ```
    */
   probe(f: (v: DecodeResult<In, Out, Err>) => void): Decoder<In, Out, Err> {

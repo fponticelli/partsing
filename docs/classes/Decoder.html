@@ -340,6 +340,12 @@ compile time.</p>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>See <a href="_E">_E</a>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -375,6 +381,12 @@ compile time.</p>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>See <a href="_E">_E</a>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -423,7 +435,7 @@ compile time.</p>
                 <tr>
                     <td class="col-md-4">
                             <div class="io-description"><p><code>flatMap</code> allows to combine the result of a decoder with a new one.</p>
-<p>That can be used to conditionally pick the next decoder in a chain based
+<p>It can be used to conditionally pick the next decoder in a chain based
 on the result of a previous step.</p>
 </div>
 
@@ -666,7 +678,9 @@ them as tuple of two if they are both successful.</p>
                             <div class="io-description"><p>Convert and/or transform the result of a decoding into a different value.</p>
 <p>The applied function argument is executed exclusively on a succesful result
 of decoding.</p>
-</div>
+<p><em>example</em></p>
+<div><pre class="line-numbers"><code class="language-ts">   * regexp(/\d{4}-\d{2}-\d{2}/y).map(Date.parse)
+   *</code></pre></div></div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -695,11 +709,6 @@ of decoding.</p>
                                     </table>
                             </div>
                             <div>
-                                    <b>Example :</b>
-                                        <div>
-                                            <pre class="line-numbers"><code class="language-html">&lt;div&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;   * regexp(/\d{4}-\d{2}-\d{2}/y).map(Date.parse)
-   *&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</code></pre>
-                                        </div>
                             </div>
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, Out2, Err&gt;</a></code>
@@ -1066,7 +1075,9 @@ returning only its result.</p>
                     <td class="col-md-4">
                             <div class="io-description"><p>The <code>probe</code> method is used to perform a side-effecty function somewhere in
 the decoder chain. It is mostly used as a debugging mechanism.</p>
-</div>
+<p>  <em>example</em></p>
+<div><pre class="line-numbers"><code class="language-ts">   * decoder.probe(console.log).map(v =&gt; ...)
+   *</code></pre></div></div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -1095,11 +1106,6 @@ the decoder chain. It is mostly used as a debugging mechanism.</p>
                                     </table>
                             </div>
                             <div>
-                                    <b>Example :</b>
-                                        <div>
-                                            <pre class="line-numbers"><code class="language-html">&lt;div&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;   * decoder.probe(console.log).map(v -&amp;gt; ...)
-   *&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</code></pre>
-                                        </div>
                             </div>
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, Out, Err&gt;</a></code>
@@ -2157,11 +2163,11 @@ export class Decoder&lt;In, Out, Err&gt; {
    */
   readonly _E!: Err
   /**
-   * @see {@link _E}
+   * See {@link _E}.
    */
   readonly _I!: In
   /**
-   * @see {@link _E}
+   * See {@link _E}.
    */
   readonly _O!: Out
   private constructor(readonly run: Decoding&lt;In, Out, Err&gt;) {}
@@ -2169,7 +2175,7 @@ export class Decoder&lt;In, Out, Err&gt; {
   /**
    * &#x60;flatMap&#x60; allows to combine the result of a decoder with a new one.
    *
-   * That can be used to conditionally pick the next decoder in a chain based
+   * It can be used to conditionally pick the next decoder in a chain based
    * on the result of a previous step.
    */
   flatMap&lt;Out2&gt;(fun: (res: Out) &#x3D;&gt; Decoder&lt;In, Out2, Err&gt;): Decoder&lt;In, Out2, Err&gt; {
@@ -2189,8 +2195,8 @@ export class Decoder&lt;In, Out, Err&gt; {
    * The applied function argument is executed exclusively on a succesful result
    * of decoding.
    *
-   * @example
-   * &#x60;&#x60;&#x60;typescript
+   * *example*
+   * &#x60;&#x60;&#x60;ts
    * regexp(/\d{4}-\d{2}-\d{2}/y).map(Date.parse)
    * &#x60;&#x60;&#x60;
    */
@@ -2413,9 +2419,9 @@ export class Decoder&lt;In, Out, Err&gt; {
    * The &#x60;probe&#x60; method is used to perform a side-effecty function somewhere in
    * the decoder chain. It is mostly used as a debugging mechanism.
    *
-   * @example
-   * &#x60;&#x60;&#x60;typescript
-   * decoder.probe(console.log).map(v -&gt; ...)
+   *  *example*
+   * &#x60;&#x60;&#x60;ts
+   * decoder.probe(console.log).map(v &#x3D;&gt; ...)
    * &#x60;&#x60;&#x60;
    */
   probe(f: (v: DecodeResult&lt;In, Out, Err&gt;) &#x3D;&gt; void): Decoder&lt;In, Out, Err&gt; {

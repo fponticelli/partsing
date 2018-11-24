@@ -21,8 +21,19 @@ import { Entity, entityToString } from './entity'
  * decoder.
  */
 export class ExpectedOnce {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'expected-once' = 'expected-once'
+
+  /**
+   * Construct an instance of `ExpectedOnce`.
+   */
   constructor(readonly entity: Entity) {}
+
+  /**
+   * Provides a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return `a ${entityToString(this.entity, 1)}`
   }

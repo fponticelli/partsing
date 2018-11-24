@@ -129,12 +129,14 @@ decoder.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/error/expected_once.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/error/expected_once.ts:27</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Construct an instance of <code>ExpectedOnce</code>.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -199,10 +201,16 @@ decoder.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/error/expected_once.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/error/expected_once.ts:27</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Type discriminator</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -235,13 +243,15 @@ decoder.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/error/expected_once.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/error/expected_once.ts:37</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Provides a human readable representation of the value. Mostly for debugging.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -269,8 +279,19 @@ decoder.</p>
  * decoder.
  */
 export class ExpectedOnce {
+  /**
+   * Type discriminator
+   */
   readonly kind: &#x27;expected-once&#x27; &#x3D; &#x27;expected-once&#x27;
+
+  /**
+   * Construct an instance of &#x60;ExpectedOnce&#x60;.
+   */
   constructor(readonly entity: Entity) {}
+
+  /**
+   * Provides a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return &#x60;a ${entityToString(this.entity, 1)}&#x60;
   }

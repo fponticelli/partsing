@@ -18,8 +18,20 @@ limitations under the License.
  * Error type that allows for a customized message.
  */
 export class CustomError {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'custom-error' = 'custom-error'
+
+  /**
+   * Construct an instance of `CustomerError`.
+   * @param message The human readable message that justifies the failure.
+   */
   constructor(readonly message: string) {}
+
+  /**
+   * Provides a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return this.message
   }

@@ -129,12 +129,14 @@ as described in <code>min</code> and <code>max</code>.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/error/expected_within_range.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/error/expected_within_range.ts:25</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Construct an instance of <code>ExpectedWithinRange</code>.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -143,6 +145,7 @@ as described in <code>min</code> and <code>max</code>.</p>
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -157,6 +160,10 @@ as described in <code>min</code> and <code>max</code>.</p>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>minimum number of occurrances expected (inclusive).</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>max</td>
@@ -169,6 +176,10 @@ as described in <code>min</code> and <code>max</code>.</p>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>maximum number of occurrances expected (inclusive).</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -211,10 +222,16 @@ as described in <code>min</code> and <code>max</code>.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/error/expected_within_range.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/error/expected_within_range.ts:25</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Type discriminator</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -247,13 +264,15 @@ as described in <code>min</code> and <code>max</code>.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/error/expected_within_range.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/error/expected_within_range.ts:37</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Provides a human readable representation of the value. Mostly for debugging.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -275,8 +294,21 @@ as described in <code>min</code> and <code>max</code>.</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class ExpectedWithinRange {
+  /**
+   * Type discriminator
+   */
   readonly kind: &#x27;expected-within-range&#x27; &#x3D; &#x27;expected-within-range&#x27;
+
+  /**
+   * Construct an instance of &#x60;ExpectedWithinRange&#x60;.
+   * @param min minimum number of occurrances expected (inclusive).
+   * @param max maximum number of occurrances expected (inclusive).
+   */
   constructor(readonly min: string, readonly max: string) {}
+
+  /**
+   * Provides a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return &#x60;between ${this.min} and ${this.max}&#x60;
   }

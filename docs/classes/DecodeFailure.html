@@ -105,6 +105,11 @@
                                     <span class="modifier">Readonly</span>
                                 <a href="#_O">_O</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Abstract</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#kind">kind</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -217,12 +222,14 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/core/result.ts:95</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="232" class="link-to-prism">src/core/result.ts:232</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Contruct an instance of <code>DecodeFailure</code>.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -231,6 +238,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -245,6 +253,11 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>The input value that corresponds to the place where the decoder
+failed to generate a valid result.</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>failures</td>
@@ -257,6 +270,11 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>The error messages associated with the reason why the decoder
+failed.</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -300,10 +318,16 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/core/result.ts:95</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="232" class="link-to-prism">src/core/result.ts:232</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains all the possible reasons of why a decoder failed.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -340,10 +364,16 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">src/core/result.ts:94</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="227" class="link-to-prism">src/core/result.ts:227</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Type discriminator</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -381,10 +411,18 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:24</div>
+                                    <div class="io-line">Defined in DecodeResultBase:34</div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>These placeholder (<code>_I</code>, <code>_O</code>, <code>_E</code>) types are not expected to bring any
+value. They exist to allow inspecting the main types of a DecodeResult at
+compile time.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -422,10 +460,16 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:22</div>
+                                    <div class="io-line">Defined in DecodeResultBase:38</div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>See <a href="_E">_E</a>.</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -463,10 +507,64 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:23</div>
+                                    <div class="io-line">Defined in DecodeResultBase:42</div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>See <a href="_E">_E</a>.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="kind"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Abstract</span>
+                                <span class="modifier">Readonly</span>
+                            kind
+                            </b>
+                            <a href="#kind"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>kind:     <code><a href="../miscellaneous/variables.html#success" target="_self" >&quot;decode-success&quot; | &quot;decode-failure&quot;</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../miscellaneous/variables.html#success" target="_self" >&quot;decode-success&quot; | &quot;decode-failure&quot;</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/DecodeResultBase.html" target="_self" >DecodeResultBase</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in DecodeResultBase:46</div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Type discriminator</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -499,7 +597,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="108" class="link-to-prism">src/core/result.ts:108</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="259" class="link-to-prism">src/core/result.ts:259</a></div>
                             </td>
                         </tr>
 
@@ -514,6 +612,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>See <a href="DecodeResultBase.flatMap">DecodeResultBase.flatMap</a></p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -576,7 +676,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">src/core/result.ts:114</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="273" class="link-to-prism">src/core/result.ts:273</a></div>
                             </td>
                         </tr>
 
@@ -591,6 +691,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>See <a href="DecodeResultBase.flatMapError">DecodeResultBase.flatMapError</a></p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -653,13 +755,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">src/core/result.ts:133</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="315" class="link-to-prism">src/core/result.ts:315</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>See <a href="DecodeResultBase.getUnsafeFailure">DecodeResultBase.getUnsafeFailure</a></p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code>Err[]</code>
@@ -691,13 +795,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">src/core/result.ts:130</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="308" class="link-to-prism">src/core/result.ts:308</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>See <a href="DecodeResultBase.getUnsafeSuccess">DecodeResultBase.getUnsafeSuccess</a></p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code>Out</code>
@@ -729,13 +835,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/core/result.ts:127</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="301" class="link-to-prism">src/core/result.ts:301</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>See <a href="DecodeResultBase.isFailure">DecodeResultBase.isFailure</a></p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/DecodeFailure.html" target="_self" >DecodeFailure&lt;In | Out | Err&gt;</a></code>
@@ -767,13 +875,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">src/core/result.ts:124</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="294" class="link-to-prism">src/core/result.ts:294</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>See <a href="DecodeResultBase.isSuccess">DecodeResultBase.isSuccess</a></p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/DecodeSuccess.html" target="_self" >DecodeSuccess&lt;In | Out | Err&gt;</a></code>
@@ -805,7 +915,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">src/core/result.ts:111</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="266" class="link-to-prism">src/core/result.ts:266</a></div>
                             </td>
                         </tr>
 
@@ -820,6 +930,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>See <a href="DecodeResultBase.map">DecodeResultBase.map</a></p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -882,7 +994,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">src/core/result.ts:117</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="280" class="link-to-prism">src/core/result.ts:280</a></div>
                             </td>
                         </tr>
 
@@ -897,6 +1009,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>See <a href="DecodeResultBase.mapError">DecodeResultBase.mapError</a></p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -959,7 +1073,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">src/core/result.ts:120</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="287" class="link-to-prism">src/core/result.ts:287</a></div>
                             </td>
                         </tr>
 
@@ -974,6 +1088,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>See <a href="DecodeResultBase.mapInput">DecodeResultBase.mapInput</a></p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -1036,7 +1152,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">src/core/result.ts:101</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="249" class="link-to-prism">src/core/result.ts:249</a></div>
                             </td>
                         </tr>
 
@@ -1051,6 +1167,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>See <a href="DecodeResultBase.match">DecodeResultBase.match</a></p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -1113,13 +1231,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="137" class="link-to-prism">src/core/result.ts:137</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="322" class="link-to-prism">src/core/result.ts:322</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Provides a human readable representation of the value. Mostly for debugging.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -1159,7 +1279,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:32</div>
+                                    <div class="io-line">Defined in DecodeResultBase:71</div>
                             </td>
                         </tr>
 
@@ -1174,6 +1294,9 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Transfom the result of a <code>DecodeSuccess</code> into a new <code>DecodeResult</code> by applying
+the function <code>f</code> to it.</p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -1244,7 +1367,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:33</div>
+                                    <div class="io-line">Defined in DecodeResultBase:76</div>
                             </td>
                         </tr>
 
@@ -1259,6 +1382,9 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Transfom the result of a <code>DecodeFailure</code> into a new <code>DecodeResult</code> by applying
+the function <code>f</code> to it. This operation allows to recover form a failed result.</p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -1329,13 +1455,17 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:43</div>
+                                    <div class="io-line">Defined in DecodeResultBase:122</div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Unwrap the result value of a <code>DecodeFailure</code>. If the current instance is of
+type <code>DecodeSuccess</code> then this function will throw an exception.
+Do not use unless you are protecting from exceptions.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code>Err[]</code>
@@ -1375,13 +1505,17 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:42</div>
+                                    <div class="io-line">Defined in DecodeResultBase:115</div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Unwrap the result value of a <code>DecodeSuccess</code>. If the current instance is of
+type <code>DecodeFailure</code> then this function will throw an exception.
+Do not use unless you are protecting from exceptions.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code>Out</code>
@@ -1421,13 +1555,17 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:40</div>
+                                    <div class="io-line">Defined in DecodeResultBase:108</div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Return true if the current instance is of type <code>DecodeFailure</code>. It also
+provide a guard value so that properties of <code>DecodeFailure</code> can be used
+in the right conditional scope.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/DecodeFailure.html" target="_self" >DecodeFailure&lt;In | Out | Err&gt;</a></code>
@@ -1467,13 +1605,17 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:39</div>
+                                    <div class="io-line">Defined in DecodeResultBase:101</div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Return true if the current instance is of type <code>DecodeSuccess</code>. It also
+provide a guard value so that properties of <code>DecodeSuccess</code> can be used
+in the right conditional scope.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/DecodeSuccess.html" target="_self" >DecodeSuccess&lt;In | Out | Err&gt;</a></code>
@@ -1513,7 +1655,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:35</div>
+                                    <div class="io-line">Defined in DecodeResultBase:82</div>
                             </td>
                         </tr>
 
@@ -1528,6 +1670,9 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Transfom the result of a <code>DecodeSuccess</code> into a new value of type <code>Out2</code> by
+applying the function <code>f</code> to the original <code>Out</code> value.</p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -1598,7 +1743,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:36</div>
+                                    <div class="io-line">Defined in DecodeResultBase:88</div>
                             </td>
                         </tr>
 
@@ -1613,6 +1758,9 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Transfom the result of a <code>DecodeFailure</code> into a new value of type <code>Err2</code> by
+applying the function <code>f</code> to the original <code>Err</code> value.</p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -1683,7 +1831,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:37</div>
+                                    <div class="io-line">Defined in DecodeResultBase:94</div>
                             </td>
                         </tr>
 
@@ -1698,6 +1846,9 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Transform the input value associated with the current <code>DecodeResult</code> into
+a new input of type <code>In2</code>.</p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -1768,7 +1919,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:27</div>
+                                    <div class="io-line">Defined in DecodeResultBase:62</div>
                             </td>
                         </tr>
 
@@ -1783,6 +1934,14 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Transform an instance of <code><a href="../miscellaneous/typealiases.html#DecodeResult">DecodeResult</a></code> into any type <code>O</code>.
+To perform the transformation an object is passed with 2 fields <code>success</code>
+and <code>failure</code>. Both fields must be populated with a function.</p>
+<ul>
+<li><code>success</code> will take a function <code>DecodeSuccess -&gt; O</code></li>
+<li><code>failure</code> will take a function <code>DecodeFailure -&gt; O</code></li>
+</ul>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -1853,13 +2012,15 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DecodeResultBase:45</div>
+                                    <div class="io-line">Defined in DecodeResultBase:127</div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Provides a human readable representation of the value. Mostly for debugging.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -1881,85 +2042,226 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">abstract class DecodeResultBase&lt;In, Out, Err&gt; {
-  readonly _I!: In
-  readonly _O!: Out
+  /**
+   * These placeholder (&#x60;_I&#x60;, &#x60;_O&#x60;, &#x60;_E&#x60;) types are not expected to bring any
+   * value. They exist to allow inspecting the main types of a DecodeResult at
+   * compile time.
+   */
   readonly _E!: Err
+  /**
+   * See {@link _E}.
+   */
+  readonly _I!: In
+  /**
+   * See {@link _E}.
+   */
+  readonly _O!: Out
+  /**
+   * Type discriminator
+   */
+  abstract readonly kind: &#x27;decode-success&#x27; | &#x27;decode-failure&#x27;
 
+  /**
+   * Construct an instance of &#x60;{@link DecodeResult}&#x60;. The only field that is shared
+   * between &#x60;{@link DecodeSuccess}&#x60; and &#x60;{@link DecodeFailure}&#x60; is &#x60;input: In&#x60;.
+   */
   constructor(readonly input: In) {}
+
+  /**
+   * Transform an instance of &#x60;{@link DecodeResult}&#x60; into any type &#x60;O&#x60;.
+   * To perform the transformation an object is passed with 2 fields &#x60;success&#x60;
+   * and &#x60;failure&#x60;. Both fields must be populated with a function.
+   *
+   * * &#x60;success&#x60; will take a function &#x60;DecodeSuccess -&gt; O&#x60;
+   * * &#x60;failure&#x60; will take a function &#x60;DecodeFailure -&gt; O&#x60;
+   */
   abstract match&lt;O&gt;(o: {
     success: (s: DecodeSuccess&lt;In, Out, Err&gt;) &#x3D;&gt; O
     failure: (f: DecodeFailure&lt;In, Out, Err&gt;) &#x3D;&gt; O
   }): O
 
+  /**
+   * Transfom the result of a &#x60;DecodeSuccess&#x60; into a new &#x60;DecodeResult&#x60; by applying
+   * the function &#x60;f&#x60; to it.
+   */
   abstract flatMap&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; DecodeResult&lt;In, Out2, Err&gt;): DecodeResult&lt;In, Out2, Err&gt;
+  /**
+   * Transfom the result of a &#x60;DecodeFailure&#x60; into a new &#x60;DecodeResult&#x60; by applying
+   * the function &#x60;f&#x60; to it. This operation allows to recover form a failed result.
+   */
   abstract flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt;
 
+  /**
+   * Transfom the result of a &#x60;DecodeSuccess&#x60; into a new value of type &#x60;Out2&#x60; by
+   * applying the function &#x60;f&#x60; to the original &#x60;Out&#x60; value.
+   */
   abstract map&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; Out2): DecodeResult&lt;In, Out2, Err&gt;
+
+  /**
+   * Transfom the result of a &#x60;DecodeFailure&#x60; into a new value of type &#x60;Err2&#x60; by
+   * applying the function &#x60;f&#x60; to the original &#x60;Err&#x60; value.
+   */
   abstract mapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; Err2): DecodeResult&lt;In, Out, Err2&gt;
+
+  /**
+   * Transform the input value associated with the current &#x60;DecodeResult&#x60; into
+   * a new input of type &#x60;In2&#x60;.
+   */
   abstract mapInput&lt;In2&gt;(f: (i: In) &#x3D;&gt; In2): DecodeResult&lt;In2, Out, Err&gt;
 
+  /**
+   * Return true if the current instance is of type &#x60;DecodeSuccess&#x60;. It also
+   * provide a guard value so that properties of &#x60;DecodeSuccess&#x60; can be used
+   * in the right conditional scope.
+   */
   abstract isSuccess(): this is DecodeSuccess&lt;In, Out, Err&gt;
+
+  /**
+   * Return true if the current instance is of type &#x60;DecodeFailure&#x60;. It also
+   * provide a guard value so that properties of &#x60;DecodeFailure&#x60; can be used
+   * in the right conditional scope.
+   */
   abstract isFailure(): this is DecodeFailure&lt;In, Out, Err&gt;
 
+  /**
+   * Unwrap the result value of a &#x60;DecodeSuccess&#x60;. If the current instance is of
+   * type &#x60;DecodeFailure&#x60; then this function will throw an exception.
+   * Do not use unless you are protecting from exceptions.
+   */
   abstract getUnsafeSuccess(): Out
+
+  /**
+   * Unwrap the result value of a &#x60;DecodeFailure&#x60;. If the current instance is of
+   * type &#x60;DecodeSuccess&#x60; then this function will throw an exception.
+   * Do not use unless you are protecting from exceptions.
+   */
   abstract getUnsafeFailures(): Err[]
 
+  /**
+   * Provides a human readable representation of the value. Mostly for debugging.
+   */
   abstract toString(): string
 }
 
 export class DecodeSuccess&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, Out, Err&gt; {
+  /**
+   * Type discriminator
+   */
   readonly kind &#x3D; &#x27;decode-success&#x27;
+
+  /**
+   * Contruct an instance of &#x60;DecodeSuccess&#x60;.
+   * @param input The input value that the next decoder should try to consume.
+   * @param value The value generated from the decoding operation.
+   */
   constructor(input: In, readonly value: Out) {
     super(input)
   }
 
+  /**
+   * See {@link DecodeResultBase.match}
+   */
   match&lt;O&gt;(o: { success: (s: DecodeSuccess&lt;In, Out, Err&gt;) &#x3D;&gt; O; failure: (f: DecodeFailure&lt;In, Out, Err&gt;) &#x3D;&gt; O }): O {
     return o.success(this)
   }
 
+  /**
+   * See {@link DecodeResultBase.flatMap}
+   */
   flatMap&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; DecodeResult&lt;In, Out2, Err&gt;): DecodeResult&lt;In, Out2, Err&gt; {
     return f(this.value)
   }
+
+  /**
+   * See {@link DecodeResultBase.map}
+   */
   map&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; Out2): DecodeResult&lt;In, Out2, Err&gt; {
     return this.flatMap(v &#x3D;&gt; new DecodeSuccess(this.input, f(v)))
   }
+
+  /**
+   * See {@link DecodeResultBase.flatMapError}
+   */
   flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
     return new DecodeSuccess(this.input, this.value)
   }
+
+  /**
+   * See {@link DecodeResultBase.mapError}
+   */
   mapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; Err2): DecodeResult&lt;In, Out, Err2&gt; {
     return new DecodeSuccess(this.input, this.value)
   }
+
+  /**
+   * See {@link DecodeResultBase.mapInput}
+   */
   mapInput&lt;In2&gt;(f: (i: In) &#x3D;&gt; In2): DecodeResult&lt;In2, Out, Err&gt; {
     return new DecodeSuccess(f(this.input), this.value)
   }
 
+  /**
+   * See {@link DecodeResultBase.isSuccess}
+   */
   isSuccess(): this is DecodeSuccess&lt;In, Out, Err&gt; {
     return true
   }
+
+  /**
+   * See {@link DecodeResultBase.isFailure}
+   */
   isFailure(): this is DecodeFailure&lt;In, Out, Err&gt; {
     return false
   }
 
+  /**
+   * See {@link DecodeResultBase.getUnsafeSuccess}
+   */
   getUnsafeSuccess(): Out {
     return this.value
   }
+
+  /**
+   * See {@link DecodeResultBase.getUnsafeFailures}
+   */
   getUnsafeFailures(): Err[] {
-    throw new Error(&quot;can&#x27;t get failures from success&quot;)
+    throw new Error(&quot;can&#x27;t get failure from success&quot;)
   }
 
+  /**
+   * Provides a human readable representation of the value. Mostly for debugging.
+   */
   toString(): string {
     return &#x60;DecodeSuccess&lt;${JSON.stringify(this.value)}&gt;: ${JSON.stringify(this.input)}&#x60;
   }
 }
 
 export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, Out, Err&gt; {
+  /**
+   * Type discriminator
+   */
   readonly kind &#x3D; &#x27;decode-failure&#x27;
+
+  /**
+   * Contains all the possible reasons of why a decoder failed.
+   */
   readonly failures: Err[]
+
+  /**
+   * Contruct an instance of &#x60;DecodeFailure&#x60;.
+   * @param input The input value that corresponds to the place where the decoder
+   * failed to generate a valid result.
+   * @param failures The error messages associated with the reason why the decoder
+   * failed.
+   */
   constructor(input: In, ...failures: Err[]) {
     super(input)
     this.failures &#x3D; failures
   }
 
+  /**
+   * See {@link DecodeResultBase.match}
+   */
   match&lt;O&gt;(o: {
     success: (succ: DecodeSuccess&lt;In, Out, Err&gt;) &#x3D;&gt; O
     failure: (fail: DecodeFailure&lt;In, Out, Err&gt;) &#x3D;&gt; O
@@ -1967,44 +2269,101 @@ export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
     return o.failure(this)
   }
 
+  /**
+   * See {@link DecodeResultBase.flatMap}
+   */
   flatMap&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; DecodeResult&lt;In, Out2, Err&gt;): DecodeResult&lt;In, Out2, Err&gt; {
     return new DecodeFailure(this.input, ...this.failures)
   }
+
+  /**
+   * See {@link DecodeResultBase.map}
+   */
   map&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; Out2): DecodeResult&lt;In, Out2, Err&gt; {
     return new DecodeFailure(this.input, ...this.failures)
   }
+
+  /**
+   * See {@link DecodeResultBase.flatMapError}
+   */
   flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
     return f(this.failures)
   }
+
+  /**
+   * See {@link DecodeResultBase.mapError}
+   */
   mapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; Err2): DecodeResult&lt;In, Out, Err2&gt; {
     return failure(this.input, ...this.failures.map(f))
   }
+
+  /**
+   * See {@link DecodeResultBase.mapInput}
+   */
   mapInput&lt;In2&gt;(f: (i: In) &#x3D;&gt; In2): DecodeResult&lt;In2, Out, Err&gt; {
     return failure(f(this.input), ...this.failures)
   }
 
+  /**
+   * See {@link DecodeResultBase.isSuccess}
+   */
   isSuccess(): this is DecodeSuccess&lt;In, Out, Err&gt; {
     return false
   }
+
+  /**
+   * See {@link DecodeResultBase.isFailure}
+   */
   isFailure(): this is DecodeFailure&lt;In, Out, Err&gt; {
     return true
   }
+
+  /**
+   * See {@link DecodeResultBase.getUnsafeSuccess}
+   */
   getUnsafeSuccess(): Out {
     throw new Error(&quot;can&#x27;t get success from failure&quot;)
   }
+
+  /**
+   * See {@link DecodeResultBase.getUnsafeFailure}
+   */
   getUnsafeFailures(): Err[] {
     return this.failures
   }
 
+  /**
+   * Provides a human readable representation of the value. Mostly for debugging.
+   */
   toString(): string {
     return &#x60;DecodeFailure&lt;${JSON.stringify(this.failures)}&gt;: ${JSON.stringify(this.input)}&#x60;
   }
 }
 
+/**
+ * &#x60;DecodeResult&#x60; it&#x27;s an either type, aunion type of two possible constructors.
+ * It can either be:
+ *
+ * * &#x60;DecodeSuccess&#x60;: a decoder was able to successfully decode a value
+ * * &#x60;DecodeFailure&#x60;: a decoder failed to decode a value
+ *
+ * A &#x60;DecodeResult&#x60; brings three type parameters like in &#x60;{@link Decoder}&#x60;:
+ *
+ * * &#x60;In&#x60;: The input stream for a decoder.
+ * * &#x60;Out&#x60;: The expected result from a decoder.
+ * * &#x60;Err&#x60;: The type that contains information on why a decoder failed.
+ */
 export type DecodeResult&lt;In, Out, Err&gt; &#x3D; DecodeSuccess&lt;In, Out, Err&gt; | DecodeFailure&lt;In, Out, Err&gt;
 
+/**
+ * Helper function to create an instance of &#x60;DecodeResult&#x60; from a succeeded decoding.
+ */
 export const success &#x3D; &lt;In, Out, Err&gt;(input: In, result: Out): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
   new DecodeSuccess(input, result)
+
+/**
+ * Helper function to create an instance of &#x60;DecodeResult&#x60; from a failed decoding.
+ */
 export const failure &#x3D; &lt;In, Out, Err&gt;(input: In, ...failures: Err[]): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
   new DecodeFailure(input, ...failures)
 </code></pre>

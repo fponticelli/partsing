@@ -128,12 +128,14 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/error/expected_at_least.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/error/expected_at_least.ts:26</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Construct an instance of <code>ExpectedAtLeast</code></p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -142,6 +144,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -156,6 +159,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>minimum (inclusive) number of expected repetitions</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>entity</td>
@@ -168,6 +175,8 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -210,10 +219,16 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/error/expected_at_least.ts:23</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/error/expected_at_least.ts:26</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Type discriminator</p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -246,13 +261,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/error/expected_at_least.ts:25</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/error/expected_at_least.ts:38</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Provides a human readable representation of the value. Mostly for debugging.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -279,8 +296,21 @@
  * Error for an {@link Entity} that was not repeated at least &#x60;min&#x60; times.
  */
 export class ExpectedAtLeast {
+  /**
+   * Type discriminator
+   */
   readonly kind: &#x27;expected-at-least&#x27; &#x3D; &#x27;expected-at-least&#x27;
+
+  /**
+   * Construct an instance of &#x60;ExpectedAtLeast&#x60;
+   * @param min minimum (inclusive) number of expected repetitions
+   * @param entity
+   */
   constructor(readonly min: number, readonly entity: Entity) {}
+
+  /**
+   * Provides a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return &#x60;at least ${this.min} ${entityToString(this.entity, this.min)}&#x60;
   }

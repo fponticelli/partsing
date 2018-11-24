@@ -18,7 +18,14 @@ limitations under the License.
  * Error for a decoder that is not expecting an end of input.
  */
 export class UnexpectedEoi {
+  /**
+   * Type discriminator
+   */
   readonly kind: 'unexpected-eoi' = 'unexpected-eoi'
+
+  /**
+   * Provides a human readable representation of the value. Mostly for debugging.
+   */
   toString() {
     return `NOT end of input`
   }
