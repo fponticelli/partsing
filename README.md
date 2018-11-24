@@ -62,7 +62,7 @@ const greyDecoder  = matchInsensitive('grey').or(DecodeError.combine, matchInsen
 const hslDecoder   = matchInsensitive('hsl(')
                        .pickNext(
                          ratioDecoder
-                           .separatedByTimes(match(','), 3)
+                           .repeatWithSeparator(3, match(','))
                            .map(v => new HSL(v[0], v[1], v[2]))
                        )
                        .skipNext(match(')'))
