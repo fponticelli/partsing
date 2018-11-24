@@ -100,9 +100,9 @@ export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
 
 /**
  * A decoder that doesn't consume any portion of the string but does
- * return the current position as its result value.
+ * return the current index position as its result value.
  */
-export const withPosition = make(input => new DecodeSuccess(input, input.index))
+export const currentIndex = make(input => new DecodeSuccess(input, input.index))
 
 /**
  * A decoder that produces all the remaining characters in `TextInput`.
@@ -159,6 +159,9 @@ export const matchInsensitive = (s: string): TextDecoder<string> => {
   })
 }
 
+/**
+ * Helper patterns used in exposed functions.
+ */
 const {
   letterPattern,
   lettersPattern,
