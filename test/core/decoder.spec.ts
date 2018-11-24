@@ -17,8 +17,7 @@ limitations under the License.
 import { Decoder, fail, lazy, oneOf, sequence, succeed } from '../../src/core/decoder'
 import { DecodeFailure, DecodeSuccess, success, failure } from '../../src/core/result'
 import { DecodeError } from '../../src/error'
-import { decodeText, digit, letter, match, regexp } from '../../src/text'
-import { TextInput } from '../../src/text/input'
+import { decodeText, digit, letter, match, regexp, TextInput } from '../../src/text'
 import { decodeValue, stringValue } from '../../src/value'
 
 const decodeSuccess = <In, Err>() => Decoder.of<In, In, Err>(input => success<In, In, Err>(input, input))

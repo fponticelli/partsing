@@ -48,9 +48,9 @@ import {
   upperCaseLetter,
   upperCaseLetters,
   whitespace,
-  withPosition
+  withPosition,
+  TextInput
 } from '../../src/text'
-import { TextInput } from '../../src/text/input'
 
 const decodeSuccess = <Out>(decoder: TextDecoder<Out>, input: string): [TextInput, Out] => {
   const r = decoder.run({ input, index: 0 })
