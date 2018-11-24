@@ -33,8 +33,8 @@ describe('decode_result', () => {
     expect(result.isFailure()).toEqual(true)
     expect(result.input).toEqual('some')
     expect(result.kind).toEqual('decode-failure')
-    if (result.isFailure()) expect(result.failure).toEqual({ error: 'error' })
-    expect(result.toString()).toEqual('DecodeFailure<{"error":"error"}>: "some"')
+    if (result.isFailure()) expect(result.failures).toEqual([{ error: 'error' }])
+    expect(result.toString()).toEqual('DecodeFailure<[{"error":"error"}]>: "some"')
   })
 
   it('match will return a value for each constructor', () => {
@@ -46,7 +46,7 @@ describe('decode_result', () => {
     ).toEqual('1')
     expect(
       failure('', 1).match({
-        failure: f => String(f.failure),
+        failure: f => String(f.failures),
         success: _ => 'nah'
       })
     ).toEqual('1')
@@ -56,37 +56,37 @@ describe('decode_result', () => {
     const v = success('', 1).map(String) as DecodeSuccess<string, any, any>
     expect(v.value).toEqual('1')
     const f = failure('', 1).map(String) as DecodeFailure<any, any, number>
-    expect(f.failure).toEqual(1)
+    expect(f.failures).toEqual([1])
   })
 
   it('flatMap will transform success but not failure', () => {
     const v = success('', 1).flatMap(v => success('', String(v))) as DecodeSuccess<string, any, any>
     expect(v.value).toEqual('1')
     const s = success('', 1).flatMap(v => failure('', 'fail')) as DecodeFailure<string, any, any>
-    expect(s.failure).toEqual('fail')
+    expect(s.failures).toEqual(['fail'])
     const f = failure('', 1).flatMap(v => success('', String(v))) as DecodeFailure<any, any, number>
-    expect(f.failure).toEqual(1)
+    expect(f.failures).toEqual([1])
   })
 
   it('mapError will transform failure but not success', () => {
     const v = success('', 1).mapError(String) as DecodeSuccess<any, number, any>
     expect(v.value).toEqual(1)
     const f = failure('', 1).mapError(String) as DecodeFailure<any, string, any>
-    expect(f.failure).toEqual('1')
+    expect(f.failures).toEqual(['1'])
   })
 
   it('flatMapError will transform failure but not success', () => {
     const v = success('', 1).flatMapError(e => success('', 2)) as DecodeSuccess<string, number, string>
     expect(v.value).toEqual(1)
     const s = failure('', 1).flatMapError(e => failure('', `${e} fail`)) as DecodeFailure<string, any, any>
-    expect(s.failure).toEqual('1 fail')
+    expect(s.failures).toEqual(['1 fail'])
     const f = failure('', 1).flatMapError(v => success('', 1)) as DecodeSuccess<any, number, any>
     expect(f.value).toEqual(1)
   })
 
   it('getUnsafeSuccess/getUnsafeFailure throw when not safe', () => {
     const s = new DecodeSuccess('', 1)
-    expect(s.getUnsafeFailure).toThrow(Error)
+    expect(s.getUnsafeFailures).toThrow(Error)
     const f = new DecodeFailure('', 1)
     expect(f.getUnsafeSuccess).toThrow(Error)
   })

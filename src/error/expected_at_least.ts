@@ -36,6 +36,6 @@ export class ExpectedAtLeast {
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
-    return `expected at least ${this.min} ${entityToString(this.entity, this.min)}`
+    return `at least ${this.min} ${entityToString(this.entity, this.min)}`
   }
 }

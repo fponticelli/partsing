@@ -30,10 +30,10 @@ const jsonNumber = regexp(/-?(0|[1-9]\d*)([.]\d+)?([eE][+-]?\d+)?/y)
 // this is incomplete as it doesn't convert escaped chars or unicode values
 const jsonString = regexp(/"((:?\\"|[^"])*)"/y, 1).withFailure(DecodeError.custom('expected quoted string'))
 const jsonNull = match('null').withResult(null)
-const jsonBoolean = jsonTrue.or(DecodeError.combine, jsonFalse)
+const jsonBoolean = jsonTrue.or(jsonFalse)
 
 const jsonValue: TextDecoder<JSONValue> = lazy(() =>
-  oneOf(DecodeError.combine, jsonNumber, jsonNull, jsonBoolean, jsonString, jsonArray, jsonObject)
+  oneOf(jsonNumber, jsonNull, jsonBoolean, jsonString, jsonArray, jsonObject)
 )
 
 const token = <T>(decoder: TextDecoder<T>) => decoder.skipNext(optionalWhitespace)

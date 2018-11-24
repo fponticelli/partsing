@@ -33,6 +33,6 @@ export class PatternMismatch {
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
-    return `expected to match pattern ${this.pattern}`
+    return `to match pattern ${this.pattern}`
   }
 }

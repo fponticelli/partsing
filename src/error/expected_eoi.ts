@@ -27,6 +27,6 @@ export class ExpectedEoi {
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
-    return `expected end of input`
+    return `end of input`
   }
 }

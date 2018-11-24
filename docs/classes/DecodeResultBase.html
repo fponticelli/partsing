@@ -131,7 +131,7 @@ defined to provide a common signature to the only two possible constructors
                             </li>
                             <li>
                                     <span class="modifier">Abstract</span>
-                                <a href="#getUnsafeFailure">getUnsafeFailure</a>
+                                <a href="#getUnsafeFailures">getUnsafeFailures</a>
                             </li>
                             <li>
                                     <span class="modifier">Abstract</span>
@@ -507,7 +507,7 @@ the function <code>f</code> to it.</p>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>flatMapError(f: (r: Err) => void)</code>
+                        <code>flatMapError(f: (r: Err[]) => void)</code>
                     </td>
                 </tr>
 
@@ -576,20 +576,20 @@ the function <code>f</code> to it. This operation allows to recover form a faile
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="getUnsafeFailure"></a>
+                        <a name="getUnsafeFailures"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Abstract</span>
-                            getUnsafeFailure
+                            getUnsafeFailures
                             </b>
-                            <a href="#getUnsafeFailure"><span class="icon ion-ios-link"></span></a>
+                            <a href="#getUnsafeFailures"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>getUnsafeFailure()</code>
+                        <code>getUnsafeFailures()</code>
                     </td>
                 </tr>
 
@@ -609,7 +609,7 @@ Do not use unless you are protecting from exceptions.</p>
 </div>
 
                             <div class="io-description">
-                                <b>Returns : </b>    <code>Err</code>
+                                <b>Returns : </b>    <code>Err[]</code>
 
                             </div>
                     </td>
@@ -1182,7 +1182,7 @@ and <code>failure</code>. Both fields must be populated with a function.</p>
    * Transfom the result of a &#x60;DecodeFailure&#x60; into a new &#x60;DecodeResult&#x60; by applying
    * the function &#x60;f&#x60; to it. This operation allows to recover form a failed result.
    */
-  abstract flatMapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt;
+  abstract flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt;
 
   /**
    * Transfom the result of a &#x60;DecodeSuccess&#x60; into a new value of type &#x60;Out2&#x60; by
@@ -1228,7 +1228,7 @@ and <code>failure</code>. Both fields must be populated with a function.</p>
    * type &#x60;DecodeSuccess&#x60; then this function will throw an exception.
    * Do not use unless you are protecting from exceptions.
    */
-  abstract getUnsafeFailure(): Err
+  abstract getUnsafeFailures(): Err[]
 
   /**
    * Provides a human readable representation of the value. Mostly for debugging.
@@ -1275,7 +1275,7 @@ export class DecodeSuccess&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   /**
    * See {@link DecodeResultBase.flatMapError}
    */
-  flatMapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
+  flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
     return new DecodeSuccess(this.input, this.value)
   }
 
@@ -1315,9 +1315,9 @@ export class DecodeSuccess&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   }
 
   /**
-   * See {@link DecodeResultBase.getUnsafeFailure}
+   * See {@link DecodeResultBase.getUnsafeFailures}
    */
-  getUnsafeFailure(): Err {
+  getUnsafeFailures(): Err[] {
     throw new Error(&quot;can&#x27;t get failure from success&quot;)
   }
 
@@ -1336,14 +1336,20 @@ export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   readonly kind &#x3D; &#x27;decode-failure&#x27;
 
   /**
+   * Contains all the possible reasons of why a decoder failed.
+   */
+  readonly failures: Err[]
+
+  /**
    * Contruct an instance of &#x60;DecodeFailure&#x60;.
    * @param input The input value that corresponds to the place where the decoder
    * failed to generate a valid result.
-   * @param failure The error message associated with the reason why the decoder
+   * @param failures The error messages associated with the reason why the decoder
    * failed.
    */
-  constructor(input: In, readonly failure: Err) {
+  constructor(input: In, ...failures: Err[]) {
     super(input)
+    this.failures &#x3D; failures
   }
 
   /**
@@ -1360,35 +1366,35 @@ export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
    * See {@link DecodeResultBase.flatMap}
    */
   flatMap&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; DecodeResult&lt;In, Out2, Err&gt;): DecodeResult&lt;In, Out2, Err&gt; {
-    return new DecodeFailure(this.input, this.failure)
+    return new DecodeFailure(this.input, ...this.failures)
   }
 
   /**
    * See {@link DecodeResultBase.map}
    */
   map&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; Out2): DecodeResult&lt;In, Out2, Err&gt; {
-    return new DecodeFailure(this.input, this.failure)
+    return new DecodeFailure(this.input, ...this.failures)
   }
 
   /**
    * See {@link DecodeResultBase.flatMapError}
    */
-  flatMapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
-    return f(this.failure)
+  flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
+    return f(this.failures)
   }
 
   /**
    * See {@link DecodeResultBase.mapError}
    */
   mapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; Err2): DecodeResult&lt;In, Out, Err2&gt; {
-    return this.flatMapError(e &#x3D;&gt; new DecodeFailure(this.input, f(e)))
+    return failure(this.input, ...this.failures.map(f))
   }
 
   /**
    * See {@link DecodeResultBase.mapInput}
    */
   mapInput&lt;In2&gt;(f: (i: In) &#x3D;&gt; In2): DecodeResult&lt;In2, Out, Err&gt; {
-    return new DecodeFailure(f(this.input), this.failure)
+    return failure(f(this.input), ...this.failures)
   }
 
   /**
@@ -1415,15 +1421,15 @@ export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   /**
    * See {@link DecodeResultBase.getUnsafeFailure}
    */
-  getUnsafeFailure(): Err {
-    return this.failure
+  getUnsafeFailures(): Err[] {
+    return this.failures
   }
 
   /**
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString(): string {
-    return &#x60;DecodeFailure&lt;${JSON.stringify(this.failure)}&gt;: ${JSON.stringify(this.input)}&#x60;
+    return &#x60;DecodeFailure&lt;${JSON.stringify(this.failures)}&gt;: ${JSON.stringify(this.input)}&#x60;
   }
 }
 
@@ -1451,8 +1457,8 @@ export const success &#x3D; &lt;In, Out, Err&gt;(input: In, result: Out): Decode
 /**
  * Helper function to create an instance of &#x60;DecodeResult&#x60; from a failed decoding.
  */
-export const failure &#x3D; &lt;In, Out, Err&gt;(input: In, failure: Err): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
-  new DecodeFailure(input, failure)
+export const failure &#x3D; &lt;In, Out, Err&gt;(input: In, ...failures: Err[]): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
+  new DecodeFailure(input, ...failures)
 </code></pre>
     </div>
 </div>

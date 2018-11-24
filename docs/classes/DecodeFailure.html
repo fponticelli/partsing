@@ -88,6 +88,10 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Readonly</span>
+                                <a href="#failures">failures</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Readonly</span>
                                 <a href="#kind">kind</a>
                             </li>
                             <li>
@@ -126,7 +130,7 @@
                                 <a href="#flatMapError">flatMapError</a>
                             </li>
                             <li>
-                                <a href="#getUnsafeFailure">getUnsafeFailure</a>
+                                <a href="#getUnsafeFailures">getUnsafeFailures</a>
                             </li>
                             <li>
                                 <a href="#getUnsafeSuccess">getUnsafeSuccess</a>
@@ -162,7 +166,7 @@
                             </li>
                             <li>
                                     <span class="modifier">Abstract</span>
-                                <a href="#getUnsafeFailure">getUnsafeFailure</a>
+                                <a href="#getUnsafeFailures">getUnsafeFailures</a>
                             </li>
                             <li>
                                     <span class="modifier">Abstract</span>
@@ -214,12 +218,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(input: In, failure: Err)</code>
+<code>constructor(input: In, ...failures: Err[])</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="227" class="link-to-prism">src/core/result.ts:227</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="232" class="link-to-prism">src/core/result.ts:232</a></div>
                             </td>
                         </tr>
 
@@ -257,10 +261,10 @@ failed to generate a valid result.</p>
                                                         </td>
                                                 </tr>
                                                 <tr>
-                                                        <td>failure</td>
+                                                        <td>failures</td>
                                                   
                                                         <td>
-                                                                    <code>Err</code>
+                                                                    <code>Err[]</code>
                                                         </td>
                                                   
                                                     <td>
@@ -268,7 +272,7 @@ failed to generate a valid result.</p>
                                                     </td>
                                                     
                                                         <td>
-                                                                <code><p>The error message associated with the reason why the decoder
+                                                                <code><p>The error messages associated with the reason why the decoder
 failed.</p>
 </code>
                                                         </td>
@@ -287,6 +291,47 @@ failed.</p>
         <h3 id="inputs">
             Properties
         </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="failures"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Readonly</span>
+                            failures
+                            </b>
+                            <a href="#failures"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>failures:     <code>Err[]</code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Err[]</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="232" class="link-to-prism">src/core/result.ts:232</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains all the possible reasons of why a decoder failed.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -553,7 +598,7 @@ compile time.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="253" class="link-to-prism">src/core/result.ts:253</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="259" class="link-to-prism">src/core/result.ts:259</a></div>
                             </td>
                         </tr>
 
@@ -625,14 +670,14 @@ compile time.</p>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>flatMapError(f: (r: Err) => void)</code>
+<code>flatMapError(f: (r: Err[]) => void)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="267" class="link-to-prism">src/core/result.ts:267</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="273" class="link-to-prism">src/core/result.ts:273</a></div>
                             </td>
                         </tr>
 
@@ -693,25 +738,25 @@ compile time.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="getUnsafeFailure"></a>
+                        <a name="getUnsafeFailures"></a>
                         <span class="name">
                             <b>
-                            getUnsafeFailure
+                            getUnsafeFailures
                             </b>
-                            <a href="#getUnsafeFailure"><span class="icon ion-ios-link"></span></a>
+                            <a href="#getUnsafeFailures"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>getUnsafeFailure()</code>
+<code>getUnsafeFailures()</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="309" class="link-to-prism">src/core/result.ts:309</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="315" class="link-to-prism">src/core/result.ts:315</a></div>
                             </td>
                         </tr>
 
@@ -722,7 +767,7 @@ compile time.</p>
 </div>
 
                             <div class="io-description">
-                                <b>Returns : </b>    <code>Err</code>
+                                <b>Returns : </b>    <code>Err[]</code>
 
                             </div>
                     </td>
@@ -751,7 +796,7 @@ compile time.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="302" class="link-to-prism">src/core/result.ts:302</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="308" class="link-to-prism">src/core/result.ts:308</a></div>
                             </td>
                         </tr>
 
@@ -791,7 +836,7 @@ compile time.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="295" class="link-to-prism">src/core/result.ts:295</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="301" class="link-to-prism">src/core/result.ts:301</a></div>
                             </td>
                         </tr>
 
@@ -831,7 +876,7 @@ compile time.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="288" class="link-to-prism">src/core/result.ts:288</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="294" class="link-to-prism">src/core/result.ts:294</a></div>
                             </td>
                         </tr>
 
@@ -871,7 +916,7 @@ compile time.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="260" class="link-to-prism">src/core/result.ts:260</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="266" class="link-to-prism">src/core/result.ts:266</a></div>
                             </td>
                         </tr>
 
@@ -950,7 +995,7 @@ compile time.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="274" class="link-to-prism">src/core/result.ts:274</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="280" class="link-to-prism">src/core/result.ts:280</a></div>
                             </td>
                         </tr>
 
@@ -1029,7 +1074,7 @@ compile time.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="281" class="link-to-prism">src/core/result.ts:281</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="287" class="link-to-prism">src/core/result.ts:287</a></div>
                             </td>
                         </tr>
 
@@ -1108,7 +1153,7 @@ compile time.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="243" class="link-to-prism">src/core/result.ts:243</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="249" class="link-to-prism">src/core/result.ts:249</a></div>
                             </td>
                         </tr>
 
@@ -1187,7 +1232,7 @@ compile time.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="316" class="link-to-prism">src/core/result.ts:316</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="322" class="link-to-prism">src/core/result.ts:322</a></div>
                             </td>
                         </tr>
 
@@ -1310,7 +1355,7 @@ the function <code>f</code> to it.</p>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>flatMapError(f: (r: Err) => void)</code>
+                        <code>flatMapError(f: (r: Err[]) => void)</code>
                     </td>
                 </tr>
 
@@ -1385,20 +1430,20 @@ the function <code>f</code> to it. This operation allows to recover form a faile
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="getUnsafeFailure"></a>
+                        <a name="getUnsafeFailures"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Abstract</span>
-                            getUnsafeFailure
+                            getUnsafeFailures
                             </b>
-                            <a href="#getUnsafeFailure"><span class="icon ion-ios-link"></span></a>
+                            <a href="#getUnsafeFailures"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>getUnsafeFailure()</code>
+                        <code>getUnsafeFailures()</code>
                     </td>
                 </tr>
 
@@ -1424,7 +1469,7 @@ Do not use unless you are protecting from exceptions.</p>
 </div>
 
                             <div class="io-description">
-                                <b>Returns : </b>    <code>Err</code>
+                                <b>Returns : </b>    <code>Err[]</code>
 
                             </div>
                     </td>
@@ -2045,7 +2090,7 @@ and <code>failure</code>. Both fields must be populated with a function.</p>
    * Transfom the result of a &#x60;DecodeFailure&#x60; into a new &#x60;DecodeResult&#x60; by applying
    * the function &#x60;f&#x60; to it. This operation allows to recover form a failed result.
    */
-  abstract flatMapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt;
+  abstract flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt;
 
   /**
    * Transfom the result of a &#x60;DecodeSuccess&#x60; into a new value of type &#x60;Out2&#x60; by
@@ -2091,7 +2136,7 @@ and <code>failure</code>. Both fields must be populated with a function.</p>
    * type &#x60;DecodeSuccess&#x60; then this function will throw an exception.
    * Do not use unless you are protecting from exceptions.
    */
-  abstract getUnsafeFailure(): Err
+  abstract getUnsafeFailures(): Err[]
 
   /**
    * Provides a human readable representation of the value. Mostly for debugging.
@@ -2138,7 +2183,7 @@ export class DecodeSuccess&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   /**
    * See {@link DecodeResultBase.flatMapError}
    */
-  flatMapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
+  flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
     return new DecodeSuccess(this.input, this.value)
   }
 
@@ -2178,9 +2223,9 @@ export class DecodeSuccess&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   }
 
   /**
-   * See {@link DecodeResultBase.getUnsafeFailure}
+   * See {@link DecodeResultBase.getUnsafeFailures}
    */
-  getUnsafeFailure(): Err {
+  getUnsafeFailures(): Err[] {
     throw new Error(&quot;can&#x27;t get failure from success&quot;)
   }
 
@@ -2199,14 +2244,20 @@ export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   readonly kind &#x3D; &#x27;decode-failure&#x27;
 
   /**
+   * Contains all the possible reasons of why a decoder failed.
+   */
+  readonly failures: Err[]
+
+  /**
    * Contruct an instance of &#x60;DecodeFailure&#x60;.
    * @param input The input value that corresponds to the place where the decoder
    * failed to generate a valid result.
-   * @param failure The error message associated with the reason why the decoder
+   * @param failures The error messages associated with the reason why the decoder
    * failed.
    */
-  constructor(input: In, readonly failure: Err) {
+  constructor(input: In, ...failures: Err[]) {
     super(input)
+    this.failures &#x3D; failures
   }
 
   /**
@@ -2223,35 +2274,35 @@ export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
    * See {@link DecodeResultBase.flatMap}
    */
   flatMap&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; DecodeResult&lt;In, Out2, Err&gt;): DecodeResult&lt;In, Out2, Err&gt; {
-    return new DecodeFailure(this.input, this.failure)
+    return new DecodeFailure(this.input, ...this.failures)
   }
 
   /**
    * See {@link DecodeResultBase.map}
    */
   map&lt;Out2&gt;(f: (r: Out) &#x3D;&gt; Out2): DecodeResult&lt;In, Out2, Err&gt; {
-    return new DecodeFailure(this.input, this.failure)
+    return new DecodeFailure(this.input, ...this.failures)
   }
 
   /**
    * See {@link DecodeResultBase.flatMapError}
    */
-  flatMapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
-    return f(this.failure)
+  flatMapError&lt;Err2&gt;(f: (r: Err[]) &#x3D;&gt; DecodeResult&lt;In, Out, Err2&gt;): DecodeResult&lt;In, Out, Err2&gt; {
+    return f(this.failures)
   }
 
   /**
    * See {@link DecodeResultBase.mapError}
    */
   mapError&lt;Err2&gt;(f: (r: Err) &#x3D;&gt; Err2): DecodeResult&lt;In, Out, Err2&gt; {
-    return this.flatMapError(e &#x3D;&gt; new DecodeFailure(this.input, f(e)))
+    return failure(this.input, ...this.failures.map(f))
   }
 
   /**
    * See {@link DecodeResultBase.mapInput}
    */
   mapInput&lt;In2&gt;(f: (i: In) &#x3D;&gt; In2): DecodeResult&lt;In2, Out, Err&gt; {
-    return new DecodeFailure(f(this.input), this.failure)
+    return failure(f(this.input), ...this.failures)
   }
 
   /**
@@ -2278,15 +2329,15 @@ export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   /**
    * See {@link DecodeResultBase.getUnsafeFailure}
    */
-  getUnsafeFailure(): Err {
-    return this.failure
+  getUnsafeFailures(): Err[] {
+    return this.failures
   }
 
   /**
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString(): string {
-    return &#x60;DecodeFailure&lt;${JSON.stringify(this.failure)}&gt;: ${JSON.stringify(this.input)}&#x60;
+    return &#x60;DecodeFailure&lt;${JSON.stringify(this.failures)}&gt;: ${JSON.stringify(this.input)}&#x60;
   }
 }
 
@@ -2314,8 +2365,8 @@ export const success &#x3D; &lt;In, Out, Err&gt;(input: In, result: Out): Decode
 /**
  * Helper function to create an instance of &#x60;DecodeResult&#x60; from a failed decoding.
  */
-export const failure &#x3D; &lt;In, Out, Err&gt;(input: In, failure: Err): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
-  new DecodeFailure(input, failure)
+export const failure &#x3D; &lt;In, Out, Err&gt;(input: In, ...failures: Err[]): DecodeResult&lt;In, Out, Err&gt; &#x3D;&gt;
+  new DecodeFailure(input, ...failures)
 </code></pre>
     </div>
 </div>
