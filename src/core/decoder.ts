@@ -208,7 +208,7 @@ export class Decoder<In, Out, Err> {
    *
    * The result is an array of `Out` values.
    */
-  repeatAtLeast(times = 1) {
+  atLeast(times: number) {
     return Decoder.of<In, Out[], Err>((input: In) => {
       const buff: Out[] = []
       while (true) {
@@ -226,9 +226,16 @@ export class Decoder<In, Out, Err> {
   }
 
   /**
+   * Repeat the current decoder zero or more times.
+   */
+  many() {
+    return this.atLeast(0)
+  }
+
+  /**
    * Repeat the current decoder between `min` and `max` times.
    */
-  repeatBetween(min: number, max: number) {
+  between(min: number, max: number) {
     return Decoder.of<In, Out[], Err>((input: In) => {
       const buff: Out[] = []
       let failures = undefined
@@ -244,8 +251,9 @@ export class Decoder<In, Out, Err> {
       }
       if (buff.length < min) {
         return failure(input, ...failures!)
+      } else {
+        return success<In, Out[], Err>(input, buff)
       }
-      return success<In, Out[], Err>(input, buff)
     })
   }
 
@@ -253,7 +261,7 @@ export class Decoder<In, Out, Err> {
    * Repeat the current decoder exactly n `times`.
    */
   repeat(times: number) {
-    return this.repeatBetween(times, times)
+    return this.between(times, times)
   }
 
   /**
@@ -262,39 +270,121 @@ export class Decoder<In, Out, Err> {
    * Notice that this allows for zero successes. Which makes this decoder
    * optional.
    */
-  repeatAtMost(times: number) {
-    return this.repeatBetween(0, times)
+  atMost(times: number) {
+    return this.between(0, times)
   }
 
   /**
    * Given a `separator` decoder, it returns an array of values from the current
-   * decoder. It is expected that at least two values are returned from this
+   * decoder. It is expected that at least `times` values are returned from this
    * decoder.
    */
-  separatedByAtLeastOnce<Separator>(separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
-    const pairs = separator.pickNext(this).repeatAtLeast(1)
-    return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
+  atLeastWithSeparator<Separator>(times: number, separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
+    return this.betweenWithSeparator(times, Infinity, separator)
   }
 
   /**
-   * Like {@link separatedByAtLeastOnce} but without the expectation that at
-   * least two values are captured.
+   * Given a `separator` decoder, it returns an array of values from the current
+   * decoder. It is expected that at most `times` values are returned from this
+   * decoder.
    */
-  separatedBy<Separator>(separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
-    return this.separatedByAtLeastOnce(separator)
-      .or(this.map(v => [v]))
-      .or(succeed([]))
+  atMostWithSeparator<Separator>(times: number, separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
+    return this.betweenWithSeparator(0, times, separator)
   }
 
   /**
-   * Like [separatedByAtLeastOne] but expecting a fixed number of results.
+   * Given a `separator` decoder, it returns an array of values from the current
+   * decoder. It is expected any number of values returned, even zero.
    */
-  separatedByTimes<Separator>(separator: Decoder<In, Separator, Err>, times: number): Decoder<In, Out[], Err> {
-    if (times <= 1) return this.map(v => [v])
-    else {
-      const pairs = separator.pickNext(this).repeat(times - 1)
-      return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
+  manyWithSeparator<Separator>(separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
+    return this.atLeastWithSeparator(0, separator)
+  }
+
+  /**
+   * Given a `separator` decoder, it returns an array of values from the current
+   * decoder. It is expected that exactly `times` values are returned from this
+   * decoder.
+   */
+  repeatWithSeparator<Separator>(times: number, separator: Decoder<In, Separator, Err>): Decoder<In, Out[], Err> {
+    return this.betweenWithSeparator(times, times, separator)
+  }
+
+  /**
+   * Given a `separator` decoder, it returns an array of values from the current
+   * decoder. It is expected that between `min` and `max` values are returned.
+   */
+  betweenWithSeparator<Separator>(
+    min: number,
+    max: number,
+    separator: Decoder<In, Separator, Err>
+  ): Decoder<In, Out[], Err> {
+    if (max < min) {
+      const t = min
+      min = max
+      max = t
     }
+    if (max <= 0) {
+      return succeed([])
+    }
+
+    const pair = separator.pickNext(this)
+    const decoderF = (value: Out) =>
+      Decoder.of<In, Out[], Err>((input: In) => {
+        const buff = [value]
+        for (let i = 1; i < max; i++) {
+          const res = pair.run(input)
+          if (res.isFailure()) {
+            if (i >= min) {
+              return success(input, buff)
+            } else {
+              return failure(input, ...res.failures)
+            }
+          } else {
+            buff.push(res.value)
+            input = res.input
+          }
+        }
+        return success(input, buff)
+      })
+    if (min <= 0) {
+      return Decoder.of((input: In) => {
+        const res = this.run(input)
+        if (res.isSuccess()) {
+          return decoderF(res.value).run(res.input)
+        } else {
+          return success<In, Out[], Err>(input, [])
+        }
+      })
+    } else {
+      return this.flatMap<Out[]>(decoderF)
+    }
+
+    // return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
+
+    // if (times <= 0) {
+
+    // } else {
+
+    // }
+    // const pairs = separator.pickNext(this).atLeast(times - 1)
+    // return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
+    // if (times <= 0) {
+
+    // } else if (times === 1) {
+
+    // } else {
+
+    // }
+    // const pairs = separator.pickNext(this).atLeast(times - 1)
+    // return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
+    // return this.atLeastWithSeparator(0, separator)
+    //   .or(this.map(v => [v]))
+    //   .or(succeed([]))
+    // if (times <= 1) return this.map(v => [v])
+    // else {
+    //   const pairs = separator.pickNext(this).repeat(times - 1)
+    //   return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
+    // }
   }
 
   /**

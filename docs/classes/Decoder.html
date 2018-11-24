@@ -136,6 +136,24 @@ strings and can be properly used for localization.</p>
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#atLeast">atLeast</a>
+                            </li>
+                            <li>
+                                <a href="#atLeastWithSeparator">atLeastWithSeparator</a>
+                            </li>
+                            <li>
+                                <a href="#atMost">atMost</a>
+                            </li>
+                            <li>
+                                <a href="#atMostWithSeparator">atMostWithSeparator</a>
+                            </li>
+                            <li>
+                                <a href="#between">between</a>
+                            </li>
+                            <li>
+                                <a href="#betweenWithSeparator">betweenWithSeparator</a>
+                            </li>
+                            <li>
                                 <a href="#flatMap">flatMap</a>
                             </li>
                             <li>
@@ -143,6 +161,12 @@ strings and can be properly used for localization.</p>
                             </li>
                             <li>
                                 <a href="#join">join</a>
+                            </li>
+                            <li>
+                                <a href="#many">many</a>
+                            </li>
+                            <li>
+                                <a href="#manyWithSeparator">manyWithSeparator</a>
                             </li>
                             <li>
                                 <a href="#map">map</a>
@@ -167,22 +191,7 @@ strings and can be properly used for localization.</p>
                                 <a href="#repeat">repeat</a>
                             </li>
                             <li>
-                                <a href="#repeatAtLeast">repeatAtLeast</a>
-                            </li>
-                            <li>
-                                <a href="#repeatAtMost">repeatAtMost</a>
-                            </li>
-                            <li>
-                                <a href="#repeatBetween">repeatBetween</a>
-                            </li>
-                            <li>
-                                <a href="#separatedBy">separatedBy</a>
-                            </li>
-                            <li>
-                                <a href="#separatedByAtLeastOnce">separatedByAtLeastOnce</a>
-                            </li>
-                            <li>
-                                <a href="#separatedByTimes">separatedByTimes</a>
+                                <a href="#repeatWithSeparator">repeatWithSeparator</a>
                             </li>
                             <li>
                                 <a href="#skipNext">skipNext</a>
@@ -398,6 +407,524 @@ compile time.</p>
         <h3 id="methods">
             Methods
         </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="atLeast"></a>
+                        <span class="name">
+                            <b>
+                            atLeast
+                            </b>
+                            <a href="#atLeast"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>atLeast(times: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="211" class="link-to-prism">src/core/decoder.ts:211</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Expect the current decoder to be repeated at least n <code>times</code>.</p>
+<p>The result is an array of <code>Out</code> values.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>times</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, {}, Err&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="atLeastWithSeparator"></a>
+                        <span class="name">
+                            <b>
+                            atLeastWithSeparator
+                            </b>
+                            <a href="#atLeastWithSeparator"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>atLeastWithSeparator(times: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, separator: <a href="../classes/Decoder.html">Decoder<In | Separator | Err></a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="282" class="link-to-prism">src/core/decoder.ts:282</a></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-md-4">
+                                <b>Type parameters :</b>
+                                <ul class="type-parameters">
+                                        <li>Separator</li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Given a <code>separator</code> decoder, it returns an array of values from the current
+decoder. It is expected that at least <code>times</code> values are returned from this
+decoder.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>times</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>separator</td>
+                                                        <td>
+                                                                    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In | Separator | Err&gt;</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, Out[], Err&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="atMost"></a>
+                        <span class="name">
+                            <b>
+                            atMost
+                            </b>
+                            <a href="#atMost"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>atMost(times: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="273" class="link-to-prism">src/core/decoder.ts:273</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Repeat the current decoder at most n <code>times</code>.</p>
+<p>Notice that this allows for zero successes. Which makes this decoder
+optional.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>times</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, {}, Err&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="atMostWithSeparator"></a>
+                        <span class="name">
+                            <b>
+                            atMostWithSeparator
+                            </b>
+                            <a href="#atMostWithSeparator"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>atMostWithSeparator(times: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, separator: <a href="../classes/Decoder.html">Decoder<In | Separator | Err></a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="291" class="link-to-prism">src/core/decoder.ts:291</a></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-md-4">
+                                <b>Type parameters :</b>
+                                <ul class="type-parameters">
+                                        <li>Separator</li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Given a <code>separator</code> decoder, it returns an array of values from the current
+decoder. It is expected that at most <code>times</code> values are returned from this
+decoder.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>times</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>separator</td>
+                                                        <td>
+                                                                    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In | Separator | Err&gt;</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, Out[], Err&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="between"></a>
+                        <span class="name">
+                            <b>
+                            between
+                            </b>
+                            <a href="#between"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>between(min: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, max: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="238" class="link-to-prism">src/core/decoder.ts:238</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Repeat the current decoder between <code>min</code> and <code>max</code> times.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>min</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>max</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, {}, Err&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="betweenWithSeparator"></a>
+                        <span class="name">
+                            <b>
+                            betweenWithSeparator
+                            </b>
+                            <a href="#betweenWithSeparator"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>betweenWithSeparator(min: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, max: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, separator: <a href="../classes/Decoder.html">Decoder<In | Separator | Err></a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="316" class="link-to-prism">src/core/decoder.ts:316</a></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-md-4">
+                                <b>Type parameters :</b>
+                                <ul class="type-parameters">
+                                        <li>Separator</li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Given a <code>separator</code> decoder, it returns an array of values from the current
+decoder. It is expected that between <code>min</code> and <code>max</code> values are returned.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>min</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>max</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>separator</td>
+                                                        <td>
+                                                                    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In | Separator | Err&gt;</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, Out[], Err&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -630,6 +1157,126 @@ them as tuple of two if they are both successful.</p>
                             </div>
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, , Err&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="many"></a>
+                        <span class="name">
+                            <b>
+                            many
+                            </b>
+                            <a href="#many"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>many()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="231" class="link-to-prism">src/core/decoder.ts:231</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Repeat the current decoder zero or more times.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, {}, Err&gt;</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="manyWithSeparator"></a>
+                        <span class="name">
+                            <b>
+                            manyWithSeparator
+                            </b>
+                            <a href="#manyWithSeparator"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>manyWithSeparator(separator: <a href="../classes/Decoder.html">Decoder<In | Separator | Err></a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="299" class="link-to-prism">src/core/decoder.ts:299</a></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-md-4">
+                                <b>Type parameters :</b>
+                                <ul class="type-parameters">
+                                        <li>Separator</li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Given a <code>separator</code> decoder, it returns an array of values from the current
+decoder. It is expected any number of values returned, even zero.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>separator</td>
+                                                        <td>
+                                                                    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In | Separator | Err&gt;</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, Out[], Err&gt;</a></code>
 
                             </div>
                                 <div class="io-description">
@@ -1067,7 +1714,7 @@ returning only its result.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="327" class="link-to-prism">src/core/decoder.ts:327</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="417" class="link-to-prism">src/core/decoder.ts:417</a></div>
                             </td>
                         </tr>
 
@@ -1141,7 +1788,7 @@ the decoder chain. It is mostly used as a debugging mechanism.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="255" class="link-to-prism">src/core/decoder.ts:255</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="263" class="link-to-prism">src/core/decoder.ts:263</a></div>
                             </td>
                         </tr>
 
@@ -1194,337 +1841,25 @@ the decoder chain. It is mostly used as a debugging mechanism.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="repeatAtLeast"></a>
+                        <a name="repeatWithSeparator"></a>
                         <span class="name">
                             <b>
-                            repeatAtLeast
+                            repeatWithSeparator
                             </b>
-                            <a href="#repeatAtLeast"><span class="icon ion-ios-link"></span></a>
+                            <a href="#repeatWithSeparator"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>repeatAtLeast(times: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+<code>repeatWithSeparator(times: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, separator: <a href="../classes/Decoder.html">Decoder<In | Separator | Err></a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="211" class="link-to-prism">src/core/decoder.ts:211</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-                            <div class="io-description"><p>Expect the current decoder to be repeated at least n <code>times</code>.</p>
-<p>The result is an array of <code>Out</code> values.</p>
-</div>
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                                    <td>Default value</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>times</td>
-                                                        <td>
-                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                        <td>
-                                                                <code>1</code>
-                                                        </td>
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, {}, Err&gt;</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="repeatAtMost"></a>
-                        <span class="name">
-                            <b>
-                            repeatAtMost
-                            </b>
-                            <a href="#repeatAtMost"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>repeatAtMost(times: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="265" class="link-to-prism">src/core/decoder.ts:265</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-                            <div class="io-description"><p>Repeat the current decoder at most n <code>times</code>.</p>
-<p>Notice that this allows for zero successes. Which makes this decoder
-optional.</p>
-</div>
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>times</td>
-                                                        <td>
-                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, {}, Err&gt;</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="repeatBetween"></a>
-                        <span class="name">
-                            <b>
-                            repeatBetween
-                            </b>
-                            <a href="#repeatBetween"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>repeatBetween(min: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, max: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="231" class="link-to-prism">src/core/decoder.ts:231</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-                            <div class="io-description"><p>Repeat the current decoder between <code>min</code> and <code>max</code> times.</p>
-</div>
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>min</td>
-                                                        <td>
-                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                                <tr>
-                                                        <td>max</td>
-                                                        <td>
-                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, {}, Err&gt;</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="separatedBy"></a>
-                        <span class="name">
-                            <b>
-                            separatedBy
-                            </b>
-                            <a href="#separatedBy"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>separatedBy(separator: <a href="../classes/Decoder.html">Decoder<In | Separator | Err></a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="283" class="link-to-prism">src/core/decoder.ts:283</a></div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="col-md-4">
-                                <b>Type parameters :</b>
-                                <ul class="type-parameters">
-                                        <li>Separator</li>
-                                </ul>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                            <div class="io-description"><p>Like <a href="separatedByAtLeastOnce">separatedByAtLeastOnce</a> but without the expectation that at
-least two values are captured.</p>
-</div>
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>separator</td>
-                                                        <td>
-                                                                    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In | Separator | Err&gt;</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, Out[], Err&gt;</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="separatedByAtLeastOnce"></a>
-                        <span class="name">
-                            <b>
-                            separatedByAtLeastOnce
-                            </b>
-                            <a href="#separatedByAtLeastOnce"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>separatedByAtLeastOnce(separator: <a href="../classes/Decoder.html">Decoder<In | Separator | Err></a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="274" class="link-to-prism">src/core/decoder.ts:274</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="308" class="link-to-prism">src/core/decoder.ts:308</a></div>
                             </td>
                         </tr>
 
@@ -1540,7 +1875,7 @@ least two values are captured.</p>
                 <tr>
                     <td class="col-md-4">
                             <div class="io-description"><p>Given a <code>separator</code> decoder, it returns an array of values from the current
-decoder. It is expected that at least two values are returned from this
+decoder. It is expected that exactly <code>times</code> values are returned from this
 decoder.</p>
 </div>
 
@@ -1556,100 +1891,21 @@ decoder.</p>
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>separator</td>
-                                                        <td>
-                                                                    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In | Separator | Err&gt;</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In, Out[], Err&gt;</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="separatedByTimes"></a>
-                        <span class="name">
-                            <b>
-                            separatedByTimes
-                            </b>
-                            <a href="#separatedByTimes"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>separatedByTimes(separator: <a href="../classes/Decoder.html">Decoder<In | Separator | Err></a>, times: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="292" class="link-to-prism">src/core/decoder.ts:292</a></div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="col-md-4">
-                                <b>Type parameters :</b>
-                                <ul class="type-parameters">
-                                        <li>Separator</li>
-                                </ul>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                            <div class="io-description"><p>Like [separatedByAtLeastOne] but expecting a fixed number of results.</p>
-</div>
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>separator</td>
-                                                        <td>
-                                                                    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In | Separator | Err&gt;</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                                <tr>
                                                         <td>times</td>
                                                         <td>
                                                                     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>separator</td>
+                                                        <td>
+                                                                    <code><a href="../classes/Decoder.html" target="_self" >Decoder&lt;In | Separator | Err&gt;</a></code>
                                                         </td>
                                                     
                                                     <td>
@@ -1882,7 +2138,7 @@ can be used to use different kind of decoders together.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="306" class="link-to-prism">src/core/decoder.ts:306</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="396" class="link-to-prism">src/core/decoder.ts:396</a></div>
                             </td>
                         </tr>
 
@@ -1967,7 +2223,7 @@ and succeed the decoding if the function returns <code>true</code>.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="346" class="link-to-prism">src/core/decoder.ts:346</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="436" class="link-to-prism">src/core/decoder.ts:436</a></div>
                             </td>
                         </tr>
 
@@ -2046,7 +2302,7 @@ and succeed the decoding if the function returns <code>true</code>.</p>
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="339" class="link-to-prism">src/core/decoder.ts:339</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="429" class="link-to-prism">src/core/decoder.ts:429</a></div>
                             </td>
                         </tr>
 
@@ -2309,7 +2565,7 @@ export class Decoder&lt;In, Out, Err&gt; {
    *
    * The result is an array of &#x60;Out&#x60; values.
    */
-  repeatAtLeast(times &#x3D; 1) {
+  atLeast(times: number) {
     return Decoder.of&lt;In, Out[], Err&gt;((input: In) &#x3D;&gt; {
       const buff: Out[] &#x3D; []
       while (true) {
@@ -2327,9 +2583,16 @@ export class Decoder&lt;In, Out, Err&gt; {
   }
 
   /**
+   * Repeat the current decoder zero or more times.
+   */
+  many() {
+    return this.atLeast(0)
+  }
+
+  /**
    * Repeat the current decoder between &#x60;min&#x60; and &#x60;max&#x60; times.
    */
-  repeatBetween(min: number, max: number) {
+  between(min: number, max: number) {
     return Decoder.of&lt;In, Out[], Err&gt;((input: In) &#x3D;&gt; {
       const buff: Out[] &#x3D; []
       let failures &#x3D; undefined
@@ -2345,8 +2608,9 @@ export class Decoder&lt;In, Out, Err&gt; {
       }
       if (buff.length &lt; min) {
         return failure(input, ...failures!)
+      } else {
+        return success&lt;In, Out[], Err&gt;(input, buff)
       }
-      return success&lt;In, Out[], Err&gt;(input, buff)
     })
   }
 
@@ -2354,7 +2618,7 @@ export class Decoder&lt;In, Out, Err&gt; {
    * Repeat the current decoder exactly n &#x60;times&#x60;.
    */
   repeat(times: number) {
-    return this.repeatBetween(times, times)
+    return this.between(times, times)
   }
 
   /**
@@ -2363,39 +2627,121 @@ export class Decoder&lt;In, Out, Err&gt; {
    * Notice that this allows for zero successes. Which makes this decoder
    * optional.
    */
-  repeatAtMost(times: number) {
-    return this.repeatBetween(0, times)
+  atMost(times: number) {
+    return this.between(0, times)
   }
 
   /**
    * Given a &#x60;separator&#x60; decoder, it returns an array of values from the current
-   * decoder. It is expected that at least two values are returned from this
+   * decoder. It is expected that at least &#x60;times&#x60; values are returned from this
    * decoder.
    */
-  separatedByAtLeastOnce&lt;Separator&gt;(separator: Decoder&lt;In, Separator, Err&gt;): Decoder&lt;In, Out[], Err&gt; {
-    const pairs &#x3D; separator.pickNext(this).repeatAtLeast(1)
-    return this.flatMap&lt;Out[]&gt;((res: Out) &#x3D;&gt; pairs.map(rs &#x3D;&gt; [res].concat(rs)))
+  atLeastWithSeparator&lt;Separator&gt;(times: number, separator: Decoder&lt;In, Separator, Err&gt;): Decoder&lt;In, Out[], Err&gt; {
+    return this.betweenWithSeparator(times, Infinity, separator)
   }
 
   /**
-   * Like {@link separatedByAtLeastOnce} but without the expectation that at
-   * least two values are captured.
+   * Given a &#x60;separator&#x60; decoder, it returns an array of values from the current
+   * decoder. It is expected that at most &#x60;times&#x60; values are returned from this
+   * decoder.
    */
-  separatedBy&lt;Separator&gt;(separator: Decoder&lt;In, Separator, Err&gt;): Decoder&lt;In, Out[], Err&gt; {
-    return this.separatedByAtLeastOnce(separator)
-      .or(this.map(v &#x3D;&gt; [v]))
-      .or(succeed([]))
+  atMostWithSeparator&lt;Separator&gt;(times: number, separator: Decoder&lt;In, Separator, Err&gt;): Decoder&lt;In, Out[], Err&gt; {
+    return this.betweenWithSeparator(0, times, separator)
   }
 
   /**
-   * Like [separatedByAtLeastOne] but expecting a fixed number of results.
+   * Given a &#x60;separator&#x60; decoder, it returns an array of values from the current
+   * decoder. It is expected any number of values returned, even zero.
    */
-  separatedByTimes&lt;Separator&gt;(separator: Decoder&lt;In, Separator, Err&gt;, times: number): Decoder&lt;In, Out[], Err&gt; {
-    if (times &lt;&#x3D; 1) return this.map(v &#x3D;&gt; [v])
-    else {
-      const pairs &#x3D; separator.pickNext(this).repeat(times - 1)
-      return this.flatMap&lt;Out[]&gt;((res: Out) &#x3D;&gt; pairs.map(rs &#x3D;&gt; [res].concat(rs)))
+  manyWithSeparator&lt;Separator&gt;(separator: Decoder&lt;In, Separator, Err&gt;): Decoder&lt;In, Out[], Err&gt; {
+    return this.atLeastWithSeparator(0, separator)
+  }
+
+  /**
+   * Given a &#x60;separator&#x60; decoder, it returns an array of values from the current
+   * decoder. It is expected that exactly &#x60;times&#x60; values are returned from this
+   * decoder.
+   */
+  repeatWithSeparator&lt;Separator&gt;(times: number, separator: Decoder&lt;In, Separator, Err&gt;): Decoder&lt;In, Out[], Err&gt; {
+    return this.betweenWithSeparator(times, times, separator)
+  }
+
+  /**
+   * Given a &#x60;separator&#x60; decoder, it returns an array of values from the current
+   * decoder. It is expected that between &#x60;min&#x60; and &#x60;max&#x60; values are returned.
+   */
+  betweenWithSeparator&lt;Separator&gt;(
+    min: number,
+    max: number,
+    separator: Decoder&lt;In, Separator, Err&gt;
+  ): Decoder&lt;In, Out[], Err&gt; {
+    if (max &lt; min) {
+      const t &#x3D; min
+      min &#x3D; max
+      max &#x3D; t
     }
+    if (max &lt;&#x3D; 0) {
+      return succeed([])
+    }
+
+    const pair &#x3D; separator.pickNext(this)
+    const decoderF &#x3D; (value: Out) &#x3D;&gt;
+      Decoder.of&lt;In, Out[], Err&gt;((input: In) &#x3D;&gt; {
+        const buff &#x3D; [value]
+        for (let i &#x3D; 1; i &lt; max; i++) {
+          const res &#x3D; pair.run(input)
+          if (res.isFailure()) {
+            if (i &gt;&#x3D; min) {
+              return success(input, buff)
+            } else {
+              return failure(input, ...res.failures)
+            }
+          } else {
+            buff.push(res.value)
+            input &#x3D; res.input
+          }
+        }
+        return success(input, buff)
+      })
+    if (min &lt;&#x3D; 0) {
+      return Decoder.of((input: In) &#x3D;&gt; {
+        const res &#x3D; this.run(input)
+        if (res.isSuccess()) {
+          return decoderF(res.value).run(res.input)
+        } else {
+          return success&lt;In, Out[], Err&gt;(input, [])
+        }
+      })
+    } else {
+      return this.flatMap&lt;Out[]&gt;(decoderF)
+    }
+
+    // return this.flatMap&lt;Out[]&gt;((res: Out) &#x3D;&gt; pairs.map(rs &#x3D;&gt; [res].concat(rs)))
+
+    // if (times &lt;&#x3D; 0) {
+
+    // } else {
+
+    // }
+    // const pairs &#x3D; separator.pickNext(this).atLeast(times - 1)
+    // return this.flatMap&lt;Out[]&gt;((res: Out) &#x3D;&gt; pairs.map(rs &#x3D;&gt; [res].concat(rs)))
+    // if (times &lt;&#x3D; 0) {
+
+    // } else if (times &#x3D;&#x3D;&#x3D; 1) {
+
+    // } else {
+
+    // }
+    // const pairs &#x3D; separator.pickNext(this).atLeast(times - 1)
+    // return this.flatMap&lt;Out[]&gt;((res: Out) &#x3D;&gt; pairs.map(rs &#x3D;&gt; [res].concat(rs)))
+    // return this.atLeastWithSeparator(0, separator)
+    //   .or(this.map(v &#x3D;&gt; [v]))
+    //   .or(succeed([]))
+    // if (times &lt;&#x3D; 1) return this.map(v &#x3D;&gt; [v])
+    // else {
+    //   const pairs &#x3D; separator.pickNext(this).repeat(times - 1)
+    //   return this.flatMap&lt;Out[]&gt;((res: Out) &#x3D;&gt; pairs.map(rs &#x3D;&gt; [res].concat(rs)))
+    // }
   }
 
   /**

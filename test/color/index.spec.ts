@@ -57,7 +57,7 @@ const greyDecoder = matchInsensitive('grey')
   .pickNext(ratioDecoder)
   .map(v => new Grey(v))
 const hslDecoder = matchInsensitive('hsl(')
-  .pickNext(ratioDecoder.separatedByTimes(match(','), 3).map(v => new HSL(v[0], v[1], v[2])))
+  .pickNext(ratioDecoder.repeatWithSeparator(3, match(',')).map(v => new HSL(v[0], v[1], v[2])))
   .skipNext(match(')'))
 
 const colorTextDecoder = decodeText(
