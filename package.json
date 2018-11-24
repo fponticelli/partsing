@@ -41,7 +41,7 @@
     "url": "https://github.com/fponticelli/partsing.git"
   },
   "scripts": {
-    "build": "rm -rf lib && tsc && cp package.npm.json lib/package.json",
+    "build": "rm -rf lib && tsc && cp package.npm.json lib/package.json && cp *.md lib/*.md",
     "docs": "rm -rf docs && typedoc --options typedoc.js ./src",
     "serve-doc": "rm -rf docs && compodoc src -s",
     "lint": "tslint \"./{src,test}/**/*.ts\"",
@@ -51,7 +51,8 @@
     "prep": "yarn test-coverage && yarn lint && yarn prettier && yarn build && yarn docs",
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "watch": "jest --watch --coverage"
+    "watch": "jest --watch --coverage",
+    "npm-publish": "yarn prep && ( cd lib && npm publish --access public )"
   },
   "eslint.packageManager": "yarn",
   "jest": {
