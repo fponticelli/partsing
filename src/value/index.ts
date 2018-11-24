@@ -14,6 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * This module contains a set of decoders and utility functions to decode
+ * JavaScript values. A typical scenario would be decoding the result of an AJAX
+ * call after it has been processed by `JSON.parse`.
+ */
+
 import { Decoder, Decoding } from '../core/decoder'
 import { DecodeFailure, DecodeResult, success, failure } from '../core/result'
 import { MarkOptionalFields } from '../core/type_level'
@@ -236,6 +242,9 @@ export const objectValue = <T, K extends keyof T>(
   })
 }
 
+/**
+ * Pattern to recognize if a field name is in a format that doesn't require quotes.
+ */
 const isToken = /^[a-z$_]+$/i
 /**
  * Pretty prints a `ValueInput.path` value.

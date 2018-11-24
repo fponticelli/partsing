@@ -22,6 +22,16 @@ limitations under the License.
  * `number` values (index inside an array).
  */
 export interface ValueInput {
+  /**
+   * The input JavaScript value. It can be any value of any type.
+   *
+   * When decoders traverse an array or object value, they will pass only the
+   * currently inspected element to the next decoder and not the source value.
+   */
   readonly input: any
+
+  /**
+   * The current path for this value input.
+   */
   readonly path: (string | number)[]
 }

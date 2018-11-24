@@ -14,6 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * This module contains a set of decoders and utility functions to decode
+ * string values.
+ */
+
 import { Decoder, Decoding } from '../core/decoder'
 import { DecodeFailure, DecodeResult, DecodeSuccess, success, failure } from '../core/result'
 import { DecodeError, Entity } from '../error'
