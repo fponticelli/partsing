@@ -102,7 +102,7 @@ export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
  * A decoder that doesn't consume any portion of the string but does
  * return the current index position as its result value.
  */
-export const currentIndex = make(input => new DecodeSuccess(input, input.index))
+export const withPosition = make(input => new DecodeSuccess(input, input.index))
 
 /**
  * A decoder that produces all the remaining characters in `TextInput`.
