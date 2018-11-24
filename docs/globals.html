@@ -63,116 +63,43 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<h1 id="partsing">ParTSing</h1>
-				<p><em>ParTSing</em> is a decoder combinator library. You can use it to build parsers/decoders from string or really any input values.</p>
-				<p>If you want full control over what to decode your should start from <code>partsing/core/decoder</code>. It provides 3 types parameters</p>
-				<ul>
-					<li><code>In</code> for the input. Remember that you will need to decode one portion of your input at the time and your input probably needs to track somehow the current position.</li>
-					<li><code>Out</code> it&#39;s the type of the value if successfully decoded.</li>
-					<li><code>Err</code> it&#39;s the type of the failure returned when the parser fails.</li>
-				</ul>
-				<p>The library provides two additional set of utility functions to decode <code>string</code> values (<code>partsing/text</code>) and native JS values (<code>partsing/value</code>).</p>
-				<h2 id="decoder-error">Decoder Error</h2>
-				<p>If you adopt the generic <code>Decoder</code> directly, you can define the shape of your error. The library provides a <code>DecoderError</code> type that should fit most decoding needs. The type of errors available are defined in <code>partsing/error</code>.</p>
-				<p><code>DecoderError</code> provides a simple method to debug the result of the decoding (<code>toString</code>) but still leaves the flexibility to give granular control on the representation of the error.</p>
-				<p>Both [Text Decoding] and [Value Decoding] use <code>DecodeError</code>.</p>
-				<h2 id="text-decoding">Text Decoding</h2>
-				<p>To be able to keep track of the position of the decoding within a <code>string</code>, Text Decoding uses <code>TextInput</code> to track both the entire text <code>input</code> and the current <code>index</code>.</p>
-				<p>The <code>decodeText</code> function simplifies the inputs and outputs of decoding text. It takes a text decoder (<code>Decoder&lt;TextInput, T, DecoderError&gt;</code>) and return a function that takes a string input and returns a <code>DecodeResult&lt;string, T, string&gt;</code> (where input and error are of type <code>string</code>).</p>
-				<p>If you intend to write your own regular expressions decoder functions, consider using the <code>y</code> (<code>sticky</code>) flag. When used, there is no need to reallocate slices of the input string saving memory and CPU cycles. The <code>sticky</code> flag is not available for all implementations of JS.</p>
-				<h2 id="value-decoding">Value Decoding</h2>
-				<p>To be able to keep track of the position of the decoding within <code>any</code> value, Value Decoding uses <code>ValueInput</code> to track both the <code>input</code> value and the current position within it using a <code>path</code>. <code>path</code> is an array of either <code>string</code> (object field name) or <code>number</code> (array/tuple index position).</p>
-				<p>The <code>decodeValue</code> function simplifies the inputs and outputs of decoding values. It takes a value decoder (<code>Decoder&lt;ValueInput, T, DecoderError&gt;</code>) and return a function that takes <code>any</code> and returns a <code>DecodeResult&lt;any, T, string&gt;</code> (where input is of type <code>any</code> and error is of type <code>string</code>).</p>
-				<h2 id="example">Example</h2>
-				<p>A simple decoder combinator to parse color values from strings into class instances.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> RGB {
-  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly rgb: <span class="hljs-built_in">number</span></span>) {}
-}
-
-<span class="hljs-keyword">class</span> Grey {
-  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly value: <span class="hljs-built_in">number</span></span>) {}
-}
-
-<span class="hljs-keyword">class</span> HSL {
-  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly hue: <span class="hljs-built_in">number</span>, readonly saturation: <span class="hljs-built_in">number</span>, readonly lightness: <span class="hljs-built_in">number</span></span>) {}
-}
-
-<span class="hljs-keyword">type</span> Color = RGB | Grey | HSL
-
-<span class="hljs-keyword">const</span> ratioDecoder = regexp(<span class="hljs-regexp">/0[.]\d+/y</span>).map(<span class="hljs-built_in">Number</span>)
-<span class="hljs-keyword">const</span> rgbDecoder   = regexp(<span class="hljs-regexp">/[#]([0-9a-f]{6})/iy</span>, <span class="hljs-number">1</span>)
-                       .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-built_in">parseInt</span>(v, <span class="hljs-number">16</span>))
-                       .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> RGB(v))
-<span class="hljs-keyword">const</span> greyDecoder  = matchInsensitive(<span class="hljs-string">'grey'</span>).or(DecodeError.combine, matchInsensitive(<span class="hljs-string">'gray'</span>))
-                       .skipNext(optionalWhitespace)
-                       .pickNext(ratioDecoder)
-                       .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> Grey(v))
-<span class="hljs-keyword">const</span> hslDecoder   = matchInsensitive(<span class="hljs-string">'hsl('</span>)
-                       .pickNext(
-                         ratioDecoder
-                           .repeatWithSeparator(<span class="hljs-number">3</span>, match(<span class="hljs-string">','</span>))
-                           .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> HSL(v[<span class="hljs-number">0</span>], v[<span class="hljs-number">1</span>], v[<span class="hljs-number">2</span>]))
-                       )
-                       .skipNext(match(<span class="hljs-string">')'</span>))
-
-<span class="hljs-keyword">const</span> colorTextDecoder = decodeText(
-    oneOf&lt;TextInput, Color[], DecodeError&gt;(
-      DecodeError.combine,
-      rgbDecoder,
-      greyDecoder,
-      hslDecoder
-    ).skipNext(eoi) <span class="hljs-comment">// make sure that there is nothing left to decode</span>
-  )
-
-<span class="hljs-comment">// all results are wrapped in a DecodeSuccess</span>
-<span class="hljs-comment">// colorTextDecoder('#003355')          == new RGB(0x003355)</span>
-<span class="hljs-comment">// colorTextDecoder('gray 0.3')         == new Grey(0.3)</span>
-<span class="hljs-comment">// colorTextDecoder('gray0.2')          == new Grey(0.2)</span>
-<span class="hljs-comment">// colorTextDecoder('HSL(0.1,0.2,0.3)') == new HSL(0.1,0.2,0.3)</span></code></pre>
-				<p>Another scenario where decoding comes in handy is to validate, type and transform payloads from JSON requests. You can decode a value (after being parsed by <code>JSON.parse</code>) into one of the <code>Color</code> types described above.</p>
-				<p>A few examples of valid JSON payloads:</p>
-				<pre><code class="language-json"><span class="hljs-string">"#003366"</span></code></pre>
-				<pre><code class="language-json">{ <span class="hljs-attr">"grey"</span>: <span class="hljs-number">0.5</span> }</code></pre>
-				<pre><code class="language-json">{ <span class="hljs-attr">"kind"</span>: <span class="hljs-string">"hsl"</span>, <span class="hljs-attr">"h"</span>: <span class="hljs-number">0.2</span>, <span class="hljs-attr">"s"</span>: <span class="hljs-number">0.5</span>, <span class="hljs-attr">"l"</span>: <span class="hljs-number">0.8</span> }</code></pre>
-				<p>Here is a <code>colorValueDecoder</code> definition that can deal with those cases:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> ratioValue = numberValue.test(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> v &gt;= <span class="hljs-number">0</span> &amp;&amp; v &lt;= <span class="hljs-number">1</span>, DecodeError.expectedWithinRange(<span class="hljs-string">'0'</span>, <span class="hljs-string">'1'</span>))
-
-<span class="hljs-comment">// reuse the rgbDecoder defined above to validate and trasform the string value into an RGB instance</span>
-<span class="hljs-comment">// example: "#003366"</span>
-<span class="hljs-keyword">const</span> rgbValue = stringValue.sub(rgbDecoder, <span class="hljs-function"><span class="hljs-params">input</span> =&gt;</span> ({ input, index: <span class="hljs-number">0</span> }), <span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> v)
-
-<span class="hljs-comment">// example: { "grey": 0.5 }</span>
-<span class="hljs-keyword">const</span> greyValue = objectValue(
-    { grey: ratioValue },
-    [] <span class="hljs-comment">// the empty array means that no fields are optional</span>
-  ).map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> Grey(v.grey))
-
-<span class="hljs-comment">// example: { "kind": "hsl", "h": 0.2, "s": 0.5, "l": 0.8 }</span>
-<span class="hljs-keyword">const</span> hslValue = objectValue(
-    {
-      kind: literalValue(<span class="hljs-string">'hsl'</span>),
-      h: ratioValue,
-      s: ratioValue,
-      l: ratioValue
-    },
-    []
-  ).map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> HSL(v.h, v.s, v.l))
-
-<span class="hljs-keyword">const</span> colorValueDecoder = decodeValue(
-    oneOf&lt;ValueInput, Color[], DecodeError&gt;(
-      DecodeError.combine,
-      rgbValue,
-      greyValue,
-      hslValue
-    )
-  )</code></pre>
-			</div>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>External modules</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-external-module"><a href="modules/_core_decoder_.html" class="tsd-kind-icon">"core/decoder"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_result_.html" class="tsd-kind-icon">"core/result"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_core_type_level_.html" class="tsd-kind-icon">"core/type_<wbr>level"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_custom_error_.html" class="tsd-kind-icon">"error/custom_<wbr>error"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_entity_.html" class="tsd-kind-icon">"error/entity"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_expected_any_of_.html" class="tsd-kind-icon">"error/expected_<wbr>any_<wbr>of"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_expected_at_least_.html" class="tsd-kind-icon">"error/expected_<wbr>at_<wbr>least"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_expected_eoi_.html" class="tsd-kind-icon">"error/expected_<wbr>eoi"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_expected_field_.html" class="tsd-kind-icon">"error/expected_<wbr>field"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_expected_match_.html" class="tsd-kind-icon">"error/expected_<wbr>match"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_expected_none_of_.html" class="tsd-kind-icon">"error/expected_<wbr>none_<wbr>of"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_expected_once_.html" class="tsd-kind-icon">"error/expected_<wbr>once"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_expected_within_range_.html" class="tsd-kind-icon">"error/expected_<wbr>within_<wbr>range"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_index_.html" class="tsd-kind-icon">"error/index"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_pattern_mismatch_.html" class="tsd-kind-icon">"error/pattern_<wbr>mismatch"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_error_unexpected_eoi_.html" class="tsd-kind-icon">"error/unexpected_<wbr>eoi"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_text_index_.html" class="tsd-kind-icon">"text/index"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_text_input_.html" class="tsd-kind-icon">"text/input"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_value_index_.html" class="tsd-kind-icon">"value/index"</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/_value_input_.html" class="tsd-kind-icon">"value/input"</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
+					<li class="globals current ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
