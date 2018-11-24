@@ -5,6 +5,7 @@
     "declaration": true,
     "outDir": "./lib",
     "target": "es5",
+    "module": "commonjs",
     "moduleResolution": "node",
     "removeComments": false,
     "strict": true

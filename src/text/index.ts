@@ -22,7 +22,23 @@ limitations under the License.
 import { Decoder, Decoding } from '../core/decoder'
 import { DecodeFailure, DecodeResult, DecodeSuccess, success, failure } from '../core/result'
 import { DecodeError, Entity } from '../error'
-import { TextInput } from './input'
+
+/**
+ * `TextInput` stores the entire `input` value as a `string` and contains
+ * an `index` as the current character position inside the stream.
+ */
+export interface TextInput {
+  /**
+   * The string input. Its value is never modified by the decoders at any point
+   * in the chain.
+   */
+  readonly input: string
+
+  /**
+   * The current position reached by a decoder.
+   */
+  readonly index: number
+}
 
 /**
  * Type alias for a decoder specialized in consuming values of type `{@link TextInput}`
@@ -386,5 +402,3 @@ export const failureToString = <Out>(err: DecodeFailure<TextInput, Out, DecodeEr
   const extract = input.input.substr(input.index, length)
   return `expected ${msg} at "${prefix}${extract}${suffix}"`
 }
-
-export { TextInput } from './input'

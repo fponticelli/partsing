@@ -1,7 +1,6 @@
 {
   "name": "partsing",
   "version": "0.2.0",
-  "main": "lib",
   "license": "Apache-2.0",
   "homepage": "https://github.com/fponticelli/partsing",
   "bugs": {
@@ -42,7 +41,7 @@
     "url": "https://github.com/fponticelli/partsing.git"
   },
   "scripts": {
-    "build": "rm -rf lib && tsc",
+    "build": "rm -rf lib && tsc && cp package.npm.json lib/package.json",
     "docs": "rm -rf docs && typedoc --options typedoc.js ./src",
     "serve-doc": "rm -rf docs && compodoc src -s",
     "lint": "tslint \"./{src,test}/**/*.ts\"",
@@ -58,7 +57,7 @@
   "jest": {
     "rootDir": ".",
     "collectCoverageFrom": [
-      "src/**/*.ts"
+      "src/*/**/*.ts"
     ],
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules"

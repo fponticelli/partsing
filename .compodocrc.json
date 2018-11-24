@@ -1,7 +1,0 @@
-{
-  "output": "./docs",
-  "name": "ParTSing",
-  "tsconfig": "./tsconfig.json",
-  "hideGenerator": true,
-  "theme": "material"
-}

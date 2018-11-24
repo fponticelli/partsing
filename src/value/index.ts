@@ -24,7 +24,28 @@ import { Decoder, Decoding } from '../core/decoder'
 import { DecodeFailure, DecodeResult, success, failure } from '../core/result'
 import { MarkOptionalFields } from '../core/type_level'
 import { DecodeError } from '../error'
-import { ValueInput } from './input'
+
+/**
+ * `ValueInput` stores the current `input` value as a `any` (any JS value) and
+ * contains a `path` value to identify the position in the current context.
+ *
+ * `path` is an array of either `string` values (field names of an object) or
+ * `number` values (index inside an array).
+ */
+export interface ValueInput {
+  /**
+   * The input JavaScript value. It can be any value of any type.
+   *
+   * When decoders traverse an array or object value, they will pass only the
+   * currently inspected element to the next decoder and not the source value.
+   */
+  readonly input: any
+
+  /**
+   * The current path for this value input.
+   */
+  readonly path: (string | number)[]
+}
 
 /**
  * Type alias for a decoder specialized in consuming values of type `{@link ValueInput}`
@@ -275,5 +296,3 @@ export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeE
   if (path === '') return msg
   else return `expected ${msg} at ${path}`
 }
-
-export { ValueInput } from './input'

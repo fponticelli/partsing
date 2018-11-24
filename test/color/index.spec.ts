@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ValueInput } from '../../src/value/input'
-import { Decoder, oneOf } from '../../src/core/decoder'
+import { oneOf } from '../../src/core/decoder'
 import { DecodeError } from '../../src/error'
-import { decodeText, eoi, match, matchInsensitive, optionalWhitespace, regexp } from '../../src/text'
-import { TextInput } from '../../src/text/input'
+import { decodeText, eoi, match, matchInsensitive, optionalWhitespace, regexp, TextInput } from '../../src/text'
+import { ValueInput } from '../../src/value'
 import { decodeValue, literalValue, numberValue, objectValue, stringValue } from '../../src/value'
 
 class RGB {
