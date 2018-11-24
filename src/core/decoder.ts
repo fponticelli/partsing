@@ -70,6 +70,11 @@ export class Decoder<In, Out, Err> {
    * See {@link _E}.
    */
   readonly _O!: Out
+
+  /**
+   * Construct an instance of `Decoder` using the passed `run` function to
+   * perform the decoding.
+   */
   private constructor(readonly run: Decoding<In, Out, Err>) {}
 
   /**

@@ -127,6 +127,9 @@ abstract class DecodeResultBase<In, Out, Err> {
   abstract toString(): string
 }
 
+/**
+ * Type that represent a successful decoding of a value.
+ */
 export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> {
   /**
    * Type discriminator
@@ -220,6 +223,9 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
   }
 }
 
+/**
+ * Type that represent a failed decoding.
+ */
 export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> {
   /**
    * Type discriminator

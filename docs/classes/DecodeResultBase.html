@@ -1236,6 +1236,9 @@ and <code>failure</code>. Both fields must be populated with a function.</p>
   abstract toString(): string
 }
 
+/**
+ * Type that represent a successful decoding of a value.
+ */
 export class DecodeSuccess&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, Out, Err&gt; {
   /**
    * Type discriminator
@@ -1329,6 +1332,9 @@ export class DecodeSuccess&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, O
   }
 }
 
+/**
+ * Type that represent a failed decoding.
+ */
 export class DecodeFailure&lt;In, Out, Err&gt; extends DecodeResultBase&lt;In, Out, Err&gt; {
   /**
    * Type discriminator

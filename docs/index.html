@@ -78,7 +78,7 @@ const greyDecoder  = matchInsensitive(&#39;grey&#39;).or(DecodeError.combine, ma
 const hslDecoder   = matchInsensitive(&#39;hsl(&#39;)
                        .pickNext(
                          ratioDecoder
-                           .separatedByTimes(match(&#39;,&#39;), 3)
+                           .repeatWithSeparator(3, match(&#39;,&#39;))
                            .map(v =&gt; new HSL(v[0], v[1], v[2]))
                        )
                        .skipNext(match(&#39;)&#39;))
