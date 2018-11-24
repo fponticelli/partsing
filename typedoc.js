@@ -8,5 +8,6 @@ module.exports = {
   module: 'commonjs',
   theme: 'default',
   target: 'ES5',
-  excludePrivate: true
+  excludePrivate: true,
+  gitRevision: 'master'
 };
