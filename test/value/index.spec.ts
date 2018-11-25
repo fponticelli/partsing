@@ -39,27 +39,27 @@ import {
 describe('value_decoder', () => {
   it('stringValue', () => {
     expect(decodeValue(stringValue)('abc').getUnsafeSuccess()).toEqual('abc')
-    expect(decodeValue(stringValue)(1).getUnsafeFailures()).toEqual(['string but got 1'])
+    expect(decodeValue(stringValue)(1).getUnsafeFailures()).toEqual(['string (type) but got 1'])
   })
 
   it('numberValue', () => {
-    expect(decodeValue(numberValue)('abc').getUnsafeFailures()).toEqual(['number but got abc'])
+    expect(decodeValue(numberValue)('abc').getUnsafeFailures()).toEqual(['number (type) but got abc'])
     expect(decodeValue(numberValue)(1).getUnsafeSuccess()).toEqual(1)
   })
 
   it('booleanValue', () => {
-    expect(decodeValue(booleanValue)('abc').getUnsafeFailures()).toEqual(['boolean but got abc'])
+    expect(decodeValue(booleanValue)('abc').getUnsafeFailures()).toEqual(['boolean (type) but got abc'])
     expect(decodeValue(booleanValue)(true).getUnsafeSuccess()).toEqual(true)
     expect(decodeValue(booleanValue)(false).getUnsafeSuccess()).toEqual(false)
   })
 
   it('nullValue', () => {
-    expect(decodeValue(nullValue)('abc').getUnsafeFailures()).toEqual(['null but got abc'])
+    expect(decodeValue(nullValue)('abc').getUnsafeFailures()).toEqual(['null (type) but got abc'])
     expect(decodeValue(nullValue)(null).getUnsafeSuccess()).toEqual(null)
   })
 
   it('undefinedValue', () => {
-    expect(decodeValue(undefinedValue)('abc').getUnsafeFailures()).toEqual(['undefined but got abc'])
+    expect(decodeValue(undefinedValue)('abc').getUnsafeFailures()).toEqual(['undefined (type) but got abc'])
     expect(decodeValue(undefinedValue)(undefined).getUnsafeSuccess()).toEqual(undefined)
   })
 
@@ -68,8 +68,8 @@ describe('value_decoder', () => {
     expect(decodeValue(literalValue({ id: 1 }, (a, b) => a.id === b.id))({ id: 1 }).getUnsafeSuccess()).toEqual({
       id: 1
     })
-    expect(decodeValue(literalValue('abc'))(undefined).getUnsafeFailures()).toEqual(['abc but got undefined'])
-    expect(decodeValue(literalValue('abc'))('ab').getUnsafeFailures()).toEqual(['abc but got ab'])
+    expect(decodeValue(literalValue('abc'))(undefined).getUnsafeFailures()).toEqual(['abc (literal) but got undefined'])
+    expect(decodeValue(literalValue('abc'))('ab').getUnsafeFailures()).toEqual(['abc (literal) but got ab'])
   })
 
   it('arrayValue', () => {
@@ -116,21 +116,21 @@ describe('value_decoder', () => {
 
   it('integerValue', () => {
     expect(decodeValue(integerValue)('abc').getUnsafeFailures()).toBeDefined()
-    expect(decodeValue(integerValue)(1.1).getUnsafeFailures()).toEqual(['integer but got 1.1'])
+    expect(decodeValue(integerValue)(1.1).getUnsafeFailures()).toEqual(['integer (type) but got 1.1'])
     expect(decodeValue(integerValue)(1).getUnsafeSuccess()).toEqual(1)
   })
 
   it('safeIntegerValue', () => {
     expect(decodeValue(safeIntegerValue)('abc').getUnsafeFailures()).toBeDefined()
-    expect(decodeValue(safeIntegerValue)(1.1).getUnsafeFailures()).toEqual(['safe integer but got 1.1'])
+    expect(decodeValue(safeIntegerValue)(1.1).getUnsafeFailures()).toEqual(['safe integer (type) but got 1.1'])
     expect(decodeValue(safeIntegerValue)(12345678901234567890).getUnsafeFailures()).toEqual([
-      'safe integer but got 12345678901234567000'
+      'safe integer (type) but got 12345678901234567000'
     ])
     expect(decodeValue(safeIntegerValue)(1).getUnsafeSuccess()).toEqual(1)
   })
 
   it('finiteNumber', () => {
-    expect(decodeValue(finiteNumberValue)(1 / 0).getUnsafeFailures()).toEqual(['finite number but got Infinity'])
+    expect(decodeValue(finiteNumberValue)(1 / 0).getUnsafeFailures()).toEqual(['finite number (type) but got Infinity'])
     expect(decodeValue(finiteNumberValue)(1.1).getUnsafeSuccess()).toEqual(1.1)
   })
 

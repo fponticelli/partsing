@@ -95,6 +95,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expectedmatch.html#entity" class="tsd-kind-icon">entity</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expectedmatch.html#kind" class="tsd-kind-icon">kind</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="expectedmatch.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
@@ -114,13 +115,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Expected<wbr>Match<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Expected<wbr>Match<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><a href="../enums/entity.html" class="tsd-signature-type">Entity</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/error/expected_match.ts#L25">error/expected_match.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/error/expected_match.ts#L27">error/expected_match.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -130,6 +131,14 @@
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
+								<li>
+									<h5>entity: <a href="../enums/entity.html" class="tsd-signature-type">Entity</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>type of the entity to be matched</p>
+										</div>
+									</div>
+								</li>
 								<li>
 									<h5>value: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
@@ -147,12 +156,27 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="entity" class="tsd-anchor"></a>
+					<h3>entity</h3>
+					<div class="tsd-signature tsd-kind-icon">entity<span class="tsd-signature-symbol">:</span> <a href="../enums/entity.html" class="tsd-signature-type">Entity</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/error/expected_match.ts#L34">error/expected_match.ts:34</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>type of the entity to be matched</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="kind" class="tsd-anchor"></a>
 					<h3>kind</h3>
 					<div class="tsd-signature tsd-kind-icon">kind<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"expected-match"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;expected-match&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/error/expected_match.ts#L25">error/expected_match.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/error/expected_match.ts#L27">error/expected_match.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -167,7 +191,7 @@
 					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/error/expected_match.ts#L31">error/expected_match.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/error/expected_match.ts#L34">error/expected_match.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -189,7 +213,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/error/expected_match.ts#L36">error/expected_match.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/error/expected_match.ts#L39">error/expected_match.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -220,6 +244,9 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="expectedmatch.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="expectedmatch.html#entity" class="tsd-kind-icon">entity</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="expectedmatch.html#kind" class="tsd-kind-icon">kind</a>

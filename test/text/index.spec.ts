@@ -50,8 +50,11 @@ import {
   upperCaseLetters,
   whitespace,
   withPosition,
-  TextInput
+  TextInput,
+  matchCharCode,
+  matchChar
 } from '../../src/text'
+import { sequence } from '../../src/core/decoder'
 
 const decodeSuccess = <Out>(decoder: TextDecoder<Out>, input: string): [TextInput, Out] => {
   const r = decoder.run({ input, index: 0 })
@@ -137,6 +140,26 @@ describe('text_decoder', () => {
     expect(decoded).toEqual('a12')
     const [, failure] = decodeFailure(match('abc'), 'a123b')
     expect(failure[0]).toBeInstanceOf(ExpectedMatch)
+  })
+
+  it('matchCharCode', () => {
+    const [, decoded] = decodeSuccess(matchCharCode(65), 'A')
+    expect(decoded).toEqual('A')
+    const [, failure] = decodeFailure(matchCharCode(65), 'a')
+    expect(failure[0]).toBeInstanceOf(ExpectedMatch)
+  })
+
+  it('matchChar', () => {
+    const [, decoded] = decodeSuccess(matchChar('A'), 'A')
+    expect(decoded).toEqual('A')
+    const [, failure] = decodeFailure(matchChar('A'), 'a')
+    expect(failure[0]).toBeInstanceOf(ExpectedMatch)
+
+    const [, decoded2] = decodeSuccess(
+      sequence(matchChar('😀'), matchChar('🥑'), matchChar('🧜')).map(v => v.join('')),
+      '😀🥑🧜'
+    )
+    expect(decoded2).toEqual('😀🥑🧜')
   })
 
   it('matchInsensitive', () => {

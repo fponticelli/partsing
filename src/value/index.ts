@@ -23,7 +23,7 @@ limitations under the License.
 import { Decoder, Decoding } from '../core/decoder'
 import { DecodeFailure, DecodeResult, success, failure } from '../core/result'
 import { MarkOptionalFields } from '../core/type_level'
-import { DecodeError } from '../error'
+import { DecodeError, Entity } from '../error'
 
 /**
  * `ValueInput` stores the current `input` value as a `any` (any JS value) and
@@ -78,7 +78,9 @@ export const decodeValue = <T>(decoder: ValueDecoder<T>) => (input: any): Decode
  * is really of type `T`. Such check must be performed by predicate itself.
  */
 export const testValue = <T>(f: (input: T) => boolean, expected: string) =>
-  make<T>(input => (f(input.input) ? success(input, input.input) : failure(input, DecodeError.expectedMatch(expected))))
+  make<T>(input =>
+    f(input.input) ? success(input, input.input) : failure(input, DecodeError.expectedMatch(Entity.PREDICATE, expected))
+  )
 
 /**
  * Given a type in `string` format, it checks that the current `input` matches it
@@ -86,7 +88,9 @@ export const testValue = <T>(f: (input: T) => boolean, expected: string) =>
  */
 export const testType = <T>(expected: string) =>
   make<T>(input =>
-    typeof input.input === expected ? success(input, input.input) : failure(input, DecodeError.expectedMatch(expected))
+    typeof input.input === expected
+      ? success(input, input.input)
+      : failure(input, DecodeError.expectedMatch(Entity.TYPE, expected))
   )
 
 /**
@@ -125,17 +129,23 @@ export const numberValue = testType<number>('number')
 /**
  * Decoder that matches an integer value.
  */
-export const integerValue = numberValue.test(Number.isInteger, DecodeError.expectedMatch('integer'))
+export const integerValue = numberValue.test(Number.isInteger, DecodeError.expectedMatch(Entity.TYPE, 'integer'))
 
 /**
  * Decoder that matches a safe-integer value.
  */
-export const safeIntegerValue = numberValue.test(Number.isSafeInteger, DecodeError.expectedMatch('safe integer'))
+export const safeIntegerValue = numberValue.test(
+  Number.isSafeInteger,
+  DecodeError.expectedMatch(Entity.TYPE, 'safe integer')
+)
 
 /**
  * Decoder that matches a finite-number value.
  */
-export const finiteNumberValue = numberValue.test(Number.isFinite, DecodeError.expectedMatch('finite number'))
+export const finiteNumberValue = numberValue.test(
+  Number.isFinite,
+  DecodeError.expectedMatch(Entity.TYPE, 'finite number')
+)
 
 /**
  * Decoder that matches a boolean value.
@@ -150,7 +160,9 @@ export const undefinedValue = testType<undefined>('undefined')
 /**
  * Decoder that matches a `null` value.
  */
-export const nullValue = testValue<null>(v => v === null, 'null').withResult(null)
+export const nullValue = testValue<null>(v => v === null, 'null')
+  .withResult(null)
+  .withFailure(DecodeError.expectedMatch(Entity.TYPE, 'null'))
 
 /**
  * A decoder that doesn't consume any input but does return the current path
@@ -165,7 +177,9 @@ export const currentPath = make(input => success(input, input.path))
  * behavior, an equality function can be provided.
  */
 export const literalValue = <T>(value: T, eq: (a: T, b: T) => boolean = (a, b) => a === b) =>
-  testValue((v: T) => eq(v, value), String(value)).withResult(value)
+  testValue((v: T) => eq(v, value), String(value))
+    .withResult(value)
+    .withFailure(DecodeError.expectedMatch(Entity.LITERAL, `${value}`))
 
 /**
  * Decoder that matches an array. Element values are not decoded and are typed

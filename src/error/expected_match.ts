@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Entity, entityToString } from './entity'
+
 /**
  * Error for an exact match that failed. The expectation is described as a
  * string.
@@ -26,14 +28,15 @@ export class ExpectedMatch {
 
   /**
    * Construct an instance of `ExpectedMatch`
+   * @param entity type of the entity to be matched
    * @param value Human readable description of the missed match.
    */
-  constructor(readonly value: string) {}
+  constructor(readonly entity: Entity, readonly value: string) {}
 
   /**
    * Provides a human readable representation of the value. Mostly for debugging.
    */
   toString() {
-    return `${this.value}`
+    return `${this.value} (${entityToString(this.entity, 1)})`
   }
 }

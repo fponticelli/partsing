@@ -152,7 +152,7 @@ export const match = <V extends string>(s: V): TextDecoder<V> => {
     if (value === s) {
       return success({ ...input, index }, s)
     } else {
-      return failure(input, DecodeError.expectedMatch(`"${s}"`))
+      return failure(input, DecodeError.expectedMatch(Entity.STRING, `"${s}"`))
     }
   })
 }
@@ -170,10 +170,54 @@ export const matchInsensitive = (s: string): TextDecoder<string> => {
     if (valueInsensitive === t) {
       return success({ ...input, index }, value)
     } else {
-      return failure(input, DecodeError.expectedMatch(`"${s}" (insensitive)`))
+      return failure(input, DecodeError.expectedMatch(Entity.STRING_INSENSITIVE, `"${s}"`))
     }
   })
 }
+
+/**
+ * Match exactly one char given its char code value as a `number`.
+ */
+export const matchCharCode = (charCode: number): TextDecoder<string> => {
+  const char = String.fromCharCode(charCode)
+  return make(input => {
+    if (input.input.charCodeAt(input.index) === charCode) {
+      return success({ ...input, index: input.index + char.length }, char)
+    } else {
+      return failure(input, DecodeError.expectedMatch(Entity.CHARACTER_CODE, `${charCode}`))
+    }
+  })
+}
+
+/**
+ * Match exactly one char given its char code value as a `number`.
+ */
+export const matchChar = (char: string): TextDecoder<string> => {
+  const charCode = char.charCodeAt(0)
+  return make(input => {
+    if (input.input.charCodeAt(input.index) === charCode) {
+      return success({ ...input, index: input.index + char.length }, char)
+    } else {
+      return failure(input, DecodeError.expectedMatch(Entity.CHARACTER, char))
+    }
+  })
+}
+
+/**
+ * Match any single char from a list of possible values `anyOf`.
+ */
+export const matchAnyCharOf = (anyOf: string): TextDecoder<string> =>
+  testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure(
+    DecodeError.expectedAnyOf(Entity.CHARACTER, anyOf.split('').map(v => `"${v}"`))
+  )
+
+/**
+ * Match any single char that is not included in the list of possible values `noneOf`.
+ */
+export const matchNoCharOf = (noneOf: string): TextDecoder<string> =>
+  testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(
+    DecodeError.expectedNoneOf(Entity.CHARACTER, noneOf.split('').map(v => `"${v}"`))
+  )
 
 /**
  * Helper patterns used in exposed functions.
@@ -334,22 +378,6 @@ export const testChar = (f: (c: string) => boolean): TextDecoder<string> =>
       }
     }
   })
-
-/**
- * Match any single char from a list of possible values `anyOf`.
- */
-export const matchAnyCharOf = (anyOf: string): TextDecoder<string> =>
-  testChar((c: string) => anyOf.indexOf(c) >= 0).withFailure(
-    DecodeError.expectedAnyOf(Entity.CHARACTER, anyOf.split('').map(v => `"${v}"`))
-  )
-
-/**
- * Match any single char that is not included in the list of possible values `noneOf`.
- */
-export const matchNoCharOf = (noneOf: string): TextDecoder<string> =>
-  testChar((c: string) => noneOf.indexOf(c) < 0).withFailure(
-    DecodeError.expectedNoneOf(Entity.CHARACTER, noneOf.split('').map(v => `"${v}"`))
-  )
 
 /**
  * Take a sequence of char that all satisfy the predicate `f`. It works much like

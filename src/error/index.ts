@@ -71,7 +71,7 @@ export const DecodeError = {
   /**
    * Generate an instance of `{@link ExpectedMatch}`.
    */
-  expectedMatch: (value: string) => new ExpectedMatch(value) as DecodeError,
+  expectedMatch: (entity: Entity, value: string) => new ExpectedMatch(entity, value) as DecodeError,
   /**
    * Generate an instance of `{@link ExpectedNoneOf}`.
    */
