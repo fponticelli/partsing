@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/fponticelli/partsing.svg?branch=master)](https://travis-ci.org/fponticelli/partsing)
-
-# ParTSing
+# ParTSing [![build status](https://travis-ci.org/fponticelli/partsing.svg?branch=master)](https://travis-ci.org/fponticelli/partsing) [![npm version](https://badge.fury.io/js/partsing.svg)](https://badge.fury.io/js/partsing) ![npm version](https://img.shields.io/github/license/fponticelli/partsing.svg)
 
 *ParTSing* is a decoder combinator library. You can use it to build parsers/decoders from string or really any input values.
 
