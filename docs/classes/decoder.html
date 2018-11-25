@@ -154,6 +154,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="decoder.html#repeatwithseparator" class="tsd-kind-icon">repeat<wbr>With<wbr>Separator</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="decoder.html#skipnext" class="tsd-kind-icon">skip<wbr>Next</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="decoder.html#sub" class="tsd-kind-icon">sub</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="decoder.html#surroundedby" class="tsd-kind-icon">surrounded<wbr>By</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="decoder.html#test" class="tsd-kind-icon">test</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="decoder.html#withfailure" class="tsd-kind-icon">with<wbr>Failure</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="decoder.html#withresult" class="tsd-kind-icon">with<wbr>Result</a></li>
@@ -813,7 +814,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L389">core/decoder.ts:389</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L401">core/decoder.ts:401</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1038,6 +1039,44 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="surroundedby" class="tsd-anchor"></a>
+					<h3>surrounded<wbr>By</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">surrounded<wbr>By<span class="tsd-signature-symbol">(</span>before<span class="tsd-signature-symbol">: </span><a href="decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">In</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Err</span><span class="tsd-signature-symbol">&gt;</span>, after<span class="tsd-signature-symbol">?: </span><a href="decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">In</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Err</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">In</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Out</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Err</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L369">core/decoder.ts:369</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Put the current decoder between <code>before</code> and <code>after</code>. The values captured
+									by <code>before</code> and <code>after</code> are discarded.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>before: <a href="decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">In</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Err</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>opening decoder.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> after: <a href="decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">In</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Err</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>optional closing decoder. If omitted <code>before</code> will be used.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">In</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Out</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Err</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="test" class="tsd-anchor"></a>
 					<h3>test</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1047,7 +1086,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L368">core/decoder.ts:368</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L380">core/decoder.ts:380</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1098,7 +1137,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L408">core/decoder.ts:408</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L420">core/decoder.ts:420</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1132,7 +1171,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L401">core/decoder.ts:401</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L413">core/decoder.ts:413</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1282,6 +1321,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="decoder.html#sub" class="tsd-kind-icon">sub</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="decoder.html#surroundedby" class="tsd-kind-icon">surrounded<wbr>By</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="decoder.html#test" class="tsd-kind-icon">test</a>

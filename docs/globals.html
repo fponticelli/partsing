@@ -121,6 +121,7 @@
 								<li class="tsd-kind-variable"><a href="globals.html#anyvalue" class="tsd-kind-icon">any<wbr>Value</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#booleanvalue" class="tsd-kind-icon">boolean<wbr>Value</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#char" class="tsd-kind-icon">char</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#currentpath" class="tsd-kind-icon">current<wbr>Path</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#digit" class="tsd-kind-icon">digit</a></li>
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#digitpattern" class="tsd-kind-icon">digit<wbr>Pattern</a></li>
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#digitspattern" class="tsd-kind-icon">digits<wbr>Pattern</a></li>
@@ -382,7 +383,7 @@
 					<div class="tsd-signature tsd-kind-icon">any<wbr>Array<wbr>Value<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/valueinput.html" class="tsd-signature-type">ValueInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="classes/customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="classes/patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="classes/unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;testValue&lt;any[]&gt;(Array.isArray, &#x27;array&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L168">value/index.ts:168</a></li>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L174">value/index.ts:174</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -425,7 +426,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="char" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> char</h3>
-					<div class="tsd-signature tsd-kind-icon">char<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">, </span><a href="classes/customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="classes/patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="classes/unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make((input: TextInput) &#x3D;&gt; {if (input.index &lt; input.input.length) {const c &#x3D; input.input.charAt(input.index)return new DecodeSuccess({ ...input, index: input.index + 1 }, c)} else {// no more charactersreturn new DecodeFailure(input, DecodeError.expectedOnce(Entity.CHARACTER))}})</span></div>
+					<div class="tsd-signature tsd-kind-icon">char<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">, </span><a href="classes/customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="classes/patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="classes/unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make((input: TextInput) &#x3D;&gt; {if (input.index &lt; input.input.length) {const c &#x3D; input.input.charAt(input.index)return success({ ...input, index: input.index + 1 }, c)} else {// no more charactersreturn failure(input, DecodeError.expectedOnce(Entity.CHARACTER))}})</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/text/index.ts#L309">text/index.ts:309</a></li>
@@ -435,6 +436,22 @@
 						<div class="lead">
 							<p>Decoder that matches one single character. This decoder will only fail if it
 							encounters the <code>EOI</code> (end of input).</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="currentpath" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> current<wbr>Path</h3>
+					<div class="tsd-signature tsd-kind-icon">current<wbr>Path<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/valueinput.html" class="tsd-signature-type">ValueInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><a href="classes/customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="classes/patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="classes/unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make(input &#x3D;&gt; success(input, input.path))</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L159">value/index.ts:159</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A decoder that doesn&#39;t consume any input but does return the current path
+							position as its result value.</p>
 						</div>
 					</div>
 				</section>
@@ -476,7 +493,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="eoi" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> eoi</h3>
-					<div class="tsd-signature tsd-kind-icon">eoi<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">, </span><a href="globals.html#decodeerror" class="tsd-signature-type">DecodeError</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make(input &#x3D;&gt; {const index &#x3D; input.input.lengthif (input.index &#x3D;&#x3D;&#x3D; index) {return new DecodeSuccess({ ...input, index }, undefined)} else {return new DecodeFailure(input, DecodeError.expectedEoi)}})</span></div>
+					<div class="tsd-signature tsd-kind-icon">eoi<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">, </span><a href="globals.html#decodeerror" class="tsd-signature-type">DecodeError</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make(input &#x3D;&gt; {const index &#x3D; input.input.lengthif (input.index &#x3D;&#x3D;&#x3D; index) {return success({ ...input, index }, undefined)} else {return failure(input, DecodeError.expectedEoi)}})</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/text/index.ts#L135">text/index.ts:135</a></li>
@@ -525,7 +542,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> =&nbsp;/^[a-z$_]+$/i</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L269">value/index.ts:269</a></li>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L275">value/index.ts:275</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -663,7 +680,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="rest" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> rest</h3>
-					<div class="tsd-signature tsd-kind-icon">rest<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="classes/customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="classes/patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="classes/unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make(input &#x3D;&gt; {const value &#x3D; input.input.substring(input.index)return new DecodeSuccess({ ...input, index: input.input.length }, value)})</span></div>
+					<div class="tsd-signature tsd-kind-icon">rest<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="classes/customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="classes/patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="classes/unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make(input &#x3D;&gt; {const value &#x3D; input.input.substring(input.index)return success({ ...input, index: input.input.length }, value)})</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/text/index.ts#L126">text/index.ts:126</a></li>
@@ -711,7 +728,7 @@
 					<div class="tsd-signature tsd-kind-icon">test<wbr>Object<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/valueinput.html" class="tsd-signature-type">ValueInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">__type</span><span class="tsd-signature-symbol">, </span><a href="classes/customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="classes/patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="classes/unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;testType&lt;{}&gt;(&#x27;object&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L219">value/index.ts:219</a></li>
+							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L225">value/index.ts:225</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -798,7 +815,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="withposition" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> with<wbr>Position</h3>
-					<div class="tsd-signature tsd-kind-icon">with<wbr>Position<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><a href="classes/customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="classes/patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="classes/unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make(input &#x3D;&gt; new DecodeSuccess(input, input.index))</span></div>
+					<div class="tsd-signature tsd-kind-icon">with<wbr>Position<span class="tsd-signature-symbol">:</span> <a href="classes/decoder.html" class="tsd-signature-type">Decoder</a><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/textinput.html" class="tsd-signature-type">TextInput</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><a href="classes/customerror.html" class="tsd-signature-type">CustomError</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedanyof.html" class="tsd-signature-type">ExpectedAnyOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedatleast.html" class="tsd-signature-type">ExpectedAtLeast</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedfield.html" class="tsd-signature-type">ExpectedField</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedmatch.html" class="tsd-signature-type">ExpectedMatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectednoneof.html" class="tsd-signature-type">ExpectedNoneOf</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedonce.html" class="tsd-signature-type">ExpectedOnce</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedwithinrange.html" class="tsd-signature-type">ExpectedWithinRange</a><span class="tsd-signature-symbol"> | </span><a href="classes/patternmismatch.html" class="tsd-signature-type">PatternMismatch</a><span class="tsd-signature-symbol"> | </span><a href="classes/expectedeoi.html" class="tsd-signature-type">ExpectedEoi</a><span class="tsd-signature-symbol"> | </span><a href="classes/unexpectedeoi.html" class="tsd-signature-type">UnexpectedEoi</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;make(input &#x3D;&gt; success(input, input.index))</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/text/index.ts#L121">text/index.ts:121</a></li>
@@ -824,7 +841,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L174">value/index.ts:174</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L180">value/index.ts:180</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1052,7 +1069,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L477">core/decoder.ts:477</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L489">core/decoder.ts:489</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1162,7 +1179,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L290">value/index.ts:290</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L296">value/index.ts:296</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1197,7 +1214,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L488">core/decoder.ts:488</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L500">core/decoder.ts:500</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1286,7 +1303,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L161">value/index.ts:161</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L167">value/index.ts:167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1593,7 +1610,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L229">value/index.ts:229</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L235">value/index.ts:235</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1638,7 +1655,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L445">core/decoder.ts:445</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L457">core/decoder.ts:457</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1711,7 +1728,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L274">value/index.ts:274</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L280">value/index.ts:280</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1776,7 +1793,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L418">core/decoder.ts:418</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L430">core/decoder.ts:430</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1815,7 +1832,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L472">core/decoder.ts:472</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/core/decoder.ts#L484">core/decoder.ts:484</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2144,7 +2161,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L198">value/index.ts:198</a></li>
+									<li>Defined in <a href="https://github.com/fponticelli/partsing/blob/master/src/value/index.ts#L204">value/index.ts:204</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2847,6 +2864,9 @@
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#char" class="tsd-kind-icon">char</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#currentpath" class="tsd-kind-icon">current<wbr>Path</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#digit" class="tsd-kind-icon">digit</a>

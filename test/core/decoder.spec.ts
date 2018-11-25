@@ -301,12 +301,15 @@ describe('decoder', () => {
   })
 
   it('surroundedBy', () => {
-    const p1 = testChar(v => v !== '>').many().map(v => v.join('')).surroundedBy(match('<'), match('>'))
+    const p1 = testChar(v => v !== '>')
+      .many()
+      .map(v => v.join(''))
+      .surroundedBy(match('<'), match('>'))
     expect(decodeText(p1)('<some>').getUnsafeSuccess()).toEqual('some')
-    const p2 =
-      match('\\"').withResult('"')
-        .or(testChar(v => v !== '"'))
-        .many()
+    const p2 = match('\\"')
+      .withResult('"')
+      .or(testChar(v => v !== '"'))
+      .many()
       .map(v => v.join(''))
       .surroundedBy(match('"'))
     expect(decodeText(p2)('"so\\"me"').getUnsafeSuccess()).toEqual('so"me')
