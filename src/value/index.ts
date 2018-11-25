@@ -153,6 +153,12 @@ export const undefinedValue = testType<undefined>('undefined')
 export const nullValue = testValue<null>(v => v === null, 'null').withResult(null)
 
 /**
+ * A decoder that doesn't consume any input but does return the current path
+ * position as its result value.
+ */
+export const currentPath = make(input => success(input, input.path))
+
+/**
  * Decoder that matches exactly a specified literal value of type `T`.
  *
  * By default this function uses strict equality. If that is not the desired

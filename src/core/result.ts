@@ -163,28 +163,28 @@ export class DecodeSuccess<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
    * See {@link DecodeResultBase.map}
    */
   map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err> {
-    return this.flatMap(v => new DecodeSuccess(this.input, f(v)))
+    return this.flatMap(v => success(this.input, f(v)))
   }
 
   /**
    * See {@link DecodeResultBase.flatMapError}
    */
   flatMapError<Err2>(f: (r: Err[]) => DecodeResult<In, Out, Err2>): DecodeResult<In, Out, Err2> {
-    return new DecodeSuccess(this.input, this.value)
+    return success(this.input, this.value)
   }
 
   /**
    * See {@link DecodeResultBase.mapError}
    */
   mapError<Err2>(f: (r: Err) => Err2): DecodeResult<In, Out, Err2> {
-    return new DecodeSuccess(this.input, this.value)
+    return success(this.input, this.value)
   }
 
   /**
    * See {@link DecodeResultBase.mapInput}
    */
   mapInput<In2>(f: (i: In) => In2): DecodeResult<In2, Out, Err> {
-    return new DecodeSuccess(f(this.input), this.value)
+    return success(f(this.input), this.value)
   }
 
   /**
@@ -263,14 +263,14 @@ export class DecodeFailure<In, Out, Err> extends DecodeResultBase<In, Out, Err> 
    * See {@link DecodeResultBase.flatMap}
    */
   flatMap<Out2>(f: (r: Out) => DecodeResult<In, Out2, Err>): DecodeResult<In, Out2, Err> {
-    return new DecodeFailure(this.input, ...this.failures)
+    return failure(this.input, ...this.failures)
   }
 
   /**
    * See {@link DecodeResultBase.map}
    */
   map<Out2>(f: (r: Out) => Out2): DecodeResult<In, Out2, Err> {
-    return new DecodeFailure(this.input, ...this.failures)
+    return failure(this.input, ...this.failures)
   }
 
   /**

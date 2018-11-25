@@ -32,7 +32,8 @@ import {
   stringValue,
   tupleValue,
   undefineableValue,
-  undefinedValue
+  undefinedValue,
+  currentPath
 } from '../../src/value'
 
 describe('value_decoder', () => {
@@ -151,6 +152,11 @@ describe('value_decoder', () => {
     expect(decodeValue(anyValue)(true).getUnsafeSuccess()).toEqual(true)
     expect(decodeValue(anyValue)(null).getUnsafeSuccess()).toBeNull()
     expect(decodeValue(anyValue)(undefined).getUnsafeSuccess()).toBeUndefined()
+  })
+
+  it('currentPath', () => {
+    const p = objectValue({ a: arrayValue(numberValue.join(currentPath)) }, [])
+    expect(decodeValue(p)({ a: [1] }).getUnsafeSuccess()).toEqual({ a: [[1, ['a', 0]]] })
   })
 
   it('pathToString', () => {

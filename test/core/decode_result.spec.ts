@@ -85,9 +85,9 @@ describe('decode_result', () => {
   })
 
   it('getUnsafeSuccess/getUnsafeFailure throw when not safe', () => {
-    const s = new DecodeSuccess('', 1)
+    const s = success('', 1)
     expect(s.getUnsafeFailures).toThrow(Error)
-    const f = new DecodeFailure('', 1)
+    const f = failure('', 1)
     expect(f.getUnsafeSuccess).toThrow(Error)
   })
 })

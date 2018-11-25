@@ -82,9 +82,9 @@ export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
       pattern.lastIndex = input.index
       const res = pattern.exec(input.input)
       if (res == null) {
-        return new DecodeFailure(input, DecodeError.patternMismatch(pattern.source))
+        return failure(input, DecodeError.patternMismatch(pattern.source))
       } else {
-        return new DecodeSuccess({ ...input, index: pattern.lastIndex }, res[group])
+        return success({ ...input, index: pattern.lastIndex }, res[group])
       }
     })
   } else if (pattern.global) {
@@ -93,10 +93,10 @@ export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
       pattern.lastIndex = 0
       const res = pattern.exec(s)
       if (res == null) {
-        return new DecodeFailure(input, DecodeError.patternMismatch(pattern.source))
+        return failure(input, DecodeError.patternMismatch(pattern.source))
       } else {
         const index = input.index + pattern.lastIndex
-        return new DecodeSuccess({ ...input, index }, res[group])
+        return success({ ...input, index }, res[group])
       }
     })
   } else {
@@ -105,10 +105,10 @@ export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
       pattern.lastIndex = 0
       const res = pattern.exec(s)
       if (res == null) {
-        return new DecodeFailure(input, DecodeError.patternMismatch(pattern.source))
+        return failure(input, DecodeError.patternMismatch(pattern.source))
       } else {
         const index = input.index + s.indexOf(res[0]) + res[0].length
-        return new DecodeSuccess({ ...input, index }, res[group])
+        return success({ ...input, index }, res[group])
       }
     })
   }
@@ -118,14 +118,14 @@ export const regexp = (pattern: RegExp, group = 0): TextDecoder<string> => {
  * A decoder that doesn't consume any portion of the string but does
  * return the current index position as its result value.
  */
-export const withPosition = make(input => new DecodeSuccess(input, input.index))
+export const withPosition = make(input => success(input, input.index))
 
 /**
  * A decoder that produces all the remaining characters in `TextInput`.
  */
 export const rest = make(input => {
   const value = input.input.substring(input.index)
-  return new DecodeSuccess({ ...input, index: input.input.length }, value)
+  return success({ ...input, index: input.input.length }, value)
 })
 
 /**
@@ -135,9 +135,9 @@ export const rest = make(input => {
 export const eoi: Decoder<TextInput, void, DecodeError> = make(input => {
   const index = input.input.length
   if (input.index === index) {
-    return new DecodeSuccess({ ...input, index }, undefined)
+    return success({ ...input, index }, undefined)
   } else {
-    return new DecodeFailure(input, DecodeError.expectedEoi)
+    return failure(input, DecodeError.expectedEoi)
   }
 })
 
@@ -150,9 +150,9 @@ export const match = <V extends string>(s: V): TextDecoder<V> => {
     const index = input.index + length
     const value = input.input.substring(input.index, index)
     if (value === s) {
-      return new DecodeSuccess({ ...input, index }, s)
+      return success({ ...input, index }, s)
     } else {
-      return new DecodeFailure(input, DecodeError.expectedMatch(`"${s}"`))
+      return failure(input, DecodeError.expectedMatch(`"${s}"`))
     }
   })
 }
@@ -168,9 +168,9 @@ export const matchInsensitive = (s: string): TextDecoder<string> => {
     const value = input.input.substring(input.index, index)
     const valueInsensitive = value.toLowerCase()
     if (valueInsensitive === t) {
-      return new DecodeSuccess({ ...input, index }, value)
+      return success({ ...input, index }, value)
     } else {
-      return new DecodeFailure(input, DecodeError.expectedMatch(`"${s}" (insensitive)`))
+      return failure(input, DecodeError.expectedMatch(`"${s}" (insensitive)`))
     }
   })
 }
@@ -309,10 +309,10 @@ export const optionalWhitespace = regexp(optionalWhitespacePattern)
 export const char = make((input: TextInput) => {
   if (input.index < input.input.length) {
     const c = input.input.charAt(input.index)
-    return new DecodeSuccess({ ...input, index: input.index + 1 }, c)
+    return success({ ...input, index: input.index + 1 }, c)
   } else {
     // no more characters
-    return new DecodeFailure(input, DecodeError.expectedOnce(Entity.CHARACTER))
+    return failure(input, DecodeError.expectedOnce(Entity.CHARACTER))
   }
 })
 
@@ -324,13 +324,13 @@ export const char = make((input: TextInput) => {
 export const testChar = (f: (c: string) => boolean): TextDecoder<string> =>
   make((input: TextInput) => {
     if (input.index >= input.input.length) {
-      return new DecodeFailure(input, DecodeError.unexpectedEoi)
+      return failure(input, DecodeError.unexpectedEoi)
     } else {
       const char = input.input.charAt(input.index)
       if (f(char)) {
-        return new DecodeSuccess({ ...input, index: input.index + 1 }, char)
+        return success({ ...input, index: input.index + 1 }, char)
       } else {
-        return new DecodeFailure(input, DecodeError.expectedOnce(Entity.PREDICATE))
+        return failure(input, DecodeError.expectedOnce(Entity.PREDICATE))
       }
     }
   })
@@ -364,9 +364,9 @@ export const takeCharWhile = (f: (c: string) => boolean, atLeast = 1): TextDecod
       index++
     }
     if (index - input.index < atLeast) {
-      return new DecodeFailure(input, DecodeError.expectedAtLeast(atLeast, Entity.PREDICATE))
+      return failure(input, DecodeError.expectedAtLeast(atLeast, Entity.PREDICATE))
     } else {
-      return new DecodeSuccess({ ...input, index }, input.input.substring(input.index, index))
+      return success({ ...input, index }, input.input.substring(input.index, index))
     }
   })
 
@@ -383,9 +383,9 @@ export const takeCharBetween = (f: (c: string) => boolean, min: number, max: num
       counter++
     }
     if (counter < min) {
-      return new DecodeFailure(input, DecodeError.expectedAtLeast(min, Entity.PREDICATE))
+      return failure(input, DecodeError.expectedAtLeast(min, Entity.PREDICATE))
     } else {
-      return new DecodeSuccess({ ...input, index }, input.input.substring(input.index, index))
+      return success({ ...input, index }, input.input.substring(input.index, index))
     }
   })
 
