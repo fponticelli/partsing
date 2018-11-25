@@ -416,42 +416,40 @@ export class Decoder<In, Out, Err> {
  * matches the expected type of the corresponding decoder.
  */
 export const sequence = <
-    U extends any[],
-    D extends {
-      [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>>
-    } = {
-      [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>>
-    }
-  >(...decoders: D & { [P in keyof U]: Decoder<Input<D[0]>, U[P], Error<D[0]>> }) =>
-  Decoder.of<Input<D[0]>, { [P in keyof U]: U[P] }, Error<D[0]>>(
-    (input: Input<D[0]>) => {
-      const buff: { [P in keyof U]: U[P] } = [] as never
-      for (let i = 0; i < decoders.length; i++) {
-        const decoder = decoders[i]
-        const result = decoder.run(input as never)
-        if (result.isFailure()) {
-          return failure(input, ...result.failures)
-        } else {
-          input = result.input
-          buff[i] = result.value
-        }
+  U extends any[],
+  D extends { [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>> } = {
+    [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>>
+  }
+>(
+  ...decoders: D & { [P in keyof U]: Decoder<Input<D[0]>, U[P], Error<D[0]>> }
+) =>
+  Decoder.of<Input<D[0]>, { [P in keyof U]: U[P] }, Error<D[0]>>((input: Input<D[0]>) => {
+    const buff: { [P in keyof U]: U[P] } = [] as never
+    for (let i = 0; i < decoders.length; i++) {
+      const decoder = decoders[i]
+      const result = decoder.run(input as never)
+      if (result.isFailure()) {
+        return failure(input, ...result.failures)
+      } else {
+        input = result.input
+        buff[i] = result.value
       }
-      return success(input, buff)
     }
-  )
+    return success(input, buff)
+  })
 
 /**
  * Given an array of decoders, it traverses them all until one succeeds or they
  * all fail.
  */
 export const oneOf = <
-    U extends any[],
-    D extends {
-      [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>>
-    } = {
-      [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>>
-    }
-  >(...decoders: D & { [P in keyof U]: Decoder<Input<D[0]>, U[P], Error<D[0]>> }) => {
+  U extends any[],
+  D extends { [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>> } = {
+    [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>>
+  }
+>(
+  ...decoders: D & { [P in keyof U]: Decoder<Input<D[0]>, U[P], Error<D[0]>> }
+) => {
   if (decoders.length === 0) throw new Error('alt needs to be called with at least one argumenr')
   return Decoder.of<Input<D[0]>, TupleToUnion<U>, Error<D[0]>>((input: Input<D[0]>) => {
     let failures: Error<D[0]>[] = []

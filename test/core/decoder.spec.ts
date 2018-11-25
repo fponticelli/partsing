@@ -198,7 +198,7 @@ describe('decoder', () => {
     expect(decodeText(p)('1').getUnsafeSuccess()).toEqual(1)
     expect(decodeText(p)('a').getUnsafeSuccess()).toEqual('a')
     expect(decodeText(p)('x').getUnsafeFailures()).toBeDefined()
-    expect(() => decodeText(oneOf())('x')).toThrow(Error)
+    expect(() => oneOf().run('x' as never)).toThrow(Error)
   })
 
   it('sequence', () => {
