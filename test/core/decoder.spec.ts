@@ -16,7 +16,7 @@ limitations under the License.
 
 import { Decoder, fail, lazy, oneOf, sequence, succeed } from '../../src/core/decoder'
 import { DecodeFailure, DecodeSuccess, success, failure } from '../../src/core/result'
-import { decodeText, digit, letter, match, regexp, TextInput } from '../../src/text'
+import { decodeText, digit, letter, match, regexp, TextInput, testChar } from '../../src/text'
 import { decodeValue, stringValue } from '../../src/value'
 
 const decodeSuccess = <In, Err>() => Decoder.of<In, In, Err>(input => success<In, In, Err>(input, input))
@@ -298,5 +298,17 @@ describe('decoder', () => {
 
     const failure = decodeValue(p)('123abc').getUnsafeFailures()
     expect(failure).toBeDefined()
+  })
+
+  it('surroundedBy', () => {
+    const p1 = testChar(v => v !== '>').many().map(v => v.join('')).surroundedBy(match('<'), match('>'))
+    expect(decodeText(p1)('<some>').getUnsafeSuccess()).toEqual('some')
+    const p2 =
+      match('\\"').withResult('"')
+        .or(testChar(v => v !== '"'))
+        .many()
+      .map(v => v.join(''))
+      .surroundedBy(match('"'))
+    expect(decodeText(p2)('"so\\"me"').getUnsafeSuccess()).toEqual('so"me')
   })
 })

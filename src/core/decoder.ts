@@ -360,6 +360,18 @@ export class Decoder<In, Out, Err> {
   }
 
   /**
+   * Put the current decoder between `before` and `after`. The values captured
+   * by `before` and `after` are discarded.
+   *
+   * @param before opening decoder.
+   * @param after optional closing decoder. If omitted `before` will be used.
+   */
+  surroundedBy(before: Decoder<In, any, Err>, after?: Decoder<In, any, Err>): Decoder<In, Out, Err> {
+    if (!after) after = before
+    return before.pickNext(this).skipNext(after)
+  }
+
+  /**
    * If the current decoder is successful it passes its value to `predicate`
    * and succeed the decoding if the function returns `true`.
    *
