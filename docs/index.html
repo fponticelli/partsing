@@ -88,42 +88,48 @@
 				<p>A simple decoder combinator to parse color values from strings into class instances.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> RGB {
   <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly rgb: <span class="hljs-built_in">number</span></span>) {}
+  toString() {
+    <span class="hljs-keyword">let</span> s = <span class="hljs-keyword">this</span>.rgb.toString(<span class="hljs-number">16</span>)
+    <span class="hljs-keyword">while</span> (s.length &lt; <span class="hljs-number">6</span>) s = <span class="hljs-string">`0<span class="hljs-subst">${s}</span>`</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`#<span class="hljs-subst">${s}</span>`</span>
+  }
 }
 
 <span class="hljs-keyword">class</span> Grey {
   <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly value: <span class="hljs-built_in">number</span></span>) {}
+  toString() {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`grey <span class="hljs-subst">${this.value}</span>`</span>
+  }
 }
 
 <span class="hljs-keyword">class</span> HSL {
   <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly hue: <span class="hljs-built_in">number</span>, readonly saturation: <span class="hljs-built_in">number</span>, readonly lightness: <span class="hljs-built_in">number</span></span>) {}
+  toString() {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`hsl(<span class="hljs-subst">${this.hue}</span>,<span class="hljs-subst">${this.saturation}</span>,<span class="hljs-subst">${this.lightness}</span>)`</span>
+  }
 }
 
 <span class="hljs-keyword">type</span> Color = RGB | Grey | HSL
 
+<span class="hljs-comment">// Hue in HSL is generally measured as an angle, not a ratio</span>
 <span class="hljs-keyword">const</span> ratioDecoder = regexp(<span class="hljs-regexp">/0[.]\d+/y</span>).map(<span class="hljs-built_in">Number</span>)
-<span class="hljs-keyword">const</span> rgbDecoder   = regexp(<span class="hljs-regexp">/[#]([0-9a-f]{6})/iy</span>, <span class="hljs-number">1</span>)
-                       .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-built_in">parseInt</span>(v, <span class="hljs-number">16</span>))
-                       .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> RGB(v))
-<span class="hljs-keyword">const</span> greyDecoder  = matchInsensitive(<span class="hljs-string">'grey'</span>).or(DecodeError.combine, matchInsensitive(<span class="hljs-string">'gray'</span>))
-                       .skipNext(optionalWhitespace)
-                       .pickNext(ratioDecoder)
-                       .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> Grey(v))
-<span class="hljs-keyword">const</span> hslDecoder   = matchInsensitive(<span class="hljs-string">'hsl('</span>)
-                       .pickNext(
-                         ratioDecoder
-                           .repeatWithSeparator(<span class="hljs-number">3</span>, match(<span class="hljs-string">','</span>))
-                           .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> HSL(v[<span class="hljs-number">0</span>], v[<span class="hljs-number">1</span>], v[<span class="hljs-number">2</span>]))
-                       )
-                       .skipNext(match(<span class="hljs-string">')'</span>))
+<span class="hljs-keyword">const</span> rgbDecoder = regexp(<span class="hljs-regexp">/[#]([0-9a-f]{6})/iy</span>, <span class="hljs-number">1</span>)
+  .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-built_in">parseInt</span>(v, <span class="hljs-number">16</span>))
+  .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> RGB(v))
+<span class="hljs-keyword">const</span> greyDecoder = matchInsensitive(<span class="hljs-string">'grey'</span>)
+  .or(matchInsensitive(<span class="hljs-string">'gray'</span>))
+  .skipNext(optionalWhitespace)
+  .pickNext(ratioDecoder)
+  .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> Grey(v))
+<span class="hljs-keyword">const</span> hslDecoder = ratioDecoder
+  .repeatWithSeparator(<span class="hljs-number">3</span>, match(<span class="hljs-string">','</span>))
+  .map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-keyword">new</span> HSL(v[<span class="hljs-number">0</span>], v[<span class="hljs-number">1</span>], v[<span class="hljs-number">2</span>]))
+  .surroundedBy(matchInsensitive(<span class="hljs-string">'hsl('</span>), match(<span class="hljs-string">')'</span>))
 
 <span class="hljs-keyword">const</span> colorTextDecoder = decodeText(
-    oneOf(
-      DecodeError.combine,
-      rgbDecoder,
-      greyDecoder,
-      hslDecoder
-    ).skipNext(eoi) <span class="hljs-comment">// make sure that there is nothing left to decode</span>
-  )
+  <span class="hljs-comment">// the `eoi` at the end, makes sure that there is nothing left to decode</span>
+  oneOf(rgbDecoder, greyDecoder, hslDecoder).skipNext(eoi)
+)
 
 <span class="hljs-comment">// all results are wrapped in a DecodeSuccess</span>
 <span class="hljs-comment">// colorTextDecoder('#003355')          == new RGB(0x003355)</span>

@@ -39,42 +39,48 @@ A simple decoder combinator to parse color values from strings into class instan
 ```typescript
 class RGB {
   constructor(readonly rgb: number) {}
+  toString() {
+    let s = this.rgb.toString(16)
+    while (s.length < 6) s = `0${s}`
+    return `#${s}`
+  }
 }
 
 class Grey {
   constructor(readonly value: number) {}
+  toString() {
+    return `grey ${this.value}`
+  }
 }
 
 class HSL {
   constructor(readonly hue: number, readonly saturation: number, readonly lightness: number) {}
+  toString() {
+    return `hsl(${this.hue},${this.saturation},${this.lightness})`
+  }
 }
 
 type Color = RGB | Grey | HSL
 
+// Hue in HSL is generally measured as an angle, not a ratio
 const ratioDecoder = regexp(/0[.]\d+/y).map(Number)
-const rgbDecoder   = regexp(/[#]([0-9a-f]{6})/iy, 1)
-                       .map(v => parseInt(v, 16))
-                       .map(v => new RGB(v))
-const greyDecoder  = matchInsensitive('grey').or(DecodeError.combine, matchInsensitive('gray'))
-                       .skipNext(optionalWhitespace)
-                       .pickNext(ratioDecoder)
-                       .map(v => new Grey(v))
-const hslDecoder   = matchInsensitive('hsl(')
-                       .pickNext(
-                         ratioDecoder
-                           .repeatWithSeparator(3, match(','))
-                           .map(v => new HSL(v[0], v[1], v[2]))
-                       )
-                       .skipNext(match(')'))
+const rgbDecoder = regexp(/[#]([0-9a-f]{6})/iy, 1)
+  .map(v => parseInt(v, 16))
+  .map(v => new RGB(v))
+const greyDecoder = matchInsensitive('grey')
+  .or(matchInsensitive('gray'))
+  .skipNext(optionalWhitespace)
+  .pickNext(ratioDecoder)
+  .map(v => new Grey(v))
+const hslDecoder = ratioDecoder
+  .repeatWithSeparator(3, match(','))
+  .map(v => new HSL(v[0], v[1], v[2]))
+  .surroundedBy(matchInsensitive('hsl('), match(')'))
 
 const colorTextDecoder = decodeText(
-    oneOf(
-      DecodeError.combine,
-      rgbDecoder,
-      greyDecoder,
-      hslDecoder
-    ).skipNext(eoi) // make sure that there is nothing left to decode
-  )
+  // the `eoi` at the end, makes sure that there is nothing left to decode
+  oneOf(rgbDecoder, greyDecoder, hslDecoder).skipNext(eoi)
+)
 
 // all results are wrapped in a DecodeSuccess
 // colorTextDecoder('#003355')          == new RGB(0x003355)

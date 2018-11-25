@@ -37,20 +37,19 @@ const jsonValue: TextDecoder<JSONValue> = lazy(() =>
 )
 
 const token = <T>(decoder: TextDecoder<T>) => decoder.skipNext(optionalWhitespace)
-const commaSeparated = <T>(decoder: TextDecoder<T>) => decoder.manyWithSeparator(token(match(',')))
+const comma = token(match(','))
+const commaSeparated = <T>(decoder: TextDecoder<T>) => decoder.manyWithSeparator(comma)
 const lCurly = token(match('{'))
 const rCurly = token(match('}'))
 const lSquare = token(match('['))
 const rSquare = token(match(']'))
-const comma = token(match(','))
 const colon = token(match(':'))
 
-const jsonArray: TextDecoder<JSONArray> = lSquare.pickNext(commaSeparated(jsonValue)).skipNext(rSquare)
+const jsonArray: TextDecoder<JSONArray> = commaSeparated(jsonValue).surroundedBy(lSquare, rSquare)
 
 const pair = jsonString.skipNext(colon).join(jsonValue)
-const jsonObject: TextDecoder<JSONObject> = lCurly
-  .pickNext(commaSeparated(pair))
-  .skipNext(rCurly)
+const jsonObject: TextDecoder<JSONObject> = commaSeparated(pair)
+  .surroundedBy(lCurly, rCurly)
   .map((res: [string, JSONValue][]) => {
     return res.reduce((acc: {}, pair: [string, JSONValue]) => {
       return { ...acc, [pair[0]]: pair[1] }

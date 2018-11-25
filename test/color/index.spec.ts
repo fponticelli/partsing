@@ -16,8 +16,7 @@ limitations under the License.
 
 import { oneOf } from '../../src/core/decoder'
 import { DecodeError } from '../../src/error'
-import { decodeText, eoi, match, matchInsensitive, optionalWhitespace, regexp, TextInput } from '../../src/text'
-import { ValueInput } from '../../src/value'
+import { decodeText, eoi, match, matchInsensitive, optionalWhitespace, regexp } from '../../src/text'
 import { decodeValue, literalValue, numberValue, objectValue, stringValue } from '../../src/value'
 
 class RGB {
@@ -55,9 +54,10 @@ const greyDecoder = matchInsensitive('grey')
   .skipNext(optionalWhitespace)
   .pickNext(ratioDecoder)
   .map(v => new Grey(v))
-const hslDecoder = matchInsensitive('hsl(')
-  .pickNext(ratioDecoder.repeatWithSeparator(3, match(',')).map(v => new HSL(v[0], v[1], v[2])))
-  .skipNext(match(')'))
+const hslDecoder = ratioDecoder
+  .repeatWithSeparator(3, match(','))
+  .map(v => new HSL(v[0], v[1], v[2]))
+  .surroundedBy(matchInsensitive('hsl('), match(')'))
 
 const colorTextDecoder = decodeText(
   // the `eoi` at the end, makes sure that there is nothing left to decode
