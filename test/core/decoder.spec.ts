@@ -16,7 +16,6 @@ limitations under the License.
 
 import { Decoder, fail, lazy, oneOf, sequence, succeed } from '../../src/core/decoder'
 import { DecodeFailure, DecodeSuccess, success, failure } from '../../src/core/result'
-import { DecodeError } from '../../src/error'
 import { decodeText, digit, letter, match, regexp, TextInput } from '../../src/text'
 import { decodeValue, stringValue } from '../../src/value'
 
@@ -112,9 +111,9 @@ describe('decoder', () => {
   })
 
   it('sequence', () => {
-    const decoder = sequence<TextInput, [string, string, string], DecodeError>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const decoder = sequence(regexp(/^1/).map(Number), regexp(/^a/), regexp(/^b/))
     const result = decodeText(decoder)('1ab').getUnsafeSuccess()
-    expect(result).toEqual(['1', 'a', 'b'])
+    expect(result).toEqual([1, 'a', 'b'])
     const result2 = decodeText(decoder)('1ba').getUnsafeFailures()
     expect(result2).toBeDefined()
   })
@@ -195,15 +194,15 @@ describe('decoder', () => {
   })
 
   it('oneOf', () => {
-    const p = oneOf<TextInput, [string, string], DecodeError>(digit, match('a'))
-    expect(decodeText(p)('1').getUnsafeSuccess()).toEqual('1')
+    const p = oneOf(digit.map(Number), match('a'))
+    expect(decodeText(p)('1').getUnsafeSuccess()).toEqual(1)
     expect(decodeText(p)('a').getUnsafeSuccess()).toEqual('a')
     expect(decodeText(p)('x').getUnsafeFailures()).toBeDefined()
     expect(() => decodeText(oneOf())('x')).toThrow(Error)
   })
 
   it('sequence', () => {
-    const decoder = sequence<TextInput, [string, string, string], DecodeError>(regexp(/^1/), regexp(/^a/), regexp(/^b/))
+    const decoder = sequence(regexp(/^1/), regexp(/^a/), regexp(/^b/))
     const result = decodeText(decoder)('1ab').getUnsafeSuccess()
     expect(result).toEqual(['1', 'a', 'b'])
   })

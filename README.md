@@ -70,7 +70,7 @@ const hslDecoder   = matchInsensitive('hsl(')
                        .skipNext(match(')'))
 
 const colorTextDecoder = decodeText(
-    oneOf<TextInput, Color[], DecodeError>(
+    oneOf(
       DecodeError.combine,
       rgbDecoder,
       greyDecoder,
@@ -128,7 +128,7 @@ const hslValue = objectValue(
   ).map(v => new HSL(v.h, v.s, v.l))
 
 const colorValueDecoder = decodeValue(
-    oneOf<ValueInput, Color[], DecodeError>(
+    oneOf(
       DecodeError.combine,
       rgbValue,
       greyValue,
