@@ -40,7 +40,7 @@
     "url": "https://github.com/fponticelli/partsing.git"
   },
   "scripts": {
-    "build": "rm -rf lib && tsc && cp package.npm.json lib/package.json && cp *.md lib/*.md",
+    "build": "rm -rf lib && tsc && cp package.npm.json lib/package.json && cp {*.md,LICENSE} lib/",
     "docs": "rm -rf docs && typedoc --options typedoc.js ./src",
     "serve-doc": "rm -rf docs && compodoc src -s",
     "lint": "tslint \"./{src,test}/**/*.ts\"",
