@@ -183,12 +183,6 @@ export class Decoder<In, Out, Err> {
   /**
    * If the current decoder fails, it tries the ones passed as arguments until
    * one of them succeeds or they all fail.
-   *
-   * The first argument `combineErrors` is optional (if omitted `undefined`
-   * needs to be passed). The provided function is used to combine an array of
-   * `Err` into one. If you are using {@link DecodeError} you can pass
-   * {@link DecodeError.combine}.
-   * If not passed, the failure will report the failure of the current decoder.
    */
   or<U extends any[]>(
     ...decoders: { [P in keyof U]: Decoder<In, U[P], Err> }
@@ -363,33 +357,6 @@ export class Decoder<In, Out, Err> {
     } else {
       return this.flatMap<Out[]>(decoderF)
     }
-
-    // return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
-
-    // if (times <= 0) {
-
-    // } else {
-
-    // }
-    // const pairs = separator.pickNext(this).atLeast(times - 1)
-    // return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
-    // if (times <= 0) {
-
-    // } else if (times === 1) {
-
-    // } else {
-
-    // }
-    // const pairs = separator.pickNext(this).atLeast(times - 1)
-    // return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
-    // return this.atLeastWithSeparator(0, separator)
-    //   .or(this.map(v => [v]))
-    //   .or(succeed([]))
-    // if (times <= 1) return this.map(v => [v])
-    // else {
-    //   const pairs = separator.pickNext(this).repeat(times - 1)
-    //   return this.flatMap<Out[]>((res: Out) => pairs.map(rs => [res].concat(rs)))
-    // }
   }
 
   /**
@@ -469,8 +436,6 @@ export const sequence = <In, U extends any[], Err>(
 /**
  * Given an array of decoders, it traverses them all until one succeeds or they
  * all fail.
- *
- * `combineErrors` works the same as in {@link or}.
  */
 export const oneOf = <In, U extends any[], Err>(...decoders: { [P in keyof U]: Decoder<In, U[P], Err> }) => {
   if (decoders.length === 0) throw new Error('alt needs to be called with at least one argumenr')

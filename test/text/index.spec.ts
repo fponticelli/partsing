@@ -24,6 +24,7 @@ import {
   ExpectedOnce,
   PatternMismatch
 } from '../../src/error'
+
 import {
   char,
   decodeText,
