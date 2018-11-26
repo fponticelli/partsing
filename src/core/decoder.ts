@@ -109,13 +109,17 @@ export class Decoder<In, Out, Err> {
     return this.flatMap<Out2>(r => Decoder.of<In, Out2, Err>((input: In) => success(input, fun(r))))
   }
 
+  /**
+   * Similar to {@link map} but passes a tuple of `res: Out` and `input: In`. This is mostly useful when decoding
+   * tokens to preserve the original position in the input.
+   */
   mapWithInput<Out2>(fun: (res: Out, input: In) => Out2): Decoder<In, Out2, Err> {
     return Decoder.of<In, Out2, Err>((input: In) => {
       const result = this.run(input)
       if (result.isSuccess()) {
-        return new DecodeSuccess(result.input, fun(result.value, input))
+        return success(result.input, fun(result.value, input))
       } else {
-        return new DecodeFailure(input, result.failure)
+        return failure(input, ...result.failures)
       }
     })
   }

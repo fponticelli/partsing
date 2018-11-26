@@ -16,7 +16,7 @@ limitations under the License.
 
 import { Decoder, fail, lazy, oneOf, sequence, succeed } from '../../src/core/decoder'
 import { DecodeFailure, DecodeSuccess, success, failure } from '../../src/core/result'
-import { decodeText, digit, letter, match, regexp, TextInput, testChar } from '../../src/text'
+import { decodeText, digit, letter, match, regexp, TextInput, testChar, char } from '../../src/text'
 import { decodeValue, stringValue } from '../../src/value'
 
 const decodeSuccess = <In, Err>() => Decoder.of<In, In, Err>(input => success<In, In, Err>(input, input))
@@ -65,6 +65,18 @@ describe('decoder', () => {
       .map(String)
       .run(1) as DecodeFailure<number, string, number>
     expect(f.failures).toEqual([1])
+  })
+
+  it('mapWithInput', () => {
+    expect(decodeText(char.mapWithInput((r, i) => [r, i]))('a').getUnsafeSuccess()).toEqual([
+      'a',
+      { index: 0, input: 'a' }
+    ])
+    expect(decodeText(char.join(char.mapWithInput((r, i) => i)).map(t => t[1]))('ab').getUnsafeSuccess()).toEqual({
+      index: 1,
+      input: 'ab'
+    })
+    expect(decodeText(letter.mapWithInput((r, i) => [r, i]))('1').getUnsafeFailures()).toBeDefined()
   })
 
   it('Decoder.flatMapError transform the failure value', () => {
