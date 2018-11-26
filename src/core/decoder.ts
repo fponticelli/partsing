@@ -109,6 +109,17 @@ export class Decoder<In, Out, Err> {
     return this.flatMap<Out2>(r => Decoder.of<In, Out2, Err>((input: In) => success(input, fun(r))))
   }
 
+  mapWithInput<Out2>(fun: (res: Out, input: In) => Out2): Decoder<In, Out2, Err> {
+    return Decoder.of<In, Out2, Err>((input: In) => {
+      const result = this.run(input)
+      if (result.isSuccess()) {
+        return new DecodeSuccess(result.input, fun(result.value, input))
+      } else {
+        return new DecodeFailure(input, result.failure)
+      }
+    })
+  }
+
   /**
    * Allow to convert the result of decoder into the input for another one. It
    * can be used to use different kind of decoders together.
