@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import {
-  concatOr,
   CustomError,
   Entity,
   ExpectedAnyOf,
@@ -71,12 +70,5 @@ describe('errors', () => {
     expect(new ExpectedWithinRange('a', 'b').toString()).toEqual('between a and b')
     expect(new PatternMismatch('/a/').toString()).toEqual('to match pattern /a/')
     expect(new UnexpectedEoi().toString()).toEqual('NOT end of input')
-  })
-
-  it('concatOr', () => {
-    expect(concatOr([])).toEqual('<empty>')
-    expect(concatOr(['a'])).toEqual('a')
-    expect(concatOr(['a', 'b'])).toEqual('a or b')
-    expect(concatOr(['a', 'b', 'c'])).toEqual('a, b or c')
   })
 })

@@ -15,23 +15,7 @@ limitations under the License.
 */
 
 import { Entity, entityToString } from './entity'
-
-/**
- * Utility function to generate a comma separate list of values where the last
- * one is concatenated by `or`.
- */
-export const concatOr = (values: string[]) => {
-  const length = values.length
-  if (length === 0) {
-    return '<empty>'
-  } else if (length <= 2) {
-    return values.join(' or ')
-  } else {
-    const last = values[length - 1]
-    const head = values.slice(0, length - 1)
-    return `${head.join(', ')} or ${last}`
-  }
-}
+import { concatOr } from '../utils'
 
 /**
  * Error for any {@link Entity} that should match at least one of the conditions

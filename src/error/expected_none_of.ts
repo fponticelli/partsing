@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Entity, entityToString } from './entity'
-import { concatOr } from './expected_any_of'
+import { concatOr } from '../utils'
 
 /**
  * Error for a decoder that is expected to fail decoding an {@link Entity} for

@@ -27,7 +27,6 @@ import {
   numberValue,
   objectValue,
   optionalValue,
-  pathToString,
   safeIntegerValue,
   stringValue,
   tupleValue,
@@ -157,9 +156,5 @@ describe('value_decoder', () => {
   it('currentPath', () => {
     const p = objectValue({ a: arrayValue(numberValue.join(currentPath)) }, [])
     expect(decodeValue(p)({ a: [1] }).getUnsafeSuccess()).toEqual({ a: [[1, ['a', 0]]] })
-  })
-
-  it('pathToString', () => {
-    expect(pathToString(['a', 'a b c', 'd', 1, '$f'])).toEqual('a["a b c"].d[1].$f')
   })
 })

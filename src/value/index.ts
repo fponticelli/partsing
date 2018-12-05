@@ -24,6 +24,7 @@ import { Decoder, Decoding } from '../core/decoder'
 import { DecodeFailure, DecodeResult, success, failure } from '../core/result'
 import { MarkOptionalFields } from '../core/type_level'
 import { DecodeError, Entity } from '../error'
+import { valueToString, pathToString } from '../utils'
 
 /**
  * `ValueInput` stores the current `input` value as a `any` (any JS value) and
@@ -284,34 +285,13 @@ export const objectValue = <T, K extends keyof T>(
 }
 
 /**
- * Pattern to recognize if a field name is in a format that doesn't require quotes.
- */
-const isToken = /^[a-z$_]+$/i
-
-/**
- * Pretty prints a `ValueInput.path` value.
- */
-export const pathToString = (path: (string | number)[]): string => {
-  return path.reduce((acc: string, curr: string | number) => {
-    if (typeof curr === 'number') {
-      return `${acc}[${curr}]`
-    } else if (isToken.test(curr)) {
-      return acc.length === 0 ? curr : `${acc}.${curr}`
-    } else {
-      const t = curr.replace('"', '\\"')
-      return `${acc}["${t}"]`
-    }
-  }, '')
-}
-
-/**
  * Pretty prints a `DecodeFailure<ValueInput, Out, DecodeError>`.
  */
 export const failureToString = <Out>(err: DecodeFailure<ValueInput, Out, DecodeError>): string => {
   const { failures, input } = err
   const expected =
     failures.length === 1 ? failures[0].toString() : `one of:\n * ${failures.map(v => v.toString()).join('\n * ')}\n`
-  const msg = `${expected} but got ${String(input.input)}`
+  const msg = `${expected} but got ${valueToString(input.input)}`
   const path = pathToString(input.path)
   if (path === '') return msg
   else return `expected ${msg} at ${path}`
