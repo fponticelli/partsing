@@ -32,7 +32,10 @@ import {
   tupleValue,
   undefineableValue,
   undefinedValue,
-  currentPath
+  currentPath,
+  stringRecordValue,
+  recordValue,
+  testObject
 } from '../../src/value'
 
 describe('value_decoder', () => {
@@ -156,5 +159,21 @@ describe('value_decoder', () => {
   it('currentPath', () => {
     const p = objectValue({ a: arrayValue(numberValue.join(currentPath)) }, [])
     expect(decodeValue(p)({ a: [1] }).getUnsafeSuccess()).toEqual({ a: [[1, ['a', 0]]] })
+  })
+
+  it('stringRecordValue', () => {
+    const p = stringRecordValue(numberValue)
+    expect(decodeValue(p)({ a: 1, b: 2 }).getUnsafeSuccess()).toEqual({ a: 1, b: 2 })
+    expect(decodeValue(p)({ a: 'A' }).getUnsafeFailures()).toBeDefined()
+  })
+
+  it('recordValue', () => {
+    const p = recordValue(literalValue('b'), numberValue)
+    expect(decodeValue(p)({ a: 1 }).getUnsafeFailures()).toBeDefined()
+  })
+
+  it('testObject', () => {
+    expect(decodeValue(testObject)({}).getUnsafeSuccess()).toEqual({})
+    expect(decodeValue(testObject)([]).getUnsafeFailures()).toBeDefined()
   })
 })

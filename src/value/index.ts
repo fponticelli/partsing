@@ -237,7 +237,15 @@ export const tupleValue = <U extends any[]>(...decoders: { [k in keyof U]: Value
 /**
  * Decoder that validates a value to be an object.
  */
-const testObject = testType<{}>('object')
+export const testObject = testType<{}>('object').flatMap(value => {
+  return Decoder.of(input => {
+    if (Array.isArray(value)) {
+      return failure(input, DecodeError.expectedMatch(Entity.TYPE, 'not array'))
+    } else {
+      return success(input, value)
+    }
+  })
+})
 
 /**
  * Create a decoder to validate objects.
@@ -283,6 +291,43 @@ export const objectValue = <T, K extends keyof T>(
     })
   })
 }
+
+/**
+ * Decodes an object applying a decoder for the keys and one for values of each
+ * field pair.
+ */
+export const recordValue = <K extends string | number | symbol, T>(
+  keyDecoder: ValueDecoder<K>,
+  valueDecoder: ValueDecoder<T>
+): ValueDecoder<Record<K, T>> => {
+  return testObject.flatMap((o: any) => {
+    return make(input => {
+      const buff = {} as any
+      for (let field of Object.keys(o)) {
+        const keyResult = keyDecoder.run({ input: field, path: input.path })
+        if (keyResult.isSuccess()) {
+          const key = keyResult.value
+          const value = o[field]
+          const valueResult = valueDecoder.run({ input: value, path: input.path.concat([field]) })
+          if (valueResult.isSuccess()) {
+            buff[key] = valueResult.value
+          } else {
+            return failure(valueResult.input, ...valueResult.failures)
+          }
+        } else {
+          return failure(keyResult.input, ...keyResult.failures)
+        }
+      }
+      return success(input, buff)
+    })
+  })
+}
+
+/**
+ * Same as {@link recodValue} enforcing string keys.
+ */
+export const stringRecordValue = <T>(valueDecoder: ValueDecoder<T>): ValueDecoder<Record<string, T>> =>
+  recordValue(stringValue, valueDecoder)
 
 /**
  * Pretty prints a `DecodeFailure<ValueInput, Out, DecodeError>`.
