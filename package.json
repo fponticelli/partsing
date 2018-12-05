@@ -50,7 +50,7 @@
     "test": "jest",
     "test-coverage": "jest --coverage",
     "watch": "jest --watch --coverage",
-    "npm-publish": "yarn prep && ( cd lib && npm publish --access public )"
+    "npm-publish": "yarn prep && ( cd lib && yarn publish --access public )"
   },
   "eslint.packageManager": "yarn",
   "jest": {
