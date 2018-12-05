@@ -58,12 +58,12 @@ export function valueToString(value: any): string {
     return 'null'
   } else if (typeof value === 'object') {
     const pairs = Object.keys(value).map((k: string): string => `${autoQuote(k)}:${valueToString(value[k])}`)
-    const prefix = (
-        value.constructor &&
+    const prefix =
+      (value.constructor &&
         value.constructor.name &&
         value.constructor.name !== 'Object' &&
-        `${value.constructor.name} `
-      ) || ''
+        `${value.constructor.name} `) ||
+      ''
     return `${prefix}{${pairs.join(',')}}`
   } else if (typeof value === 'string') {
     return autoQuote(value)
