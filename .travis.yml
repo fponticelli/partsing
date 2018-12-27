@@ -8,3 +8,4 @@ script:
  - npx yarn test-coverage
  - npx yarn prettier
  - npx yarn lint
+ - codecov -f coverage/*.json
