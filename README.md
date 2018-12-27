@@ -1,4 +1,5 @@
-# ParTSing [![build status](https://travis-ci.org/fponticelli/partsing.svg?branch=master)](https://travis-ci.org/fponticelli/partsing) [![npm version](https://badge.fury.io/js/partsing.svg)](https://badge.fury.io/js/partsing) ![npm version](https://img.shields.io/github/license/fponticelli/partsing.svg)
+# ParTSing
+[![build status](https://travis-ci.org/fponticelli/partsing.svg?branch=master)](https://travis-ci.org/fponticelli/partsing) [![npm version](https://badge.fury.io/js/partsing.svg)](https://badge.fury.io/js/partsing) ![npm version](https://img.shields.io/github/license/fponticelli/partsing.svg) [![codecov](https://codecov.io/gh/fponticelli/partsing/branch/master/graph/badge.svg)](https://codecov.io/gh/fponticelli/partsing)
 
 *ParTSing* is a decoder combinator library for TypeScript. You can use it to build parsers/decoders from text, tokens or really any input value.
 
