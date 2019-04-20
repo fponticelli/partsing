@@ -28,7 +28,7 @@
     "tslint": "^5.11.0",
     "typedoc": "^0.13.0",
     "typedoc-plugin-external-module-name": "^1.1.3",
-    "typescript": "^3.1.6"
+    "typescript": "^3.4.3"
   },
   "directories": {
     "doc": "docs",
@@ -40,9 +40,9 @@
     "url": "https://github.com/fponticelli/partsing.git"
   },
   "scripts": {
-    "build": "rm -rf lib && tsc && cp package.npm.json lib/package.json && cp {*.md,LICENSE} lib/",
-    "docs": "rm -rf docs && typedoc --options typedoc.js ./src",
-    "serve-doc": "rm -rf docs && compodoc src -s",
+    "build": "rm -rf lib/* && tsc && cp package.npm.json lib/package.json && cp *.md lib && cp LICENSE lib/",
+    "docs": "rm -rf docs/* && typedoc --options typedoc.js ./src",
+    "serve-doc": "rm -rf docs/* && compodoc src -s",
     "lint": "tslint \"./{src,test}/**/*.ts\"",
     "fix-lint": "tslint --fix \"./{src,test}/**/*.ts\"",
     "prettier": "prettier --list-different \"./{src,test}/**/*.ts\"",

@@ -442,12 +442,7 @@ export class Decoder<In, Out, Err> {
  * If they all succeed it returns a typed `n` tuple where each element type
  * matches the expected type of the corresponding decoder.
  */
-export const sequence = <
-  U extends any[],
-  D extends { [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>> } = {
-    [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>>
-  }
->(
+export const sequence = <U extends any[], D extends { [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>> }>(
   ...decoders: D & { [P in keyof U]: Decoder<Input<D[0]>, U[P], Error<D[0]>> }
 ) =>
   Decoder.of<Input<D[0]>, { [P in keyof U]: U[P] }, Error<D[0]>>((input: Input<D[0]>) => {
@@ -469,12 +464,7 @@ export const sequence = <
  * Given an array of decoders, it traverses them all until one succeeds or they
  * all fail.
  */
-export const oneOf = <
-  U extends any[],
-  D extends { [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>> } = {
-    [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>>
-  }
->(
+export const oneOf = <U extends any[], D extends { [P in keyof U]: Decoder<Input<D[P]>, U[P], Error<D[P]>> }>(
   ...decoders: D & { [P in keyof U]: Decoder<Input<D[0]>, U[P], Error<D[0]>> }
 ) => {
   if (decoders.length === 0) throw new Error('alt needs to be called with at least one argumenr')
