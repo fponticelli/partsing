@@ -42,7 +42,7 @@ export type Error<T extends { _E: any }> = T['_E']
  * Given a type for an object `T` and an array `U` of field names from `U`,
  * return a new object type with the specified fields `U` marked as optional.
  */
-export type MarkOptionalFields<T, U extends any[], K extends keyof T = keyof T> = {
-  [k in Exclude<keyof T, TupleToUnion<U>>]: T[k]
+export type MarkOptionalFields<T extends {}, U extends (keyof T)[]> = {
+  [K in Exclude<keyof T, TupleToUnion<U>>]: T[K]
 } &
-  { [k in TupleToUnion<U>]+?: T[k] }
+  { [K in TupleToUnion<U>]+?: T[K] }

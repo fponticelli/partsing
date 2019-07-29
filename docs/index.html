@@ -64,7 +64,9 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="partsing">ParTSing</h1>
+				<a href="#partsing" id="partsing" style="color: inherit; text-decoration: none;">
+					<h1>ParTSing</h1>
+				</a>
 				<p><a href="https://travis-ci.org/fponticelli/partsing"><img src="https://travis-ci.org/fponticelli/partsing.svg?branch=master" alt="build status"></a> <a href="https://badge.fury.io/js/partsing"><img src="https://badge.fury.io/js/partsing.svg" alt="npm version"></a> <img src="https://img.shields.io/github/license/fponticelli/partsing.svg" alt="npm version"> <a href="https://codecov.io/gh/fponticelli/partsing"><img src="https://codecov.io/gh/fponticelli/partsing/branch/master/graph/badge.svg" alt="codecov"></a></p>
 				<p><em>ParTSing</em> is a decoder combinator library for TypeScript. You can use it to build parsers/decoders from text, tokens or really any input value.</p>
 				<p>If you want full control over what to decode your should start from <code>partsing/core/decoder</code>. It provides 3 types parameters</p>
@@ -74,18 +76,26 @@
 					<li><code>Err</code> it&#39;s the type of the failure returned when the parser fails.</li>
 				</ul>
 				<p>The library provides two additional set of utility functions to decode <code>string</code> values (<code>partsing/text</code>) and native JS values (<code>partsing/value</code>).</p>
-				<h2 id="decoder-error">Decoder Error</h2>
+				<a href="#decoder-error" id="decoder-error" style="color: inherit; text-decoration: none;">
+					<h2>Decoder Error</h2>
+				</a>
 				<p>If you adopt the generic <code>Decoder</code> directly, you can define the shape of your error. The library provides a <code>DecoderError</code> type that should fit most decoding needs. The type of errors available are defined in <code>partsing/error</code>.</p>
 				<p><code>DecoderError</code> provides a simple method to debug the result of the decoding (<code>toString</code>) but still leaves the flexibility to give granular control on the representation of the error.</p>
 				<p>Both [Text Decoding] and [Value Decoding] use <code>DecodeError</code>.</p>
-				<h2 id="text-decoding">Text Decoding</h2>
+				<a href="#text-decoding" id="text-decoding" style="color: inherit; text-decoration: none;">
+					<h2>Text Decoding</h2>
+				</a>
 				<p>To be able to keep track of the position of the decoding within a <code>string</code>, Text Decoding uses <code>TextInput</code> to track both the entire text <code>input</code> and the current <code>index</code>.</p>
 				<p>The <code>decodeText</code> function simplifies the inputs and outputs of decoding text. It takes a text decoder (<code>Decoder&lt;TextInput, T, DecoderError&gt;</code>) and return a function that takes a string input and returns a <code>DecodeResult&lt;string, T, string&gt;</code> (where input and error are of type <code>string</code>).</p>
 				<p>If you intend to write your own regular expressions decoder functions, consider using the <code>y</code> (<code>sticky</code>) flag. When used, there is no need to reallocate slices of the input string saving memory and CPU cycles. The <code>sticky</code> flag is not available for all implementations of JS.</p>
-				<h2 id="value-decoding">Value Decoding</h2>
+				<a href="#value-decoding" id="value-decoding" style="color: inherit; text-decoration: none;">
+					<h2>Value Decoding</h2>
+				</a>
 				<p>To be able to keep track of the position of the decoding within <code>any</code> value, Value Decoding uses <code>ValueInput</code> to track both the <code>input</code> value and the current position within it using a <code>path</code>. <code>path</code> is an array of either <code>string</code> (object field name) or <code>number</code> (array/tuple index position).</p>
 				<p>The <code>decodeValue</code> function simplifies the inputs and outputs of decoding values. It takes a value decoder (<code>Decoder&lt;ValueInput, T, DecoderError&gt;</code>) and return a function that takes <code>any</code> and returns a <code>DecodeResult&lt;any, T, string&gt;</code> (where input is of type <code>any</code> and error is of type <code>string</code>).</p>
-				<h2 id="example">Example</h2>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>Example</h2>
+				</a>
 				<p>A simple decoder combinator to parse color values from strings into class instances.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> RGB {
   <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly rgb: <span class="hljs-built_in">number</span></span>) {}
@@ -239,6 +249,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/valueinput.html" class="tsd-kind-icon">Value<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#decodeerror" class="tsd-kind-icon">Decode<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#decoderesult" class="tsd-kind-icon">Decode<wbr>Result</a>
@@ -509,6 +522,7 @@
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>

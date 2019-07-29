@@ -255,18 +255,18 @@ export const testObject = testType<{}>('object').flatMap(value => {
  *
  * The second argument `optionalFields`, marks the fields to consider optionals.
  */
-export const objectValue = <T, K extends keyof T>(
+export const objectValue = <T>(
   fieldDecoders: { [k in keyof T]: ValueDecoder<T[k]> },
-  optionalFields: K[]
-): ValueDecoder<MarkOptionalFields<T, typeof optionalFields, K>> => {
+  optionalFields: (keyof T)[]
+): ValueDecoder<MarkOptionalFields<T, typeof optionalFields>> => {
   return testObject.flatMap((o: any) => {
     return make(input => {
-      const mandatoryFields = Object.keys(fieldDecoders).filter(f => optionalFields.indexOf(f as K) < 0)
+      const mandatoryFields = Object.keys(fieldDecoders).filter(f => optionalFields.indexOf(f as keyof T) < 0)
       const buff = {} as any
       for (let field of mandatoryFields) {
         if (o.hasOwnProperty(field)) {
           const s = { input: o[field], path: input.path.concat([field]) }
-          const result = fieldDecoders[field as K].run(s)
+          const result = fieldDecoders[field as keyof T].run(s)
           if (result.isSuccess()) {
             buff[field] = result.value
           } else {
@@ -279,7 +279,7 @@ export const objectValue = <T, K extends keyof T>(
       for (let field of optionalFields) {
         if (o.hasOwnProperty(field)) {
           const s = { input: o[field], path: input.path.concat([field as never]) }
-          const result = fieldDecoders[field as K].run(s)
+          const result = fieldDecoders[field as keyof T].run(s)
           if (result.isSuccess()) {
             buff[field] = result.value
           } else {
