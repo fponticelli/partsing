@@ -255,31 +255,32 @@ export const testObject = testType<{}>('object').flatMap(value => {
  *
  * The second argument `optionalFields`, marks the fields to consider optionals.
  */
-export const objectValue = <T>(
-  fieldDecoders: { [k in keyof T]: ValueDecoder<T[k]> },
-  optionalFields: (keyof T)[]
-): ValueDecoder<MarkOptionalFields<T, typeof optionalFields>> => {
+export function objectValue<T extends {}, K extends keyof T = keyof T>(
+  fieldDecoders: { [K in keyof T]: ValueDecoder<T[K]> },
+  optionalFields: [...K[]]
+): ValueDecoder<MarkOptionalFields<T, typeof optionalFields>> {
+  type OF = typeof optionalFields
   return testObject.flatMap((o: any) => {
     return make(input => {
-      const mandatoryFields = Object.keys(fieldDecoders).filter(f => optionalFields.indexOf(f as keyof T) < 0)
+      const mandatoryFields = Object.keys(fieldDecoders).filter(f => optionalFields.indexOf(f as K) < 0) as OF
       const buff = {} as any
       for (let field of mandatoryFields) {
         if (o.hasOwnProperty(field)) {
-          const s = { input: o[field], path: input.path.concat([field]) }
-          const result = fieldDecoders[field as keyof T].run(s)
+          const s = { input: o[field], path: input.path.concat([field as string]) }
+          const result = fieldDecoders[field].run(s)
           if (result.isSuccess()) {
             buff[field] = result.value
           } else {
             return failure(result.input, ...result.failures)
           }
         } else {
-          return failure(input, DecodeError.expectedField(field))
+          return failure(input, DecodeError.expectedField(field as string))
         }
       }
       for (let field of optionalFields) {
         if (o.hasOwnProperty(field)) {
-          const s = { input: o[field], path: input.path.concat([field as never]) }
-          const result = fieldDecoders[field as keyof T].run(s)
+          const s = { input: o[field], path: input.path.concat([field as string]) }
+          const result = fieldDecoders[field].run(s)
           if (result.isSuccess()) {
             buff[field] = result.value
           } else {
@@ -287,7 +288,7 @@ export const objectValue = <T>(
           }
         }
       }
-      return success(input, buff as never)
+      return success(input, buff)
     })
   })
 }
